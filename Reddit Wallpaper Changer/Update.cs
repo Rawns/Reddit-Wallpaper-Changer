@@ -81,7 +81,7 @@ namespace Reddit_Wallpaper_Changer
                     }
                 };
                 System.IO.File.Move(System.Reflection.Assembly.GetExecutingAssembly().Location, System.Reflection.Assembly.GetExecutingAssembly().Location + ".old");
-                client.DownloadFileAsync(new Uri("https://github.com/Ugleh/redditwallpaperchanger/raw/release/Reddit%20Wallpaper%20Changer.exe"),
+                client.DownloadFileAsync(new Uri("https://github.com/Rawns/RWC-Source/releases/download/release/Reddit.Wallpaper.Changer.exe"),
                     @"" + System.Reflection.Assembly.GetExecutingAssembly().Location);
             }
             catch (Exception ex)
