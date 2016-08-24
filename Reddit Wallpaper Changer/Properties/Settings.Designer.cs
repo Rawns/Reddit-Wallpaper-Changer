@@ -12,7 +12,7 @@ namespace Reddit_Wallpaper_Changer.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -116,6 +116,66 @@ namespace Reddit_Wallpaper_Changer.Properties {
             }
             set {
                 this["autoStart"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool useProxy {
+            get {
+                return ((bool)(this["useProxy"]));
+            }
+            set {
+                this["useProxy"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("proxy-server:8080")]
+        public string proxyAddress {
+            get {
+                return ((string)(this["proxyAddress"]));
+            }
+            set {
+                this["proxyAddress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool proxyAuth {
+            get {
+                return ((bool)(this["proxyAuth"]));
+            }
+            set {
+                this["proxyAuth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Username")]
+        public string proxyUser {
+            get {
+                return ((string)(this["proxyUser"]));
+            }
+            set {
+                this["proxyUser"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Password")]
+        public string proxyPass {
+            get {
+                return ((string)(this["proxyPass"]));
+            }
+            set {
+                this["proxyPass"] = value;
             }
         }
     }

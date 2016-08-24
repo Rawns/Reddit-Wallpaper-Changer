@@ -12,9 +12,9 @@ namespace Reddit_Wallpaper_Changer
 {
     public partial class SearchWizard : Form
     {
-        private Form1 form1;
+        private RWC form1;
 
-        public SearchWizard(Form1 form1)
+        public SearchWizard(RWC form1)
         {
             InitializeComponent();
             this.form1 = form1;

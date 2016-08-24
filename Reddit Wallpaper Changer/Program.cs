@@ -25,7 +25,7 @@ namespace Reddit_Wallpaper_Changer
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new Form1());
+                Application.Run(new RWC());
             }
             else if (dialogResult == DialogResult.No)
             {
@@ -38,7 +38,7 @@ namespace Reddit_Wallpaper_Changer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new RWC());
         }
         finally { mutex.ReleaseMutex(); } // I find this more explicit
         }

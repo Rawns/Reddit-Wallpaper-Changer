@@ -26,5 +26,20 @@
     <Setting Name="autoStart" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="useProxy" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="proxyAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">proxy-server:8080</Value>
+    </Setting>
+    <Setting Name="proxyAuth" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="proxyUser" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Username</Value>
+    </Setting>
+    <Setting Name="proxyPass" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Password</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

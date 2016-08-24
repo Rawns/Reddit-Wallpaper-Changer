@@ -52,11 +52,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="RWC.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="RWC.Designer.cs">
+      <DependentUpon>RWC.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -78,8 +78,8 @@
     <Compile Include="SearchWizard.Designer.cs">
       <DependentUpon>SearchWizard.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="RWC.resx">
+      <DependentUpon>RWC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -111,6 +111,8 @@
     <Content Include="Resources\information.png" />
     <Content Include="Resources\monitor.png" />
     <Content Include="Resources\panel.png" />
+    <None Include="Resources\update.png" />
+    <None Include="Resources\update_disabled.png" />
     <Content Include="Resources\Wizard.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
