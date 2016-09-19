@@ -34,7 +34,9 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.statusMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.faveWallpaperMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.blockWallpaperMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeWallpaperMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.currentThreadMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -71,6 +73,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.rawnsLink = new System.Windows.Forms.LinkLabel();
             this.button3 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.redditLink = new System.Windows.Forms.LinkLabel();
@@ -102,7 +106,6 @@
             this.monitorButton = new System.Windows.Forms.Button();
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.useThisWallpaperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rawnsLink = new System.Windows.Forms.LinkLabel();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -144,14 +147,16 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusMenuItem1,
             this.toolStripSeparator1,
+            this.faveWallpaperMenuItem,
             this.toolStripMenuItem1,
+            this.blockWallpaperMenuItem,
             this.changeWallpaperMenuItem,
             this.currentThreadMenuItem1,
             this.toolStripSeparator2,
             this.settingsToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(175, 148);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(187, 192);
             // 
             // statusMenuItem1
             // 
@@ -161,30 +166,47 @@
             this.statusMenuItem1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.statusMenuItem1.ForeColor = System.Drawing.Color.YellowGreen;
             this.statusMenuItem1.Name = "statusMenuItem1";
-            this.statusMenuItem1.Size = new System.Drawing.Size(174, 22);
+            this.statusMenuItem1.Size = new System.Drawing.Size(186, 22);
             this.statusMenuItem1.Text = "Running";
             this.statusMenuItem1.Click += new System.EventHandler(this.statusMenuItem1_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(171, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(183, 6);
+            // 
+            // faveWallpaperMenuItem
+            // 
+            this.faveWallpaperMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.faveWallpaperMenuItem.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.faveWallpaperMenuItem.Name = "faveWallpaperMenuItem";
+            this.faveWallpaperMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.faveWallpaperMenuItem.Text = "Favourite Wallpaper";
+            this.faveWallpaperMenuItem.Click += new System.EventHandler(this.faveWallpaperMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.toolStripMenuItem1.ForeColor = System.Drawing.Color.DarkCyan;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(174, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(186, 22);
             this.toolStripMenuItem1.Text = "Save Wallpaper";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
+            // blockWallpaperMenuItem
+            // 
+            this.blockWallpaperMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.blockWallpaperMenuItem.ForeColor = System.Drawing.Color.Orange;
+            this.blockWallpaperMenuItem.Name = "blockWallpaperMenuItem";
+            this.blockWallpaperMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.blockWallpaperMenuItem.Text = "Block Wallpaper";
             // 
             // changeWallpaperMenuItem
             // 
             this.changeWallpaperMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.changeWallpaperMenuItem.ForeColor = System.Drawing.Color.OrangeRed;
             this.changeWallpaperMenuItem.Name = "changeWallpaperMenuItem";
-            this.changeWallpaperMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.changeWallpaperMenuItem.Size = new System.Drawing.Size(186, 22);
             this.changeWallpaperMenuItem.Text = "Change Wallpaper";
             this.changeWallpaperMenuItem.Click += new System.EventHandler(this.changeWallpaperMenuItem_Click);
             // 
@@ -193,26 +215,26 @@
             this.currentThreadMenuItem1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.currentThreadMenuItem1.ForeColor = System.Drawing.SystemColors.InfoText;
             this.currentThreadMenuItem1.Name = "currentThreadMenuItem1";
-            this.currentThreadMenuItem1.Size = new System.Drawing.Size(174, 22);
+            this.currentThreadMenuItem1.Size = new System.Drawing.Size(186, 22);
             this.currentThreadMenuItem1.Text = "Current Thread";
             this.currentThreadMenuItem1.Click += new System.EventHandler(this.currentThreadMenuItem1_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(171, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(183, 6);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -322,16 +344,15 @@
             this.startInTrayCheckBox.AutoSize = true;
             this.startInTrayCheckBox.Location = new System.Drawing.Point(21, 22);
             this.startInTrayCheckBox.Name = "startInTrayCheckBox";
-            this.startInTrayCheckBox.Size = new System.Drawing.Size(90, 17);
+            this.startInTrayCheckBox.Size = new System.Drawing.Size(91, 17);
             this.startInTrayCheckBox.TabIndex = 3;
             this.startInTrayCheckBox.Text = "Start In Tray?";
             this.toolTip1.SetToolTip(this.startInTrayCheckBox, "Enabled, the program will start minimized.");
             this.startInTrayCheckBox.UseVisualStyleBackColor = true;
-            this.startInTrayCheckBox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(293, 370);
+            this.saveButton.Location = new System.Drawing.Point(287, 370);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(60, 23);
             this.saveButton.TabIndex = 2;
@@ -438,7 +459,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(18, 20);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(114, 13);
+            this.label2.Size = new System.Drawing.Size(115, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Reddit Search Query:";
             // 
@@ -548,7 +569,7 @@
             this.label4.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.label4.Location = new System.Drawing.Point(148, 27);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(90, 13);
+            this.label4.Size = new System.Drawing.Size(91, 13);
             this.label4.TabIndex = 6;
             this.label4.Text = "Current Version:";
             // 
@@ -564,6 +585,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.label10);
             this.groupBox4.Controls.Add(this.rawnsLink);
             this.groupBox4.Controls.Add(this.button3);
             this.groupBox4.Controls.Add(this.label3);
@@ -574,6 +596,33 @@
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "About";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(18, 47);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(77, 13);
+            this.label10.TabIndex = 8;
+            this.label10.Text = "Updated By:";
+            // 
+            // rawnsLink
+            // 
+            this.rawnsLink.ActiveLinkColor = System.Drawing.Color.SteelBlue;
+            this.rawnsLink.AutoSize = true;
+            this.rawnsLink.DisabledLinkColor = System.Drawing.Color.SteelBlue;
+            this.rawnsLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rawnsLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.rawnsLink.LinkColor = System.Drawing.Color.SteelBlue;
+            this.rawnsLink.Location = new System.Drawing.Point(126, 47);
+            this.rawnsLink.Name = "rawnsLink";
+            this.rawnsLink.Size = new System.Drawing.Size(64, 13);
+            this.rawnsLink.TabIndex = 7;
+            this.rawnsLink.TabStop = true;
+            this.rawnsLink.Text = "/u/Rawns";
+            this.rawnsLink.VisitedLinkColor = System.Drawing.Color.SteelBlue;
+            this.rawnsLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.rawnsLink_LinkClicked);
             // 
             // button3
             // 
@@ -591,9 +640,9 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(18, 27);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(48, 13);
+            this.label3.Size = new System.Drawing.Size(102, 13);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Author:";
+            this.label3.Text = "Origional Author:";
             // 
             // redditLink
             // 
@@ -603,7 +652,7 @@
             this.redditLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.redditLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.redditLink.LinkColor = System.Drawing.Color.SteelBlue;
-            this.redditLink.Location = new System.Drawing.Point(68, 27);
+            this.redditLink.Location = new System.Drawing.Point(126, 27);
             this.redditLink.Name = "redditLink";
             this.redditLink.Size = new System.Drawing.Size(59, 13);
             this.redditLink.TabIndex = 2;
@@ -685,7 +734,7 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(9, 22);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(88, 13);
+            this.label7.Size = new System.Drawing.Size(89, 13);
             this.label7.TabIndex = 9;
             this.label7.Text = "Wallpaper Type:";
             // 
@@ -782,6 +831,7 @@
             // 
             // taskIcon
             // 
+            this.taskIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.taskIcon.BalloonTipText = "Down here if you need me";
             this.taskIcon.ContextMenuStrip = this.contextMenuStrip1;
             this.taskIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("taskIcon.Icon")));
@@ -902,23 +952,6 @@
             this.useThisWallpaperToolStripMenuItem.Name = "useThisWallpaperToolStripMenuItem";
             this.useThisWallpaperToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.useThisWallpaperToolStripMenuItem.Text = "Use This Wallpaper";
-            // 
-            // rawnsLink
-            // 
-            this.rawnsLink.ActiveLinkColor = System.Drawing.Color.SteelBlue;
-            this.rawnsLink.AutoSize = true;
-            this.rawnsLink.DisabledLinkColor = System.Drawing.Color.SteelBlue;
-            this.rawnsLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rawnsLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.rawnsLink.LinkColor = System.Drawing.Color.SteelBlue;
-            this.rawnsLink.Location = new System.Drawing.Point(68, 41);
-            this.rawnsLink.Name = "rawnsLink";
-            this.rawnsLink.Size = new System.Drawing.Size(64, 13);
-            this.rawnsLink.TabIndex = 7;
-            this.rawnsLink.TabStop = true;
-            this.rawnsLink.Text = "/u/Rawns";
-            this.rawnsLink.VisitedLinkColor = System.Drawing.Color.SteelBlue;
-            this.rawnsLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.rawnsLink_LinkClicked);
             // 
             // RWC
             // 
@@ -1047,6 +1080,9 @@
         private System.Windows.Forms.TextBox txtProxyServer;
         private System.Windows.Forms.CheckBox chkProxy;
         private System.Windows.Forms.LinkLabel rawnsLink;
+        private System.Windows.Forms.ToolStripMenuItem faveWallpaperMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem blockWallpaperMenuItem;
+        private System.Windows.Forms.Label label10;
     }
 }
 

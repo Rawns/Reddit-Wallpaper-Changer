@@ -1985,7 +1985,7 @@
   <data name="monitorButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EAAACxABrSO9dQAAA/5JREFUaEPtmElMFFEQhhtFwX3fERdkU/YBcVBpugcJGDVAvGg0Kl6MJJoocU9Q
+        DQAACw0B7QfALAAAA/5JREFUaEPtmElMFFEQhhtFwX3fERdkU/YBcVBpugcJGDVAvGg0Kl6MJJoocU9Q
         ol7cd1TcdxPjwaOeNNGLB+NBD8ZEE72BB030Yiz/Gl7jY/p1C2Smh0NX8mdCT1W9739dw7xpzQ8//PDD
         j6iGruvJhmEsNU1zZX8SM1VXVycJTHU0NzcPQPKrkGlSfxRMvGBGgWsPJGRaycEVaz/krd7bqVX/V76k
         ItRYCggVC5UIFdc3viiu2/y8Jypdvu4lmP4IE2kC1x5LdD2Hk3AXfiYc+UPaEXLUgKNEg44RJR8nGnqS
@@ -2007,6 +2007,9 @@
   </data>
   <metadata name="contextMenuStrip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>651, 41</value>
+  </metadata>
+  <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
   </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

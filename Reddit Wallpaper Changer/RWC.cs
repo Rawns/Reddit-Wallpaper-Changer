@@ -349,27 +349,34 @@ namespace Reddit_Wallpaper_Changer
                     client.Proxy = proxy;
                 }
 
-                String latestVersion = client.DownloadString("https://raw.githubusercontent.com/Rawns/RWC-Source/master/version");
-
-                if (!latestVersion.ToString().Contains(currentVersion.Trim().ToString()))
+                try
                 {
-                    DialogResult choice = MessageBox.Show("You are running version " + currentVersion + "." + Environment.NewLine + "Download version " + latestVersion + " now?", "Update Avaiable!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    String latestVersion = client.DownloadString("https://raw.githubusercontent.com/Rawns/RWC-Source/master/version");
 
-                    if (choice == DialogResult.Yes)
+                    if (!latestVersion.ToString().Contains(currentVersion.Trim().ToString()))
                     {
-                        Form Update = new Update(latestVersion, this);
-                        Update.Show();
+                        DialogResult choice = MessageBox.Show("You are running version " + currentVersion + "." + Environment.NewLine + "Download version " + latestVersion + " now?", "Update Avaiable!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                        if (choice == DialogResult.Yes)
+                        {
+                            Form Update = new Update(latestVersion, this);
+                            Update.Show();
+                        }
+                        else if (choice == DialogResult.No)
+                        {
+                            btnUpdate.Enabled = true;
+                            btnUpdate.Text = "Check for Updates";
+                            return;
+                        }
                     }
-                    else if (choice == DialogResult.No)
+                    else
                     {
-                        btnUpdate.Enabled = true;
-                        btnUpdate.Text = "Check for Updates";
-                        return;
+                        MessageBox.Show("RWC is up to date. :)", "Reddit Wallpaper Changer", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-                else
+                catch(Exception ex)
                 {
-                    MessageBox.Show("RWC is up to date. :)", "Reddit Wallpaper Changer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Error checking for updates: " + ex.Message + " :(", "Reddit Wallpaper Changer", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 client.Dispose();
@@ -432,6 +439,9 @@ namespace Reddit_Wallpaper_Changer
 
         }
 
+        //======================================================================
+        // Update timer 
+        //======================================================================
         private void updateTimer()
         {
             wallpaperChangeTimer.Enabled = false;
@@ -455,7 +465,9 @@ namespace Reddit_Wallpaper_Changer
             changeWallpaperTimer.Enabled = true;
         }
 
-
+        //======================================================================
+        // Change the wallpaper
+        //======================================================================
         private void changeWallpaper()
         {
             BackgroundWorker bw = new BackgroundWorker();
@@ -537,6 +549,21 @@ namespace Reddit_Wallpaper_Changer
             {
                 client.Proxy = null;
 
+                // Use a proxy if specified
+                if (Properties.Settings.Default.useProxy == true)
+                {
+                    WebProxy proxy = new WebProxy(Properties.Settings.Default.proxyAddress);
+
+                    if (Properties.Settings.Default.proxyAuth == true)
+                    {
+                        proxy.Credentials = new NetworkCredential(Properties.Settings.Default.proxyUser, Properties.Settings.Default.proxyPass);
+                        proxy.UseDefaultCredentials = false;
+                        proxy.BypassProxyOnLocal = false;
+                    }
+
+                    client.Proxy = proxy;
+                }
+               
                 try
                 {
                     jsonData = client.DownloadString(formURL);
@@ -648,6 +675,9 @@ namespace Reddit_Wallpaper_Changer
         }
         delegate void SetTextCallback(string text);
 
+        //======================================================================
+        // Update status
+        //======================================================================
         private void updateStatus(string text)
         {
             // InvokeRequired required compares the thread ID of the
@@ -664,6 +694,9 @@ namespace Reddit_Wallpaper_Changer
             }
         }
 
+        //======================================================================
+        // Set the wallpaper
+        //======================================================================
         private void setWallpaper(string url, string title, string threadID)
         {
             BackgroundWorker bw = new BackgroundWorker();
@@ -797,6 +830,23 @@ namespace Reddit_Wallpaper_Changer
 
             }
             WebClient wc = new WebClient();
+            wc.Proxy = null;
+
+            // Use a proxy if specified
+            if (Properties.Settings.Default.useProxy == true)
+            {
+                WebProxy proxy = new WebProxy(Properties.Settings.Default.proxyAddress);
+
+                if (Properties.Settings.Default.proxyAuth == true)
+                {
+                    proxy.Credentials = new NetworkCredential(Properties.Settings.Default.proxyUser, Properties.Settings.Default.proxyPass);
+                    proxy.UseDefaultCredentials = false;
+                    proxy.BypassProxyOnLocal = false;
+                }
+
+                wc.Proxy = proxy;
+            }
+
             byte[] bytes = wc.DownloadData(url);
             //Console.WriteLine(bytes.Count().ToString());
             if (bytes.Count().Equals(0))
@@ -866,6 +916,9 @@ namespace Reddit_Wallpaper_Changer
             }
         }
 
+        //======================================================================
+        // Send to system tray
+        //======================================================================
         private void fakeClose(bool p)
         {
             this.Visible = false;
@@ -875,6 +928,10 @@ namespace Reddit_Wallpaper_Changer
 
             }
         }
+
+        //======================================================================
+        // Configure run on startup 
+        //======================================================================
         private void startup(bool add)
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(
@@ -904,6 +961,10 @@ namespace Reddit_Wallpaper_Changer
                 deleteWindowsMenu();
             }
         }
+
+        //======================================================================
+        // Restore from system tray
+        //======================================================================
         private void taskIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             this.Visible = true;
@@ -973,15 +1034,38 @@ namespace Reddit_Wallpaper_Changer
             using (WebClient client = new WebClient())
             {
                 client.Proxy = null;
-                String latestVersion = client.DownloadString("https://raw.githubusercontent.com/Rawns/RWC-Source/master/version");
-                if (!latestVersion.Contains(currentVersion.Trim().ToString()))
+
+                // Use a proxy if specified
+                if (Properties.Settings.Default.useProxy == true)
                 {
-                    Form Update = new Update(latestVersion, this);
-                    Update.Show();
+                    WebProxy proxy = new WebProxy(Properties.Settings.Default.proxyAddress);
+
+                    if (Properties.Settings.Default.proxyAuth == true)
+                    {
+                        proxy.Credentials = new NetworkCredential(Properties.Settings.Default.proxyUser, Properties.Settings.Default.proxyPass);
+                        proxy.UseDefaultCredentials = false;
+                        proxy.BypassProxyOnLocal = false;
+                    }
+
+                    client.Proxy = proxy;
                 }
-                else
+
+                try
                 {
-                    changeWallpaperTimer.Enabled = true;
+                    String latestVersion = client.DownloadString("https://raw.githubusercontent.com/Rawns/RWC-Source/master/version");
+                    if (!latestVersion.Contains(currentVersion.Trim().ToString()))
+                    {
+                        Form Update = new Update(latestVersion, this);
+                        Update.Show();
+                    }
+                    else
+                    {
+                        changeWallpaperTimer.Enabled = true;
+                    }
+                }
+                catch
+                {
+
                 }
 
                 client.Dispose();
@@ -1027,11 +1111,6 @@ namespace Reddit_Wallpaper_Changer
             System.Diagnostics.Process.Start("http://reddit.com/" + historyDataGrid.Rows[e.RowIndex].Cells[3].Value.ToString());
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             saveWallpaper.ShowDialog();
@@ -1043,6 +1122,9 @@ namespace Reddit_Wallpaper_Changer
             currentWallpaper.Save(fileName);
         }
 
+        //======================================================================
+        // Test internet connection
+        //======================================================================
         private void checkInternetTimer_Tick(object sender, EventArgs e)
         {
             noticeLabel.Text = "Checking Internet Connection...";
@@ -1080,6 +1162,9 @@ namespace Reddit_Wallpaper_Changer
             searchQueryValue = searchQuery.Text;
         }
 
+        //======================================================================
+        // Show the search wizard form
+        //======================================================================
         private void searchWizardButton_Click(object sender, EventArgs e)
         {
             Form searchWizard = new SearchWizard(this);
@@ -1091,6 +1176,7 @@ namespace Reddit_Wallpaper_Changer
             breakBetweenChange.Enabled = false;
             changeWallpaperTimer.Enabled = true;
         }
+
 
         private void monitorButton_Click_1(object sender, EventArgs e)
         {
@@ -1108,6 +1194,9 @@ namespace Reddit_Wallpaper_Changer
             }
         }
 
+        //======================================================================
+        // Draw monitor panel
+        //======================================================================
         private void monitorPanel_Paint(object sender, PaintEventArgs e)
         {
             DrawLShapeLine(e.Graphics, 0, 14, 370, -14);
@@ -1208,12 +1297,16 @@ namespace Reddit_Wallpaper_Changer
             if (chkAuth.Checked == true)
             {
                 this.txtUser.Enabled = true;
+                this.txtUser.Text = Properties.Settings.Default.proxyUser;
                 this.txtPass.Enabled = true;
+                this.txtPass.Text = Properties.Settings.Default.proxyPass;
             }
             else
             {
                 this.txtUser.Enabled = false;
+                this.txtUser.Text = "";
                 this.txtPass.Enabled = false;
+                this.txtPass.Text = "";
             }
         }
 
@@ -1231,12 +1324,13 @@ namespace Reddit_Wallpaper_Changer
             else
             {
                 this.txtProxyServer.Enabled = false;
+                this.txtProxyServer.Text = "";
                 this.chkAuth.Enabled = false;
                 this.chkAuth.Checked = false;
                 this.txtUser.Enabled = false;
-                this.txtUser.Text = Properties.Settings.Default.proxyUser;
+                this.txtUser.Text = "";
                 this.txtPass.Enabled = false;
-                this.txtPass.Text = Properties.Settings.Default.proxyPass;
+                this.txtPass.Text = "";
 
             }
         }
@@ -1247,6 +1341,11 @@ namespace Reddit_Wallpaper_Changer
         private void rawnsLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("http://www.reddit.com/user/Rawns/");
+        }
+
+        private void faveWallpaperMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
