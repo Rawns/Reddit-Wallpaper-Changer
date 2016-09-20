@@ -1,3 +1,5 @@
 Version 1.0.7.0
-- Now supports full custom proxy server for Software Updates and aquiring wallpapers
-- Minor additions/code changes   
+- Support for use in a proxy server environment for updates & aquiring wallpapers
+- Wallpapers can now be saved directly to a specified directory
+- Initial groundwork for favoriting/blacklisting wallpapers 
+- Minor additions/tweaks/code changes
