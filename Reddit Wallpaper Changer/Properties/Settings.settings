@@ -41,5 +41,11 @@
     <Setting Name="proxyPass" Type="System.String" Scope="User">
       <Value Profile="(Default)">Password</Value>
     </Setting>
+    <Setting Name="defaultSaveLocation" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="currentWallpaperName" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

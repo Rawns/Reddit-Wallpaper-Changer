@@ -85,6 +85,7 @@ namespace Reddit_Wallpaper_Changer
             updateStatus("RWC Setup Initating.");
             r = new Random();
             taskIcon.Visible = true;
+            setupSavedWallpaperLocation();
             setupProxy();
             setupButtons();
             setupPanels();
@@ -97,11 +98,32 @@ namespace Reddit_Wallpaper_Changer
 
         }
 
+        //======================================================================
+        // Set folder path for saving wallpapers
+        //======================================================================
+        private void setupSavedWallpaperLocation()
+        {
+            if (Properties.Settings.Default.defaultSaveLocation == "")
+            {
+                System.IO.Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "Saved Wallpapers");
+                Properties.Settings.Default.defaultSaveLocation = AppDomain.CurrentDomain.BaseDirectory + "Saved Wallpapers";
+                Properties.Settings.Default.Save();
+            }
+
+            txtSavePath.Text = Properties.Settings.Default.defaultSaveLocation;
+        }
+
+        //======================================================================
+        // ???
+        //======================================================================
         private void deleteWindowsMenu()
         {
             //throw new NotImplementedException();
         }
 
+        //======================================================================
+        // Windows Menus
+        //======================================================================
         private void createWindowsMenu()
         {
             RegistryKey key;
@@ -292,6 +314,9 @@ namespace Reddit_Wallpaper_Changer
             }
         }
 
+        //======================================================================
+        // Set sellected button formatting
+        //======================================================================
         private void selectButton(Button button2)
         {
             button2.BackColor = selectedBackColor;
@@ -300,6 +325,9 @@ namespace Reddit_Wallpaper_Changer
             button2.FlatAppearance.MouseOverBackColor = selectedBackColor;
         }
 
+        //======================================================================
+        // Set unsellected button formatting
+        //======================================================================
         private void cleanButton(Button button)
         {
             button.BackColor = Color.White;
@@ -371,12 +399,22 @@ namespace Reddit_Wallpaper_Changer
                     }
                     else
                     {
-                        MessageBox.Show("RWC is up to date. :)", "Reddit Wallpaper Changer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        taskIcon.Icon = Properties.Resources.rwc;
+                        taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer";
+                        taskIcon.BalloonTipText = "RWC is up to date! :)";
+                        taskIcon.ShowBalloonTip(700);
+
+                        // MessageBox.Show("RWC is up to date. :)", "Reddit Wallpaper Changer", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 catch(Exception ex)
                 {
-                    MessageBox.Show("Error checking for updates: " + ex.Message + " :(", "Reddit Wallpaper Changer", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    taskIcon.BalloonTipIcon = ToolTipIcon.Error;
+                    taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer";
+                    taskIcon.BalloonTipText = "Error checking for updates! :(";
+                    taskIcon.ShowBalloonTip(700);
+
+                    // MessageBox.Show("Error checking for updates: " + ex.Message + " :(", "Reddit Wallpaper Changer", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 client.Dispose();
@@ -432,6 +470,7 @@ namespace Reddit_Wallpaper_Changer
             Properties.Settings.Default.proxyAuth = chkAuth.Checked;
             Properties.Settings.Default.proxyUser = txtUser.Text;
             Properties.Settings.Default.proxyPass = txtPass.Text;
+            Properties.Settings.Default.defaultSaveLocation = txtSavePath.Text;
             Properties.Settings.Default.Save();
             if (updateTimerBool)
                 updateTimer();
@@ -788,6 +827,9 @@ namespace Reddit_Wallpaper_Changer
                 string extention = System.IO.Path.GetExtension(uri.LocalPath);
                 string filename = "currentWallpaper" + extention;
                 string wallpaperFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), filename);
+                Properties.Settings.Default.currentWallpaperName = title + extention;
+                Properties.Settings.Default.Save();
+
                 //MessageBox.Show(url);
                 if (ImageExtensions.Contains(extention.ToUpper()))
                 {
@@ -806,6 +848,22 @@ namespace Reddit_Wallpaper_Changer
                     {
                         WebClient webClient = new WebClient();
                         webClient.Proxy = null;
+
+                        // Use a proxy if specified
+                        if (Properties.Settings.Default.useProxy == true)
+                        {
+                            WebProxy proxy = new WebProxy(Properties.Settings.Default.proxyAddress);
+
+                            if (Properties.Settings.Default.proxyAuth == true)
+                            {
+                                proxy.Credentials = new NetworkCredential(Properties.Settings.Default.proxyUser, Properties.Settings.Default.proxyPass);
+                                proxy.UseDefaultCredentials = false;
+                                proxy.BypassProxyOnLocal = false;
+                            }
+
+                            webClient.Proxy = proxy;
+                        }
+
                         webClient.DownloadFile(uri.AbsoluteUri, @wallpaperFile);
                         SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, @wallpaperFile, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
                         historyRepeated.Add(threadID);
@@ -813,15 +871,12 @@ namespace Reddit_Wallpaper_Changer
                         BeginInvoke((MethodInvoker)delegate
                         {
                             updateStatus("Wallpaper Changed");
-
                         });
                     }
                     catch (System.Net.WebException)
                     {
 
                     }
-
-
                 }
                 else
                 {
@@ -924,7 +979,10 @@ namespace Reddit_Wallpaper_Changer
             this.Visible = false;
             if(p)
             {
-                taskIcon.ShowBalloonTip(300);
+                taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+                taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer";
+                taskIcon.BalloonTipText = "Down here if you need me!";
+                taskIcon.ShowBalloonTip(700);
 
             }
         }
@@ -948,6 +1006,9 @@ namespace Reddit_Wallpaper_Changer
             key.Close();
         }
 
+        //======================================================================
+        // Closing the form
+        //======================================================================
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!realClose)
@@ -1111,9 +1172,27 @@ namespace Reddit_Wallpaper_Changer
             System.Diagnostics.Process.Start("http://reddit.com/" + historyDataGrid.Rows[e.RowIndex].Cells[3].Value.ToString());
         }
 
+        //======================================================================
+        // Save wallpaper locally
+        //======================================================================
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            saveWallpaper.ShowDialog();
+            // saveWallpaper.ShowDialog();
+            try
+            {
+                currentWallpaper.Save(Properties.Settings.Default.defaultSaveLocation + @"\" + Properties.Settings.Default.currentWallpaperName);
+                taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+                taskIcon.BalloonTipTitle = "Wallpaper Saved!";
+                taskIcon.BalloonTipText = "Wallpaper saved to " + Properties.Settings.Default.defaultSaveLocation + @"\" + Properties.Settings.Default.currentWallpaperName;
+                taskIcon.ShowBalloonTip(750); 
+            }
+            catch (Exception)
+            {
+                taskIcon.BalloonTipIcon = ToolTipIcon.Error;
+                taskIcon.BalloonTipTitle = "Error Saving!";
+                taskIcon.BalloonTipText = "Unable to save the wallpaper locally. :(";
+                taskIcon.ShowBalloonTip(750);
+            }
         }
 
         private void saveWallpaper_FileOk(object sender, CancelEventArgs e)
@@ -1346,6 +1425,18 @@ namespace Reddit_Wallpaper_Changer
         private void faveWallpaperMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        //======================================================================
+        // Set default location for manually saved wallpapers
+        //======================================================================
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
+            if (folderBrowser.ShowDialog() == DialogResult.OK)
+            {
+                txtSavePath.Text = folderBrowser.SelectedPath;
+            }
         }
     }
 }

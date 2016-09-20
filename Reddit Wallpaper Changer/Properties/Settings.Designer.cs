@@ -178,5 +178,29 @@ namespace Reddit_Wallpaper_Changer.Properties {
                 this["proxyPass"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string defaultSaveLocation {
+            get {
+                return ((string)(this["defaultSaveLocation"]));
+            }
+            set {
+                this["defaultSaveLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string currentWallpaperName {
+            get {
+                return ((string)(this["currentWallpaperName"]));
+            }
+            set {
+                this["currentWallpaperName"] = value;
+            }
+        }
     }
 }

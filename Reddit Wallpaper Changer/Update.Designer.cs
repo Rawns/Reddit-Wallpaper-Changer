@@ -93,7 +93,7 @@
             this.MinimizeBox = false;
             this.Name = "Update";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Update Avaliable!";
+            this.Text = "Update Available!";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Update_FormClosing);
             this.Load += new System.EventHandler(this.Update_Load);
             this.ResumeLayout(false);
