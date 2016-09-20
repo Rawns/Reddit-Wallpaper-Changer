@@ -379,7 +379,7 @@ namespace Reddit_Wallpaper_Changer
 
                 try
                 {
-                    String latestVersion = client.DownloadString("https://raw.githubusercontent.com/Rawns/RWC-Source/master/version");
+                    String latestVersion = client.DownloadString("https://raw.githubusercontent.com/Rawns/Reddit-Wallpaper-Changer/master/version");
 
                     if (!latestVersion.ToString().Contains(currentVersion.Trim().ToString()))
                     {
@@ -1113,7 +1113,7 @@ namespace Reddit_Wallpaper_Changer
 
                 try
                 {
-                    String latestVersion = client.DownloadString("https://raw.githubusercontent.com/Rawns/RWC-Source/master/version");
+                    String latestVersion = client.DownloadString("https://raw.githubusercontent.com/Rawns/Reddit-Wallpaper-Changer/master/version");
                     if (!latestVersion.Contains(currentVersion.Trim().ToString()))
                     {
                         Form Update = new Update(latestVersion, this);
