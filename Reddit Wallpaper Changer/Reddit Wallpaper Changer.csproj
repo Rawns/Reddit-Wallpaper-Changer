@@ -106,6 +106,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\display.png" />
+    <None Include="Resources\display_enabled.png" />
+    <None Include="Resources\display_disabled.png" />
     <Content Include="Resources\rwc.ico" />
     <Content Include="Resources\data.png" />
     <Content Include="Resources\information.png" />

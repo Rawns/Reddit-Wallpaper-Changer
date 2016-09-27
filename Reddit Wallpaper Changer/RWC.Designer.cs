@@ -81,9 +81,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.redditLink = new System.Windows.Forms.LinkLabel();
             this.monitorPanel = new System.Windows.Forms.Panel();
-            this.label8 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.historyPanel = new System.Windows.Forms.Panel();
@@ -687,8 +686,6 @@
             this.monitorPanel.BackColor = System.Drawing.SystemColors.Control;
             this.monitorPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.monitorPanel.ContextMenuStrip = this.contextMenuStrip1;
-            this.monitorPanel.Controls.Add(this.label8);
-            this.monitorPanel.Controls.Add(this.button1);
             this.monitorPanel.Controls.Add(this.groupBox7);
             this.monitorPanel.Location = new System.Drawing.Point(0, 65);
             this.monitorPanel.Name = "monitorPanel";
@@ -697,37 +694,27 @@
             this.monitorPanel.Visible = false;
             this.monitorPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.monitorPanel_Paint);
             // 
-            // label8
+            // groupBox7
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(15, 138);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(337, 31);
-            this.label8.TabIndex = 12;
-            this.label8.Text = "Nothing Here Works Yet.";
+            this.groupBox7.Controls.Add(this.button1);
+            this.groupBox7.Controls.Add(this.comboBox1);
+            this.groupBox7.Controls.Add(this.label7);
+            this.groupBox7.Location = new System.Drawing.Point(3, 256);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(356, 144);
+            this.groupBox7.TabIndex = 1;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Settings";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(293, 296);
+            this.button1.Location = new System.Drawing.Point(290, 19);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(60, 23);
             this.button1.TabIndex = 11;
             this.button1.Text = "Save";
             this.toolTip1.SetToolTip(this.button1, "Save");
             this.button1.UseVisualStyleBackColor = true;
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.comboBox1);
-            this.groupBox7.Controls.Add(this.label7);
-            this.groupBox7.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox7.Location = new System.Drawing.Point(0, 254);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(362, 149);
-            this.groupBox7.TabIndex = 1;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Settings";
             // 
             // comboBox1
             // 
@@ -941,8 +928,7 @@
             // 
             // monitorButton
             // 
-            this.monitorButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.monitorButton.Enabled = false;
+            this.monitorButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(234)))), ((int)(((byte)(244)))));
             this.monitorButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(195)))), ((int)(((byte)(228)))));
             this.monitorButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(234)))), ((int)(((byte)(244)))));
             this.monitorButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(234)))), ((int)(((byte)(244)))));
@@ -995,7 +981,6 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.RWC_Load);
             this.Shown += new System.EventHandler(this.Form1_Shown);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseClick);
             this.configurePanel.ResumeLayout(false);
             this.configurePanel.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
@@ -1014,7 +999,6 @@
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.monitorPanel.ResumeLayout(false);
-            this.monitorPanel.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             this.historyPanel.ResumeLayout(false);
@@ -1082,7 +1066,6 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
         private System.Windows.Forms.ToolStripMenuItem useThisWallpaperToolStripMenuItem;
         private System.Windows.Forms.Label statuslabel;

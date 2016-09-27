@@ -57,6 +57,13 @@ namespace Reddit_Wallpaper_Changer
             SystemEvents.PowerModeChanged += OnPowerChange;
         }
 
+        public enum Style : int
+        {
+            Tiled,
+            Centered,
+            Stretched
+        }
+
 
         void OnPowerChange(Object sender, PowerModeChangedEventArgs e)
         {
@@ -140,6 +147,9 @@ namespace Reddit_Wallpaper_Changer
             File.Delete(System.Reflection.Assembly.GetExecutingAssembly().Location + ".old");
         }
 
+        //======================================================================
+        // Populate the search query text box
+        //======================================================================
         public void changeSearchQuery(string text)
         {
             searchQuery.Text = text;
@@ -288,7 +298,7 @@ namespace Reddit_Wallpaper_Changer
         private void selectPanel(Panel selectedPanel)
         {
             selectedPanel.Location = new Point(0, 57);
-            selectedPanel.Size = new Size(365, 331);
+            selectedPanel.Size = new Size(364, 405);
         }
 
         private void configurePanel_Paint(object sender, PaintEventArgs e)
@@ -399,7 +409,7 @@ namespace Reddit_Wallpaper_Changer
                     }
                     else
                     {
-                        taskIcon.Icon = Properties.Resources.rwc;
+                        taskIcon.BalloonTipIcon = ToolTipIcon.Info;
                         taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer";
                         taskIcon.BalloonTipText = "RWC is up to date! :)";
                         taskIcon.ShowBalloonTip(700);
@@ -499,6 +509,9 @@ namespace Reddit_Wallpaper_Changer
             wallpaperChangeTimer.Enabled = true;
         }
 
+        //======================================================================
+        // Start the timer for regular wallpaper changing
+        //======================================================================
         private void wallpaperChangeTimer_Tick(object sender, EventArgs e)
         {
             changeWallpaperTimer.Enabled = true;
@@ -1138,6 +1151,10 @@ namespace Reddit_Wallpaper_Changer
             changeWallpaperTimer.Enabled = true;
 
         }
+
+        //======================================================================
+        // History button click
+        //======================================================================
         private void historyButton_Click(object sender, EventArgs e)
         {
 
@@ -1256,10 +1273,11 @@ namespace Reddit_Wallpaper_Changer
             changeWallpaperTimer.Enabled = true;
         }
 
-
+        //======================================================================
+        // Monitor button click
+        //======================================================================
         private void monitorButton_Click_1(object sender, EventArgs e)
         {
-
             if (selectedPanel != monitorPanel)
             {
                 selectedPanel.Visible = false;
@@ -1274,48 +1292,58 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
-        // Draw monitor panel
+        // Add a button for each attached monitor 
         //======================================================================
         private void monitorPanel_Paint(object sender, PaintEventArgs e)
         {
-            DrawLShapeLine(e.Graphics, 0, 14, 370, -14);
             if (!monitorsCreated)
             {
                 monitorsCreated = true;
-                int negativeSpaceX = 0;
-                foreach (var screen in Screen.AllScreens)
-                {
-                    Label monLabel = new Label();
-                    //MessageBox.Show(screen.Bounds.ToString());
-                    if (screen.Bounds.X < 0)
-                    {
-                        negativeSpaceX = Math.Abs(screen.Bounds.X / 20);
-                    }
-                    monLabel.Location = new Point(negativeSpaceX + (screen.Bounds.X / 20), screen.Bounds.Y / 20);
-                    monLabel.AutoSize = false;
-                    monLabel.BorderStyle = BorderStyle.FixedSingle;
-                    monLabel.BackColor = Color.Green;
-                    monLabel.Size = new Size(screen.Bounds.Width / 20, screen.Bounds.Height / 20);
-                    monLabel.Text = screen.DeviceName + " [" + screen.Bounds.Width + "x" + screen.Bounds.Height + "]";
-                    monLabel.Cursor = Cursors.Hand;
-                    monitorPanel.Controls.Add(monLabel);
-                    monLabel.MouseClick += new MouseEventHandler(labelclick);
 
+                var padding = 5;
+                var buttonSize = new Size(95, 75);
+
+                int z = 0;
+                foreach (var screen in Screen.AllScreens.OrderBy(i => i.Bounds.X))
+                {
+                    
+                    Button monitor = new Button
+                    {
+                        Name = "Monitor" + screen,
+                        AutoSize = true,
+                        Size = buttonSize,
+                        Location = new Point(12 + z * (buttonSize.Width + padding), 14),
+                        BackgroundImageLayout = ImageLayout.Stretch,
+                        BackgroundImage = Properties.Resources.display_enabled,
+                        TextAlign = ContentAlignment.MiddleCenter,
+                        Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                        ForeColor = Color.White,
+                        BackColor = Color.Transparent,
+                        Text = screen.Bounds.Width + "x" + screen.Bounds.Height
+                    };
+                    z++;
+
+                    monitorPanel.Controls.Add(monitor);
+                    monitor.MouseClick += new MouseEventHandler(displayClick);
                 }
             }
         }
 
-        private void labelclick(object sender, MouseEventArgs e)
+        //======================================================================
+        // Change monitor colour based on click
+        //======================================================================
+        private void displayClick(object sender, MouseEventArgs e)
         {
-            if (((Label)sender).BackColor == Color.Red)
+            if (((Button)sender).BackgroundImage == Properties.Resources.display_disabled)
             {
-                ((Label)sender).BackColor = Color.Green;
+                ((Button)sender).BackgroundImage = Properties.Resources.display_enabled;
             }
             else
             {
-                ((Label)sender).BackColor = Color.Red;
+                ((Button)sender).BackgroundImage = Properties.Resources.display_disabled;
             }
         }
+
 
         private void historyDataGrid_MouseClick(object sender, MouseEventArgs e)
         {
@@ -1332,10 +1360,6 @@ namespace Reddit_Wallpaper_Changer
                 }
 
             }
-        }
-
-        private void Form1_MouseClick(object sender, MouseEventArgs e)
-        {
         }
 
         private void contextMenuStrip2_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
