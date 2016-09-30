@@ -1,7 +1,8 @@
 # Reddit Wallpaper Changer
 RWC Source
 
-Developed from https://github.com/JosephRobidoux/RWC-Source
+Developed from https://github.com/JosephRobidoux/RWC-Source created by Joseph Robidoux https://github.com/JosephRobidoux
+
 
 https://www.reddit.com/r/rwallpaperchanger/
 
