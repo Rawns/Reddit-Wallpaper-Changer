@@ -39,7 +39,7 @@ namespace Reddit_Wallpaper_Changer
         Button selectedButton;
         Panel selectedPanel;
         String currentVersion;
-        int dataGridNumber;
+        int dataGridNumber;                                          
         Bitmap currentWallpaper;
         String currentThread;
         Boolean monitorsCreated = false;
@@ -53,10 +53,18 @@ namespace Reddit_Wallpaper_Changer
         int noResultCount = 0;
         //Dictionary<string, string> historyRepeated = new Dictionary<string, string>();
 
+        BackgroundWorker bw = new BackgroundWorker();
+
         public RWC()
         {
             InitializeComponent();
             SystemEvents.PowerModeChanged += OnPowerChange;
+
+            //bw.WorkerReportsProgress = true;
+            //bw.WorkerSupportsCancellation = true;
+            //bw.DoWork += new DoWorkEventHandler(changeWallpaper);
+            // bw.ProgressChanged += new ProgressChangedEventHandler(bw_ProgressChanged);
+            // bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
         }
 
         //======================================================================
@@ -548,11 +556,13 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
-        // Search for a wallpaper the wallpaper
+        // Search for a wallpaper
         //======================================================================
         private void changeWallpaper()
         {
             BackgroundWorker bw = new BackgroundWorker();
+            bw.WorkerSupportsCancellation = true;
+            bw.WorkerReportsProgress = true;
             bw.DoWork += new DoWorkEventHandler(
         delegate(object o, DoWorkEventArgs args)
         {
@@ -651,9 +661,9 @@ namespace Reddit_Wallpaper_Changer
                     jsonData = client.DownloadString(formURL);
 
                 }
-                catch (System.Net.WebException e)
+                catch (System.Net.WebException Ex)
                 {
-                    if (e.Message == "The remote server returned an error: (503) Server Unavailable.")
+                    if (Ex.Message == "The remote server returned an error: (503) Server Unavailable.")
                     {
                         updateStatus("Reddit Server Unavailable, try again later.");
                     }
@@ -753,6 +763,7 @@ namespace Reddit_Wallpaper_Changer
             }
 
         });
+
             bw.RunWorkerAsync();
         }
         delegate void SetTextCallback(string text);
@@ -781,8 +792,20 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void setWallpaper(string url, string title, string threadID)
         {
+            XDocument xml = XDocument.Load("Blacklist.xml");
+            var list = xml.Descendants("URL").Select(x => x.Value).ToList();
+
+            if (list.Contains(url))
+            {
+                updateStatus("Wallpaper is blacklisted.");
+                changeWallpaperTimer.Enabled = false;
+                changeWallpaper();
+                return;
+            }
+
             BackgroundWorker bw = new BackgroundWorker();
             bw.WorkerReportsProgress = true;
+            bw.WorkerSupportsCancellation = true;
             bw.DoWork += new DoWorkEventHandler(
         delegate(object o, DoWorkEventArgs args)
         {
@@ -876,19 +899,6 @@ namespace Reddit_Wallpaper_Changer
                 Properties.Settings.Default.threadID = threadID;
                 Properties.Settings.Default.Save();
 
-                XDocument xml = XDocument.Load("Blacklist.xml");
-                var list = xml.Descendants("URL").Select(x => x.Value).ToList();
-
-                if (list.Contains(url))
-                {
-                    BeginInvoke((MethodInvoker)delegate
-                    {
-                        updateStatus("Wallpaper is blacklisted.");
-                    });
-                    changeWallpaperTimer.Enabled = true;
-                    changeWallpaper();
-                }
-
                 if (ImageExtensions.Contains(extention.ToUpper()))
                 {
                     if (System.IO.File.Exists(wallpaperFile))
@@ -929,7 +939,6 @@ namespace Reddit_Wallpaper_Changer
                         BeginInvoke((MethodInvoker)delegate
                         {
                             updateStatus("Wallpaper Changed");
-                            faveWallpaperMenuItem.Checked = false;
                         });
                     }
                     catch (System.Net.WebException)
@@ -1373,7 +1382,7 @@ namespace Reddit_Wallpaper_Changer
             {
                 monitorsCreated = true;
 
-                var padding = 5;
+                var padding = 8;
                 var buttonSize = new Size(95, 75);
 
                 int z = 0;
@@ -1385,7 +1394,7 @@ namespace Reddit_Wallpaper_Changer
                         Name = "Monitor" + screen,
                         AutoSize = true,
                         Size = buttonSize,
-                        Location = new Point(12 + z * (buttonSize.Width + padding), 14),
+                        Location = new Point(15 + z * (buttonSize.Width + padding), 14),
                         BackgroundImageLayout = ImageLayout.Stretch,
                         BackgroundImage = Properties.Resources.display_enabled,
                         TextAlign = ContentAlignment.MiddleCenter,
@@ -1417,7 +1426,9 @@ namespace Reddit_Wallpaper_Changer
             }
         }
 
-
+        //======================================================================
+        // History grid mouse click
+        //======================================================================
         private void historyDataGrid_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -1431,7 +1442,6 @@ namespace Reddit_Wallpaper_Changer
                 {
                     contextMenuStrip1.Show(historyDataGrid, new Point(e.X, e.Y));
                 }
-
             }
         }
 
