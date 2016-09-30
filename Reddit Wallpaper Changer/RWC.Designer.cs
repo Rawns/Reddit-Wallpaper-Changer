@@ -157,7 +157,7 @@
             this.settingsToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(187, 192);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(187, 214);
             // 
             // statusMenuItem1
             // 
@@ -165,7 +165,7 @@
             this.statusMenuItem1.Checked = true;
             this.statusMenuItem1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.statusMenuItem1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.statusMenuItem1.ForeColor = System.Drawing.Color.YellowGreen;
+            this.statusMenuItem1.ForeColor = System.Drawing.Color.ForestGreen;
             this.statusMenuItem1.Name = "statusMenuItem1";
             this.statusMenuItem1.Size = new System.Drawing.Size(186, 22);
             this.statusMenuItem1.Text = "Running";
@@ -179,16 +179,17 @@
             // faveWallpaperMenuItem
             // 
             this.faveWallpaperMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.faveWallpaperMenuItem.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.faveWallpaperMenuItem.ForeColor = System.Drawing.Color.DarkOrange;
             this.faveWallpaperMenuItem.Name = "faveWallpaperMenuItem";
             this.faveWallpaperMenuItem.Size = new System.Drawing.Size(186, 22);
             this.faveWallpaperMenuItem.Text = "Favourite Wallpaper";
+            this.faveWallpaperMenuItem.Visible = false;
             this.faveWallpaperMenuItem.Click += new System.EventHandler(this.faveWallpaperMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripMenuItem1.ForeColor = System.Drawing.Color.DarkCyan;
+            this.toolStripMenuItem1.ForeColor = System.Drawing.Color.DodgerBlue;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(186, 22);
             this.toolStripMenuItem1.Text = "Save Wallpaper";
@@ -197,15 +198,16 @@
             // blockWallpaperMenuItem
             // 
             this.blockWallpaperMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.blockWallpaperMenuItem.ForeColor = System.Drawing.Color.Orange;
+            this.blockWallpaperMenuItem.ForeColor = System.Drawing.Color.Crimson;
             this.blockWallpaperMenuItem.Name = "blockWallpaperMenuItem";
             this.blockWallpaperMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.blockWallpaperMenuItem.Text = "Block Wallpaper";
+            this.blockWallpaperMenuItem.Text = "Blacklist Wallpaper";
+            this.blockWallpaperMenuItem.Click += new System.EventHandler(this.blockWallpaperMenuItem_Click);
             // 
             // changeWallpaperMenuItem
             // 
             this.changeWallpaperMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.changeWallpaperMenuItem.ForeColor = System.Drawing.Color.OrangeRed;
+            this.changeWallpaperMenuItem.ForeColor = System.Drawing.Color.Black;
             this.changeWallpaperMenuItem.Name = "changeWallpaperMenuItem";
             this.changeWallpaperMenuItem.Size = new System.Drawing.Size(186, 22);
             this.changeWallpaperMenuItem.Text = "Change Wallpaper";
@@ -699,16 +701,16 @@
             this.groupBox7.Controls.Add(this.button1);
             this.groupBox7.Controls.Add(this.comboBox1);
             this.groupBox7.Controls.Add(this.label7);
-            this.groupBox7.Location = new System.Drawing.Point(3, 256);
+            this.groupBox7.Location = new System.Drawing.Point(11, 153);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(356, 144);
+            this.groupBox7.Size = new System.Drawing.Size(342, 68);
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Settings";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(290, 19);
+            this.button1.Location = new System.Drawing.Point(267, 17);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(60, 23);
             this.button1.TabIndex = 11;
@@ -734,13 +736,13 @@
             "Span"});
             this.comboBox1.Location = new System.Drawing.Point(100, 19);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.Size = new System.Drawing.Size(152, 21);
             this.comboBox1.TabIndex = 10;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(9, 22);
+            this.label7.Location = new System.Drawing.Point(8, 22);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(89, 13);
             this.label7.TabIndex = 9;

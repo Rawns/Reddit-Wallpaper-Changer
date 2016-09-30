@@ -34,6 +34,9 @@
   <PropertyGroup>
     <ApplicationIcon>Resources\rwc.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Remote|AnyCPU'">
+    <OutputPath>bin\Remote\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\..\..\Desktop\RedditSharp-master\RedditSharp-master\RedditSharp\bin\Debug\Newtonsoft.Json.dll</HintPath>

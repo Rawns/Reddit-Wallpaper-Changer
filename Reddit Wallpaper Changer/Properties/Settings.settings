@@ -30,7 +30,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="proxyAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)">proxy-server:8080</Value>
+      <Value Profile="(Default)">[Proxy]:[Port]</Value>
     </Setting>
     <Setting Name="proxyAuth" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -45,6 +45,18 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="currentWallpaperName" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="autoSave" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="url" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="threadTitle" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="threadID" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

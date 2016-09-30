@@ -133,7 +133,7 @@ namespace Reddit_Wallpaper_Changer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("proxy-server:8080")]
+        [global::System.Configuration.DefaultSettingValueAttribute("[Proxy]:[Port]")]
         public string proxyAddress {
             get {
                 return ((string)(this["proxyAddress"]));
@@ -200,6 +200,54 @@ namespace Reddit_Wallpaper_Changer.Properties {
             }
             set {
                 this["currentWallpaperName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool autoSave {
+            get {
+                return ((bool)(this["autoSave"]));
+            }
+            set {
+                this["autoSave"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string url {
+            get {
+                return ((string)(this["url"]));
+            }
+            set {
+                this["url"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string threadTitle {
+            get {
+                return ((string)(this["threadTitle"]));
+            }
+            set {
+                this["threadTitle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string threadID {
+            get {
+                return ((string)(this["threadID"]));
+            }
+            set {
+                this["threadID"] = value;
             }
         }
     }

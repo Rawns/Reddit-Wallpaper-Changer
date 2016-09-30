@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,10 +13,13 @@ using System.Reflection;
 using System.Net;
 using System.Web;
 using System.IO;
+using System.Xml;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Collections;
 using Microsoft.Win32;
+using System.Xml.Linq;
+
 namespace Reddit_Wallpaper_Changer
 {
     public partial class RWC : Form
@@ -99,7 +101,7 @@ namespace Reddit_Wallpaper_Changer
             setupOthers();
             setupForm();
             deleteOldVersion();
-            //createWindowsMenu();
+            CreateXML();
             updateStatus("RWC Setup Initated.");
             checkInternetTimer.Enabled = true;
 
@@ -518,7 +520,7 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
-        // Change the wallpaper
+        // Search for a wallpaper the wallpaper
         //======================================================================
         private void changeWallpaper()
         {
@@ -840,10 +842,25 @@ namespace Reddit_Wallpaper_Changer
                 string extention = System.IO.Path.GetExtension(uri.LocalPath);
                 string filename = "currentWallpaper" + extention;
                 string wallpaperFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), filename);
+                Properties.Settings.Default.url = url;
+                Properties.Settings.Default.threadTitle = title;
                 Properties.Settings.Default.currentWallpaperName = title + extention;
+                Properties.Settings.Default.threadID = threadID;
                 Properties.Settings.Default.Save();
 
-                //MessageBox.Show(url);
+                XDocument xml = XDocument.Load("Blacklist.xml");
+                var list = xml.Descendants("URL").Select(x => x.Value).ToList();
+
+                if (list.Contains(url))
+                {
+                    BeginInvoke((MethodInvoker)delegate
+                    {
+                        updateStatus("Wallpaper is blacklisted.");
+                    });
+                    changeWallpaperTimer.Enabled = true;
+                    changeWallpaper();
+                }
+
                 if (ImageExtensions.Contains(extention.ToUpper()))
                 {
                     if (System.IO.File.Exists(wallpaperFile))
@@ -884,6 +901,7 @@ namespace Reddit_Wallpaper_Changer
                         BeginInvoke((MethodInvoker)delegate
                         {
                             updateStatus("Wallpaper Changed");
+                            faveWallpaperMenuItem.Checked = false;
                         });
                     }
                     catch (System.Net.WebException)
@@ -976,6 +994,9 @@ namespace Reddit_Wallpaper_Changer
             }
         }
 
+        //======================================================================
+        // Form load screen
+        //======================================================================
         private void Form1_Shown(object sender, EventArgs e)
         {
             if (startInTrayCheckBox.Checked)
@@ -1063,6 +1084,9 @@ namespace Reddit_Wallpaper_Changer
             Application.Exit();
         }
 
+        //======================================================================
+        // Running Menu item
+        //======================================================================
         private void statusMenuItem1_Click(object sender, EventArgs e)
         {
             statusMenuItem1.Checked = !statusMenuItem1.Checked;
@@ -1070,7 +1094,7 @@ namespace Reddit_Wallpaper_Changer
 
             if (statusMenuItem1.Checked)
             {
-                statusMenuItem1.ForeColor = Color.YellowGreen;
+                statusMenuItem1.ForeColor = Color.ForestGreen;
                 statusMenuItem1.Text = "Running";
 
             }
@@ -1446,11 +1470,6 @@ namespace Reddit_Wallpaper_Changer
             System.Diagnostics.Process.Start("http://www.reddit.com/user/Rawns/");
         }
 
-        private void faveWallpaperMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         //======================================================================
         // Set default location for manually saved wallpapers
         //======================================================================
@@ -1461,6 +1480,109 @@ namespace Reddit_Wallpaper_Changer
             {
                 txtSavePath.Text = folderBrowser.SelectedPath;
             }
+        }
+
+        //======================================================================
+        // Create XML files to store favourite/blacklisted wallpapers
+        //======================================================================
+        public void CreateXML()
+        {
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+
+            if (!File.Exists("Favourites.xml"))
+            {
+                XmlWriter writer = XmlWriter.Create("Favourites.xml", settings);
+                writer.WriteStartDocument();
+                writer.WriteComment("This file stores a list of any wallpapers you flag as a favourite.");
+                writer.WriteStartElement("Favourites");
+                writer.WriteStartElement("Wallpaper");
+                writer.WriteElementString("URL", "http://example.url/wallpaper_link.jpg");
+                writer.WriteElementString("Title", "Just a favourite Wallpaper example! [1920x1080]");
+                writer.WriteElementString("ThreadID", "00001A");
+                writer.WriteEndElement();
+                writer.WriteEndElement();
+                writer.WriteEndDocument();
+                writer.Flush();
+                writer.Close();
+            }
+
+            if (!File.Exists("Blacklist.xml"))
+            {
+                XmlWriter writer = XmlWriter.Create("Blacklist.xml", settings);
+                writer.WriteStartDocument();
+                writer.WriteComment("This file stores a list of any wallpapers you blacklist.");
+                writer.WriteStartElement("Blacklisted");
+                writer.WriteStartElement("Wallpaper");
+                writer.WriteElementString("URL", "http://example.url/blacklisted_wallpaper.jpg");
+                writer.WriteElementString("Title", "Just a blacklisted Wallpaper example! [1920x1080]");
+                writer.WriteElementString("ThreadID", "00001B");
+                writer.WriteEndElement();
+                writer.WriteEndElement();
+                writer.WriteEndDocument();
+                writer.Flush();
+                writer.Close();
+            }
+        }
+
+        //======================================================================
+        // Add current wallpaper to favourites
+        //======================================================================
+        public void Favourite()
+        {
+            XDocument doc = XDocument.Load("Favourites.xml");
+            XElement favourite = doc.Element("Favourites");
+            favourite.Add(new XElement("Wallpaper",
+                new XElement("URL", "http://some.wallpaper/link.jpeg"),
+                new XElement("Title", "Another Wallpaper!"),
+                new XElement("ThreadID", "Thread ID here")));
+            doc.Save("Favourites.xml");
+
+            faveWallpaperMenuItem.Checked = true;
+
+            taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+            taskIcon.BalloonTipTitle = "Favourite Wallpaper!";
+            taskIcon.BalloonTipText = "The current Wallpaper has been added to your favourites successfully!";
+            taskIcon.ShowBalloonTip(750);
+        }
+
+        //======================================================================
+        //Add current wallpaper to blacklist
+        //======================================================================
+        public void Blacklist()
+        {
+            XDocument doc = XDocument.Load("Blacklist.xml");
+            XElement blacklist = doc.Element("Blacklisted");
+            blacklist.Add(new XElement("Wallpaper",
+                new XElement("URL", Properties.Settings.Default.url),
+                new XElement("Title", Properties.Settings.Default.threadTitle),
+                new XElement("ThreadID", Properties.Settings.Default.threadID)));
+            doc.Save("Blacklist.xml");
+
+            taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+            taskIcon.BalloonTipTitle = "Wallpaper Blacklisted!";
+            taskIcon.BalloonTipText = "The current Wallpaper has been blacklisted! Finding a new wallpaper...";
+            taskIcon.ShowBalloonTip(750);
+
+            wallpaperChangeTimer.Enabled = false;
+            wallpaperChangeTimer.Enabled = true;
+            changeWallpaperTimer.Enabled = true;
+        }
+
+        //======================================================================
+        // Click on favourite menu
+        //======================================================================
+        private void faveWallpaperMenuItem_Click(object sender, EventArgs e)
+        {
+            Favourite();
+        }
+
+        //======================================================================
+        // Click on blacklist menu
+        //======================================================================
+        private void blockWallpaperMenuItem_Click(object sender, EventArgs e)
+        {
+            Blacklist();
         }
     }
 }
