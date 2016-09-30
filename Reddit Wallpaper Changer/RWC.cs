@@ -59,6 +59,9 @@ namespace Reddit_Wallpaper_Changer
             SystemEvents.PowerModeChanged += OnPowerChange;
         }
 
+        //======================================================================
+        // Wallpaper layout styles
+        //======================================================================
         public enum Style : int
         {
             Tiled,
@@ -66,7 +69,9 @@ namespace Reddit_Wallpaper_Changer
             Stretched
         }
 
-
+        //======================================================================
+        // Code for if the computer sleeps or wakes up
+        //======================================================================
         void OnPowerChange(Object sender, PowerModeChangedEventArgs e)
         {
             if (e.Mode == PowerModes.Suspend)
@@ -91,6 +96,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void RWC_Load(object sender, EventArgs e)
         {
+            this.Size = new Size(380, 508);
             updateStatus("RWC Setup Initating.");
             r = new Random();
             taskIcon.Visible = true;
@@ -142,11 +148,18 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
-        // Delete old version after an update
+        // Delete old executalbe after an update
         //======================================================================
         private void deleteOldVersion()
         {
-            File.Delete(System.Reflection.Assembly.GetExecutingAssembly().Location + ".old");
+            try
+            {
+                File.Delete(System.Reflection.Assembly.GetExecutingAssembly().Location + ".old");
+            }
+            catch
+            {
+
+            }
         }
 
         //======================================================================
@@ -199,7 +212,7 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
-        // Set up other aspects
+        // Set up other aspects of the application
         //======================================================================
         private void setupOthers()
         
@@ -232,17 +245,23 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
-        // Setup the different panels
+        // Setup the four panels
         //======================================================================
         private void setupPanels()
         {
             aboutPanel.Size = new Size(364, 405);
             configurePanel.Size = new Size(364, 405);
             monitorPanel.Size = new Size(364, 405);
+            historyPanel.Size = new Size(364, 405);
+            aboutPanel.Location = new Point(0, 65);
+            configurePanel.Location = new Point(0, 65);
+            monitorPanel.Location = new Point(0, 65);
+            historyPanel.Location = new Point(0, 65);
+
         }
 
         //======================================================================
-        // Setup the different buttons
+        // Setup the main buttons
         //======================================================================
         private void setupButtons()
         {
@@ -266,6 +285,9 @@ namespace Reddit_Wallpaper_Changer
             selectedButton = configureButton;
         }
 
+        //======================================================================
+        // Setup the main buttons
+        //======================================================================
         public void DrawLShapeLine(System.Drawing.Graphics g, int intMarginLeft, int intMarginTop, int intWidth, int intHeight)
         {
 
@@ -281,6 +303,9 @@ namespace Reddit_Wallpaper_Changer
             g.DrawLines(myPen, points);
         }
 
+        //======================================================================
+        // Config button clicked
+        //======================================================================
         private void configureButton_Click(object sender, EventArgs e)
         {
             if (selectedPanel != configurePanel)
@@ -303,10 +328,7 @@ namespace Reddit_Wallpaper_Changer
             selectedPanel.Size = new Size(364, 405);
         }
 
-        private void configurePanel_Paint(object sender, PaintEventArgs e)
-        {
-            DrawLShapeLine(e.Graphics, 0, 14, 370, -14);
-        }
+
 
         //======================================================================
         // Open the About panel
@@ -352,6 +374,17 @@ namespace Reddit_Wallpaper_Changer
         {
             DrawLShapeLine(e.Graphics, 0, 14, 370, -14);
 
+        }
+
+        private void historyPanel_Paint(object sender, PaintEventArgs e)
+        {
+            DrawLShapeLine(e.Graphics, 0, 14, 370, -14);
+
+        }
+
+        private void configurePanel_Paint(object sender, PaintEventArgs e)
+        {
+            DrawLShapeLine(e.Graphics, 0, 14, 370, -14);
         }
 
         //======================================================================
@@ -419,7 +452,7 @@ namespace Reddit_Wallpaper_Changer
                         // MessageBox.Show("RWC is up to date. :)", "Reddit Wallpaper Changer", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-                catch(Exception ex)
+                catch
                 {
                     taskIcon.BalloonTipIcon = ToolTipIcon.Error;
                     taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer";
@@ -435,14 +468,12 @@ namespace Reddit_Wallpaper_Changer
             }
         }
 
-
         //======================================================================
-        // Open the Subreddit
+        // Open the RWC Subreddit
         //======================================================================
         private void btnSubreddit_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("http://www.reddit.com/r/rwallpaperchanger/");
-
         }
 
         //======================================================================
@@ -453,8 +484,6 @@ namespace Reddit_Wallpaper_Changer
             saveData();
             changeWallpaperTimer.Enabled = true;
             updateStatus("Save Successful");
-            //this.Visible = false;
-            //taskIcon.Visible = true;
         }
 
         //======================================================================
@@ -487,7 +516,6 @@ namespace Reddit_Wallpaper_Changer
             if (updateTimerBool)
                 updateTimer();
             setupProxy();
-
         }
 
         //======================================================================
@@ -981,6 +1009,9 @@ namespace Reddit_Wallpaper_Changer
 
         delegate void SetGridCallback(Bitmap img, string title, int dataGridNumber, string threadID, string url);
 
+        //======================================================================
+        // Set grid for History menu
+        //======================================================================
         private void SetGrid(Bitmap img, string title, int dataGridNumber, string threadID, string url)
         {
             if (this.historyDataGrid.InvokeRequired)
@@ -1071,13 +1102,17 @@ namespace Reddit_Wallpaper_Changer
 
         }
 
+        //======================================================================
+        // Settings selected from the menu
+        //======================================================================
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Visible = true;
-
-
         }
 
+        //======================================================================
+        // Exit selected form the menu
+        //======================================================================
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             realClose = true;
@@ -1085,7 +1120,7 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
-        // Running Menu item
+        // Running selected from the menu
         //======================================================================
         private void statusMenuItem1_Click(object sender, EventArgs e)
         {
@@ -1115,6 +1150,9 @@ namespace Reddit_Wallpaper_Changer
             }
         }
 
+        //======================================================================
+        // Change wallpaper selected from the menu
+        //======================================================================
         private void changeWallpaperMenuItem_Click(object sender, EventArgs e)
         {
             wallpaperChangeTimer.Enabled = false;
@@ -1170,6 +1208,9 @@ namespace Reddit_Wallpaper_Changer
             }
         }
 
+        //======================================================================
+        // Enable change wallpaper timer
+        //======================================================================
         public void changeWallpaperTimerEnabled()
         {
             changeWallpaperTimer.Enabled = true;
@@ -1194,12 +1235,9 @@ namespace Reddit_Wallpaper_Changer
             }
         }
 
-        private void historyPanel_Paint(object sender, PaintEventArgs e)
-        {
-            DrawLShapeLine(e.Graphics, 0, 14, 370, -14);
-
-        }
-
+        //======================================================================
+        // Trigger wallpaper change
+        //======================================================================
         private void changeWallpaperTimer_Tick(object sender, EventArgs e)
         {
 
@@ -1207,6 +1245,9 @@ namespace Reddit_Wallpaper_Changer
             changeWallpaper();
         }
 
+        //======================================================================
+        // Open thread from history selection click
+        //======================================================================
         private void historyDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             int rowIndex = e.RowIndex;
@@ -1236,10 +1277,20 @@ namespace Reddit_Wallpaper_Changer
             }
         }
 
+        //======================================================================
+        // Save the current wallpaper
+        //======================================================================
         private void saveWallpaper_FileOk(object sender, CancelEventArgs e)
         {
-            string fileName = saveWallpaper.FileName;
-            currentWallpaper.Save(fileName);
+            try
+            {
+                string fileName = saveWallpaper.FileName;
+                currentWallpaper.Save(fileName);
+            }
+            catch
+            {
+
+            }
         }
 
         //======================================================================
@@ -1254,8 +1305,6 @@ namespace Reddit_Wallpaper_Changer
                 checkInternetTimer.Enabled = false;
                 updateTimer();
                 startupTimer.Enabled = true;
-
-                //Internet is working.
             }
             else
             {
@@ -1386,16 +1435,20 @@ namespace Reddit_Wallpaper_Changer
             }
         }
 
+        //======================================================================
+        // Set wallpaper from selected histore entry
+        //======================================================================
         private void contextMenuStrip2_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-
             string url = (historyDataGrid.Rows[currentMouseOverRow].Cells[4].Value.ToString());
             string title = (historyDataGrid.Rows[currentMouseOverRow].Cells[1].Value.ToString());
             string threadid = (historyDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
             setWallpaper(url, title, threadid);
-
         }
 
+        //======================================================================
+        // Truly random searching
+        //======================================================================
         private void wallpaperGrabType_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (wallpaperGrabType.Text.Equals("Truly Random"))

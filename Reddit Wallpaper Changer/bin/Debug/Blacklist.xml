@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--This file stores a list of any wallpapers you blacklist.-->
+<Blacklisted>
+  <Wallpaper>
+    <URL>http://example.url/blacklisted_wallpaper.jpg</URL>
+    <Title>Just a blacklisted Wallpaper example! [1920x1080]</Title>
+    <ThreadID>00001B</ThreadID>
+  </Wallpaper>
+</Blacklisted>

@@ -41,8 +41,8 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(299, 40);
             this.label1.TabIndex = 0;
-            this.label1.Text = "A new version of Reddit Wallpaper Changer has been released.  Click to begin upda" +
-    "ting.";
+            this.label1.Text = "A newer version of Reddit Wallpaper Changer is available!  Click to begin updatin" +
+    "g.";
             // 
             // btnUpdate
             // 
