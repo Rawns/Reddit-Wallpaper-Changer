@@ -13,3 +13,7 @@ Version 1.0.7.0
 - Initial groundwork for favoriting wallpapers 
 - Initial groundwork for multi monitor support
 - Minor additions/tweaks/code changes
+
+# Installation
+
+RWC is a stand alone 'no installation' app. Simply download the latest release and extract to an approporate folder (like C:\RWC) and run! 
