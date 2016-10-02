@@ -25,7 +25,6 @@ E:\Dropbox\C# Projects\RWC-Source\Reddit Wallpaper Changer\obj\Debug\Reddit Wall
 E:\Dropbox\C# Projects\RWC-Source\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.pdb
 E:\Dropbox\C# Projects\RWC-Source\Reddit Wallpaper Changer\bin\Debug\Reddit Wallpaper Changer.exe
 E:\Dropbox\C# Projects\RWC-Source\Reddit Wallpaper Changer\bin\Debug\Reddit Wallpaper Changer.pdb
-E:\Dropbox\C# Projects\RWC-Source\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.csprojResolveAssemblyReference.cache
 E:\Dropbox\C# Projects\RWC-Source\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.RWC.resources
 E:\Dropbox\C# Projects\RWC-Source\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.Properties.Resources.resources
 E:\Dropbox\C# Projects\RWC-Source\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.SearchWizard.resources
@@ -41,4 +40,4 @@ C:\Dropbox\C# Projects\RWC-Source\Reddit Wallpaper Changer\obj\Debug\Reddit_Wall
 C:\Dropbox\C# Projects\RWC-Source\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.SearchWizard.resources
 C:\Dropbox\C# Projects\RWC-Source\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.Update.resources
 C:\Dropbox\C# Projects\RWC-Source\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.csproj.GenerateResource.Cache
-C:\Dropbox\C# Projects\RWC-Source\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.csprojResolveAssemblyReference.cache
+E:\Dropbox\C# Projects\RWC-Source\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.csprojResolveAssemblyReference.cache

@@ -108,6 +108,7 @@
             this.monitorButton = new System.Windows.Forms.Button();
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.useThisWallpaperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.blacklistWallpapertoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -962,24 +963,34 @@
             // contextMenuStrip2
             // 
             this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.useThisWallpaperToolStripMenuItem});
+            this.useThisWallpaperToolStripMenuItem,
+            this.blacklistWallpapertoolStripMenuItem});
             this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(180, 26);
-            this.contextMenuStrip2.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.contextMenuStrip2_ItemClicked);
+            this.contextMenuStrip2.Size = new System.Drawing.Size(205, 70);
             // 
             // useThisWallpaperToolStripMenuItem
             // 
             this.useThisWallpaperToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.useThisWallpaperToolStripMenuItem.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.useThisWallpaperToolStripMenuItem.Name = "useThisWallpaperToolStripMenuItem";
-            this.useThisWallpaperToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.useThisWallpaperToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.useThisWallpaperToolStripMenuItem.Text = "Use This Wallpaper";
+            this.useThisWallpaperToolStripMenuItem.Click += new System.EventHandler(this.useThisWallpapertoolStripMenuItem_Click);
+            // 
+            // blacklistWallpapertoolStripMenuItem
+            // 
+            this.blacklistWallpapertoolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.blacklistWallpapertoolStripMenuItem.ForeColor = System.Drawing.Color.Crimson;
+            this.blacklistWallpapertoolStripMenuItem.Name = "blacklistWallpapertoolStripMenuItem";
+            this.blacklistWallpapertoolStripMenuItem.Size = new System.Drawing.Size(204, 22);
+            this.blacklistWallpapertoolStripMenuItem.Text = "Blacklist This Wallpaper";
+            this.blacklistWallpapertoolStripMenuItem.Click += new System.EventHandler(this.blacklistWallpapertoolStripMenuItem_Click);
             // 
             // RWC
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(930, 537);
+            this.ClientSize = new System.Drawing.Size(955, 537);
             this.Controls.Add(this.aboutPanel);
             this.Controls.Add(this.monitorPanel);
             this.Controls.Add(this.historyPanel);
@@ -1105,6 +1116,7 @@
         private System.Windows.Forms.TextBox txtProxyServer;
         private System.Windows.Forms.CheckBox chkProxy;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ToolStripMenuItem blacklistWallpapertoolStripMenuItem;
     }
 }
 

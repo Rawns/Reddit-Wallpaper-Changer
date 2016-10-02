@@ -1210,7 +1210,10 @@ namespace Reddit_Wallpaper_Changer
                 }
                 catch
                 {
-
+                    taskIcon.BalloonTipIcon = ToolTipIcon.Error;
+                    taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer!";
+                    taskIcon.BalloonTipText = "Error checking for updates.";
+                    taskIcon.ShowBalloonTip(750);
                 }
 
                 client.Dispose();
@@ -1446,17 +1449,6 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
-        // Set wallpaper from selected histore entry
-        //======================================================================
-        private void contextMenuStrip2_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-            string url = (historyDataGrid.Rows[currentMouseOverRow].Cells[4].Value.ToString());
-            string title = (historyDataGrid.Rows[currentMouseOverRow].Cells[1].Value.ToString());
-            string threadid = (historyDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
-            setWallpaper(url, title, threadid);
-        }
-
-        //======================================================================
         // Truly random searching
         //======================================================================
         private void wallpaperGrabType_SelectedIndexChanged(object sender, EventArgs e)
@@ -1550,12 +1542,15 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         public void CreateXML()
         {
+            string fave = AppDomain.CurrentDomain.BaseDirectory + "Favourites.xml";
+            string black = AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml";
+
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
 
-            if (!File.Exists("Favourites.xml"))
+            if (!File.Exists(fave))
             {
-                XmlWriter writer = XmlWriter.Create("Favourites.xml", settings);
+                XmlWriter writer = XmlWriter.Create(fave, settings);
                 writer.WriteStartDocument();
                 writer.WriteComment("This file stores a list of any wallpapers you flag as a favourite.");
                 writer.WriteStartElement("Favourites");
@@ -1570,9 +1565,9 @@ namespace Reddit_Wallpaper_Changer
                 writer.Close();
             }
 
-            if (!File.Exists("Blacklist.xml"))
+            if (!File.Exists(black))
             {
-                XmlWriter writer = XmlWriter.Create("Blacklist.xml", settings);
+                XmlWriter writer = XmlWriter.Create(black, settings);
                 writer.WriteStartDocument();
                 writer.WriteComment("This file stores a list of any wallpapers you blacklist.");
                 writer.WriteStartElement("Blacklisted");
@@ -1593,7 +1588,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         public void Favourite()
         {
-            XDocument doc = XDocument.Load("Favourites.xml");
+            XDocument doc = XDocument.Load(AppDomain.CurrentDomain.BaseDirectory + "Favourites.xml");
             XElement favourite = doc.Element("Favourites");
             favourite.Add(new XElement("Wallpaper",
                 new XElement("URL", "http://some.wallpaper/link.jpeg"),
@@ -1614,7 +1609,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         public void Blacklist()
         {
-            XDocument doc = XDocument.Load("Blacklist.xml");
+            XDocument doc = XDocument.Load(AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml");
             XElement blacklist = doc.Element("Blacklisted");
             blacklist.Add(new XElement("Wallpaper",
                 new XElement("URL", Properties.Settings.Default.url),
@@ -1633,6 +1628,25 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
+        // Add historical wallpaper to blacklist
+        //======================================================================
+        public void MenuBlacklist(string url, string title, string threadid)
+        {
+            XDocument doc = XDocument.Load(AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml");
+            XElement blacklist = doc.Element("Blacklisted");
+            blacklist.Add(new XElement("Wallpaper",
+                new XElement("URL", url),
+                new XElement("Title", title),
+                new XElement("ThreadID", threadid)));
+            doc.Save("Blacklist.xml");
+
+            taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+            taskIcon.BalloonTipTitle = "Wallpaper Blacklisted!";
+            taskIcon.BalloonTipText = "The historical Wallpaper has been blacklisted!";
+            taskIcon.ShowBalloonTip(750);
+        }
+
+        //======================================================================
         // Click on favourite menu
         //======================================================================
         private void faveWallpaperMenuItem_Click(object sender, EventArgs e)
@@ -1646,6 +1660,29 @@ namespace Reddit_Wallpaper_Changer
         private void blockWallpaperMenuItem_Click(object sender, EventArgs e)
         {
             Blacklist();
+        }
+
+        //======================================================================
+        // Set wallpaper from selected histore entry
+        //======================================================================
+        // private void contextMenuStrip2_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void useThisWallpapertoolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string url = (historyDataGrid.Rows[currentMouseOverRow].Cells[4].Value.ToString());
+            string title = (historyDataGrid.Rows[currentMouseOverRow].Cells[1].Value.ToString());
+            string threadid = (historyDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
+            setWallpaper(url, title, threadid);
+        }
+
+        //======================================================================
+        // Historical Blacklist menu click
+        //======================================================================
+        private void blacklistWallpapertoolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string url = (historyDataGrid.Rows[currentMouseOverRow].Cells[4].Value.ToString());
+            string title = (historyDataGrid.Rows[currentMouseOverRow].Cells[1].Value.ToString());
+            string threadid = (historyDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
+            MenuBlacklist(url, title, threadid);
         }
     }
 }
