@@ -1,5 +1,2 @@
-Version 1.0.7.0
-- Support for use in a proxy server environment for updates & acquiring wallpapers
-- Wallpapers can now be saved directly to a specified directory (removed 'Save As...' prompt) 
-- Initial groundwork for favoriting/blacklisting wallpapers 
-- Minor additions/tweaks/code changes
+Version 1.0.7.1
+- Fixed a bug where in some instances, the Favourites.xml file was trying to be accessed from the wrong directiory throwing an error on load.
