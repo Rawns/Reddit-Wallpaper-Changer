@@ -1538,7 +1538,7 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
-        // Create XML files to store favourite/blacklisted wallpapers
+        // Create XML files to store favourite and blacklisted wallpapers
         //======================================================================
         public void CreateXML()
         {
