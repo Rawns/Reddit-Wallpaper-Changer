@@ -121,6 +121,8 @@
             this.blacklistButton = new System.Windows.Forms.Button();
             this.blacklistMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.unblacklistWallpaper = new System.Windows.Forms.ToolStripMenuItem();
+            this.monitorLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -141,6 +143,7 @@
             this.blacklistGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.blacklistDataGrid)).BeginInit();
             this.blacklistMenuStrip.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // configurePanel
@@ -383,7 +386,7 @@
             this.startInTrayCheckBox.AutoSize = true;
             this.startInTrayCheckBox.Location = new System.Drawing.Point(169, 23);
             this.startInTrayCheckBox.Name = "startInTrayCheckBox";
-            this.startInTrayCheckBox.Size = new System.Drawing.Size(91, 17);
+            this.startInTrayCheckBox.Size = new System.Drawing.Size(90, 17);
             this.startInTrayCheckBox.TabIndex = 3;
             this.startInTrayCheckBox.Text = "Start In Tray?";
             this.toolTip1.SetToolTip(this.startInTrayCheckBox, "Enabled, the program will start minimized.");
@@ -498,7 +501,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(18, 20);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(115, 13);
+            this.label2.Size = new System.Drawing.Size(114, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Reddit Search Query:";
             // 
@@ -573,7 +576,7 @@
             this.aboutPanel.ContextMenuStrip = this.contextMenuStrip1;
             this.aboutPanel.Controls.Add(this.groupBox3);
             this.aboutPanel.Controls.Add(this.groupBox4);
-            this.aboutPanel.Location = new System.Drawing.Point(392, 90);
+            this.aboutPanel.Location = new System.Drawing.Point(0, 65);
             this.aboutPanel.Name = "aboutPanel";
             this.aboutPanel.Size = new System.Drawing.Size(375, 405);
             this.aboutPanel.TabIndex = 3;
@@ -607,7 +610,7 @@
             this.label4.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.label4.Location = new System.Drawing.Point(148, 27);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(91, 13);
+            this.label4.Size = new System.Drawing.Size(90, 13);
             this.label4.TabIndex = 6;
             this.label4.Text = "Current Version:";
             // 
@@ -704,6 +707,7 @@
             this.monitorPanel.BackColor = System.Drawing.SystemColors.Control;
             this.monitorPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.monitorPanel.ContextMenuStrip = this.contextMenuStrip1;
+            this.monitorPanel.Controls.Add(this.groupBox8);
             this.monitorPanel.Controls.Add(this.label8);
             this.monitorPanel.Controls.Add(this.groupBox7);
             this.monitorPanel.Location = new System.Drawing.Point(462, 25);
@@ -715,8 +719,8 @@
             // 
             // label8
             // 
-            this.label8.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label8.Font = new System.Drawing.Font("Segoe UI", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.Color.Red;
             this.label8.Location = new System.Drawing.Point(11, 252);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(351, 66);
@@ -729,7 +733,7 @@
             this.groupBox7.Controls.Add(this.button1);
             this.groupBox7.Controls.Add(this.comboBox1);
             this.groupBox7.Controls.Add(this.label7);
-            this.groupBox7.Location = new System.Drawing.Point(11, 153);
+            this.groupBox7.Location = new System.Drawing.Point(11, 177);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(351, 63);
             this.groupBox7.TabIndex = 1;
@@ -773,7 +777,7 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(8, 22);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(89, 13);
+            this.label7.Size = new System.Drawing.Size(88, 13);
             this.label7.TabIndex = 9;
             this.label7.Text = "Wallpaper Type:";
             // 
@@ -1004,7 +1008,7 @@
             this.blacklistPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.blacklistPanel.Controls.Add(this.blacklistProgress);
             this.blacklistPanel.Controls.Add(this.blacklistGroupBox);
-            this.blacklistPanel.Location = new System.Drawing.Point(410, 22);
+            this.blacklistPanel.Location = new System.Drawing.Point(935, 22);
             this.blacklistPanel.Name = "blacklistPanel";
             this.blacklistPanel.Size = new System.Drawing.Size(375, 404);
             this.blacklistPanel.TabIndex = 8;
@@ -1126,6 +1130,31 @@
             this.unblacklistWallpaper.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.unblacklistWallpaper.Click += new System.EventHandler(this.unblacklistWallpaper_Click);
             // 
+            // monitorLayoutPanel
+            // 
+            this.monitorLayoutPanel.AutoSize = true;
+            this.monitorLayoutPanel.ColumnCount = 1;
+            this.monitorLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.monitorLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.monitorLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.monitorLayoutPanel.Location = new System.Drawing.Point(3, 18);
+            this.monitorLayoutPanel.Name = "monitorLayoutPanel";
+            this.monitorLayoutPanel.RowCount = 1;
+            this.monitorLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.monitorLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.monitorLayoutPanel.Size = new System.Drawing.Size(345, 124);
+            this.monitorLayoutPanel.TabIndex = 3;
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.monitorLayoutPanel);
+            this.groupBox8.Location = new System.Drawing.Point(11, 21);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(351, 145);
+            this.groupBox8.TabIndex = 4;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Detected Monitor(s)";
+            // 
             // RWC
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1178,6 +1207,8 @@
             this.blacklistGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.blacklistDataGrid)).EndInit();
             this.blacklistMenuStrip.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1275,6 +1306,8 @@
         private System.Windows.Forms.ContextMenuStrip blacklistMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem unblacklistWallpaper;
         private System.Windows.Forms.ProgressBar blacklistProgress;
+        private System.Windows.Forms.TableLayoutPanel monitorLayoutPanel;
+        private System.Windows.Forms.GroupBox groupBox8;
     }
 }
 

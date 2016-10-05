@@ -1271,7 +1271,16 @@ namespace Reddit_Wallpaper_Changer
             {
                 monitorsCreated = true;
 
-                var padding = 8;
+                int count = Screen.AllScreens.Count();
+                this.monitorLayoutPanel.ColumnCount = count;
+
+                ColumnStyle cs = new ColumnStyle(SizeType.Percent, 100 / count);
+                this.monitorLayoutPanel.ColumnStyles.Add(cs);
+
+                // this.monitorLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+                // this.monitorLayoutPanel.AutoSize = true;
+
+                // var padding = 8;
                 var buttonSize = new Size(95, 75);
 
                 int z = 0;
@@ -1283,18 +1292,21 @@ namespace Reddit_Wallpaper_Changer
                         Name = "Monitor" + screen,
                         AutoSize = true,
                         Size = buttonSize,
-                        Location = new Point(15 + z * (buttonSize.Width + padding), 14),
+                        // Location = new Point(15 + z * (buttonSize.Width + padding), 14),
                         BackgroundImageLayout = ImageLayout.Stretch,
                         BackgroundImage = Properties.Resources.display_enabled,
                         TextAlign = ContentAlignment.MiddleCenter,
                         Font = new Font("Segoe UI", 10, FontStyle.Bold),
                         ForeColor = Color.White,
                         BackColor = Color.Transparent,
-                        Text = screen.Bounds.Width + "x" + screen.Bounds.Height
-                    };
+                        Text = screen.Bounds.Width + "x" + screen.Bounds.Height,
+                        Anchor = System.Windows.Forms.AnchorStyles.None
+                };
                     z++;
 
-                    monitorPanel.Controls.Add(monitor);
+                    this.monitorLayoutPanel.Controls.Add(monitor, z, 0);
+
+                    //monitorPanel.Controls.Add(monitor);
                     monitor.MouseClick += new MouseEventHandler(displayClick);
                 }
             }
