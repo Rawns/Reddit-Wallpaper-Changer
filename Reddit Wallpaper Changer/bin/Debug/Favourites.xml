@@ -1,9 +1,3 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!--This file stores a list of any wallpapers you flag as a favourite.-->
-<Favourites>
-  <Wallpaper>
-    <URL>http://example.url/wallpaper_link.jpg</URL>
-    <Title>Just a favourite Wallpaper example! [1920x1080]</Title>
-    <ThreadID>00001A</ThreadID>
-  </Wallpaper>
-</Favourites>
+<Favourites />

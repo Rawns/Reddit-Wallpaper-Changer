@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 namespace Reddit_Wallpaper_Changer
@@ -33,30 +26,12 @@ namespace Reddit_Wallpaper_Changer
 
             try
             {
-                WebClient client = new WebClient();
-                client.Proxy = null;
-
-                // Use a proxy if specified
-                if (Properties.Settings.Default.useProxy == true)
-                {
-                    WebProxy proxy = new WebProxy(Properties.Settings.Default.proxyAddress);
-
-                    if (Properties.Settings.Default.proxyAuth == true)
-                    {
-                        proxy.Credentials = new NetworkCredential(Properties.Settings.Default.proxyUser, Properties.Settings.Default.proxyPass);
-                        proxy.UseDefaultCredentials = false;
-                        proxy.BypassProxyOnLocal = false;
-                    }
-
-                    client.Proxy = proxy;
-                }
-
-                
-                client.DownloadProgressChanged += (s, a) =>
+                WebClient wc = Proxy.setProxy();        
+                wc.DownloadProgressChanged += (s, a) =>
                 {
                     progressBar.Value = a.ProgressPercentage;
                 };
-                client.DownloadFileCompleted += (s, a) =>
+                wc.DownloadFileCompleted += (s, a) =>
                 {
                     progressBar.Visible = false;
                 // any other code to process the file
@@ -81,8 +56,10 @@ namespace Reddit_Wallpaper_Changer
                     }
                 };
                 System.IO.File.Move(System.Reflection.Assembly.GetExecutingAssembly().Location, System.Reflection.Assembly.GetExecutingAssembly().Location + ".old");
-                client.DownloadFileAsync(new Uri("https://github.com/Rawns/Reddit-Wallpaper-Changer/releases/download/release/Reddit.Wallpaper.Changer.exe"),
+                wc.DownloadFileAsync(new Uri("https://github.com/Rawns/Reddit-Wallpaper-Changer/releases/download/release/Reddit.Wallpaper.Changer.exe"),
                     @"" + System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+                wc.Dispose();
             }
             catch (Exception ex)
             {

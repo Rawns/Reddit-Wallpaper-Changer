@@ -2,13 +2,13 @@
 <!--This file stores a list of any wallpapers you blacklist.-->
 <Blacklisted>
   <Wallpaper>
-    <URL>http://example.url/blacklisted_wallpaper.jpg</URL>
-    <Title>Just a blacklisted Wallpaper example! [1920x1080]</Title>
-    <ThreadID>00001B</ThreadID>
+    <URL>https://i.redd.it/5w2ahaf4uapx.png</URL>
+    <Title>Mononoke 1920x1080</Title>
+    <ThreadID>55oz67</ThreadID>
   </Wallpaper>
   <Wallpaper>
-    <URL>https://i.redd.it/vheoa8qhacjx.png</URL>
-    <Title>Rad (1920x1080)</Title>
-    <ThreadID>50zjlk</ThreadID>
+    <URL>https://i.redd.it/a9uazowfhapx.jpg</URL>
+    <Title>Biomes 1920x1080 [OC]</Title>
+    <ThreadID>55olgt</ThreadID>
   </Wallpaper>
 </Blacklisted>

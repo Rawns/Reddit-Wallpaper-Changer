@@ -6,15 +6,12 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
 using System.Net;
 using System.Web;
 using System.IO;
 using System.Xml;
-using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Collections;
 using Microsoft.Win32;
@@ -28,7 +25,6 @@ namespace Reddit_Wallpaper_Changer
         private static extern Int32 SystemParametersInfo(UInt32 uiAction, UInt32
         uiParam, String pvParam, UInt32 fWinIni);
         private static UInt32 SPI_SETDESKWALLPAPER = 20;
-        //private static UInt32 SPIF_SENDCHANGE = 0x02;
         private static UInt32 SPIF_UPDATEINIFILE = 0x0001;
         private static UInt32 SPIF_SENDWININICHANGE = 0x0002;
 
@@ -51,7 +47,7 @@ namespace Reddit_Wallpaper_Changer
         Boolean enabledOnSleep;
         ArrayList historyRepeated = new ArrayList();
         int noResultCount = 0;
-        //Dictionary<string, string> historyRepeated = new Dictionary<string, string>();
+
 
         BackgroundWorker bw = new BackgroundWorker();
 
@@ -59,12 +55,6 @@ namespace Reddit_Wallpaper_Changer
         {
             InitializeComponent();
             SystemEvents.PowerModeChanged += OnPowerChange;
-
-            //bw.WorkerReportsProgress = true;
-            //bw.WorkerSupportsCancellation = true;
-            //bw.DoWork += new DoWorkEventHandler(changeWallpaper);
-            // bw.ProgressChanged += new ProgressChangedEventHandler(bw_ProgressChanged);
-            // bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bw_RunWorkerCompleted);
         }
 
         //======================================================================
@@ -104,21 +94,21 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void RWC_Load(object sender, EventArgs e)
         {
-            this.Size = new Size(380, 508);
+            this.Size = new Size(391, 508);
             updateStatus("RWC Setup Initating.");
             r = new Random();
             taskIcon.Visible = true;
             setupSavedWallpaperLocation();
-            setupProxy();
+            setupProxySettings();
             setupButtons();
             setupPanels();
             setupOthers();
             setupForm();
             deleteOldVersion();
-            CreateXML();
+            Xml.createXML();
+            populateBlacklistHistory();
             updateStatus("RWC Setup Initated.");
             checkInternetTimer.Enabled = true;
-
         }
 
         //======================================================================
@@ -134,14 +124,6 @@ namespace Reddit_Wallpaper_Changer
             }
 
             txtSavePath.Text = Properties.Settings.Default.defaultSaveLocation;
-        }
-
-        //======================================================================
-        // ???
-        //======================================================================
-        private void deleteWindowsMenu()
-        {
-            //throw new NotImplementedException();
         }
 
         //======================================================================
@@ -181,7 +163,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         // Set proxy settings if configured
         //======================================================================
-        private void setupProxy()
+        private void setupProxySettings()
         {
             if (Properties.Settings.Default.useProxy == true)
             {
@@ -257,15 +239,21 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void setupPanels()
         {
-            aboutPanel.Size = new Size(364, 405);
-            configurePanel.Size = new Size(364, 405);
-            monitorPanel.Size = new Size(364, 405);
-            historyPanel.Size = new Size(364, 405);
-            aboutPanel.Location = new Point(0, 65);
-            configurePanel.Location = new Point(0, 65);
-            monitorPanel.Location = new Point(0, 65);
-            historyPanel.Location = new Point(0, 65);
+            int w = 375;
+            int h = 405;
+            aboutPanel.Size = new Size(w, h);
+            configurePanel.Size = new Size(w, h);
+            monitorPanel.Size = new Size(w, h);
+            historyPanel.Size = new Size(w, h);
+            blacklistPanel.Size = new Size(w, h);
 
+            int x = 0;
+            int y = 65;    
+            aboutPanel.Location = new Point(x, y);
+            configurePanel.Location = new Point(x, y);
+            monitorPanel.Location = new Point(x, y);
+            historyPanel.Location = new Point(x, y);
+            blacklistPanel.Location = new Point(x, y);
         }
 
         //======================================================================
@@ -288,27 +276,13 @@ namespace Reddit_Wallpaper_Changer
             monitorButton.FlatAppearance.MouseDownBackColor = Color.White;
             monitorButton.FlatAppearance.MouseOverBackColor = Color.White;
 
+            blacklistButton.BackColor = Color.White;
+            blacklistButton.FlatAppearance.BorderColor = Color.White;
+            blacklistButton.FlatAppearance.MouseDownBackColor = Color.White;
+            blacklistButton.FlatAppearance.MouseOverBackColor = Color.White;
 
             selectedPanel = configurePanel;
             selectedButton = configureButton;
-        }
-
-        //======================================================================
-        // Setup the main buttons
-        //======================================================================
-        public void DrawLShapeLine(System.Drawing.Graphics g, int intMarginLeft, int intMarginTop, int intWidth, int intHeight)
-        {
-
-            Pen myPen = new Pen(Color.DarkGray);
-            myPen.Width = 1;
-            // Create array of points that define lines to draw. 
-            Point[] points = 
-         { 
-            new Point(intMarginLeft, intHeight + intMarginTop), 
-            new Point(intMarginLeft + intWidth, intMarginTop + intHeight), 
-         };
-
-            g.DrawLines(myPen, points);
         }
 
         //======================================================================
@@ -325,18 +299,8 @@ namespace Reddit_Wallpaper_Changer
                 selectButton(configureButton);
                 selectedButton = configureButton;
                 selectedPanel = configurePanel;
-                //selectPanel(selectedPanel);
             }
-
         }
-
-        private void selectPanel(Panel selectedPanel)
-        {
-            selectedPanel.Location = new Point(0, 57);
-            selectedPanel.Size = new Size(364, 405);
-        }
-
-
 
         //======================================================================
         // Open the About panel
@@ -357,42 +321,77 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
+        // History button click
+        //======================================================================
+        private void historyButton_Click(object sender, EventArgs e)
+        {
+
+            if (selectedPanel != historyPanel)
+            {
+                selectedPanel.Visible = false;
+                historyPanel.Visible = true;
+                cleanButton(selectedButton);
+                selectButton(historyButton);
+                selectedButton = historyButton;
+                selectedPanel = historyPanel;
+
+            }
+        }
+
+        //======================================================================
+        // Open the Blacklisted panel
+        //======================================================================
+        private void blacklistButton_Click(object sender, EventArgs e)
+        {
+            if (selectedPanel != blacklistPanel)
+            {
+                selectedPanel.Visible = false;
+                blacklistPanel.Visible = true;
+                cleanButton(selectedButton);
+                selectButton(blacklistButton);
+                selectedButton = blacklistButton;
+                selectedPanel = blacklistPanel;
+            }
+        }
+
+        //======================================================================
+        // Monitor button click
+        //======================================================================
+        private void monitorButton_Click_1(object sender, EventArgs e)
+        {
+            if (selectedPanel != monitorPanel)
+            {
+                selectedPanel.Visible = false;
+                monitorPanel.Visible = true;
+
+                cleanButton(selectedButton);
+                selectButton(monitorButton);
+                selectedButton = monitorButton;
+                selectedPanel = monitorPanel;
+
+            }
+        }
+
+        //======================================================================
         // Set sellected button formatting
         //======================================================================
-        private void selectButton(Button button2)
+        private void selectButton(Button btn)
         {
-            button2.BackColor = selectedBackColor;
-            button2.FlatAppearance.BorderColor = selectedBorderColor;
-            button2.FlatAppearance.MouseDownBackColor = selectedBackColor;
-            button2.FlatAppearance.MouseOverBackColor = selectedBackColor;
+            btn.BackColor = selectedBackColor;
+            btn.FlatAppearance.BorderColor = selectedBorderColor;
+            btn.FlatAppearance.MouseDownBackColor = selectedBackColor;
+            btn.FlatAppearance.MouseOverBackColor = selectedBackColor;
         }
 
         //======================================================================
         // Set unsellected button formatting
         //======================================================================
-        private void cleanButton(Button button)
+        private void cleanButton(Button btn)
         {
-            button.BackColor = Color.White;
-            button.FlatAppearance.BorderColor = Color.White;
-            button.FlatAppearance.MouseDownBackColor = Color.White;
-            button.FlatAppearance.MouseOverBackColor = Color.White;
-        }
-
-        private void aboutPanel_Paint(object sender, PaintEventArgs e)
-        {
-            DrawLShapeLine(e.Graphics, 0, 14, 370, -14);
-
-        }
-
-        private void historyPanel_Paint(object sender, PaintEventArgs e)
-        {
-            DrawLShapeLine(e.Graphics, 0, 14, 370, -14);
-
-        }
-
-        private void configurePanel_Paint(object sender, PaintEventArgs e)
-        {
-            DrawLShapeLine(e.Graphics, 0, 14, 370, -14);
+            btn.BackColor = Color.White;
+            btn.FlatAppearance.BorderColor = Color.White;
+            btn.FlatAppearance.MouseDownBackColor = Color.White;
+            btn.FlatAppearance.MouseOverBackColor = Color.White;
         }
 
         //======================================================================
@@ -412,69 +411,49 @@ namespace Reddit_Wallpaper_Changer
             btnUpdate.Text = "Checking....";
             currentVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
 
-            using (WebClient client = new WebClient())
-            { 
-                client.Proxy = null;
-                
-                if (Properties.Settings.Default.useProxy == true)
+            WebClient wc = Proxy.setProxy();
+            try
+            {
+                String latestVersion = wc.DownloadString("https://raw.githubusercontent.com/Rawns/Reddit-Wallpaper-Changer/master/version");
+
+                if (!latestVersion.ToString().Contains(currentVersion.Trim().ToString()))
                 {
-                    WebProxy proxy = new WebProxy(Properties.Settings.Default.proxyAddress);
+                    DialogResult choice = MessageBox.Show("You are running version " + currentVersion + "." + Environment.NewLine + "Download version " + latestVersion + " now?", "Update Avaiable!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                    if (Properties.Settings.Default.proxyAuth == true)
+                    if (choice == DialogResult.Yes)
                     {
-                        proxy.Credentials = new NetworkCredential(Properties.Settings.Default.proxyUser, Properties.Settings.Default.proxyPass);
-                        proxy.UseDefaultCredentials = false;
-                        proxy.BypassProxyOnLocal = false;
+                        Form Update = new Update(latestVersion, this);
+                        Update.Show();
                     }
-
-                    client.Proxy = proxy;
-                }
-
-                try
-                {
-                    String latestVersion = client.DownloadString("https://raw.githubusercontent.com/Rawns/Reddit-Wallpaper-Changer/master/version");
-
-                    if (!latestVersion.ToString().Contains(currentVersion.Trim().ToString()))
+                    else if (choice == DialogResult.No)
                     {
-                        DialogResult choice = MessageBox.Show("You are running version " + currentVersion + "." + Environment.NewLine + "Download version " + latestVersion + " now?", "Update Avaiable!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                        if (choice == DialogResult.Yes)
-                        {
-                            Form Update = new Update(latestVersion, this);
-                            Update.Show();
-                        }
-                        else if (choice == DialogResult.No)
-                        {
-                            btnUpdate.Enabled = true;
-                            btnUpdate.Text = "Check for Updates";
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        taskIcon.BalloonTipIcon = ToolTipIcon.Info;
-                        taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer";
-                        taskIcon.BalloonTipText = "RWC is up to date! :)";
-                        taskIcon.ShowBalloonTip(700);
-
-                        // MessageBox.Show("RWC is up to date. :)", "Reddit Wallpaper Changer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        btnUpdate.Enabled = true;
+                        btnUpdate.Text = "Check for Updates";
+                        return;
                     }
                 }
-                catch
+                else
                 {
-                    taskIcon.BalloonTipIcon = ToolTipIcon.Error;
+                    taskIcon.BalloonTipIcon = ToolTipIcon.Info;
                     taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer";
-                    taskIcon.BalloonTipText = "Error checking for updates! :(";
+                    taskIcon.BalloonTipText = "RWC is up to date! :)";
                     taskIcon.ShowBalloonTip(700);
-
-                    // MessageBox.Show("Error checking for updates: " + ex.Message + " :(", "Reddit Wallpaper Changer", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
-                client.Dispose();
-                btnUpdate.Text = "Check For Updates";
-                btnUpdate.Enabled = true;
             }
+            catch
+            {
+                taskIcon.BalloonTipIcon = ToolTipIcon.Error;
+                taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer";
+                taskIcon.BalloonTipText = "Error checking for updates! :(";
+                taskIcon.ShowBalloonTip(700);
+            }
+
+            wc.Dispose();
+            btnUpdate.Text = "Check For Updates";
+            btnUpdate.Enabled = true;
         }
+        
+
 
         //======================================================================
         // Open the RWC Subreddit
@@ -523,7 +502,7 @@ namespace Reddit_Wallpaper_Changer
             Properties.Settings.Default.Save();
             if (updateTimerBool)
                 updateTimer();
-            setupProxy();
+            setupProxySettings();
         }
 
         //======================================================================
@@ -812,7 +791,7 @@ namespace Reddit_Wallpaper_Changer
             Uri uri2 = new Uri(url);
             string extention2 = System.IO.Path.GetExtension(uri2.LocalPath);
 
-            contextMenuStrip2.Hide();
+            historyMenuStrip.Hide();
             BeginInvoke((MethodInvoker)delegate
             {
                 updateStatus("Setting Wallpaper");
@@ -914,24 +893,7 @@ namespace Reddit_Wallpaper_Changer
                     }
                     try
                     {
-                        WebClient webClient = new WebClient();
-                        webClient.Proxy = null;
-
-                        // Use a proxy if specified
-                        if (Properties.Settings.Default.useProxy == true)
-                        {
-                            WebProxy proxy = new WebProxy(Properties.Settings.Default.proxyAddress);
-
-                            if (Properties.Settings.Default.proxyAuth == true)
-                            {
-                                proxy.Credentials = new NetworkCredential(Properties.Settings.Default.proxyUser, Properties.Settings.Default.proxyPass);
-                                proxy.UseDefaultCredentials = false;
-                                proxy.BypassProxyOnLocal = false;
-                            }
-
-                            webClient.Proxy = proxy;
-                        }
-
+                        WebClient webClient = Proxy.setProxy();
                         webClient.DownloadFile(uri.AbsoluteUri, @wallpaperFile);
                         SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, @wallpaperFile, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
                         historyRepeated.Add(threadID);
@@ -952,26 +914,10 @@ namespace Reddit_Wallpaper_Changer
                 }
 
             }
-            WebClient wc = new WebClient();
-            wc.Proxy = null;
 
-            // Use a proxy if specified
-            if (Properties.Settings.Default.useProxy == true)
-            {
-                WebProxy proxy = new WebProxy(Properties.Settings.Default.proxyAddress);
-
-                if (Properties.Settings.Default.proxyAuth == true)
-                {
-                    proxy.Credentials = new NetworkCredential(Properties.Settings.Default.proxyUser, Properties.Settings.Default.proxyPass);
-                    proxy.UseDefaultCredentials = false;
-                    proxy.BypassProxyOnLocal = false;
-                }
-
-                wc.Proxy = proxy;
-            }
-
+            WebClient wc = Proxy.setProxy();
             byte[] bytes = wc.DownloadData(url);
-            //Console.WriteLine(bytes.Count().ToString());
+
             if (bytes.Count().Equals(0))
             {
                 changeWallpaperTimer.Enabled = true;
@@ -1005,14 +951,10 @@ namespace Reddit_Wallpaper_Changer
                     historyDataGrid.Rows[0].Visible = false;
                     breakBetweenChange.Enabled = true;
                 }
+
+                wc.Dispose();
             }
         });
-
-            //    bw.RunWorkerCompleted += new RunWorkerCompletedEventHandler(
-            //delegate(object o, RunWorkerCompletedEventArgs args)
-            //{
-            //    MessageBox.Show("Finished");
-            //});
             bw.RunWorkerAsync();
         }
 
@@ -1037,7 +979,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         // Form load screen
         //======================================================================
-        private void Form1_Shown(object sender, EventArgs e)
+        private void RWC_Shown(object sender, EventArgs e)
         {
             if (startInTrayCheckBox.Checked)
             {
@@ -1083,7 +1025,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         // Closing the form
         //======================================================================
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void RWC_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!realClose)
             {
@@ -1093,7 +1035,7 @@ namespace Reddit_Wallpaper_Changer
             else
             {
                 toolTip1.Active = false;
-                deleteWindowsMenu();
+                // deleteWindowsMenu();
             }
         }
 
@@ -1103,12 +1045,6 @@ namespace Reddit_Wallpaper_Changer
         private void taskIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             this.Visible = true;
-
-        }
-
-        private void taskIcon_BalloonTipClicked(object sender, EventArgs e)
-        {
-
         }
 
         //======================================================================
@@ -1170,55 +1106,38 @@ namespace Reddit_Wallpaper_Changer
             changeWallpaperTimer.Enabled = true;
         }
 
+        //======================================================================
+        // Startup time for update check
+        //======================================================================
         private void startupTimer_Tick(object sender, EventArgs e)
         {
             startupTimer.Enabled = false;
+            WebClient wc = Proxy.setProxy();
 
-
-            //Update Check
-            using (WebClient client = new WebClient())
+            try
             {
-                client.Proxy = null;
-
-                // Use a proxy if specified
-                if (Properties.Settings.Default.useProxy == true)
+                String latestVersion = wc.DownloadString("https://raw.githubusercontent.com/Rawns/Reddit-Wallpaper-Changer/master/version");
+                if (!latestVersion.Contains(currentVersion.Trim().ToString()))
                 {
-                    WebProxy proxy = new WebProxy(Properties.Settings.Default.proxyAddress);
-
-                    if (Properties.Settings.Default.proxyAuth == true)
-                    {
-                        proxy.Credentials = new NetworkCredential(Properties.Settings.Default.proxyUser, Properties.Settings.Default.proxyPass);
-                        proxy.UseDefaultCredentials = false;
-                        proxy.BypassProxyOnLocal = false;
-                    }
-
-                    client.Proxy = proxy;
+                    Form Update = new Update(latestVersion, this);
+                    Update.Show();
                 }
-
-                try
+                else
                 {
-                    String latestVersion = client.DownloadString("https://raw.githubusercontent.com/Rawns/Reddit-Wallpaper-Changer/master/version");
-                    if (!latestVersion.Contains(currentVersion.Trim().ToString()))
-                    {
-                        Form Update = new Update(latestVersion, this);
-                        Update.Show();
-                    }
-                    else
-                    {
-                        changeWallpaperTimer.Enabled = true;
-                    }
+                    changeWallpaperTimer.Enabled = true;
                 }
-                catch
-                {
-                    taskIcon.BalloonTipIcon = ToolTipIcon.Error;
-                    taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer!";
-                    taskIcon.BalloonTipText = "Error checking for updates.";
-                    taskIcon.ShowBalloonTip(750);
-                }
-
-                client.Dispose();
             }
+            catch
+            {
+                taskIcon.BalloonTipIcon = ToolTipIcon.Error;
+                taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer!";
+                taskIcon.BalloonTipText = "Error checking for updates.";
+                taskIcon.ShowBalloonTip(750);
+            }
+
+            wc.Dispose();
         }
+
 
         //======================================================================
         // Enable change wallpaper timer
@@ -1227,24 +1146,6 @@ namespace Reddit_Wallpaper_Changer
         {
             changeWallpaperTimer.Enabled = true;
 
-        }
-
-        //======================================================================
-        // History button click
-        //======================================================================
-        private void historyButton_Click(object sender, EventArgs e)
-        {
-
-            if (selectedPanel != historyPanel)
-            {
-                selectedPanel.Visible = false;
-                historyPanel.Visible = true;
-                cleanButton(selectedButton);
-                selectButton(historyButton);
-                selectedButton = historyButton;
-                selectedPanel = historyPanel;
-
-            }
         }
 
         //======================================================================
@@ -1324,6 +1225,9 @@ namespace Reddit_Wallpaper_Changer
             }
         }
 
+        //======================================================================
+        // Change subreddit text box
+        //======================================================================
         private void subredditTextBox_TextChanged(object sender, EventArgs e)
         {
             if (subredditTextBox.Text.Contains("/m/"))
@@ -1356,24 +1260,6 @@ namespace Reddit_Wallpaper_Changer
         {
             breakBetweenChange.Enabled = false;
             changeWallpaperTimer.Enabled = true;
-        }
-
-        //======================================================================
-        // Monitor button click
-        //======================================================================
-        private void monitorButton_Click_1(object sender, EventArgs e)
-        {
-            if (selectedPanel != monitorPanel)
-            {
-                selectedPanel.Visible = false;
-                monitorPanel.Visible = true;
-
-                cleanButton(selectedButton);
-                selectButton(monitorButton);
-                selectedButton = monitorButton;
-                selectedPanel = monitorPanel;
-
-            }
         }
 
         //======================================================================
@@ -1439,11 +1325,26 @@ namespace Reddit_Wallpaper_Changer
                 currentMouseOverRow = historyDataGrid.HitTest(e.X, e.Y).RowIndex;
                 if (currentMouseOverRow >= 0)
                 {
-                    contextMenuStrip2.Show(historyDataGrid, new Point(e.X, e.Y));
+                    historyMenuStrip.Show(historyDataGrid, new Point(e.X, e.Y));
                 }
                 else
                 {
                     contextMenuStrip1.Show(historyDataGrid, new Point(e.X, e.Y));
+                }
+            }
+        }
+
+        //======================================================================
+        // Blacklist grid mouse click
+        //======================================================================
+        private void blacklistDataGrid_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                currentMouseOverRow = blacklistDataGrid.HitTest(e.X, e.Y).RowIndex;
+                if (currentMouseOverRow >= 0)
+                {
+                    blacklistMenuStrip.Show(blacklistDataGrid, new Point(e.X, e.Y));
                 }
             }
         }
@@ -1537,51 +1438,6 @@ namespace Reddit_Wallpaper_Changer
             }
         }
 
-        //======================================================================
-        // Create XML files to store favourite and blacklisted wallpapers
-        //======================================================================
-        public void CreateXML()
-        {
-            string fave = AppDomain.CurrentDomain.BaseDirectory + "Favourites.xml";
-            string black = AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml";
-
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Indent = true;
-
-            if (!File.Exists(fave))
-            {
-                XmlWriter writer = XmlWriter.Create(fave, settings);
-                writer.WriteStartDocument();
-                writer.WriteComment("This file stores a list of any wallpapers you flag as a favourite.");
-                writer.WriteStartElement("Favourites");
-                writer.WriteStartElement("Wallpaper");
-                writer.WriteElementString("URL", "http://example.url/wallpaper_link.jpg");
-                writer.WriteElementString("Title", "Just a favourite Wallpaper example! [1920x1080]");
-                writer.WriteElementString("ThreadID", "00001A");
-                writer.WriteEndElement();
-                writer.WriteEndElement();
-                writer.WriteEndDocument();
-                writer.Flush();
-                writer.Close();
-            }
-
-            if (!File.Exists(black))
-            {
-                XmlWriter writer = XmlWriter.Create(black, settings);
-                writer.WriteStartDocument();
-                writer.WriteComment("This file stores a list of any wallpapers you blacklist.");
-                writer.WriteStartElement("Blacklisted");
-                writer.WriteStartElement("Wallpaper");
-                writer.WriteElementString("URL", "http://example.url/blacklisted_wallpaper.jpg");
-                writer.WriteElementString("Title", "Just a blacklisted Wallpaper example! [1920x1080]");
-                writer.WriteElementString("ThreadID", "00001B");
-                writer.WriteEndElement();
-                writer.WriteEndElement();
-                writer.WriteEndDocument();
-                writer.Flush();
-                writer.Close();
-            }
-        }
 
         //======================================================================
         // Add current wallpaper to favourites
@@ -1625,10 +1481,13 @@ namespace Reddit_Wallpaper_Changer
             wallpaperChangeTimer.Enabled = false;
             wallpaperChangeTimer.Enabled = true;
             changeWallpaperTimer.Enabled = true;
+
+            populateBlacklistHistory();
+
         }
 
         //======================================================================
-        // Add historical wallpaper to blacklist
+        // Add wallpaper from history view to blacklist
         //======================================================================
         public void MenuBlacklist(string url, string title, string threadid)
         {
@@ -1638,12 +1497,14 @@ namespace Reddit_Wallpaper_Changer
                 new XElement("URL", url),
                 new XElement("Title", title),
                 new XElement("ThreadID", threadid)));
-            doc.Save("Blacklist.xml");
+            doc.Save(AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml");
 
             taskIcon.BalloonTipIcon = ToolTipIcon.Info;
             taskIcon.BalloonTipTitle = "Wallpaper Blacklisted!";
             taskIcon.BalloonTipText = "The historical Wallpaper has been blacklisted!";
             taskIcon.ShowBalloonTip(750);
+
+            populateBlacklistHistory();
         }
 
         //======================================================================
@@ -1665,7 +1526,6 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         // Set wallpaper from selected histore entry
         //======================================================================
-        // private void contextMenuStrip2_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         private void useThisWallpapertoolStripMenuItem_Click(object sender, EventArgs e)
         {
             string url = (historyDataGrid.Rows[currentMouseOverRow].Cells[4].Value.ToString());
@@ -1683,6 +1543,111 @@ namespace Reddit_Wallpaper_Changer
             string title = (historyDataGrid.Rows[currentMouseOverRow].Cells[1].Value.ToString());
             string threadid = (historyDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
             MenuBlacklist(url, title, threadid);
+        }
+
+        //======================================================================
+        // Pupulate the blacklisted history panel
+        //======================================================================
+        private void populateBlacklistHistory()
+        {
+            blacklistDataGrid.Rows.Clear();
+            BackgroundWorker blUpdate= new BackgroundWorker();
+            blUpdate.WorkerSupportsCancellation = true;
+            blUpdate.WorkerReportsProgress = true;
+            blUpdate.DoWork += new DoWorkEventHandler(
+        delegate (object o, DoWorkEventArgs args)
+        {
+            try
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml");
+                XmlNodeList list = doc.SelectNodes("Blacklisted/Wallpaper");
+
+                int count = list.Count;
+                int i = 0;                
+                foreach (XmlNode xn in list)
+                {
+                    try
+                    {
+                        string URL = xn["URL"].InnerText;
+                        string Title = xn["Title"].InnerText;
+                        string ThreadID = xn["ThreadID"].InnerText;
+
+                        WebClient wc = Proxy.setProxy();
+                        byte[] bytes = wc.DownloadData(URL);
+
+                        MemoryStream img = new MemoryStream(bytes);
+                        memoryStreamImage = System.Drawing.Image.FromStream(img);
+
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            blacklistDataGrid.Rows.Add(new Bitmap(memoryStreamImage, new Size(100, 100)), Title, dataGridNumber, ThreadID, URL);
+                        });
+
+                        img.Dispose();
+                        img.Close();
+
+                        i++;
+
+                        int percent = i * 100 / (count);
+
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            blacklistProgress.Value = percent;
+                        });
+                        wc.Dispose();
+                    }
+                    catch
+                    {
+                    }
+                }
+
+                if(blacklistProgress.Value == 100)
+                {
+                    this.Invoke((MethodInvoker)delegate
+                    {
+                        blacklistProgress.Value = 0;
+                    });
+                }
+            }
+            catch
+            {
+
+            }
+
+        });           
+            blUpdate.RunWorkerAsync();
+        }
+
+        //======================================================================
+        // Remove a previously blacklisted wallpaper
+        //======================================================================
+        private void unblacklistWallpaper_Click(object sender, EventArgs e)
+        {
+            string path = AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml";
+            string url = (blacklistDataGrid.Rows[currentMouseOverRow].Cells[4].Value.ToString());
+            // string title = (blacklistDataGrid.Rows[currentMouseOverRow].Cells[1].Value.ToString());
+            // string threadid = (blacklistDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
+
+            try
+            {
+                XmlDocument xml = new XmlDocument();
+                xml.Load(path);
+                foreach (XmlNode node in xml.SelectNodes("Blacklisted/Wallpaper"))
+                {
+                    if (node.SelectSingleNode("URL").InnerText == url)
+                    {
+                        node.ParentNode.RemoveChild(node);
+                    }
+                }
+
+                xml.Save(path);
+                populateBlacklistHistory();
+            }
+            catch
+            {
+
+            }   
         }
     }
 }

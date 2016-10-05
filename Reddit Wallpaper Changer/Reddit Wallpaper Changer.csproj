@@ -55,6 +55,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logging.cs" />
+    <Compile Include="Proxy.cs" />
     <Compile Include="RWC.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +83,7 @@
     <Compile Include="SearchWizard.Designer.cs">
       <DependentUpon>SearchWizard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Xml.cs" />
     <EmbeddedResource Include="RWC.resx">
       <DependentUpon>RWC.cs</DependentUpon>
     </EmbeddedResource>
@@ -112,6 +115,9 @@
     <None Include="Resources\display.png" />
     <None Include="Resources\display_enabled.png" />
     <None Include="Resources\display_disabled.png" />
+    <None Include="Resources\blacklisted.png" />
+    <None Include="Resources\history.png" />
+    <None Include="Resources\about.png" />
     <Content Include="Resources\rwc.ico" />
     <Content Include="Resources\data.png" />
     <Content Include="Resources\information.png" />

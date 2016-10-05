@@ -106,9 +106,21 @@
             this.historyButton = new System.Windows.Forms.Button();
             this.breakBetweenChange = new System.Windows.Forms.Timer(this.components);
             this.monitorButton = new System.Windows.Forms.Button();
-            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.historyMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.useThisWallpaperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.blacklistWallpapertoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.blacklistPanel = new System.Windows.Forms.Panel();
+            this.blacklistProgress = new System.Windows.Forms.ProgressBar();
+            this.blacklistGroupBox = new System.Windows.Forms.GroupBox();
+            this.blacklistDataGrid = new System.Windows.Forms.DataGridView();
+            this.blacklistPreview = new System.Windows.Forms.DataGridViewImageColumn();
+            this.blacklistThread = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.blacklistOrderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.blacklistThreadLink = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.blacklistImageURL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.blacklistButton = new System.Windows.Forms.Button();
+            this.blacklistMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.unblacklistWallpaper = new System.Windows.Forms.ToolStripMenuItem();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -124,7 +136,11 @@
             this.historyPanel.SuspendLayout();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.historyDataGrid)).BeginInit();
-            this.contextMenuStrip2.SuspendLayout();
+            this.historyMenuStrip.SuspendLayout();
+            this.blacklistPanel.SuspendLayout();
+            this.blacklistGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.blacklistDataGrid)).BeginInit();
+            this.blacklistMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // configurePanel
@@ -141,9 +157,8 @@
             this.configurePanel.Controls.Add(this.groupBox1);
             this.configurePanel.Location = new System.Drawing.Point(0, 65);
             this.configurePanel.Name = "configurePanel";
-            this.configurePanel.Size = new System.Drawing.Size(364, 405);
+            this.configurePanel.Size = new System.Drawing.Size(375, 405);
             this.configurePanel.TabIndex = 1;
-            this.configurePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.configurePanel_Paint);
             // 
             // contextMenuStrip1
             // 
@@ -249,14 +264,14 @@
             this.groupBox9.Controls.Add(this.txtSavePath);
             this.groupBox9.Location = new System.Drawing.Point(12, 316);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(338, 56);
+            this.groupBox9.Size = new System.Drawing.Size(352, 56);
             this.groupBox9.TabIndex = 13;
             this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "Save Wallpapers To:";
+            this.groupBox9.Text = "Wallpaper Save Location:";
             // 
             // btnBrowse
             // 
-            this.btnBrowse.Location = new System.Drawing.Point(260, 22);
+            this.btnBrowse.Location = new System.Drawing.Point(262, 22);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(75, 23);
             this.btnBrowse.TabIndex = 1;
@@ -299,7 +314,7 @@
             this.groupBox5.Controls.Add(this.startInTrayCheckBox);
             this.groupBox5.Location = new System.Drawing.Point(12, 176);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(338, 134);
+            this.groupBox5.Size = new System.Drawing.Size(352, 134);
             this.groupBox5.TabIndex = 10;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Behind The Scenes:";
@@ -307,7 +322,7 @@
             // txtPass
             // 
             this.txtPass.Enabled = false;
-            this.txtPass.Location = new System.Drawing.Point(164, 99);
+            this.txtPass.Location = new System.Drawing.Point(169, 99);
             this.txtPass.Name = "txtPass";
             this.txtPass.PasswordChar = '*';
             this.txtPass.Size = new System.Drawing.Size(168, 22);
@@ -316,7 +331,7 @@
             // txtUser
             // 
             this.txtUser.Enabled = false;
-            this.txtUser.Location = new System.Drawing.Point(164, 74);
+            this.txtUser.Location = new System.Drawing.Point(169, 74);
             this.txtUser.Name = "txtUser";
             this.txtUser.Size = new System.Drawing.Size(168, 22);
             this.txtUser.TabIndex = 8;
@@ -336,7 +351,7 @@
             // txtProxyServer
             // 
             this.txtProxyServer.Enabled = false;
-            this.txtProxyServer.Location = new System.Drawing.Point(164, 48);
+            this.txtProxyServer.Location = new System.Drawing.Point(169, 48);
             this.txtProxyServer.Name = "txtProxyServer";
             this.txtProxyServer.Size = new System.Drawing.Size(168, 22);
             this.txtProxyServer.TabIndex = 6;
@@ -366,9 +381,9 @@
             // startInTrayCheckBox
             // 
             this.startInTrayCheckBox.AutoSize = true;
-            this.startInTrayCheckBox.Location = new System.Drawing.Point(164, 23);
+            this.startInTrayCheckBox.Location = new System.Drawing.Point(169, 23);
             this.startInTrayCheckBox.Name = "startInTrayCheckBox";
-            this.startInTrayCheckBox.Size = new System.Drawing.Size(90, 17);
+            this.startInTrayCheckBox.Size = new System.Drawing.Size(91, 17);
             this.startInTrayCheckBox.TabIndex = 3;
             this.startInTrayCheckBox.Text = "Start In Tray?";
             this.toolTip1.SetToolTip(this.startInTrayCheckBox, "Enabled, the program will start minimized.");
@@ -376,7 +391,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(287, 375);
+            this.saveButton.Location = new System.Drawing.Point(289, 375);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(60, 23);
             this.saveButton.TabIndex = 2;
@@ -396,7 +411,7 @@
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Location = new System.Drawing.Point(12, 87);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(341, 83);
+            this.groupBox2.Size = new System.Drawing.Size(352, 83);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Advanced:";
@@ -417,7 +432,7 @@
             this.searchWizardButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("searchWizardButton.BackgroundImage")));
             this.searchWizardButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.searchWizardButton.Cursor = System.Windows.Forms.Cursors.Help;
-            this.searchWizardButton.Location = new System.Drawing.Point(297, 10);
+            this.searchWizardButton.Location = new System.Drawing.Point(299, 10);
             this.searchWizardButton.Name = "searchWizardButton";
             this.searchWizardButton.Size = new System.Drawing.Size(38, 33);
             this.searchWizardButton.TabIndex = 9;
@@ -473,7 +488,7 @@
             "Minutes",
             "Hours",
             "Days"});
-            this.changeTimeType.Location = new System.Drawing.Point(266, 47);
+            this.changeTimeType.Location = new System.Drawing.Point(268, 46);
             this.changeTimeType.Name = "changeTimeType";
             this.changeTimeType.Size = new System.Drawing.Size(69, 21);
             this.changeTimeType.TabIndex = 6;
@@ -483,7 +498,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(18, 20);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(114, 13);
+            this.label2.Size = new System.Drawing.Size(115, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Reddit Search Query:";
             // 
@@ -495,7 +510,7 @@
             this.groupBox1.Controls.Add(this.wallpaperGrabType);
             this.groupBox1.Location = new System.Drawing.Point(12, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(341, 75);
+            this.groupBox1.Size = new System.Drawing.Size(352, 75);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
@@ -505,7 +520,7 @@
             this.subredditTextBox.ForeColor = System.Drawing.SystemColors.WindowFrame;
             this.subredditTextBox.Location = new System.Drawing.Point(107, 19);
             this.subredditTextBox.Name = "subredditTextBox";
-            this.subredditTextBox.Size = new System.Drawing.Size(228, 20);
+            this.subredditTextBox.Size = new System.Drawing.Size(230, 20);
             this.subredditTextBox.TabIndex = 5;
             this.subredditTextBox.Text = "wallpapers+wallpaper";
             this.toolTip1.SetToolTip(this.subredditTextBox, "Multiple subs seperated by (+) sign.");
@@ -544,7 +559,7 @@
             "Top this Year",
             "Top All Time",
             "Truly Random"});
-            this.wallpaperGrabType.Location = new System.Drawing.Point(214, 45);
+            this.wallpaperGrabType.Location = new System.Drawing.Point(216, 45);
             this.wallpaperGrabType.Name = "wallpaperGrabType";
             this.wallpaperGrabType.Size = new System.Drawing.Size(121, 21);
             this.wallpaperGrabType.TabIndex = 0;
@@ -558,21 +573,20 @@
             this.aboutPanel.ContextMenuStrip = this.contextMenuStrip1;
             this.aboutPanel.Controls.Add(this.groupBox3);
             this.aboutPanel.Controls.Add(this.groupBox4);
-            this.aboutPanel.Location = new System.Drawing.Point(437, 12);
+            this.aboutPanel.Location = new System.Drawing.Point(392, 90);
             this.aboutPanel.Name = "aboutPanel";
-            this.aboutPanel.Size = new System.Drawing.Size(364, 405);
+            this.aboutPanel.Size = new System.Drawing.Size(375, 405);
             this.aboutPanel.TabIndex = 3;
             this.aboutPanel.Visible = false;
-            this.aboutPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.aboutPanel_Paint);
             // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.versionLabel);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.btnUpdate);
-            this.groupBox3.Location = new System.Drawing.Point(12, 103);
+            this.groupBox3.Location = new System.Drawing.Point(11, 104);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(341, 83);
+            this.groupBox3.Size = new System.Drawing.Size(351, 83);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Update";
@@ -593,7 +607,7 @@
             this.label4.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.label4.Location = new System.Drawing.Point(148, 27);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(90, 13);
+            this.label4.Size = new System.Drawing.Size(91, 13);
             this.label4.TabIndex = 6;
             this.label4.Text = "Current Version:";
             // 
@@ -614,9 +628,9 @@
             this.groupBox4.Controls.Add(this.button3);
             this.groupBox4.Controls.Add(this.label3);
             this.groupBox4.Controls.Add(this.redditLink);
-            this.groupBox4.Location = new System.Drawing.Point(12, 14);
+            this.groupBox4.Location = new System.Drawing.Point(11, 14);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(341, 74);
+            this.groupBox4.Size = new System.Drawing.Size(351, 74);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "About";
@@ -652,7 +666,7 @@
             // 
             this.button3.Location = new System.Drawing.Point(214, 22);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(121, 23);
+            this.button3.Size = new System.Drawing.Size(131, 23);
             this.button3.TabIndex = 6;
             this.button3.Text = "Support Subreddit";
             this.button3.UseVisualStyleBackColor = true;
@@ -692,9 +706,9 @@
             this.monitorPanel.ContextMenuStrip = this.contextMenuStrip1;
             this.monitorPanel.Controls.Add(this.label8);
             this.monitorPanel.Controls.Add(this.groupBox7);
-            this.monitorPanel.Location = new System.Drawing.Point(396, 57);
+            this.monitorPanel.Location = new System.Drawing.Point(462, 25);
             this.monitorPanel.Name = "monitorPanel";
-            this.monitorPanel.Size = new System.Drawing.Size(364, 405);
+            this.monitorPanel.Size = new System.Drawing.Size(375, 405);
             this.monitorPanel.TabIndex = 4;
             this.monitorPanel.Visible = false;
             this.monitorPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.monitorPanel_Paint);
@@ -703,9 +717,9 @@
             // 
             this.label8.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label8.Location = new System.Drawing.Point(11, 251);
+            this.label8.Location = new System.Drawing.Point(11, 252);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(342, 66);
+            this.label8.Size = new System.Drawing.Size(351, 66);
             this.label8.TabIndex = 2;
             this.label8.Text = "This menu is under development and not yet fully functional!";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -717,7 +731,7 @@
             this.groupBox7.Controls.Add(this.label7);
             this.groupBox7.Location = new System.Drawing.Point(11, 153);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(342, 68);
+            this.groupBox7.Size = new System.Drawing.Size(351, 63);
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Settings";
@@ -725,7 +739,7 @@
             // button1
             // 
             this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(267, 17);
+            this.button1.Location = new System.Drawing.Point(282, 19);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(60, 23);
             this.button1.TabIndex = 11;
@@ -749,9 +763,9 @@
             "Centre",
             "Stretch",
             ""});
-            this.comboBox1.Location = new System.Drawing.Point(100, 19);
+            this.comboBox1.Location = new System.Drawing.Point(103, 19);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(152, 21);
+            this.comboBox1.Size = new System.Drawing.Size(173, 21);
             this.comboBox1.TabIndex = 10;
             // 
             // label7
@@ -759,31 +773,31 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(8, 22);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(88, 13);
+            this.label7.Size = new System.Drawing.Size(89, 13);
             this.label7.TabIndex = 9;
             this.label7.Text = "Wallpaper Type:";
             // 
             // historyPanel
             // 
             this.historyPanel.BackColor = System.Drawing.SystemColors.Control;
+            this.historyPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.historyPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.historyPanel.Controls.Add(this.groupBox6);
-            this.historyPanel.Location = new System.Drawing.Point(371, 305);
+            this.historyPanel.Location = new System.Drawing.Point(899, 65);
             this.historyPanel.Name = "historyPanel";
-            this.historyPanel.Size = new System.Drawing.Size(364, 405);
+            this.historyPanel.Size = new System.Drawing.Size(375, 405);
             this.historyPanel.TabIndex = 5;
             this.historyPanel.Visible = false;
-            this.historyPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.historyPanel_Paint);
             // 
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.historyDataGrid);
             this.groupBox6.Location = new System.Drawing.Point(11, 6);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(341, 393);
+            this.groupBox6.Size = new System.Drawing.Size(351, 387);
             this.groupBox6.TabIndex = 0;
             this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "History";
+            this.groupBox6.Text = "Wallpaper History";
             // 
             // historyDataGrid
             // 
@@ -811,7 +825,7 @@
             this.historyDataGrid.ShowCellToolTips = false;
             this.historyDataGrid.ShowEditingIcon = false;
             this.historyDataGrid.ShowRowErrors = false;
-            this.historyDataGrid.Size = new System.Drawing.Size(335, 372);
+            this.historyDataGrid.Size = new System.Drawing.Size(345, 366);
             this.historyDataGrid.TabIndex = 1;
             this.historyDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.historyDataGrid_CellContentClick);
             this.historyDataGrid.MouseClick += new System.Windows.Forms.MouseEventHandler(this.historyDataGrid_MouseClick);
@@ -860,7 +874,6 @@
             this.taskIcon.ContextMenuStrip = this.contextMenuStrip1;
             this.taskIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("taskIcon.Icon")));
             this.taskIcon.Text = "Reddit Wallpaper Changer";
-            this.taskIcon.BalloonTipClicked += new System.EventHandler(this.taskIcon_BalloonTipClicked);
             this.taskIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.taskIcon_MouseDoubleClick);
             // 
             // startupTimer
@@ -897,7 +910,7 @@
             this.configureButton.Image = ((System.Drawing.Image)(resources.GetObject("configureButton.Image")));
             this.configureButton.Location = new System.Drawing.Point(0, 0);
             this.configureButton.Name = "configureButton";
-            this.configureButton.Size = new System.Drawing.Size(91, 66);
+            this.configureButton.Size = new System.Drawing.Size(75, 66);
             this.configureButton.TabIndex = 4;
             this.configureButton.Text = "Settings";
             this.configureButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -911,12 +924,12 @@
             this.aboutButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(234)))), ((int)(((byte)(244)))));
             this.aboutButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(234)))), ((int)(((byte)(244)))));
             this.aboutButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.aboutButton.Image = ((System.Drawing.Image)(resources.GetObject("aboutButton.Image")));
-            this.aboutButton.Location = new System.Drawing.Point(273, 0);
+            this.aboutButton.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.about;
+            this.aboutButton.Location = new System.Drawing.Point(300, 0);
             this.aboutButton.Name = "aboutButton";
-            this.aboutButton.Size = new System.Drawing.Size(91, 66);
+            this.aboutButton.Size = new System.Drawing.Size(75, 66);
             this.aboutButton.TabIndex = 5;
-            this.aboutButton.Text = "Information";
+            this.aboutButton.Text = "About";
             this.aboutButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.aboutButton.UseVisualStyleBackColor = false;
             this.aboutButton.Click += new System.EventHandler(this.aboutButton_Click);
@@ -928,10 +941,10 @@
             this.historyButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(234)))), ((int)(((byte)(244)))));
             this.historyButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(234)))), ((int)(((byte)(244)))));
             this.historyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.historyButton.Image = ((System.Drawing.Image)(resources.GetObject("historyButton.Image")));
-            this.historyButton.Location = new System.Drawing.Point(91, 0);
+            this.historyButton.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.history;
+            this.historyButton.Location = new System.Drawing.Point(150, 0);
             this.historyButton.Name = "historyButton";
-            this.historyButton.Size = new System.Drawing.Size(91, 66);
+            this.historyButton.Size = new System.Drawing.Size(75, 66);
             this.historyButton.TabIndex = 6;
             this.historyButton.Text = "History";
             this.historyButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -951,22 +964,22 @@
             this.monitorButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(234)))), ((int)(((byte)(244)))));
             this.monitorButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.monitorButton.Image = ((System.Drawing.Image)(resources.GetObject("monitorButton.Image")));
-            this.monitorButton.Location = new System.Drawing.Point(182, 0);
+            this.monitorButton.Location = new System.Drawing.Point(75, 0);
             this.monitorButton.Name = "monitorButton";
-            this.monitorButton.Size = new System.Drawing.Size(91, 66);
+            this.monitorButton.Size = new System.Drawing.Size(75, 66);
             this.monitorButton.TabIndex = 7;
             this.monitorButton.Text = "Monitor(s)";
             this.monitorButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.monitorButton.UseVisualStyleBackColor = false;
             this.monitorButton.Click += new System.EventHandler(this.monitorButton_Click_1);
             // 
-            // contextMenuStrip2
+            // historyMenuStrip
             // 
-            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.historyMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.useThisWallpaperToolStripMenuItem,
             this.blacklistWallpapertoolStripMenuItem});
-            this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(205, 70);
+            this.historyMenuStrip.Name = "contextMenuStrip2";
+            this.historyMenuStrip.Size = new System.Drawing.Size(205, 48);
             // 
             // useThisWallpaperToolStripMenuItem
             // 
@@ -986,28 +999,157 @@
             this.blacklistWallpapertoolStripMenuItem.Text = "Blacklist This Wallpaper";
             this.blacklistWallpapertoolStripMenuItem.Click += new System.EventHandler(this.blacklistWallpapertoolStripMenuItem_Click);
             // 
+            // blacklistPanel
+            // 
+            this.blacklistPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.blacklistPanel.Controls.Add(this.blacklistProgress);
+            this.blacklistPanel.Controls.Add(this.blacklistGroupBox);
+            this.blacklistPanel.Location = new System.Drawing.Point(410, 22);
+            this.blacklistPanel.Name = "blacklistPanel";
+            this.blacklistPanel.Size = new System.Drawing.Size(375, 404);
+            this.blacklistPanel.TabIndex = 8;
+            this.blacklistPanel.Visible = false;
+            // 
+            // blacklistProgress
+            // 
+            this.blacklistProgress.Location = new System.Drawing.Point(11, 376);
+            this.blacklistProgress.Name = "blacklistProgress";
+            this.blacklistProgress.Size = new System.Drawing.Size(351, 16);
+            this.blacklistProgress.Step = 1;
+            this.blacklistProgress.TabIndex = 2;
+            // 
+            // blacklistGroupBox
+            // 
+            this.blacklistGroupBox.Controls.Add(this.blacklistDataGrid);
+            this.blacklistGroupBox.Location = new System.Drawing.Point(11, 6);
+            this.blacklistGroupBox.Name = "blacklistGroupBox";
+            this.blacklistGroupBox.Size = new System.Drawing.Size(351, 364);
+            this.blacklistGroupBox.TabIndex = 0;
+            this.blacklistGroupBox.TabStop = false;
+            this.blacklistGroupBox.Text = "Blacklisted Wallpapers";
+            // 
+            // blacklistDataGrid
+            // 
+            this.blacklistDataGrid.AllowUserToAddRows = false;
+            this.blacklistDataGrid.AllowUserToDeleteRows = false;
+            this.blacklistDataGrid.AllowUserToResizeColumns = false;
+            this.blacklistDataGrid.AllowUserToResizeRows = false;
+            this.blacklistDataGrid.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.blacklistDataGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.blacklistDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.blacklistDataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.blacklistPreview,
+            this.blacklistThread,
+            this.blacklistOrderID,
+            this.blacklistThreadLink,
+            this.blacklistImageURL});
+            this.blacklistDataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.blacklistDataGrid.Location = new System.Drawing.Point(3, 18);
+            this.blacklistDataGrid.MultiSelect = false;
+            this.blacklistDataGrid.Name = "blacklistDataGrid";
+            this.blacklistDataGrid.ReadOnly = true;
+            this.blacklistDataGrid.RowHeadersVisible = false;
+            this.blacklistDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.blacklistDataGrid.ShowCellErrors = false;
+            this.blacklistDataGrid.ShowCellToolTips = false;
+            this.blacklistDataGrid.ShowEditingIcon = false;
+            this.blacklistDataGrid.ShowRowErrors = false;
+            this.blacklistDataGrid.Size = new System.Drawing.Size(345, 343);
+            this.blacklistDataGrid.TabIndex = 1;
+            this.blacklistDataGrid.MouseClick += new System.Windows.Forms.MouseEventHandler(this.blacklistDataGrid_MouseClick);
+            // 
+            // blacklistPreview
+            // 
+            this.blacklistPreview.HeaderText = "Preview";
+            this.blacklistPreview.Name = "blacklistPreview";
+            this.blacklistPreview.ReadOnly = true;
+            // 
+            // blacklistThread
+            // 
+            this.blacklistThread.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.blacklistThread.HeaderText = "Thread";
+            this.blacklistThread.Name = "blacklistThread";
+            this.blacklistThread.ReadOnly = true;
+            // 
+            // blacklistOrderID
+            // 
+            this.blacklistOrderID.HeaderText = "OrderID";
+            this.blacklistOrderID.Name = "blacklistOrderID";
+            this.blacklistOrderID.ReadOnly = true;
+            this.blacklistOrderID.Visible = false;
+            // 
+            // blacklistThreadLink
+            // 
+            this.blacklistThreadLink.HeaderText = "ThreadLink";
+            this.blacklistThreadLink.Name = "blacklistThreadLink";
+            this.blacklistThreadLink.ReadOnly = true;
+            this.blacklistThreadLink.Visible = false;
+            // 
+            // blacklistImageURL
+            // 
+            this.blacklistImageURL.HeaderText = "ImageURL";
+            this.blacklistImageURL.Name = "blacklistImageURL";
+            this.blacklistImageURL.ReadOnly = true;
+            this.blacklistImageURL.Visible = false;
+            // 
+            // blacklistButton
+            // 
+            this.blacklistButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(234)))), ((int)(((byte)(244)))));
+            this.blacklistButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(195)))), ((int)(((byte)(228)))));
+            this.blacklistButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(234)))), ((int)(((byte)(244)))));
+            this.blacklistButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(214)))), ((int)(((byte)(234)))), ((int)(((byte)(244)))));
+            this.blacklistButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.blacklistButton.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.blacklisted;
+            this.blacklistButton.Location = new System.Drawing.Point(225, 0);
+            this.blacklistButton.Name = "blacklistButton";
+            this.blacklistButton.Size = new System.Drawing.Size(75, 66);
+            this.blacklistButton.TabIndex = 3;
+            this.blacklistButton.Text = "Blacklisted";
+            this.blacklistButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.blacklistButton.UseVisualStyleBackColor = false;
+            this.blacklistButton.Click += new System.EventHandler(this.blacklistButton_Click);
+            // 
+            // blacklistMenuStrip
+            // 
+            this.blacklistMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.unblacklistWallpaper});
+            this.blacklistMenuStrip.Name = "contextMenuStrip3";
+            this.blacklistMenuStrip.Size = new System.Drawing.Size(261, 26);
+            // 
+            // unblacklistWallpaper
+            // 
+            this.unblacklistWallpaper.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.unblacklistWallpaper.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.unblacklistWallpaper.Name = "unblacklistWallpaper";
+            this.unblacklistWallpaper.Size = new System.Drawing.Size(260, 22);
+            this.unblacklistWallpaper.Text = "Remove Wallpaper from Blacklist";
+            this.unblacklistWallpaper.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.unblacklistWallpaper.Click += new System.EventHandler(this.unblacklistWallpaper_Click);
+            // 
             // RWC
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(955, 537);
+            this.ClientSize = new System.Drawing.Size(1192, 470);
+            this.Controls.Add(this.blacklistPanel);
+            this.Controls.Add(this.historyPanel);
             this.Controls.Add(this.aboutPanel);
             this.Controls.Add(this.monitorPanel);
-            this.Controls.Add(this.historyPanel);
             this.Controls.Add(this.configurePanel);
             this.Controls.Add(this.configureButton);
             this.Controls.Add(this.aboutButton);
             this.Controls.Add(this.historyButton);
             this.Controls.Add(this.monitorButton);
+            this.Controls.Add(this.blacklistButton);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "RWC";
             this.Text = "Reddit Wallpaper Changer";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RWC_FormClosing);
             this.Load += new System.EventHandler(this.RWC_Load);
-            this.Shown += new System.EventHandler(this.Form1_Shown);
+            this.Shown += new System.EventHandler(this.RWC_Shown);
             this.configurePanel.ResumeLayout(false);
             this.configurePanel.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
@@ -1031,7 +1173,11 @@
             this.historyPanel.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.historyDataGrid)).EndInit();
-            this.contextMenuStrip2.ResumeLayout(false);
+            this.historyMenuStrip.ResumeLayout(false);
+            this.blacklistPanel.ResumeLayout(false);
+            this.blacklistGroupBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.blacklistDataGrid)).EndInit();
+            this.blacklistMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1093,7 +1239,7 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
+        private System.Windows.Forms.ContextMenuStrip historyMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem useThisWallpaperToolStripMenuItem;
         private System.Windows.Forms.Label statuslabel;
         private System.Windows.Forms.DataGridViewImageColumn Preview;
@@ -1117,6 +1263,18 @@
         private System.Windows.Forms.CheckBox chkProxy;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ToolStripMenuItem blacklistWallpapertoolStripMenuItem;
+        private System.Windows.Forms.Panel blacklistPanel;
+        private System.Windows.Forms.GroupBox blacklistGroupBox;
+        private System.Windows.Forms.DataGridView blacklistDataGrid;
+        private System.Windows.Forms.DataGridViewImageColumn blacklistPreview;
+        private System.Windows.Forms.DataGridViewLinkColumn blacklistThread;
+        private System.Windows.Forms.DataGridViewTextBoxColumn blacklistOrderID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn blacklistThreadLink;
+        private System.Windows.Forms.DataGridViewTextBoxColumn blacklistImageURL;
+        private System.Windows.Forms.Button blacklistButton;
+        private System.Windows.Forms.ContextMenuStrip blacklistMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem unblacklistWallpaper;
+        private System.Windows.Forms.ProgressBar blacklistProgress;
     }
 }
 
