@@ -96,12 +96,15 @@ namespace Reddit_Wallpaper_Changer
         {
             this.Size = new Size(391, 508);
             updateStatus("RWC Setup Initating.");
+            Logging.LogMessageToFile("RWC is starting.");
             r = new Random();
             taskIcon.Visible = true;
             setupSavedWallpaperLocation();
+            setupLogging();
             setupProxySettings();
             setupButtons();
             setupPanels();
+            Logging.LogMessageToFile("RWC Interface Loaded.");
             setupOthers();
             setupForm();
             deleteOldVersion();
@@ -124,6 +127,15 @@ namespace Reddit_Wallpaper_Changer
             }
 
             txtSavePath.Text = Properties.Settings.Default.defaultSaveLocation;
+            Logging.LogMessageToFile("Save location for wallpapers set to " + Properties.Settings.Default.defaultSaveLocation);
+        }
+
+        //======================================================================
+        // Setup the logging check box
+        //======================================================================
+        private void setupLogging()
+        {
+            chkLogging.Checked = Properties.Settings.Default.logging;
         }
 
         //======================================================================
@@ -170,6 +182,7 @@ namespace Reddit_Wallpaper_Changer
                 chkProxy.Checked = true;
                 txtProxyServer.Enabled = true;
                 txtProxyServer.Text = Properties.Settings.Default.proxyAddress;
+                Logging.LogMessageToFile("Proxy Enabled: " + Properties.Settings.Default.proxyAddress);
 
                 if (Properties.Settings.Default.proxyAuth == true)
                 {
@@ -179,6 +192,8 @@ namespace Reddit_Wallpaper_Changer
                     txtUser.Text = Properties.Settings.Default.proxyUser;
                     txtPass.Enabled = true;
                     txtPass.Text = Properties.Settings.Default.proxyPass;
+                    Logging.LogMessageToFile("Proxy Username: " + Properties.Settings.Default.proxyUser);
+                    Logging.LogMessageToFile("Proxy Password: **********");
                 }
             }
         }
@@ -216,10 +231,13 @@ namespace Reddit_Wallpaper_Changer
 
             //Set the Wallpaper Type to Random
             wallpaperGrabType.SelectedIndex = Properties.Settings.Default.wallpaperGrabType;
+            Logging.LogMessageToFile("Wallpaper Grab Type: " + Properties.Settings.Default.wallpaperGrabType);
             //Setting the Subreddit Textbox to the default Settings
             subredditTextBox.Text = Properties.Settings.Default.subredditsUsed;
+            Logging.LogMessageToFile("Selected Subreddits: " + Properties.Settings.Default.subredditsUsed);
             //Set the Search Query text
             searchQuery.Text = Properties.Settings.Default.searchQuery;
+            Logging.LogMessageToFile("Search Query: " + Properties.Settings.Default.searchQuery);
             //Set the Time Value
             changeTimeValue.Value = Properties.Settings.Default.changeTimeValue;
             //Set the Time Type
@@ -230,8 +248,9 @@ namespace Reddit_Wallpaper_Changer
 
             //Set the Tray checkbox up
             startInTrayCheckBox.Checked = Properties.Settings.Default.startInTray;
+            Logging.LogMessageToFile("Start In Tray: " + Properties.Settings.Default.startInTray);
             autoStartCheckBox.Checked = Properties.Settings.Default.autoStart;
-
+            Logging.LogMessageToFile("Auto Start: " + Properties.Settings.Default.autoStart);
         }
 
         //======================================================================
@@ -294,7 +313,6 @@ namespace Reddit_Wallpaper_Changer
             {
                 selectedPanel.Visible = false;
                 configurePanel.Visible = true;
-
                 cleanButton(selectedButton);
                 selectButton(configureButton);
                 selectedButton = configureButton;
@@ -311,12 +329,10 @@ namespace Reddit_Wallpaper_Changer
             {
                 selectedPanel.Visible = false;
                 aboutPanel.Visible = true;
-
                 cleanButton(selectedButton);
                 selectButton(aboutButton);
                 selectedButton = aboutButton;
                 selectedPanel = aboutPanel;
-
             }
         }
 
@@ -325,7 +341,6 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void historyButton_Click(object sender, EventArgs e)
         {
-
             if (selectedPanel != historyPanel)
             {
                 selectedPanel.Visible = false;
@@ -363,12 +378,10 @@ namespace Reddit_Wallpaper_Changer
             {
                 selectedPanel.Visible = false;
                 monitorPanel.Visible = true;
-
                 cleanButton(selectedButton);
                 selectButton(monitorButton);
                 selectedButton = monitorButton;
                 selectedPanel = monitorPanel;
-
             }
         }
 
@@ -418,6 +431,7 @@ namespace Reddit_Wallpaper_Changer
 
                 if (!latestVersion.ToString().Contains(currentVersion.Trim().ToString()))
                 {
+                    Logging.LogMessageToFile("Current Version: " + currentVersion + ". " + "Latest version: " + latestVersion);
                     DialogResult choice = MessageBox.Show("You are running version " + currentVersion + "." + Environment.NewLine + "Download version " + latestVersion + " now?", "Update Avaiable!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     if (choice == DialogResult.Yes)
@@ -499,6 +513,7 @@ namespace Reddit_Wallpaper_Changer
             Properties.Settings.Default.proxyUser = txtUser.Text;
             Properties.Settings.Default.proxyPass = txtPass.Text;
             Properties.Settings.Default.defaultSaveLocation = txtSavePath.Text;
+            Properties.Settings.Default.logging = chkAuth.Checked;
             Properties.Settings.Default.Save();
             if (updateTimerBool)
                 updateTimer();
@@ -1558,6 +1573,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void populateBlacklistHistory()
         {
+            Logging.LogMessageToFile("Refreshing Blacklisted wallpapers.");
             blacklistDataGrid.Rows.Clear();
             BackgroundWorker blUpdate= new BackgroundWorker();
             blUpdate.WorkerSupportsCancellation = true;
@@ -1615,12 +1631,13 @@ namespace Reddit_Wallpaper_Changer
                     this.Invoke((MethodInvoker)delegate
                     {
                         blacklistProgress.Value = 0;
+                        Logging.LogMessageToFile("Blacklisted wallpapers loaded.");
                     });
                 }
             }
-            catch
+            catch (Exception ex)
             {
-
+                Logging.LogMessageToFile("Error refreshing blacklist: " + ex.Message);
             }
 
         });           

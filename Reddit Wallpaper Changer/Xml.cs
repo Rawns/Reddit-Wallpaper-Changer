@@ -27,6 +27,7 @@ namespace Reddit_Wallpaper_Changer
                 writer.WriteEndDocument();
                 writer.Flush();
                 writer.Close();
+                Logging.LogMessageToFile("New Favourites.xml file created successfully.");
             }
 
             if (!File.Exists(black))
@@ -39,6 +40,7 @@ namespace Reddit_Wallpaper_Changer
                 writer.WriteEndDocument();
                 writer.Flush();
                 writer.Close();
+                Logging.LogMessageToFile("New Blacklisted.xml file created successfully.");
             }
 
         }

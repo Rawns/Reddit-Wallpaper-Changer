@@ -81,6 +81,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.redditLink = new System.Windows.Forms.LinkLabel();
             this.monitorPanel = new System.Windows.Forms.Panel();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.monitorLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -121,8 +123,7 @@
             this.blacklistButton = new System.Windows.Forms.Button();
             this.blacklistMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.unblacklistWallpaper = new System.Windows.Forms.ToolStripMenuItem();
-            this.monitorLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.chkLogging = new System.Windows.Forms.CheckBox();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -134,6 +135,7 @@
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.monitorPanel.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.historyPanel.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -143,7 +145,6 @@
             this.blacklistGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.blacklistDataGrid)).BeginInit();
             this.blacklistMenuStrip.SuspendLayout();
-            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // configurePanel
@@ -308,6 +309,7 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.chkLogging);
             this.groupBox5.Controls.Add(this.txtPass);
             this.groupBox5.Controls.Add(this.txtUser);
             this.groupBox5.Controls.Add(this.chkAuth);
@@ -325,18 +327,18 @@
             // txtPass
             // 
             this.txtPass.Enabled = false;
-            this.txtPass.Location = new System.Drawing.Point(169, 99);
+            this.txtPass.Location = new System.Drawing.Point(137, 99);
             this.txtPass.Name = "txtPass";
             this.txtPass.PasswordChar = '*';
-            this.txtPass.Size = new System.Drawing.Size(168, 22);
+            this.txtPass.Size = new System.Drawing.Size(200, 22);
             this.txtPass.TabIndex = 9;
             // 
             // txtUser
             // 
             this.txtUser.Enabled = false;
-            this.txtUser.Location = new System.Drawing.Point(169, 74);
+            this.txtUser.Location = new System.Drawing.Point(137, 74);
             this.txtUser.Name = "txtUser";
-            this.txtUser.Size = new System.Drawing.Size(168, 22);
+            this.txtUser.Size = new System.Drawing.Size(200, 22);
             this.txtUser.TabIndex = 8;
             // 
             // chkAuth
@@ -345,18 +347,18 @@
             this.chkAuth.Enabled = false;
             this.chkAuth.Location = new System.Drawing.Point(13, 81);
             this.chkAuth.Name = "chkAuth";
-            this.chkAuth.Size = new System.Drawing.Size(137, 17);
+            this.chkAuth.Size = new System.Drawing.Size(108, 17);
             this.chkAuth.TabIndex = 7;
-            this.chkAuth.Text = "Requires Credentials?";
+            this.chkAuth.Text = "Authentication?";
             this.chkAuth.UseVisualStyleBackColor = true;
             this.chkAuth.CheckedChanged += new System.EventHandler(this.chkAuth_CheckedChanged);
             // 
             // txtProxyServer
             // 
             this.txtProxyServer.Enabled = false;
-            this.txtProxyServer.Location = new System.Drawing.Point(169, 48);
+            this.txtProxyServer.Location = new System.Drawing.Point(137, 48);
             this.txtProxyServer.Name = "txtProxyServer";
-            this.txtProxyServer.Size = new System.Drawing.Size(168, 22);
+            this.txtProxyServer.Size = new System.Drawing.Size(200, 22);
             this.txtProxyServer.TabIndex = 6;
             // 
             // chkProxy
@@ -384,7 +386,7 @@
             // startInTrayCheckBox
             // 
             this.startInTrayCheckBox.AutoSize = true;
-            this.startInTrayCheckBox.Location = new System.Drawing.Point(169, 23);
+            this.startInTrayCheckBox.Location = new System.Drawing.Point(137, 23);
             this.startInTrayCheckBox.Name = "startInTrayCheckBox";
             this.startInTrayCheckBox.Size = new System.Drawing.Size(90, 17);
             this.startInTrayCheckBox.TabIndex = 3;
@@ -576,7 +578,7 @@
             this.aboutPanel.ContextMenuStrip = this.contextMenuStrip1;
             this.aboutPanel.Controls.Add(this.groupBox3);
             this.aboutPanel.Controls.Add(this.groupBox4);
-            this.aboutPanel.Location = new System.Drawing.Point(0, 65);
+            this.aboutPanel.Location = new System.Drawing.Point(420, 49);
             this.aboutPanel.Name = "aboutPanel";
             this.aboutPanel.Size = new System.Drawing.Size(375, 405);
             this.aboutPanel.TabIndex = 3;
@@ -716,6 +718,31 @@
             this.monitorPanel.TabIndex = 4;
             this.monitorPanel.Visible = false;
             this.monitorPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.monitorPanel_Paint);
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.monitorLayoutPanel);
+            this.groupBox8.Location = new System.Drawing.Point(11, 3);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(351, 163);
+            this.groupBox8.TabIndex = 4;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Detected Monitor(s)";
+            // 
+            // monitorLayoutPanel
+            // 
+            this.monitorLayoutPanel.AutoSize = true;
+            this.monitorLayoutPanel.ColumnCount = 1;
+            this.monitorLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.monitorLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.monitorLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.monitorLayoutPanel.Location = new System.Drawing.Point(3, 18);
+            this.monitorLayoutPanel.Name = "monitorLayoutPanel";
+            this.monitorLayoutPanel.RowCount = 1;
+            this.monitorLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.monitorLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.monitorLayoutPanel.Size = new System.Drawing.Size(345, 142);
+            this.monitorLayoutPanel.TabIndex = 3;
             // 
             // label8
             // 
@@ -1130,30 +1157,15 @@
             this.unblacklistWallpaper.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.unblacklistWallpaper.Click += new System.EventHandler(this.unblacklistWallpaper_Click);
             // 
-            // monitorLayoutPanel
+            // chkLogging
             // 
-            this.monitorLayoutPanel.AutoSize = true;
-            this.monitorLayoutPanel.ColumnCount = 1;
-            this.monitorLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.monitorLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.monitorLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.monitorLayoutPanel.Location = new System.Drawing.Point(3, 18);
-            this.monitorLayoutPanel.Name = "monitorLayoutPanel";
-            this.monitorLayoutPanel.RowCount = 1;
-            this.monitorLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.monitorLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.monitorLayoutPanel.Size = new System.Drawing.Size(345, 142);
-            this.monitorLayoutPanel.TabIndex = 3;
-            // 
-            // groupBox8
-            // 
-            this.groupBox8.Controls.Add(this.monitorLayoutPanel);
-            this.groupBox8.Location = new System.Drawing.Point(11, 3);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(351, 163);
-            this.groupBox8.TabIndex = 4;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Detected Monitor(s)";
+            this.chkLogging.AutoSize = true;
+            this.chkLogging.Location = new System.Drawing.Point(262, 23);
+            this.chkLogging.Name = "chkLogging";
+            this.chkLogging.Size = new System.Drawing.Size(74, 17);
+            this.chkLogging.TabIndex = 10;
+            this.chkLogging.Text = "Logging?";
+            this.chkLogging.UseVisualStyleBackColor = true;
             // 
             // RWC
             // 
@@ -1197,6 +1209,8 @@
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.monitorPanel.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             this.historyPanel.ResumeLayout(false);
@@ -1207,8 +1221,6 @@
             this.blacklistGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.blacklistDataGrid)).EndInit();
             this.blacklistMenuStrip.ResumeLayout(false);
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1308,6 +1320,7 @@
         private System.Windows.Forms.ProgressBar blacklistProgress;
         private System.Windows.Forms.TableLayoutPanel monitorLayoutPanel;
         private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.CheckBox chkLogging;
     }
 }
 
