@@ -631,9 +631,9 @@
             this.groupBox4.Controls.Add(this.button3);
             this.groupBox4.Controls.Add(this.label3);
             this.groupBox4.Controls.Add(this.redditLink);
-            this.groupBox4.Location = new System.Drawing.Point(11, 14);
+            this.groupBox4.Location = new System.Drawing.Point(11, 6);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(351, 74);
+            this.groupBox4.Size = new System.Drawing.Size(351, 82);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "About";
@@ -1142,15 +1142,15 @@
             this.monitorLayoutPanel.RowCount = 1;
             this.monitorLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.monitorLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.monitorLayoutPanel.Size = new System.Drawing.Size(345, 124);
+            this.monitorLayoutPanel.Size = new System.Drawing.Size(345, 142);
             this.monitorLayoutPanel.TabIndex = 3;
             // 
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.monitorLayoutPanel);
-            this.groupBox8.Location = new System.Drawing.Point(11, 21);
+            this.groupBox8.Location = new System.Drawing.Point(11, 3);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(351, 145);
+            this.groupBox8.Size = new System.Drawing.Size(351, 163);
             this.groupBox8.TabIndex = 4;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Detected Monitor(s)";

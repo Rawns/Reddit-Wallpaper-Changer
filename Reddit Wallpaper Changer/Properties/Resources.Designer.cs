@@ -113,9 +113,49 @@ namespace Reddit_Wallpaper_Changer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap display_green {
+            get {
+                object obj = ResourceManager.GetObject("display_green", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap display_grey {
+            get {
+                object obj = ResourceManager.GetObject("display_grey", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap history {
             get {
                 object obj = ResourceManager.GetObject("history", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap monitor {
+            get {
+                object obj = ResourceManager.GetObject("monitor", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap panel {
+            get {
+                object obj = ResourceManager.GetObject("panel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -146,6 +186,16 @@ namespace Reddit_Wallpaper_Changer.Properties {
         internal static System.Drawing.Bitmap update_disabled {
             get {
                 object obj = ResourceManager.GetObject("update_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Wizard {
+            get {
+                object obj = ResourceManager.GetObject("Wizard", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

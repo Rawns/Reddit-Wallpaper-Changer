@@ -145,4 +145,19 @@
   <data name="about" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\about.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="display_green" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\display_green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="display_grey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\display_grey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="monitor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\monitor.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="panel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\panel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Wizard" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Wizard.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

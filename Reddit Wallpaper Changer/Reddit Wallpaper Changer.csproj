@@ -118,6 +118,8 @@
     <None Include="Resources\blacklisted.png" />
     <None Include="Resources\history.png" />
     <None Include="Resources\about.png" />
+    <None Include="Resources\display_green.png" />
+    <None Include="Resources\display_grey.png" />
     <Content Include="Resources\rwc.ico" />
     <Content Include="Resources\data.png" />
     <Content Include="Resources\information.png" />

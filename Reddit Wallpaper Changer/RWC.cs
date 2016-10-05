@@ -1277,10 +1277,8 @@ namespace Reddit_Wallpaper_Changer
                 ColumnStyle cs = new ColumnStyle(SizeType.Percent, 100 / count);
                 this.monitorLayoutPanel.ColumnStyles.Add(cs);
 
-                // this.monitorLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
                 // this.monitorLayoutPanel.AutoSize = true;
 
-                // var padding = 8;
                 var buttonSize = new Size(95, 75);
 
                 int z = 0;
@@ -1293,7 +1291,7 @@ namespace Reddit_Wallpaper_Changer
                         AutoSize = true,
                         Size = buttonSize,
                         // Location = new Point(15 + z * (buttonSize.Width + padding), 14),
-                        BackgroundImageLayout = ImageLayout.Stretch,
+                        BackgroundImageLayout = ImageLayout.Stretch,                                                  
                         BackgroundImage = Properties.Resources.display_enabled,
                         TextAlign = ContentAlignment.MiddleCenter,
                         Font = new Font("Segoe UI", 10, FontStyle.Bold),
@@ -1305,9 +1303,7 @@ namespace Reddit_Wallpaper_Changer
                     z++;
 
                     this.monitorLayoutPanel.Controls.Add(monitor, z, 0);
-
-                    //monitorPanel.Controls.Add(monitor);
-                    monitor.MouseClick += new MouseEventHandler(displayClick);
+                    monitor.MouseClick += new MouseEventHandler(monitor_Click);
                 }
             }
         }
@@ -1315,7 +1311,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         // Change monitor colour based on click
         //======================================================================
-        private void displayClick(object sender, MouseEventArgs e)
+        private void monitor_Click(object sender, MouseEventArgs e)
         {
             if (((Button)sender).BackgroundImage == Properties.Resources.display_disabled)
             {
@@ -1368,17 +1364,17 @@ namespace Reddit_Wallpaper_Changer
         {
             if (wallpaperGrabType.Text.Equals("Truly Random"))
             {
-                label2.Visible = false;
-                searchQuery.Visible = false;
-                label9.Visible = true;
+                this.label2.Visible = false;
+                this.searchQuery.Visible = false;
+                this.label9.Visible = true;
             }
             else
             {
                 if (!label2.Visible)
                 {
-                    label2.Visible = true;
-                    searchQuery.Visible = true;
-                    label9.Visible = false;
+                    this.label2.Visible = true;
+                    this.searchQuery.Visible = true;
+                    this.label9.Visible = false;
 
                 }
             }
