@@ -262,5 +262,17 @@ namespace Reddit_Wallpaper_Changer.Properties {
                 this["logging"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string currentWallpaperUrl {
+            get {
+                return ((string)(this["currentWallpaperUrl"]));
+            }
+            set {
+                this["currentWallpaperUrl"] = value;
+            }
+        }
     }
 }

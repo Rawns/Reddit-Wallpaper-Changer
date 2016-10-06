@@ -94,9 +94,10 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void RWC_Load(object sender, EventArgs e)
         {
+            Xml.deleteDummy();
+
             this.Size = new Size(391, 508);
             updateStatus("RWC Setup Initating.");
-            
             r = new Random();
             taskIcon.Visible = true;
             setupSavedWallpaperLocation();
@@ -926,6 +927,7 @@ namespace Reddit_Wallpaper_Changer
                 string wallpaperFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), filename);
                 Properties.Settings.Default.url = url;
                 Properties.Settings.Default.threadTitle = title;
+                Properties.Settings.Default.currentWallpaperUrl = url;
                 Properties.Settings.Default.currentWallpaperName = title + extention;
                 Properties.Settings.Default.threadID = threadID;
                 Properties.Settings.Default.Save();
@@ -1559,6 +1561,13 @@ namespace Reddit_Wallpaper_Changer
             taskIcon.BalloonTipTitle = "Wallpaper Blacklisted!";
             taskIcon.BalloonTipText = "The historical Wallpaper has been blacklisted!";
             taskIcon.ShowBalloonTip(750);
+
+            if (url == Properties.Settings.Default.currentWallpaperUrl)
+            {
+                wallpaperChangeTimer.Enabled = false;
+                wallpaperChangeTimer.Enabled = true;
+                changeWallpaperTimer.Enabled = true;
+            }
 
             populateBlacklistHistory();
         }

@@ -44,5 +44,40 @@ namespace Reddit_Wallpaper_Changer
             }
 
         }
+
+        //======================================================================
+        // Delete the dummy wallpaper example if it exists
+        //======================================================================
+        public static void deleteDummy()
+        {
+            
+            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "Favourites.xml"))
+            {
+                // Delete origional file
+                File.Delete(AppDomain.CurrentDomain.BaseDirectory + "Favourites.xml");
+            }
+
+            string blacklisturl = "http://example.url/blacklisted_wallpaper.jpg";
+            string blpath = AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml";
+
+            try
+            {
+                XmlDocument xml = new XmlDocument();
+                xml.Load(blpath);
+                foreach (XmlNode node in xml.SelectNodes("Blacklisted/Wallpaper"))
+                {
+                    if (node.SelectSingleNode("URL").InnerText == blacklisturl)
+                    {
+                        node.ParentNode.RemoveChild(node);
+                    }
+                }
+
+                xml.Save(blpath);
+            }
+            catch
+            {
+
+            }
+        }
     }
 }
