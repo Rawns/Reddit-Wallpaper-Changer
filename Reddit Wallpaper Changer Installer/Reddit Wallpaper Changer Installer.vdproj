@@ -21,13 +21,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7045F5B4C62B199454F20CCC3A47C985"
+        "MsmKey" = "8:_69091D90DE6B2754ECCBAD0F7A8A68C5"
         "OwnerKey" = "8:_0C833988C45E473F9111FD3263BCB966"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_A78EF0372A849D990F206FE324B58FC7"
+        "MsmKey" = "8:_7045F5B4C62B199454F20CCC3A47C985"
         "OwnerKey" = "8:_0C833988C45E473F9111FD3263BCB966"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -46,13 +46,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7045F5B4C62B199454F20CCC3A47C985"
+        "OwnerKey" = "8:_69091D90DE6B2754ECCBAD0F7A8A68C5"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A78EF0372A849D990F206FE324B58FC7"
+        "OwnerKey" = "8:_7045F5B4C62B199454F20CCC3A47C985"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -112,6 +112,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.5"
+                    }
+                }
             }
         }
     }
@@ -142,20 +150,20 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7045F5B4C62B199454F20CCC3A47C985"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_69091D90DE6B2754ECCBAD0F7A8A68C5"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_7045F5B4C62B199454F20CCC3A47C985"
+                    "_69091D90DE6B2754ECCBAD0F7A8A68C5"
                     {
-                    "Name" = "8:System.Net.Http.dll"
+                    "Name" = "8:Newtonsoft.Json.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:System.Net.Http.dll"
+            "SourcePath" = "8:Newtonsoft.Json.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_4D8D091475BE414084D527C4A579AAAA"
@@ -173,20 +181,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A78EF0372A849D990F206FE324B58FC7"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7045F5B4C62B199454F20CCC3A47C985"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
-                    "_A78EF0372A849D990F206FE324B58FC7"
+                    "_7045F5B4C62B199454F20CCC3A47C985"
                     {
-                    "Name" = "8:Newtonsoft.Json.dll"
+                    "Name" = "8:System.Net.Http.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Newtonsoft.Json.dll"
+            "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_4D8D091475BE414084D527C4A579AAAA"
@@ -232,7 +240,7 @@
         {
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_4D8D091475BE414084D527C4A579AAAA"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder]\\[ProductName]"
+            "DefaultLocation" = "8:C:\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -291,15 +299,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Reddit Wallpaper Changer"
-        "ProductCode" = "8:{1DD098A8-7A53-40C7-A0D1-CA25FFCB7A91}"
-        "PackageCode" = "8:{124D16D2-0760-4D05-800D-A07CB3A8823F}"
+        "ProductCode" = "8:{BCA5721A-FBD4-4E3B-9A46-F502166212DD}"
+        "PackageCode" = "8:{1614C724-BF75-4152-8D9C-67290B415556}"
         "UpgradeCode" = "8:{661C805E-7AE7-4E81-99F6-A78BD746890C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:1.0.8"
         "Manufacturer" = "8:Paul Rawnsley"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://www.reddit.com/r/rwallpaperchanger/"
