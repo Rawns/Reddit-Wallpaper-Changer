@@ -95,6 +95,7 @@ namespace Reddit_Wallpaper_Changer
         private void RWC_Load(object sender, EventArgs e)
         {
             Xml.deleteDummy();
+
             this.Size = new Size(391, 508);
             updateStatus("RWC Setup Initating.");
             r = new Random();

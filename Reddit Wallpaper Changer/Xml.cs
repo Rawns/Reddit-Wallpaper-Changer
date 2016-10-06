@@ -53,6 +53,7 @@ namespace Reddit_Wallpaper_Changer
             
             if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "Favourites.xml"))
             {
+                // Delete origional file
                 File.Delete(AppDomain.CurrentDomain.BaseDirectory + "Favourites.xml");
             }
 
