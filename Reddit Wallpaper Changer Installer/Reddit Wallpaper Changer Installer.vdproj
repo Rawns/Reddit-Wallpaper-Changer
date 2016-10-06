@@ -292,7 +292,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Reddit Wallpaper Changer"
         "ProductCode" = "8:{1DD098A8-7A53-40C7-A0D1-CA25FFCB7A91}"
-        "PackageCode" = "8:{D48FCCEE-F88F-4724-8BBC-5B48F90384A5}"
+        "PackageCode" = "8:{124D16D2-0760-4D05-800D-A07CB3A8823F}"
         "UpgradeCode" = "8:{661C805E-7AE7-4E81-99F6-A78BD746890C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -706,7 +706,7 @@
                     }
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_D105B09C68CF49B487A9B825A98C3AD7"
                     {
-                    "Sequence" = "3:210"
+                    "Sequence" = "3:200"
                     "DisplayName" = "8:Read Me"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"

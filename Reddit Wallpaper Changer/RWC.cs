@@ -96,7 +96,7 @@ namespace Reddit_Wallpaper_Changer
         {
             this.Size = new Size(391, 508);
             updateStatus("RWC Setup Initating.");
-            Logging.LogMessageToFile("RWC is starting.");
+            
             r = new Random();
             taskIcon.Visible = true;
             setupSavedWallpaperLocation();
@@ -104,14 +104,49 @@ namespace Reddit_Wallpaper_Changer
             setupProxySettings();
             setupButtons();
             setupPanels();
-            Logging.LogMessageToFile("RWC Interface Loaded.");
             setupOthers();
             setupForm();
+
+            if (Properties.Settings.Default.logging == true)
+            {
+                loggingStartup();
+            }
+
             deleteOldVersion();
             Xml.createXML();
             populateBlacklistHistory();
             updateStatus("RWC Setup Initated.");
             checkInternetTimer.Enabled = true;
+        }
+
+        //======================================================================
+        // Log startup info
+        //======================================================================
+        private void loggingStartup()
+        {
+            Logging.LogMessageToFile("==============================================================");
+            Logging.LogMessageToFile("RWC is starting.");
+            Logging.LogMessageToFile("RWC Interface Loaded.");
+            Logging.LogMessageToFile("Auto Start: " + Properties.Settings.Default.autoStart);
+            Logging.LogMessageToFile("Start In Tray: " + Properties.Settings.Default.startInTray);
+
+            if (Properties.Settings.Default.useProxy == true)
+            {
+                Logging.LogMessageToFile("Proxy Enabled: " + Properties.Settings.Default.proxyAddress);
+
+                if (Properties.Settings.Default.proxyAuth == true)
+                {
+                    Logging.LogMessageToFile("Proxy Username: " + Properties.Settings.Default.proxyUser);
+                    Logging.LogMessageToFile("Proxy Password: **********");
+                }
+            }
+
+            Logging.LogMessageToFile("Save location for wallpapers set to " + Properties.Settings.Default.defaultSaveLocation);
+            Logging.LogMessageToFile("Wallpaper Grab Type: " + Properties.Settings.Default.wallpaperGrabType);
+            Logging.LogMessageToFile("Selected Subreddits: " + Properties.Settings.Default.subredditsUsed);
+            Logging.LogMessageToFile("Search Query: " + Properties.Settings.Default.searchQuery);
+            Logging.LogMessageToFile("Change wallpaper every " + Properties.Settings.Default.changeTimeValue + " " + changeTimeType.Text);
+
         }
 
         //======================================================================
@@ -127,7 +162,7 @@ namespace Reddit_Wallpaper_Changer
             }
 
             txtSavePath.Text = Properties.Settings.Default.defaultSaveLocation;
-            Logging.LogMessageToFile("Save location for wallpapers set to " + Properties.Settings.Default.defaultSaveLocation);
+            
         }
 
         //======================================================================
@@ -182,7 +217,6 @@ namespace Reddit_Wallpaper_Changer
                 chkProxy.Checked = true;
                 txtProxyServer.Enabled = true;
                 txtProxyServer.Text = Properties.Settings.Default.proxyAddress;
-                Logging.LogMessageToFile("Proxy Enabled: " + Properties.Settings.Default.proxyAddress);
 
                 if (Properties.Settings.Default.proxyAuth == true)
                 {
@@ -192,8 +226,6 @@ namespace Reddit_Wallpaper_Changer
                     txtUser.Text = Properties.Settings.Default.proxyUser;
                     txtPass.Enabled = true;
                     txtPass.Text = Properties.Settings.Default.proxyPass;
-                    Logging.LogMessageToFile("Proxy Username: " + Properties.Settings.Default.proxyUser);
-                    Logging.LogMessageToFile("Proxy Password: **********");
                 }
             }
         }
@@ -231,26 +263,29 @@ namespace Reddit_Wallpaper_Changer
 
             //Set the Wallpaper Type to Random
             wallpaperGrabType.SelectedIndex = Properties.Settings.Default.wallpaperGrabType;
-            Logging.LogMessageToFile("Wallpaper Grab Type: " + Properties.Settings.Default.wallpaperGrabType);
+
             //Setting the Subreddit Textbox to the default Settings
             subredditTextBox.Text = Properties.Settings.Default.subredditsUsed;
-            Logging.LogMessageToFile("Selected Subreddits: " + Properties.Settings.Default.subredditsUsed);
+
             //Set the Search Query text
             searchQuery.Text = Properties.Settings.Default.searchQuery;
-            Logging.LogMessageToFile("Search Query: " + Properties.Settings.Default.searchQuery);
+
             //Set the Time Value
             changeTimeValue.Value = Properties.Settings.Default.changeTimeValue;
+
             //Set the Time Type
             changeTimeType.SelectedIndex = Properties.Settings.Default.changeTimeType;
+
             //Set the current version for update check and label set.
+
             currentVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
             versionLabel.Text = currentVersion;
 
             //Set the Tray checkbox up
             startInTrayCheckBox.Checked = Properties.Settings.Default.startInTray;
-            Logging.LogMessageToFile("Start In Tray: " + Properties.Settings.Default.startInTray);
+
             autoStartCheckBox.Checked = Properties.Settings.Default.autoStart;
-            Logging.LogMessageToFile("Auto Start: " + Properties.Settings.Default.autoStart);
+
         }
 
         //======================================================================
@@ -448,14 +483,16 @@ namespace Reddit_Wallpaper_Changer
                 }
                 else
                 {
+                    Logging.LogMessageToFile("Reddit Wallpaper Changer is up to date (" + currentVersion + ")");
                     taskIcon.BalloonTipIcon = ToolTipIcon.Info;
                     taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer";
                     taskIcon.BalloonTipText = "RWC is up to date! :)";
                     taskIcon.ShowBalloonTip(700);
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Logging.LogMessageToFile("Error checking for updates: " + ex.Message);
                 taskIcon.BalloonTipIcon = ToolTipIcon.Error;
                 taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer";
                 taskIcon.BalloonTipText = "Error checking for updates! :(";
@@ -513,7 +550,7 @@ namespace Reddit_Wallpaper_Changer
             Properties.Settings.Default.proxyUser = txtUser.Text;
             Properties.Settings.Default.proxyPass = txtPass.Text;
             Properties.Settings.Default.defaultSaveLocation = txtSavePath.Text;
-            Properties.Settings.Default.logging = chkAuth.Checked;
+            Properties.Settings.Default.logging = chkLogging.Checked;
             Properties.Settings.Default.Save();
             if (updateTimerBool)
                 updateTimer();

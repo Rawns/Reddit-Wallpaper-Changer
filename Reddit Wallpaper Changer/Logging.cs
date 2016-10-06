@@ -17,16 +17,16 @@ namespace Reddit_Wallpaper_Changer
                 string logfiledir = AppDomain.CurrentDomain.BaseDirectory + @"\Log";
                 System.IO.Directory.CreateDirectory(logfiledir);
 
-                if (File.Exists(logfiledir + "RWC.log"))
+                if (File.Exists(logfiledir + @"\RWC.log"))
                 {
-                    long length = new System.IO.FileInfo(logfiledir + "RWC.log").Length;
+                    long length = new System.IO.FileInfo(logfiledir + @"\RWC.log").Length;
                     long max = 1048576;
 
                     if (length >= max)
                     {
                         try
                         {
-                            File.Delete(logfiledir + "RWC.log");
+                            File.Delete(logfiledir + @"\RWC.log");
                         }
                         catch
                         {
@@ -36,7 +36,7 @@ namespace Reddit_Wallpaper_Changer
 
                 try
                 {
-                    sw = new StreamWriter(logfiledir + "RWC.log", true);
+                    sw = new StreamWriter(logfiledir + @"\RWC.log", true);
                     sw.WriteLine(DateTime.Now.ToString() + " - " + hostName + ": " + msg);
                     sw.Flush();
                     sw.Close();
