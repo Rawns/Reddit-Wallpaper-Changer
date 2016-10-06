@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reddit Wallpaper Changer", "Reddit Wallpaper Changer\Reddit Wallpaper Changer.csproj", "{E7DD94D8-2127-46C3-B8F1-167B7815CA12}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Reddit Wallpaper Changer Installer", "Reddit Wallpaper Changer Installer\Reddit Wallpaper Changer Installer.vdproj", "{518C1467-6B9F-4A63-AA0E-5D1174BA2C3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +20,9 @@ Global
 		{E7DD94D8-2127-46C3-B8F1-167B7815CA12}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E7DD94D8-2127-46C3-B8F1-167B7815CA12}.Remote|Any CPU.ActiveCfg = Remote|Any CPU
 		{E7DD94D8-2127-46C3-B8F1-167B7815CA12}.Remote|Any CPU.Build.0 = Remote|Any CPU
+		{518C1467-6B9F-4A63-AA0E-5D1174BA2C3B}.Debug|Any CPU.ActiveCfg = Debug
+		{518C1467-6B9F-4A63-AA0E-5D1174BA2C3B}.Release|Any CPU.ActiveCfg = Release
+		{518C1467-6B9F-4A63-AA0E-5D1174BA2C3B}.Remote|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
