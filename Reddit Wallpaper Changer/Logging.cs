@@ -14,7 +14,7 @@ namespace Reddit_Wallpaper_Changer
             {
                 StreamWriter sw = null;
                 string hostName = System.Environment.MachineName;
-                string logfiledir = AppDomain.CurrentDomain.BaseDirectory + "Log";
+                string logfiledir = AppDomain.CurrentDomain.BaseDirectory + @"\Log";
                 System.IO.Directory.CreateDirectory(logfiledir);
 
                 if (File.Exists(logfiledir + "RWC.log"))

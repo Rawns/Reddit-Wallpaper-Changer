@@ -1286,26 +1286,21 @@ namespace Reddit_Wallpaper_Changer
             {
                 monitorsCreated = true;
 
-                int count = Screen.AllScreens.Count();
-                this.monitorLayoutPanel.ColumnCount = count;
-
-                ColumnStyle cs = new ColumnStyle(SizeType.Percent, 100 / count);
-                this.monitorLayoutPanel.ColumnStyles.Add(cs);
-
-                // this.monitorLayoutPanel.AutoSize = true;
-
-                var buttonSize = new Size(95, 75);
+                int screens = Screen.AllScreens.Count();
+                this.monitorLayoutPanel.ColumnStyles.Clear();
+                this.monitorLayoutPanel.ColumnCount = screens;            
+                this.monitorLayoutPanel.AutoSize = true;
 
                 int z = 0;
                 foreach (var screen in Screen.AllScreens.OrderBy(i => i.Bounds.X))
                 {
+                    var percent = 100f / screens;
+                    this.monitorLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, percent));
                     
                     Button monitor = new Button
                     {
-                        Name = "Monitor" + screen,
-                        AutoSize = true,
-                        Size = buttonSize,
-                        // Location = new Point(15 + z * (buttonSize.Width + padding), 14),
+                        Name = "Monitor" + z,
+                        Size = new Size(95, 75),
                         BackgroundImageLayout = ImageLayout.Stretch,                                                  
                         BackgroundImage = Properties.Resources.display_enabled,
                         TextAlign = ContentAlignment.MiddleCenter,
@@ -1314,10 +1309,11 @@ namespace Reddit_Wallpaper_Changer
                         BackColor = Color.Transparent,
                         Text = screen.Bounds.Width + "x" + screen.Bounds.Height,
                         Anchor = System.Windows.Forms.AnchorStyles.None
-                };
-                    z++;
+                    };
+                    
 
                     this.monitorLayoutPanel.Controls.Add(monitor, z, 0);
+                    z++;
                     monitor.MouseClick += new MouseEventHandler(monitor_Click);
                 }
             }

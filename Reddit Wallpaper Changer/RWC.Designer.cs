@@ -48,6 +48,7 @@
             this.statuslabel = new System.Windows.Forms.Label();
             this.noticeLabel = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.chkLogging = new System.Windows.Forms.CheckBox();
             this.txtPass = new System.Windows.Forms.TextBox();
             this.txtUser = new System.Windows.Forms.TextBox();
             this.chkAuth = new System.Windows.Forms.CheckBox();
@@ -123,7 +124,6 @@
             this.blacklistButton = new System.Windows.Forms.Button();
             this.blacklistMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.unblacklistWallpaper = new System.Windows.Forms.ToolStripMenuItem();
-            this.chkLogging = new System.Windows.Forms.CheckBox();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -324,6 +324,16 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Behind The Scenes:";
             // 
+            // chkLogging
+            // 
+            this.chkLogging.AutoSize = true;
+            this.chkLogging.Location = new System.Drawing.Point(262, 23);
+            this.chkLogging.Name = "chkLogging";
+            this.chkLogging.Size = new System.Drawing.Size(74, 17);
+            this.chkLogging.TabIndex = 10;
+            this.chkLogging.Text = "Logging?";
+            this.chkLogging.UseVisualStyleBackColor = true;
+            // 
             // txtPass
             // 
             this.txtPass.Enabled = false;
@@ -388,7 +398,7 @@
             this.startInTrayCheckBox.AutoSize = true;
             this.startInTrayCheckBox.Location = new System.Drawing.Point(137, 23);
             this.startInTrayCheckBox.Name = "startInTrayCheckBox";
-            this.startInTrayCheckBox.Size = new System.Drawing.Size(90, 17);
+            this.startInTrayCheckBox.Size = new System.Drawing.Size(91, 17);
             this.startInTrayCheckBox.TabIndex = 3;
             this.startInTrayCheckBox.Text = "Start In Tray?";
             this.toolTip1.SetToolTip(this.startInTrayCheckBox, "Enabled, the program will start minimized.");
@@ -503,7 +513,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(18, 20);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(114, 13);
+            this.label2.Size = new System.Drawing.Size(115, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Reddit Search Query:";
             // 
@@ -578,7 +588,7 @@
             this.aboutPanel.ContextMenuStrip = this.contextMenuStrip1;
             this.aboutPanel.Controls.Add(this.groupBox3);
             this.aboutPanel.Controls.Add(this.groupBox4);
-            this.aboutPanel.Location = new System.Drawing.Point(420, 49);
+            this.aboutPanel.Location = new System.Drawing.Point(861, 47);
             this.aboutPanel.Name = "aboutPanel";
             this.aboutPanel.Size = new System.Drawing.Size(375, 405);
             this.aboutPanel.TabIndex = 3;
@@ -612,7 +622,7 @@
             this.label4.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.label4.Location = new System.Drawing.Point(148, 27);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(90, 13);
+            this.label4.Size = new System.Drawing.Size(91, 13);
             this.label4.TabIndex = 6;
             this.label4.Text = "Current Version:";
             // 
@@ -733,26 +743,24 @@
             // 
             this.monitorLayoutPanel.AutoSize = true;
             this.monitorLayoutPanel.ColumnCount = 1;
-            this.monitorLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.monitorLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.monitorLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.monitorLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.monitorLayoutPanel.Location = new System.Drawing.Point(3, 18);
             this.monitorLayoutPanel.Name = "monitorLayoutPanel";
             this.monitorLayoutPanel.RowCount = 1;
             this.monitorLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.monitorLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.monitorLayoutPanel.Size = new System.Drawing.Size(345, 142);
             this.monitorLayoutPanel.TabIndex = 3;
             // 
             // label8
             // 
-            this.label8.Font = new System.Drawing.Font("Segoe UI", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.Red;
             this.label8.Location = new System.Drawing.Point(11, 252);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(351, 66);
             this.label8.TabIndex = 2;
-            this.label8.Text = "This menu is under development and not yet fully functional!";
+            this.label8.Text = "Multiple monitor support is under development and not yet functional.";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // groupBox7
@@ -772,7 +780,7 @@
             this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point(282, 19);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(60, 23);
+            this.button1.Size = new System.Drawing.Size(60, 21);
             this.button1.TabIndex = 11;
             this.button1.Text = "Save";
             this.toolTip1.SetToolTip(this.button1, "Save");
@@ -787,7 +795,6 @@
             "Center",
             "Span"});
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.Enabled = false;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "Tiled",
@@ -804,7 +811,7 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(8, 22);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(88, 13);
+            this.label7.Size = new System.Drawing.Size(89, 13);
             this.label7.TabIndex = 9;
             this.label7.Text = "Wallpaper Type:";
             // 
@@ -1156,16 +1163,6 @@
             this.unblacklistWallpaper.Text = "Remove Wallpaper from Blacklist";
             this.unblacklistWallpaper.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.unblacklistWallpaper.Click += new System.EventHandler(this.unblacklistWallpaper_Click);
-            // 
-            // chkLogging
-            // 
-            this.chkLogging.AutoSize = true;
-            this.chkLogging.Location = new System.Drawing.Point(262, 23);
-            this.chkLogging.Name = "chkLogging";
-            this.chkLogging.Size = new System.Drawing.Size(74, 17);
-            this.chkLogging.TabIndex = 10;
-            this.chkLogging.Text = "Logging?";
-            this.chkLogging.UseVisualStyleBackColor = true;
             // 
             // RWC
             // 
