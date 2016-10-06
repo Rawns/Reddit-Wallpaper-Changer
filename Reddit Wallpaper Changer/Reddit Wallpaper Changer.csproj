@@ -39,7 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\..\..\Desktop\RedditSharp-master\RedditSharp-master\RedditSharp\bin\Debug\Newtonsoft.Json.dll</HintPath>
+      <HintPath>C:\Reddit Wallpaper Changer\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -68,6 +68,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SaveSettings.cs" />
     <Compile Include="SetGridCallback.cs" />
     <Compile Include="Update.cs">
       <SubType>Form</SubType>
@@ -118,6 +119,8 @@
     <None Include="Resources\blacklisted.png" />
     <None Include="Resources\history.png" />
     <None Include="Resources\about.png" />
+    <None Include="Resources\display_green.png" />
+    <None Include="Resources\display_grey.png" />
     <Content Include="Resources\rwc.ico" />
     <Content Include="Resources\data.png" />
     <Content Include="Resources\information.png" />

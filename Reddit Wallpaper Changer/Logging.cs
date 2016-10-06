@@ -10,37 +10,40 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         public static void LogMessageToFile(string msg)
         {
-            StreamWriter sw = null;
-            string hostName = System.Environment.MachineName;
-            string logfiledir = AppDomain.CurrentDomain.BaseDirectory + @"\Log\";
-            System.IO.Directory.CreateDirectory(logfiledir);
-
-            if (File.Exists(logfiledir + "RWC.log"))
+            if (Properties.Settings.Default.logging == true)
             {
-                long length = new System.IO.FileInfo(logfiledir + "RWC.log").Length;
-                long max = 1048576;
+                StreamWriter sw = null;
+                string hostName = System.Environment.MachineName;
+                string logfiledir = AppDomain.CurrentDomain.BaseDirectory + @"\Log";
+                System.IO.Directory.CreateDirectory(logfiledir);
 
-                if (length >= max)
+                if (File.Exists(logfiledir + @"\RWC.log"))
                 {
-                    try
+                    long length = new System.IO.FileInfo(logfiledir + @"\RWC.log").Length;
+                    long max = 1048576;
+
+                    if (length >= max)
                     {
-                        File.Delete(logfiledir + "RWC.log");
-                    }
-                    catch
-                    {
+                        try
+                        {
+                            File.Delete(logfiledir + @"\RWC.log");
+                        }
+                        catch
+                        {
+                        }
                     }
                 }
-            }
 
-            try
-            {
-                sw = new StreamWriter(logfiledir + "RWC.log", true);
-                sw.WriteLine(DateTime.Now.ToString() + " - " + hostName + ": " + msg);
-                sw.Flush();
-                sw.Close();
-            }
-            catch
-            {
+                try
+                {
+                    sw = new StreamWriter(logfiledir + @"\RWC.log", true);
+                    sw.WriteLine(DateTime.Now.ToString() + " - " + hostName + ": " + msg);
+                    sw.Flush();
+                    sw.Close();
+                }
+                catch
+                {
+                }
             }
         }
 

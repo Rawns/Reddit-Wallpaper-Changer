@@ -250,5 +250,17 @@ namespace Reddit_Wallpaper_Changer.Properties {
                 this["threadID"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool logging {
+            get {
+                return ((bool)(this["logging"]));
+            }
+            set {
+                this["logging"] = value;
+            }
+        }
     }
 }

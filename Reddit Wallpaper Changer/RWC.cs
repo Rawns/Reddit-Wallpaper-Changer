@@ -96,19 +96,57 @@ namespace Reddit_Wallpaper_Changer
         {
             this.Size = new Size(391, 508);
             updateStatus("RWC Setup Initating.");
+            
             r = new Random();
             taskIcon.Visible = true;
             setupSavedWallpaperLocation();
+            setupLogging();
             setupProxySettings();
             setupButtons();
             setupPanels();
             setupOthers();
             setupForm();
+
+            if (Properties.Settings.Default.logging == true)
+            {
+                loggingStartup();
+            }
+
             deleteOldVersion();
             Xml.createXML();
             populateBlacklistHistory();
             updateStatus("RWC Setup Initated.");
             checkInternetTimer.Enabled = true;
+        }
+
+        //======================================================================
+        // Log startup info
+        //======================================================================
+        private void loggingStartup()
+        {
+            Logging.LogMessageToFile("==============================================================");
+            Logging.LogMessageToFile("RWC is starting.");
+            Logging.LogMessageToFile("RWC Interface Loaded.");
+            Logging.LogMessageToFile("Auto Start: " + Properties.Settings.Default.autoStart);
+            Logging.LogMessageToFile("Start In Tray: " + Properties.Settings.Default.startInTray);
+
+            if (Properties.Settings.Default.useProxy == true)
+            {
+                Logging.LogMessageToFile("Proxy Enabled: " + Properties.Settings.Default.proxyAddress);
+
+                if (Properties.Settings.Default.proxyAuth == true)
+                {
+                    Logging.LogMessageToFile("Proxy Username: " + Properties.Settings.Default.proxyUser);
+                    Logging.LogMessageToFile("Proxy Password: **********");
+                }
+            }
+
+            Logging.LogMessageToFile("Save location for wallpapers set to " + Properties.Settings.Default.defaultSaveLocation);
+            Logging.LogMessageToFile("Wallpaper Grab Type: " + Properties.Settings.Default.wallpaperGrabType);
+            Logging.LogMessageToFile("Selected Subreddits: " + Properties.Settings.Default.subredditsUsed);
+            Logging.LogMessageToFile("Search Query: " + Properties.Settings.Default.searchQuery);
+            Logging.LogMessageToFile("Change wallpaper every " + Properties.Settings.Default.changeTimeValue + " " + changeTimeType.Text);
+
         }
 
         //======================================================================
@@ -124,6 +162,15 @@ namespace Reddit_Wallpaper_Changer
             }
 
             txtSavePath.Text = Properties.Settings.Default.defaultSaveLocation;
+            
+        }
+
+        //======================================================================
+        // Setup the logging check box
+        //======================================================================
+        private void setupLogging()
+        {
+            chkLogging.Checked = Properties.Settings.Default.logging;
         }
 
         //======================================================================
@@ -216,20 +263,27 @@ namespace Reddit_Wallpaper_Changer
 
             //Set the Wallpaper Type to Random
             wallpaperGrabType.SelectedIndex = Properties.Settings.Default.wallpaperGrabType;
+
             //Setting the Subreddit Textbox to the default Settings
             subredditTextBox.Text = Properties.Settings.Default.subredditsUsed;
+
             //Set the Search Query text
             searchQuery.Text = Properties.Settings.Default.searchQuery;
+
             //Set the Time Value
             changeTimeValue.Value = Properties.Settings.Default.changeTimeValue;
+
             //Set the Time Type
             changeTimeType.SelectedIndex = Properties.Settings.Default.changeTimeType;
+
             //Set the current version for update check and label set.
+
             currentVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
             versionLabel.Text = currentVersion;
 
             //Set the Tray checkbox up
             startInTrayCheckBox.Checked = Properties.Settings.Default.startInTray;
+
             autoStartCheckBox.Checked = Properties.Settings.Default.autoStart;
 
         }
@@ -294,7 +348,6 @@ namespace Reddit_Wallpaper_Changer
             {
                 selectedPanel.Visible = false;
                 configurePanel.Visible = true;
-
                 cleanButton(selectedButton);
                 selectButton(configureButton);
                 selectedButton = configureButton;
@@ -311,12 +364,10 @@ namespace Reddit_Wallpaper_Changer
             {
                 selectedPanel.Visible = false;
                 aboutPanel.Visible = true;
-
                 cleanButton(selectedButton);
                 selectButton(aboutButton);
                 selectedButton = aboutButton;
                 selectedPanel = aboutPanel;
-
             }
         }
 
@@ -325,7 +376,6 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void historyButton_Click(object sender, EventArgs e)
         {
-
             if (selectedPanel != historyPanel)
             {
                 selectedPanel.Visible = false;
@@ -363,12 +413,10 @@ namespace Reddit_Wallpaper_Changer
             {
                 selectedPanel.Visible = false;
                 monitorPanel.Visible = true;
-
                 cleanButton(selectedButton);
                 selectButton(monitorButton);
                 selectedButton = monitorButton;
                 selectedPanel = monitorPanel;
-
             }
         }
 
@@ -418,6 +466,7 @@ namespace Reddit_Wallpaper_Changer
 
                 if (!latestVersion.ToString().Contains(currentVersion.Trim().ToString()))
                 {
+                    Logging.LogMessageToFile("Current Version: " + currentVersion + ". " + "Latest version: " + latestVersion);
                     DialogResult choice = MessageBox.Show("You are running version " + currentVersion + "." + Environment.NewLine + "Download version " + latestVersion + " now?", "Update Avaiable!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     if (choice == DialogResult.Yes)
@@ -434,14 +483,16 @@ namespace Reddit_Wallpaper_Changer
                 }
                 else
                 {
+                    Logging.LogMessageToFile("Reddit Wallpaper Changer is up to date (" + currentVersion + ")");
                     taskIcon.BalloonTipIcon = ToolTipIcon.Info;
                     taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer";
                     taskIcon.BalloonTipText = "RWC is up to date! :)";
                     taskIcon.ShowBalloonTip(700);
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Logging.LogMessageToFile("Error checking for updates: " + ex.Message);
                 taskIcon.BalloonTipIcon = ToolTipIcon.Error;
                 taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer";
                 taskIcon.BalloonTipText = "Error checking for updates! :(";
@@ -499,6 +550,7 @@ namespace Reddit_Wallpaper_Changer
             Properties.Settings.Default.proxyUser = txtUser.Text;
             Properties.Settings.Default.proxyPass = txtPass.Text;
             Properties.Settings.Default.defaultSaveLocation = txtSavePath.Text;
+            Properties.Settings.Default.logging = chkLogging.Checked;
             Properties.Settings.Default.Save();
             if (updateTimerBool)
                 updateTimer();
@@ -1271,31 +1323,35 @@ namespace Reddit_Wallpaper_Changer
             {
                 monitorsCreated = true;
 
-                var padding = 8;
-                var buttonSize = new Size(95, 75);
+                int screens = Screen.AllScreens.Count();
+                this.monitorLayoutPanel.ColumnStyles.Clear();
+                this.monitorLayoutPanel.ColumnCount = screens;            
+                this.monitorLayoutPanel.AutoSize = true;
 
                 int z = 0;
                 foreach (var screen in Screen.AllScreens.OrderBy(i => i.Bounds.X))
                 {
+                    var percent = 100f / screens;
+                    this.monitorLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, percent));
                     
                     Button monitor = new Button
                     {
-                        Name = "Monitor" + screen,
-                        AutoSize = true,
-                        Size = buttonSize,
-                        Location = new Point(15 + z * (buttonSize.Width + padding), 14),
-                        BackgroundImageLayout = ImageLayout.Stretch,
+                        Name = "Monitor" + z,
+                        Size = new Size(95, 75),
+                        BackgroundImageLayout = ImageLayout.Stretch,                                                  
                         BackgroundImage = Properties.Resources.display_enabled,
                         TextAlign = ContentAlignment.MiddleCenter,
                         Font = new Font("Segoe UI", 10, FontStyle.Bold),
                         ForeColor = Color.White,
                         BackColor = Color.Transparent,
-                        Text = screen.Bounds.Width + "x" + screen.Bounds.Height
+                        Text = screen.Bounds.Width + "x" + screen.Bounds.Height,
+                        Anchor = System.Windows.Forms.AnchorStyles.None
                     };
-                    z++;
+                    
 
-                    monitorPanel.Controls.Add(monitor);
-                    monitor.MouseClick += new MouseEventHandler(displayClick);
+                    this.monitorLayoutPanel.Controls.Add(monitor, z, 0);
+                    z++;
+                    monitor.MouseClick += new MouseEventHandler(monitor_Click);
                 }
             }
         }
@@ -1303,7 +1359,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         // Change monitor colour based on click
         //======================================================================
-        private void displayClick(object sender, MouseEventArgs e)
+        private void monitor_Click(object sender, MouseEventArgs e)
         {
             if (((Button)sender).BackgroundImage == Properties.Resources.display_disabled)
             {
@@ -1356,17 +1412,17 @@ namespace Reddit_Wallpaper_Changer
         {
             if (wallpaperGrabType.Text.Equals("Truly Random"))
             {
-                label2.Visible = false;
-                searchQuery.Visible = false;
-                label9.Visible = true;
+                this.label2.Visible = false;
+                this.searchQuery.Visible = false;
+                this.label9.Visible = true;
             }
             else
             {
                 if (!label2.Visible)
                 {
-                    label2.Visible = true;
-                    searchQuery.Visible = true;
-                    label9.Visible = false;
+                    this.label2.Visible = true;
+                    this.searchQuery.Visible = true;
+                    this.label9.Visible = false;
 
                 }
             }
@@ -1550,6 +1606,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void populateBlacklistHistory()
         {
+            Logging.LogMessageToFile("Refreshing Blacklisted wallpapers.");
             blacklistDataGrid.Rows.Clear();
             BackgroundWorker blUpdate= new BackgroundWorker();
             blUpdate.WorkerSupportsCancellation = true;
@@ -1607,12 +1664,13 @@ namespace Reddit_Wallpaper_Changer
                     this.Invoke((MethodInvoker)delegate
                     {
                         blacklistProgress.Value = 0;
+                        Logging.LogMessageToFile("Blacklisted wallpapers loaded.");
                     });
                 }
             }
-            catch
+            catch (Exception ex)
             {
-
+                Logging.LogMessageToFile("Error refreshing blacklist: " + ex.Message);
             }
 
         });           
