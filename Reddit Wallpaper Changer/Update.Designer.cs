@@ -39,7 +39,7 @@
             // 
             this.label1.Location = new System.Drawing.Point(6, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(299, 40);
+            this.label1.Size = new System.Drawing.Size(359, 40);
             this.label1.TabIndex = 0;
             this.label1.Text = "A newer version of Reddit Wallpaper Changer is available!  Click to begin updatin" +
     "g.";
@@ -48,7 +48,7 @@
             // 
             this.btnUpdate.BackgroundImage = global::Reddit_Wallpaper_Changer.Properties.Resources.update;
             this.btnUpdate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnUpdate.Location = new System.Drawing.Point(311, 9);
+            this.btnUpdate.Location = new System.Drawing.Point(451, 9);
             this.btnUpdate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(40, 40);
@@ -58,21 +58,23 @@
             // 
             // textBox1
             // 
+            this.textBox1.Font = new System.Drawing.Font("Lucida Console", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.Location = new System.Drawing.Point(9, 57);
             this.textBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(342, 127);
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox1.Size = new System.Drawing.Size(482, 157);
             this.textBox1.TabIndex = 0;
             this.textBox1.TabStop = false;
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(9, 192);
+            this.progressBar.Location = new System.Drawing.Point(9, 222);
             this.progressBar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(342, 20);
+            this.progressBar.Size = new System.Drawing.Size(482, 20);
             this.progressBar.TabIndex = 4;
             this.progressBar.Visible = false;
             // 
@@ -80,7 +82,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(361, 220);
+            this.ClientSize = new System.Drawing.Size(503, 255);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.btnUpdate);

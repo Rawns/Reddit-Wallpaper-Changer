@@ -64,7 +64,8 @@ namespace Reddit_Wallpaper_Changer
         {
             Tiled,
             Centered,
-            Stretched
+            Stretched,
+            Fill
         }
 
         //======================================================================
@@ -613,20 +614,26 @@ namespace Reddit_Wallpaper_Changer
             string query = HttpUtility.UrlEncode(Properties.Settings.Default.searchQuery) + "+self%3Ano+((url%3A.png+OR+url%3A.jpg+OR+url%3A.jpeg)+OR+(url%3Aimgur.png+OR+url%3Aimgur.jpg+OR+url%3Aimgur.jpeg)+OR+(url%3Adeviantart))";
             String formURL = "http://www.reddit.com/r/";
             String subreddits = Properties.Settings.Default.subredditsUsed.Replace(" ", "").Replace("www.reddit.com/", "").Replace("reddit.com/", "").Replace("http://", "").Replace("/r/", "");
-            if (subreddits.Equals(""))
+
+            var rand = new Random();
+            string[] subs = subreddits.Split('+');
+            string sub = subs[rand.Next(0, subs.Length)];
+            updateStatus("Sub: " + sub);
+
+            if (sub.Equals(""))
             {
                 formURL += "all";
 
             }
             else
             {
-                if (subreddits.Contains("/m/"))
+                if (sub.Contains("/m/"))
                 {
                     formURL = "http://www.reddit.com/" + subreddits.Replace("http://", "").Replace("https://", "").Replace("user/", "u/");
                 }
                 else
                 {
-                    formURL += subreddits;
+                    formURL += sub;
                 }
 
             }
@@ -1326,8 +1333,16 @@ namespace Reddit_Wallpaper_Changer
                 monitorsCreated = true;
 
                 int screens = Screen.AllScreens.Count();
+                if (screens == 1)
+                {
+                    comboType.Enabled = false;
+                    monitorSaveButton.Enabled = false;
+                    comboType.Text = "-";
+                }
+
                 this.monitorLayoutPanel.ColumnStyles.Clear();
-                this.monitorLayoutPanel.ColumnCount = screens;            
+                this.monitorLayoutPanel.ColumnCount = screens;
+                this.monitorLayoutPanel.RowCount = 2;           
                 this.monitorLayoutPanel.AutoSize = true;
 
                 int z = 0;
@@ -1335,25 +1350,30 @@ namespace Reddit_Wallpaper_Changer
                 {
                     var percent = 100f / screens;
                     this.monitorLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, percent));
-                    
-                    Button monitor = new Button
+
+                    PictureBox monitor = new PictureBox
                     {
-                        Name = "Monitor" + z,
+                        Name = "MonitorPic" + z,
                         Size = new Size(95, 75),
-                        BackgroundImageLayout = ImageLayout.Stretch,                                                  
+                        BackgroundImageLayout = ImageLayout.Stretch,
                         BackgroundImage = Properties.Resources.display_enabled,
-                        TextAlign = ContentAlignment.MiddleCenter,
-                        Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                        ForeColor = Color.White,
-                        BackColor = Color.Transparent,
-                        Text = screen.Bounds.Width + "x" + screen.Bounds.Height,
                         Anchor = System.Windows.Forms.AnchorStyles.None
                     };
-                    
+
+                    Label rez = new Label
+                    {
+                        Name = "MonitorLabel" + z,
+                        TextAlign = ContentAlignment.MiddleCenter,
+                        Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                        ForeColor = Color.Black,
+                        BackColor = Color.Transparent,
+                        Text = screen.Bounds.Width + "x" + screen.Bounds.Height,
+                        Anchor = System.Windows.Forms.AnchorStyles.Bottom
+                    };
 
                     this.monitorLayoutPanel.Controls.Add(monitor, z, 0);
+                    this.monitorLayoutPanel.Controls.Add(rez, z, 1);
                     z++;
-                    monitor.MouseClick += new MouseEventHandler(monitor_Click);
                 }
             }
         }
@@ -1693,8 +1713,6 @@ namespace Reddit_Wallpaper_Changer
         {
             string path = AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml";
             string url = (blacklistDataGrid.Rows[currentMouseOverRow].Cells[4].Value.ToString());
-            // string title = (blacklistDataGrid.Rows[currentMouseOverRow].Cells[1].Value.ToString());
-            // string threadid = (blacklistDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
 
             try
             {
@@ -1715,6 +1733,31 @@ namespace Reddit_Wallpaper_Changer
             {
 
             }   
+        }
+
+        //======================================================================
+        // Remove a previously blacklisted wallpaper
+        //======================================================================
+        private void comboType_SelectedValueChanged(object sender, EventArgs e)
+        {
+            int screens = Screen.AllScreens.Count();
+
+            if (comboType.Text == "Tiled")
+            { 
+
+            }
+            else if(comboType.Text == "Centered")
+            {
+
+            }
+            else if(comboType.Text == "Fill")
+            {
+
+            }
+            else if(comboType.Text == "Stretched")
+            { 
+
+            }
         }
     }
 }
