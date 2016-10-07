@@ -6,8 +6,14 @@ https://www.reddit.com/r/rwallpaperchanger/
 # About
 Reddit Wallpaper Changer is a lightweight C# application for Windows that will scrape Reddit for desktop wallpapers. You can specify which subs to scrape from and how oftern to rotate your wallpaper.
 
-# Current Version - 1.0.7.1
-- Fixed a bug where in some instances, the Favourites.xml file was trying to be accessed from the wrong directiory throwing an error on load. 
+# Current Version - 1.0.8.0
+- Reddit Wallpaper Changer is now available to new users in a lightweight installer (existing users can update using the built-in automatic update utility)
+- Added a new 'Blacklisted' history menu to list wallpapers that have been blacklisted
+- Blacklisted wallpapers can be 'un-blacklisted' by right-clicking any wallpaper in the Blacklisted screen
+- Changed some of the toolbar icons
+- Added some basic logging functionality (to be expanded on in future releases)
+- Redesigned the 'Monitor(s)' menu for smarter detection & displaying of monitors (still in development)
+- Other minor code tweaks/additions
 
 # Installation
 
