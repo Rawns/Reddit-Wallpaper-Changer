@@ -20,6 +20,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void btnUpdate_Click(object sender, EventArgs e)
         {
+            Logging.LogMessageToFile("Updating Reddit Wallpaper Changer.");
             btnUpdate.Enabled = false;
             btnUpdate.BackgroundImage = Properties.Resources.update_disabled;
             progressBar.Visible = true;
@@ -53,6 +54,7 @@ namespace Reddit_Wallpaper_Changer
                     catch (Exception ex)
                     {
                         MessageBox.Show("Error Updating: " + ex.Message, "RWC", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Logging.LogMessageToFile("Error Updating: " + ex.Message);
                     }
                 };
                 System.IO.File.Move(System.Reflection.Assembly.GetExecutingAssembly().Location, System.Reflection.Assembly.GetExecutingAssembly().Location + ".old");
@@ -64,6 +66,7 @@ namespace Reddit_Wallpaper_Changer
             catch (Exception ex)
             {
                 MessageBox.Show("Error Updating: " + ex.Message, "RWC", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logging.LogMessageToFile("Error Updating: " + ex.Message);
             }
         }
 
