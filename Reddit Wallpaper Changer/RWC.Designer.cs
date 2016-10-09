@@ -86,8 +86,8 @@
             this.monitorLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.monitorSaveButton = new System.Windows.Forms.Button();
+            this.comboType = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.historyPanel = new System.Windows.Forms.Panel();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
@@ -124,6 +124,7 @@
             this.blacklistButton = new System.Windows.Forms.Button();
             this.blacklistMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.unblacklistWallpaper = new System.Windows.Forms.ToolStripMenuItem();
+            this.typeDescription = new System.Windows.Forms.Label();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -398,7 +399,7 @@
             this.startInTrayCheckBox.AutoSize = true;
             this.startInTrayCheckBox.Location = new System.Drawing.Point(137, 23);
             this.startInTrayCheckBox.Name = "startInTrayCheckBox";
-            this.startInTrayCheckBox.Size = new System.Drawing.Size(91, 17);
+            this.startInTrayCheckBox.Size = new System.Drawing.Size(90, 17);
             this.startInTrayCheckBox.TabIndex = 3;
             this.startInTrayCheckBox.Text = "Start In Tray?";
             this.toolTip1.SetToolTip(this.startInTrayCheckBox, "Enabled, the program will start minimized.");
@@ -513,7 +514,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(18, 20);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(115, 13);
+            this.label2.Size = new System.Drawing.Size(114, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Reddit Search Query:";
             // 
@@ -622,7 +623,7 @@
             this.label4.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.label4.Location = new System.Drawing.Point(148, 27);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(91, 13);
+            this.label4.Size = new System.Drawing.Size(90, 13);
             this.label4.TabIndex = 6;
             this.label4.Text = "Current Version:";
             // 
@@ -719,6 +720,7 @@
             this.monitorPanel.BackColor = System.Drawing.SystemColors.Control;
             this.monitorPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.monitorPanel.ContextMenuStrip = this.contextMenuStrip1;
+            this.monitorPanel.Controls.Add(this.typeDescription);
             this.monitorPanel.Controls.Add(this.groupBox8);
             this.monitorPanel.Controls.Add(this.label8);
             this.monitorPanel.Controls.Add(this.groupBox7);
@@ -756,17 +758,17 @@
             // 
             this.label8.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.Red;
-            this.label8.Location = new System.Drawing.Point(11, 252);
+            this.label8.Location = new System.Drawing.Point(11, 335);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(351, 66);
+            this.label8.Size = new System.Drawing.Size(351, 54);
             this.label8.TabIndex = 2;
             this.label8.Text = "Multiple monitor support is under development and not yet functional.";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // groupBox7
             // 
-            this.groupBox7.Controls.Add(this.button1);
-            this.groupBox7.Controls.Add(this.comboBox1);
+            this.groupBox7.Controls.Add(this.monitorSaveButton);
+            this.groupBox7.Controls.Add(this.comboType);
             this.groupBox7.Controls.Add(this.label7);
             this.groupBox7.Location = new System.Drawing.Point(11, 177);
             this.groupBox7.Name = "groupBox7";
@@ -775,43 +777,42 @@
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Settings";
             // 
-            // button1
+            // monitorSaveButton
             // 
-            this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(282, 19);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(60, 21);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "Save";
-            this.toolTip1.SetToolTip(this.button1, "Save");
-            this.button1.UseVisualStyleBackColor = true;
+            this.monitorSaveButton.Location = new System.Drawing.Point(282, 19);
+            this.monitorSaveButton.Name = "monitorSaveButton";
+            this.monitorSaveButton.Size = new System.Drawing.Size(60, 21);
+            this.monitorSaveButton.TabIndex = 11;
+            this.monitorSaveButton.Text = "Save";
+            this.toolTip1.SetToolTip(this.monitorSaveButton, "Save");
+            this.monitorSaveButton.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
+            // comboType
             // 
-            this.comboBox1.AutoCompleteCustomSource.AddRange(new string[] {
-            "Fill",
-            "Fit",
-            "Stretch",
-            "Center",
-            "Span"});
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.comboType.AutoCompleteCustomSource.AddRange(new string[] {
+            "Tiled",
+            "Centered",
+            "Stretched",
+            "Fill"});
+            this.comboType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboType.FormattingEnabled = true;
+            this.comboType.Items.AddRange(new object[] {
             "Tiled",
             "Centre",
             "Stretch",
             ""});
-            this.comboBox1.Location = new System.Drawing.Point(103, 19);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(173, 21);
-            this.comboBox1.TabIndex = 10;
+            this.comboType.Location = new System.Drawing.Point(103, 19);
+            this.comboType.Name = "comboType";
+            this.comboType.Size = new System.Drawing.Size(173, 21);
+            this.comboType.TabIndex = 10;
+            this.comboType.SelectedValueChanged += new System.EventHandler(this.comboType_SelectedValueChanged);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(8, 22);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(89, 13);
+            this.label7.Size = new System.Drawing.Size(88, 13);
             this.label7.TabIndex = 9;
             this.label7.Text = "Wallpaper Type:";
             // 
@@ -1164,6 +1165,13 @@
             this.unblacklistWallpaper.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.unblacklistWallpaper.Click += new System.EventHandler(this.unblacklistWallpaper_Click);
             // 
+            // typeDescription
+            // 
+            this.typeDescription.Location = new System.Drawing.Point(11, 247);
+            this.typeDescription.Name = "typeDescription";
+            this.typeDescription.Size = new System.Drawing.Size(351, 90);
+            this.typeDescription.TabIndex = 5;
+            // 
             // RWC
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1276,9 +1284,9 @@
         private System.Windows.Forms.Button monitorButton;
         private System.Windows.Forms.Panel monitorPanel;
         private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboType;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button monitorSaveButton;
         private System.Windows.Forms.ContextMenuStrip historyMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem useThisWallpaperToolStripMenuItem;
         private System.Windows.Forms.Label statuslabel;
@@ -1318,6 +1326,7 @@
         private System.Windows.Forms.TableLayoutPanel monitorLayoutPanel;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.CheckBox chkLogging;
+        private System.Windows.Forms.Label typeDescription;
     }
 }
 

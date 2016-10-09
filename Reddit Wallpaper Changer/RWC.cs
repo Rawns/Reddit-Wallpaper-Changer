@@ -64,7 +64,8 @@ namespace Reddit_Wallpaper_Changer
         {
             Tiled,
             Centered,
-            Stretched
+            Stretched,
+            Fill
         }
 
         //======================================================================
@@ -125,7 +126,9 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void loggingStartup()
         {
-            Logging.LogMessageToFile("==============================================================");
+            int screens = Screen.AllScreens.Count();
+
+            Logging.LogMessageToFile("==================================================================================================");
             Logging.LogMessageToFile("RWC is starting.");
             Logging.LogMessageToFile("RWC Interface Loaded.");
             Logging.LogMessageToFile("Auto Start: " + Properties.Settings.Default.autoStart);
@@ -147,6 +150,7 @@ namespace Reddit_Wallpaper_Changer
             Logging.LogMessageToFile("Selected Subreddits: " + Properties.Settings.Default.subredditsUsed);
             Logging.LogMessageToFile("Search Query: " + Properties.Settings.Default.searchQuery);
             Logging.LogMessageToFile("Change wallpaper every " + Properties.Settings.Default.changeTimeValue + " " + changeTimeType.Text);
+            Logging.LogMessageToFile("Detected " + screens + " displays attached.");
 
         }
 
@@ -194,9 +198,9 @@ namespace Reddit_Wallpaper_Changer
             {
                 File.Delete(System.Reflection.Assembly.GetExecutingAssembly().Location + ".old");
             }
-            catch
+            catch (Exception ex)
             {
-
+                Logging.LogMessageToFile("Error removing old version: " + ex.Message);
             }
         }
 
@@ -456,6 +460,8 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void btnUpdate_Click(object sender, EventArgs e)
         {
+            Logging.LogMessageToFile("Manually checking for updates.");
+
             btnUpdate.Enabled = false;
             btnUpdate.Text = "Checking....";
             currentVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
@@ -523,6 +529,7 @@ namespace Reddit_Wallpaper_Changer
             saveData();
             changeWallpaperTimer.Enabled = true;
             updateStatus("Save Successful");
+            Logging.LogMessageToFile("Settings saved.");
         }
 
         //======================================================================
@@ -592,6 +599,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void changeWallpaper()
         {
+            Logging.LogMessageToFile("Changing wallpaper...");
             BackgroundWorker bw = new BackgroundWorker();
             bw.WorkerSupportsCancellation = true;
             bw.WorkerReportsProgress = true;
@@ -601,7 +609,8 @@ namespace Reddit_Wallpaper_Changer
             if (noResultCount >= 20)
             {
                 noResultCount = 0;
-                MessageBox.Show("No Results After 20 Retries. Disabling RWC. Try a different query?", "Reddit Wallpaper Changer: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No Results After 20 Retries. Disabling RWC.", "Reddit Wallpaper Changer: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logging.LogMessageToFile("No results after 20 retries.");
                 updateStatus("RWC Disabled.");
                 changeWallpaperTimer.Enabled = false;
                 return;
@@ -613,20 +622,27 @@ namespace Reddit_Wallpaper_Changer
             string query = HttpUtility.UrlEncode(Properties.Settings.Default.searchQuery) + "+self%3Ano+((url%3A.png+OR+url%3A.jpg+OR+url%3A.jpeg)+OR+(url%3Aimgur.png+OR+url%3Aimgur.jpg+OR+url%3Aimgur.jpeg)+OR+(url%3Adeviantart))";
             String formURL = "http://www.reddit.com/r/";
             String subreddits = Properties.Settings.Default.subredditsUsed.Replace(" ", "").Replace("www.reddit.com/", "").Replace("reddit.com/", "").Replace("http://", "").Replace("/r/", "");
-            if (subreddits.Equals(""))
+
+            var rand = new Random();
+            string[] subs = subreddits.Split('+');
+            string sub = subs[rand.Next(0, subs.Length)];
+            updateStatus("Sub: " + sub);
+            Logging.LogMessageToFile("Sellected sub to search: " + sub);
+
+            if (sub.Equals(""))
             {
                 formURL += "all";
 
             }
             else
             {
-                if (subreddits.Contains("/m/"))
+                if (sub.Contains("/m/"))
                 {
                     formURL = "http://www.reddit.com/" + subreddits.Replace("http://", "").Replace("https://", "").Replace("user/", "u/");
                 }
                 else
                 {
-                    formURL += subreddits;
+                    formURL += sub;
                 }
 
             }
@@ -690,6 +706,7 @@ namespace Reddit_Wallpaper_Changer
                
                 try
                 {
+                    Logging.LogMessageToFile("Attempting to download: " + formURL);
                     jsonData = client.DownloadString(formURL);
 
                 }
@@ -698,6 +715,7 @@ namespace Reddit_Wallpaper_Changer
                     if (Ex.Message == "The remote server returned an error: (503) Server Unavailable.")
                     {
                         updateStatus("Reddit Server Unavailable, try again later.");
+                        Logging.LogMessageToFile("Reddit Server Unavailable, try again later.");
                     }
                     failedDownload = true;
                 }
@@ -708,10 +726,10 @@ namespace Reddit_Wallpaper_Changer
                 if (jsonData.Length == 0)
                 {
                     updateStatus("Subreddit Probably Doesn't Exist");
+                    Logging.LogMessageToFile("Subreddit probably does not exist.");
                     ++noResultCount;
                     failedDownload = true;
                     breakBetweenChange.Enabled = true;
-
                     return;
                 }
                 JToken redditResult;
@@ -744,7 +762,7 @@ namespace Reddit_Wallpaper_Changer
                             if (redditResult.Count() == 0)
                             {
                                 ++noResultCount;
-                                Console.WriteLine("redditResult Count = 0, Changing Wallpaper.");
+                                Logging.LogMessageToFile("Result Count = 0, Changing Wallpaper.");
                                 needsChange = true;
                                 changeWallpaper();
                             }
@@ -760,14 +778,16 @@ namespace Reddit_Wallpaper_Changer
                         {
                             if (wallpaperGrabType != 0)
                             {
-                                currentThread = "http://reddit.com" + token["data"]["permalink"].ToString();
 
+                                currentThread = "http://reddit.com" + token["data"]["permalink"].ToString();
+                                Logging.LogMessageToFile("Found a wallpaper! Title: " + token["data"]["title"].ToString() + ", URL: " + token["data"]["url"].ToString() + ", ThreadID: " + token["data"]["id"].ToString());
                                 setWallpaper(token["data"]["url"].ToString(), token["data"]["title"].ToString(), token["data"]["id"].ToString());
                             }
                             else
                             {
                                 token = redditResult.ElementAt(random.Next(0, redditResult.Count() - 1));
                                 currentThread = "http://reddit.com" + token["data"]["permalink"].ToString();
+                                Logging.LogMessageToFile("Found a wallpaper! Title: " + token["data"]["title"].ToString() + ", URL: " + token["data"]["url"].ToString() + ", ThreadID: " + token["data"]["id"].ToString());
                                 setWallpaper(token["data"]["url"].ToString(), token["data"]["title"].ToString(), token["data"]["id"].ToString());
 
                             }
@@ -777,6 +797,7 @@ namespace Reddit_Wallpaper_Changer
                     catch (System.InvalidOperationException)
                     {
                         updateStatus("Your query is bringing up no results.");
+                        Logging.LogMessageToFile("No results from the search query.");
                         failedDownload = true;
                         breakBetweenChange.Enabled = true;
                     }
@@ -788,8 +809,9 @@ namespace Reddit_Wallpaper_Changer
                     breakBetweenChange.Enabled = true;
                 }
             }
-            catch (JsonReaderException)
+            catch (JsonReaderException ex)
             {
+                Logging.LogMessageToFile("Unexpected error: " + ex.Message);
                 breakBetweenChange.Enabled = true;
 
             }
@@ -824,6 +846,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void setWallpaper(string url, string title, string threadID)
         {
+            Logging.LogMessageToFile("Setting wallpaper.");
             XDocument xml = XDocument.Load("Blacklist.xml");
             var list = xml.Descendants("URL").Select(x => x.Value).ToList();
 
@@ -932,6 +955,10 @@ namespace Reddit_Wallpaper_Changer
                 Properties.Settings.Default.threadID = threadID;
                 Properties.Settings.Default.Save();
 
+                Logging.LogMessageToFile("URL: " + url);
+                Logging.LogMessageToFile("Title: " + title);
+                Logging.LogMessageToFile("Thread ID: " + threadID);
+
                 if (ImageExtensions.Contains(extention.ToUpper()))
                 {
                     if (System.IO.File.Exists(wallpaperFile))
@@ -940,8 +967,9 @@ namespace Reddit_Wallpaper_Changer
                         {
                             System.IO.File.Delete(wallpaperFile);
                         }
-                        catch (System.IO.IOException)
+                        catch (System.IO.IOException Ex)
                         {
+                            Logging.LogMessageToFile("Unexpected error: " + Ex.Message);
 
                         }
                     }
@@ -956,9 +984,11 @@ namespace Reddit_Wallpaper_Changer
                         {
                             updateStatus("Wallpaper Changed");
                         });
+                        Logging.LogMessageToFile("Wallapper set successfully!");
                     }
-                    catch (System.Net.WebException)
+                    catch (System.Net.WebException Ex)
                     {
+                        Logging.LogMessageToFile("Unexpected Error: " + Ex.Message);
 
                     }
                 }
@@ -998,8 +1028,9 @@ namespace Reddit_Wallpaper_Changer
                     memoryStreamImage.Dispose();
 
                 }
-                catch (ArgumentException)
+                catch (ArgumentException Ex)
                 {
+                    Logging.LogMessageToFile("Unexpected Error: " + Ex.Message);
                     dataGridNumber += 1;
                     SetGrid(null, title, dataGridNumber, threadID, url);
                     historyDataGrid.Rows[0].Visible = false;
@@ -1114,6 +1145,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Logging.LogMessageToFile("Exiting Reddit Wallpaper Changer.");
             realClose = true;
             Application.Exit();
         }
@@ -1130,12 +1162,14 @@ namespace Reddit_Wallpaper_Changer
             {
                 statusMenuItem1.ForeColor = Color.ForestGreen;
                 statusMenuItem1.Text = "Running";
+                Logging.LogMessageToFile("Running.");
 
             }
             else
             {
                 statusMenuItem1.ForeColor = Color.Red;
                 statusMenuItem1.Text = "Not Running";
+                Logging.LogMessageToFile("Not Running.");
 
             }
 
@@ -1233,14 +1267,16 @@ namespace Reddit_Wallpaper_Changer
                 taskIcon.BalloonTipIcon = ToolTipIcon.Info;
                 taskIcon.BalloonTipTitle = "Wallpaper Saved!";
                 taskIcon.BalloonTipText = "Wallpaper saved to " + Properties.Settings.Default.defaultSaveLocation + @"\" + Properties.Settings.Default.currentWallpaperName;
-                taskIcon.ShowBalloonTip(750); 
+                taskIcon.ShowBalloonTip(750);
+                Logging.LogMessageToFile("Saved " + Properties.Settings.Default.currentWallpaperName + " to " + Properties.Settings.Default.defaultSaveLocation); 
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
                 taskIcon.BalloonTipIcon = ToolTipIcon.Error;
                 taskIcon.BalloonTipTitle = "Error Saving!";
                 taskIcon.BalloonTipText = "Unable to save the wallpaper locally. :(";
                 taskIcon.ShowBalloonTip(750);
+                Logging.LogMessageToFile("Error Saving Wallpaper: " + Ex.Message);
             }
         }
 
@@ -1272,10 +1308,12 @@ namespace Reddit_Wallpaper_Changer
                 checkInternetTimer.Enabled = false;
                 updateTimer();
                 startupTimer.Enabled = true;
+                Logging.LogMessageToFile("Internet is working.");
             }
             else
             {
                 updateStatus("Network Unavaliable. Rechecking.");
+                Logging.LogMessageToFile("Network Unavaliable. Rechecking.");
             }
         }
 
@@ -1326,8 +1364,17 @@ namespace Reddit_Wallpaper_Changer
                 monitorsCreated = true;
 
                 int screens = Screen.AllScreens.Count();
+
+                if (screens == 1)
+                {
+                    comboType.Enabled = false;
+                    monitorSaveButton.Enabled = false;
+                    comboType.Text = "-";
+                }
+
                 this.monitorLayoutPanel.ColumnStyles.Clear();
-                this.monitorLayoutPanel.ColumnCount = screens;            
+                this.monitorLayoutPanel.ColumnCount = screens;
+                this.monitorLayoutPanel.RowCount = 2;           
                 this.monitorLayoutPanel.AutoSize = true;
 
                 int z = 0;
@@ -1335,25 +1382,30 @@ namespace Reddit_Wallpaper_Changer
                 {
                     var percent = 100f / screens;
                     this.monitorLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, percent));
-                    
-                    Button monitor = new Button
+
+                    PictureBox monitor = new PictureBox
                     {
-                        Name = "Monitor" + z,
+                        Name = "MonitorPic" + z,
                         Size = new Size(95, 75),
-                        BackgroundImageLayout = ImageLayout.Stretch,                                                  
+                        BackgroundImageLayout = ImageLayout.Stretch,
                         BackgroundImage = Properties.Resources.display_enabled,
-                        TextAlign = ContentAlignment.MiddleCenter,
-                        Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                        ForeColor = Color.White,
-                        BackColor = Color.Transparent,
-                        Text = screen.Bounds.Width + "x" + screen.Bounds.Height,
                         Anchor = System.Windows.Forms.AnchorStyles.None
                     };
-                    
+
+                    Label rez = new Label
+                    {
+                        Name = "MonitorLabel" + z,
+                        TextAlign = ContentAlignment.MiddleCenter,
+                        Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                        ForeColor = Color.Black,
+                        BackColor = Color.Transparent,
+                        Text = screen.Bounds.Width + "x" + screen.Bounds.Height,
+                        Anchor = System.Windows.Forms.AnchorStyles.Bottom
+                    };
 
                     this.monitorLayoutPanel.Controls.Add(monitor, z, 0);
+                    this.monitorLayoutPanel.Controls.Add(rez, z, 1);
                     z++;
-                    monitor.MouseClick += new MouseEventHandler(monitor_Click);
                 }
             }
         }
@@ -1361,17 +1413,17 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         // Change monitor colour based on click
         //======================================================================
-        private void monitor_Click(object sender, MouseEventArgs e)
-        {
-            if (((Button)sender).BackgroundImage == Properties.Resources.display_disabled)
-            {
-                ((Button)sender).BackgroundImage = Properties.Resources.display_enabled;
-            }
-            else
-            {
-                ((Button)sender).BackgroundImage = Properties.Resources.display_disabled;
-            }
-        }
+        // private void monitor_Click(object sender, MouseEventArgs e)
+        //{
+        //    if (((Button)sender).BackgroundImage == Properties.Resources.display_disabled)
+        //    {
+        //        ((Button)sender).BackgroundImage = Properties.Resources.display_enabled;
+        //    }
+        //    else
+        //    {
+        //        ((Button)sender).BackgroundImage = Properties.Resources.display_disabled;
+        //    }
+        //}
 
         //======================================================================
         // History grid mouse click
@@ -1536,6 +1588,8 @@ namespace Reddit_Wallpaper_Changer
             taskIcon.BalloonTipText = "The current Wallpaper has been blacklisted! Finding a new wallpaper...";
             taskIcon.ShowBalloonTip(750);
 
+            Logging.LogMessageToFile("Wallpaper Blacklisted! Wallpaper Title, " + Properties.Settings.Default.threadTitle + ", URL: " + Properties.Settings.Default.threadTitle + ", ThreadID: " + Properties.Settings.Default.threadID);
+
             wallpaperChangeTimer.Enabled = false;
             wallpaperChangeTimer.Enabled = true;
             changeWallpaperTimer.Enabled = true;
@@ -1562,13 +1616,14 @@ namespace Reddit_Wallpaper_Changer
             taskIcon.BalloonTipText = "The historical Wallpaper has been blacklisted!";
             taskIcon.ShowBalloonTip(750);
 
+            Logging.LogMessageToFile("Wallpaper Blacklisted! Wallpaper, " + title + ", URL: " + url + ", ThreadID: " + threadid);
+
             if (url == Properties.Settings.Default.currentWallpaperUrl)
             {
                 wallpaperChangeTimer.Enabled = false;
                 wallpaperChangeTimer.Enabled = true;
                 changeWallpaperTimer.Enabled = true;
             }
-
             populateBlacklistHistory();
         }
 
@@ -1615,7 +1670,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void populateBlacklistHistory()
         {
-            Logging.LogMessageToFile("Refreshing Blacklisted wallpapers.");
+            Logging.LogMessageToFile("Refreshing blacklisted wallpaper history.");
             blacklistDataGrid.Rows.Clear();
             BackgroundWorker blUpdate= new BackgroundWorker();
             blUpdate.WorkerSupportsCancellation = true;
@@ -1663,8 +1718,9 @@ namespace Reddit_Wallpaper_Changer
                         });
                         wc.Dispose();
                     }
-                    catch
+                    catch (Exception ex)
                     {
+                        Logging.LogMessageToFile("Unexpected Error: " + ex.Message);
                     }
                 }
 
@@ -1693,8 +1749,6 @@ namespace Reddit_Wallpaper_Changer
         {
             string path = AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml";
             string url = (blacklistDataGrid.Rows[currentMouseOverRow].Cells[4].Value.ToString());
-            // string title = (blacklistDataGrid.Rows[currentMouseOverRow].Cells[1].Value.ToString());
-            // string threadid = (blacklistDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
 
             try
             {
@@ -1709,12 +1763,38 @@ namespace Reddit_Wallpaper_Changer
                 }
 
                 xml.Save(path);
+                Logging.LogMessageToFile("Wallpaper removed from the blacklist. URL: " + url);
                 populateBlacklistHistory();
             }
-            catch
+            catch (Exception ex)
+            {
+                Logging.LogMessageToFile("Unexpected Error: " + ex.Message);
+            }   
+        }
+
+        //======================================================================
+        // Remove a previously blacklisted wallpaper
+        //======================================================================
+        private void comboType_SelectedValueChanged(object sender, EventArgs e)
+        {
+            int screens = Screen.AllScreens.Count();
+
+            if (comboType.Text == "Tiled")
+            { 
+
+            }
+            else if(comboType.Text == "Centered")
             {
 
-            }   
+            }
+            else if(comboType.Text == "Fill")
+            {
+
+            }
+            else if(comboType.Text == "Stretched")
+            { 
+
+            }
         }
     }
 }
