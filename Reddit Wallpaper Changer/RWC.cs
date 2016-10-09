@@ -176,6 +176,17 @@ namespace Reddit_Wallpaper_Changer
         private void setupLogging()
         {
             chkLogging.Checked = Properties.Settings.Default.logging;
+
+            if (Properties.Settings.Default.logging == false)
+            {
+                btnLog.Enabled = false;
+                btnLog.Text = "Logging Disabled";
+            } 
+            else
+            {
+                btnLog.Enabled = true;
+                btnLog.Text = "Open Log File";
+            }
         }
 
         //======================================================================
@@ -560,6 +571,7 @@ namespace Reddit_Wallpaper_Changer
             Properties.Settings.Default.defaultSaveLocation = txtSavePath.Text;
             Properties.Settings.Default.logging = chkLogging.Checked;
             Properties.Settings.Default.Save();
+            setupLogging();
             if (updateTimerBool)
                 updateTimer();
             setupProxySettings();
@@ -1795,6 +1807,26 @@ namespace Reddit_Wallpaper_Changer
             { 
 
             }
+        }
+
+        //======================================================================
+        // Open the bug form on GitHub
+        //======================================================================
+        private void btnBug_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/Rawns/Reddit-Wallpaper-Changer/issues/new");
+        }
+
+        //======================================================================
+        // Open the log form
+        //======================================================================
+        private void btnLog_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(AppDomain.CurrentDomain.BaseDirectory + @"\Log\RWC.log");
+            }
+            catch { }
         }
     }
 }

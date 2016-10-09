@@ -76,12 +76,14 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btnBug = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.rawnsLink = new System.Windows.Forms.LinkLabel();
             this.button3 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.redditLink = new System.Windows.Forms.LinkLabel();
             this.monitorPanel = new System.Windows.Forms.Panel();
+            this.typeDescription = new System.Windows.Forms.Label();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.monitorLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.label8 = new System.Windows.Forms.Label();
@@ -124,7 +126,8 @@
             this.blacklistButton = new System.Windows.Forms.Button();
             this.blacklistMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.unblacklistWallpaper = new System.Windows.Forms.ToolStripMenuItem();
-            this.typeDescription = new System.Windows.Forms.Label();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.btnLog = new System.Windows.Forms.Button();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -146,6 +149,7 @@
             this.blacklistGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.blacklistDataGrid)).BeginInit();
             this.blacklistMenuStrip.SuspendLayout();
+            this.groupBox10.SuspendLayout();
             this.SuspendLayout();
             // 
             // configurePanel
@@ -328,6 +332,8 @@
             // chkLogging
             // 
             this.chkLogging.AutoSize = true;
+            this.chkLogging.Checked = true;
+            this.chkLogging.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkLogging.Location = new System.Drawing.Point(262, 23);
             this.chkLogging.Name = "chkLogging";
             this.chkLogging.Size = new System.Drawing.Size(74, 17);
@@ -587,9 +593,10 @@
             this.aboutPanel.BackColor = System.Drawing.SystemColors.Control;
             this.aboutPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.aboutPanel.ContextMenuStrip = this.contextMenuStrip1;
+            this.aboutPanel.Controls.Add(this.groupBox10);
             this.aboutPanel.Controls.Add(this.groupBox3);
             this.aboutPanel.Controls.Add(this.groupBox4);
-            this.aboutPanel.Location = new System.Drawing.Point(861, 47);
+            this.aboutPanel.Location = new System.Drawing.Point(411, 33);
             this.aboutPanel.Name = "aboutPanel";
             this.aboutPanel.Size = new System.Drawing.Size(375, 405);
             this.aboutPanel.TabIndex = 3;
@@ -600,9 +607,9 @@
             this.groupBox3.Controls.Add(this.versionLabel);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.btnUpdate);
-            this.groupBox3.Location = new System.Drawing.Point(11, 104);
+            this.groupBox3.Location = new System.Drawing.Point(11, 119);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(351, 83);
+            this.groupBox3.Size = new System.Drawing.Size(351, 63);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Update";
@@ -639,6 +646,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.btnBug);
             this.groupBox4.Controls.Add(this.label10);
             this.groupBox4.Controls.Add(this.rawnsLink);
             this.groupBox4.Controls.Add(this.button3);
@@ -646,20 +654,30 @@
             this.groupBox4.Controls.Add(this.redditLink);
             this.groupBox4.Location = new System.Drawing.Point(11, 6);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(351, 82);
+            this.groupBox4.Size = new System.Drawing.Size(351, 93);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "About";
+            this.groupBox4.Text = "About Reddit Wallpaper Changer";
+            // 
+            // btnBug
+            // 
+            this.btnBug.Location = new System.Drawing.Point(214, 56);
+            this.btnBug.Name = "btnBug";
+            this.btnBug.Size = new System.Drawing.Size(131, 23);
+            this.btnBug.TabIndex = 9;
+            this.btnBug.Text = "Report a bug";
+            this.btnBug.UseVisualStyleBackColor = true;
+            this.btnBug.Click += new System.EventHandler(this.btnBug_Click);
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(18, 47);
+            this.label10.Location = new System.Drawing.Point(18, 27);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(77, 13);
+            this.label10.Size = new System.Drawing.Size(91, 13);
             this.label10.TabIndex = 8;
-            this.label10.Text = "Updated By:";
+            this.label10.Text = "Maintained By:";
             // 
             // rawnsLink
             // 
@@ -669,7 +687,7 @@
             this.rawnsLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rawnsLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.rawnsLink.LinkColor = System.Drawing.Color.SteelBlue;
-            this.rawnsLink.Location = new System.Drawing.Point(126, 47);
+            this.rawnsLink.Location = new System.Drawing.Point(115, 27);
             this.rawnsLink.Name = "rawnsLink";
             this.rawnsLink.Size = new System.Drawing.Size(64, 13);
             this.rawnsLink.TabIndex = 7;
@@ -692,11 +710,11 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(18, 27);
+            this.label3.Location = new System.Drawing.Point(18, 61);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(102, 13);
+            this.label3.Size = new System.Drawing.Size(73, 13);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Origional Author:";
+            this.label3.Text = "Created By:";
             // 
             // redditLink
             // 
@@ -706,7 +724,7 @@
             this.redditLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.redditLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.redditLink.LinkColor = System.Drawing.Color.SteelBlue;
-            this.redditLink.Location = new System.Drawing.Point(126, 27);
+            this.redditLink.Location = new System.Drawing.Point(115, 61);
             this.redditLink.Name = "redditLink";
             this.redditLink.Size = new System.Drawing.Size(59, 13);
             this.redditLink.TabIndex = 2;
@@ -730,6 +748,13 @@
             this.monitorPanel.TabIndex = 4;
             this.monitorPanel.Visible = false;
             this.monitorPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.monitorPanel_Paint);
+            // 
+            // typeDescription
+            // 
+            this.typeDescription.Location = new System.Drawing.Point(11, 247);
+            this.typeDescription.Name = "typeDescription";
+            this.typeDescription.Size = new System.Drawing.Size(351, 90);
+            this.typeDescription.TabIndex = 5;
             // 
             // groupBox8
             // 
@@ -1165,12 +1190,25 @@
             this.unblacklistWallpaper.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.unblacklistWallpaper.Click += new System.EventHandler(this.unblacklistWallpaper_Click);
             // 
-            // typeDescription
+            // groupBox10
             // 
-            this.typeDescription.Location = new System.Drawing.Point(11, 247);
-            this.typeDescription.Name = "typeDescription";
-            this.typeDescription.Size = new System.Drawing.Size(351, 90);
-            this.typeDescription.TabIndex = 5;
+            this.groupBox10.Controls.Add(this.btnLog);
+            this.groupBox10.Location = new System.Drawing.Point(11, 208);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(351, 63);
+            this.groupBox10.TabIndex = 4;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Log File";
+            // 
+            // btnLog
+            // 
+            this.btnLog.Location = new System.Drawing.Point(21, 23);
+            this.btnLog.Name = "btnLog";
+            this.btnLog.Size = new System.Drawing.Size(121, 23);
+            this.btnLog.TabIndex = 0;
+            this.btnLog.Text = "Open Log File";
+            this.btnLog.UseVisualStyleBackColor = true;
+            this.btnLog.Click += new System.EventHandler(this.btnLog_Click);
             // 
             // RWC
             // 
@@ -1226,6 +1264,7 @@
             this.blacklistGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.blacklistDataGrid)).EndInit();
             this.blacklistMenuStrip.ResumeLayout(false);
+            this.groupBox10.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1327,6 +1366,9 @@
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.CheckBox chkLogging;
         private System.Windows.Forms.Label typeDescription;
+        private System.Windows.Forms.Button btnBug;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.Button btnLog;
     }
 }
 
