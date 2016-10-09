@@ -10,6 +10,7 @@ Reddit Wallpaper Changer is a lightweight C# application for Windows that will s
 - Only one subreddit per wallpaper search will be used (chosen at random) from the users list of Subreddits to search, improving searching relibailty/randomness and also allowing users to significently increase the list of subreddits to search for wallpapers.    
 - Added additional application logging functionalty.   
 - Logging is now enabled by default.
+- Made the update window slightly bigger, and added scroll bar so the changes can be viewed more easily.
 
 # Installation
 RWC is a stand alone 'no installation' app. Either:
