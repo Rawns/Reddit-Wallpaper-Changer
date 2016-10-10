@@ -1359,7 +1359,7 @@ namespace Reddit_Wallpaper_Changer
             Form searchWizard = new SearchWizard(this);
             searchWizard.Show();
         }
-
+        
         private void breakBetweenChange_Tick(object sender, EventArgs e)
         {
             breakBetweenChange.Enabled = false;
