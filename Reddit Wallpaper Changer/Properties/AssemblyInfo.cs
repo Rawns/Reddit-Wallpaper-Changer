@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Reddit Wallpaper Changer")]
 [assembly: AssemblyDescription("Reddit Wallpaper Changer")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Rawns")]
+[assembly: AssemblyCompany("/u/Rawns")]
 [assembly: AssemblyProduct("Reddit Wallpaper Changer")]
 [assembly: AssemblyCopyright("Copyright © Paul Rawnsley 2016")]
 [assembly: AssemblyTrademark("")]
