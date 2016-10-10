@@ -3,7 +3,7 @@
 "VSVersion" = "3:800"
 "ProjectType" = "8:{978C614F-708E-4E1A-B201-565925725DBA}"
 "IsWebType" = "8:FALSE"
-"ProjectName" = "8:Reddit Wallpaper Changer Installer"
+"ProjectName" = "8:Reddit-Wallpaper-Changer-Installer"
 "LanguageId" = "3:1033"
 "CodePage" = "3:1252"
 "UILanguageId" = "3:1033"
@@ -15,14 +15,20 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_0C833988C45E473F9111FD3263BCB966"
+        "MsmKey" = "8:_450B816E19CA4F579B99326351197ECE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_7045F5B4C62B199454F20CCC3A47C985"
-        "OwnerKey" = "8:_0C833988C45E473F9111FD3263BCB966"
+        "OwnerKey" = "8:_450B816E19CA4F579B99326351197ECE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A4FE9194BA32A7E6A09A508269058BC7"
+        "OwnerKey" = "8:_450B816E19CA4F579B99326351197ECE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -33,26 +39,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_AEAA9F7520B7BADC4927F8AA7C78D1FF"
-        "OwnerKey" = "8:_0C833988C45E473F9111FD3263BCB966"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0C833988C45E473F9111FD3263BCB966"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_AEAA9F7520B7BADC4927F8AA7C78D1FF"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_7045F5B4C62B199454F20CCC3A47C985"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_A4FE9194BA32A7E6A09A508269058BC7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_450B816E19CA4F579B99326351197ECE"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -160,7 +160,7 @@
                     "_7045F5B4C62B199454F20CCC3A47C985"
                     {
                     "Name" = "8:System.Net.Http.dll"
-                    "Attributes" = "3:516"
+                    "Attributes" = "3:512"
                     }
                 }
             "SourcePath" = "8:System.Net.Http.dll"
@@ -172,7 +172,38 @@
             "Vital" = "11:TRUE"
             "ReadOnly" = "11:FALSE"
             "Hidden" = "11:FALSE"
-            "System" = "11:TRUE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A4FE9194BA32A7E6A09A508269058BC7"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_A4FE9194BA32A7E6A09A508269058BC7"
+                    {
+                    "Name" = "8:Newtonsoft.Json.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Newtonsoft.Json.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_4D8D091475BE414084D527C4A579AAAA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
             "Permanent" = "11:FALSE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
@@ -199,37 +230,6 @@
             "Register" = "3:1"
             "Exclude" = "11:TRUE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AEAA9F7520B7BADC4927F8AA7C78D1FF"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_AEAA9F7520B7BADC4927F8AA7C78D1FF"
-                    {
-                    "Name" = "8:Newtonsoft.Json.dll"
-                    "Attributes" = "3:516"
-                    }
-                }
-            "SourcePath" = "8:Newtonsoft.Json.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_4D8D091475BE414084D527C4A579AAAA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:TRUE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
         }
@@ -300,7 +300,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Reddit Wallpaper Changer"
         "ProductCode" = "8:{BCA5721A-FBD4-4E3B-9A46-F502166212DD}"
-        "PackageCode" = "8:{1614C724-BF75-4152-8D9C-67290B415556}"
+        "PackageCode" = "8:{81F7B3CB-FC8F-4CE9-AECA-25A84A1AAE80}"
         "UpgradeCode" = "8:{661C805E-7AE7-4E81-99F6-A78BD746890C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -420,18 +420,18 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_C20CCDD182BD44FCA97EDCD5AC8A3E4E"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_8D349D2A25CA4EA6BEBFF854D01D9ADA"
             {
-            "Name" = "8:Reddit Wallpaper Changer"
+            "Name" = "8:Reddit Wallpaper Changer (Active)"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:32512"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_0C833988C45E473F9111FD3263BCB966"
+            "Target" = "8:_450B816E19CA4F579B99326351197ECE"
             "Folder" = "8:_CAD53B1CF4744DF49807B6EED4EA5ADA"
             "WorkingFolder" = "8:_4D8D091475BE414084D527C4A579AAAA"
-            "Icon" = "8:_0C833988C45E473F9111FD3263BCB966"
+            "Icon" = "8:_450B816E19CA4F579B99326351197ECE"
             "Feature" = "8:"
             }
         }
@@ -583,7 +583,7 @@
                             "ContextData" = "8:4;True=4;False=0"
                             "Attributes" = "3:0"
                             "Setting" = "3:0"
-                            "Value" = "3:4"
+                            "Value" = "3:0"
                             "DefaultValue" = "3:4"
                             "UsePlugInResources" = "11:TRUE"
                             }
@@ -753,7 +753,7 @@
                             "ContextData" = "8:4;True=4;False=0"
                             "Attributes" = "3:0"
                             "Setting" = "3:0"
-                            "Value" = "3:4"
+                            "Value" = "3:0"
                             "DefaultValue" = "3:4"
                             "UsePlugInResources" = "11:TRUE"
                             }
@@ -927,7 +927,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_0C833988C45E473F9111FD3263BCB966"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_450B816E19CA4F579B99326351197ECE"
             {
             "SourcePath" = "8:..\\Reddit Wallpaper Changer\\obj\\Debug\\Reddit Wallpaper Changer.exe"
             "TargetName" = "8:"
@@ -938,10 +938,10 @@
             "Vital" = "11:TRUE"
             "ReadOnly" = "11:FALSE"
             "Hidden" = "11:FALSE"
-            "System" = "11:TRUE"
+            "System" = "11:FALSE"
             "Permanent" = "11:FALSE"
             "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:2"
+            "PackageAs" = "3:1"
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
@@ -953,7 +953,6 @@
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {
-                "ExcludeFilter" = "8:*.config"
                 }
             }
         }
