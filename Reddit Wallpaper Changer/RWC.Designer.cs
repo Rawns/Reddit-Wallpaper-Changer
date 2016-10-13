@@ -71,6 +71,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.wallpaperGrabType = new System.Windows.Forms.ComboBox();
             this.aboutPanel = new System.Windows.Forms.Panel();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.btnLog = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.versionLabel = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -126,8 +128,6 @@
             this.blacklistButton = new System.Windows.Forms.Button();
             this.blacklistMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.unblacklistWallpaper = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.btnLog = new System.Windows.Forms.Button();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -136,6 +136,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.changeTimeValue)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.aboutPanel.SuspendLayout();
+            this.groupBox10.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.monitorPanel.SuspendLayout();
@@ -149,7 +150,6 @@
             this.blacklistGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.blacklistDataGrid)).BeginInit();
             this.blacklistMenuStrip.SuspendLayout();
-            this.groupBox10.SuspendLayout();
             this.SuspendLayout();
             // 
             // configurePanel
@@ -601,6 +601,26 @@
             this.aboutPanel.Size = new System.Drawing.Size(375, 405);
             this.aboutPanel.TabIndex = 3;
             this.aboutPanel.Visible = false;
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.btnLog);
+            this.groupBox10.Location = new System.Drawing.Point(11, 208);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(351, 63);
+            this.groupBox10.TabIndex = 4;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Log File";
+            // 
+            // btnLog
+            // 
+            this.btnLog.Location = new System.Drawing.Point(21, 23);
+            this.btnLog.Name = "btnLog";
+            this.btnLog.Size = new System.Drawing.Size(121, 23);
+            this.btnLog.TabIndex = 0;
+            this.btnLog.Text = "Open Log File";
+            this.btnLog.UseVisualStyleBackColor = true;
+            this.btnLog.Click += new System.EventHandler(this.btnLog_Click);
             // 
             // groupBox3
             // 
@@ -1113,6 +1133,7 @@
             this.blacklistDataGrid.Name = "blacklistDataGrid";
             this.blacklistDataGrid.ReadOnly = true;
             this.blacklistDataGrid.RowHeadersVisible = false;
+            this.blacklistDataGrid.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.blacklistDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.blacklistDataGrid.ShowCellErrors = false;
             this.blacklistDataGrid.ShowCellToolTips = false;
@@ -1190,26 +1211,6 @@
             this.unblacklistWallpaper.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.unblacklistWallpaper.Click += new System.EventHandler(this.unblacklistWallpaper_Click);
             // 
-            // groupBox10
-            // 
-            this.groupBox10.Controls.Add(this.btnLog);
-            this.groupBox10.Location = new System.Drawing.Point(11, 208);
-            this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(351, 63);
-            this.groupBox10.TabIndex = 4;
-            this.groupBox10.TabStop = false;
-            this.groupBox10.Text = "Log File";
-            // 
-            // btnLog
-            // 
-            this.btnLog.Location = new System.Drawing.Point(21, 23);
-            this.btnLog.Name = "btnLog";
-            this.btnLog.Size = new System.Drawing.Size(121, 23);
-            this.btnLog.TabIndex = 0;
-            this.btnLog.Text = "Open Log File";
-            this.btnLog.UseVisualStyleBackColor = true;
-            this.btnLog.Click += new System.EventHandler(this.btnLog_Click);
-            // 
             // RWC
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1247,6 +1248,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.aboutPanel.ResumeLayout(false);
+            this.groupBox10.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
@@ -1264,7 +1266,6 @@
             this.blacklistGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.blacklistDataGrid)).EndInit();
             this.blacklistMenuStrip.ResumeLayout(false);
-            this.groupBox10.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

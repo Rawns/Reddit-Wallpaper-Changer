@@ -1767,7 +1767,7 @@ namespace Reddit_Wallpaper_Changer
 
                 if(blacklistProgress.Value == 100)
                 {
-                    this.blacklistDataGrid.Sort(this.blacklistDataGrid.Columns["OrderID"], ListSortDirection.Descending);
+                    // this.blacklistDataGrid.Sort(this.blacklistDataGrid.Columns[2], ListSortDirection.Descending);
                     this.Invoke((MethodInvoker)delegate
                     {
                         blacklistProgress.Value = 0;
