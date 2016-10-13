@@ -129,6 +129,7 @@ namespace Reddit_Wallpaper_Changer
             int screens = Screen.AllScreens.Count();
 
             Logging.LogMessageToFile("==================================================================================================");
+            Logging.LogMessageToFile("Reddit Wallpaper Changer Version " + Assembly.GetEntryAssembly().GetName().Version.ToString());
             Logging.LogMessageToFile("RWC is starting.");
             Logging.LogMessageToFile("RWC Interface Loaded.");
             Logging.LogMessageToFile("Auto Start: " + Properties.Settings.Default.autoStart);
@@ -150,7 +151,7 @@ namespace Reddit_Wallpaper_Changer
             Logging.LogMessageToFile("Selected Subreddits: " + Properties.Settings.Default.subredditsUsed);
             Logging.LogMessageToFile("Search Query: " + Properties.Settings.Default.searchQuery);
             Logging.LogMessageToFile("Change wallpaper every " + Properties.Settings.Default.changeTimeValue + " " + changeTimeType.Text);
-            Logging.LogMessageToFile("Detected " + screens + " displays attached.");
+            Logging.LogMessageToFile("Detected " + screens + " display(s) attached.");
 
         }
 
@@ -176,6 +177,17 @@ namespace Reddit_Wallpaper_Changer
         private void setupLogging()
         {
             chkLogging.Checked = Properties.Settings.Default.logging;
+
+            if (Properties.Settings.Default.logging == false)
+            {
+                btnLog.Enabled = false;
+                btnLog.Text = "Logging Disabled";
+            } 
+            else
+            {
+                btnLog.Enabled = true;
+                btnLog.Text = "Open Log File";
+            }
         }
 
         //======================================================================
@@ -560,6 +572,7 @@ namespace Reddit_Wallpaper_Changer
             Properties.Settings.Default.defaultSaveLocation = txtSavePath.Text;
             Properties.Settings.Default.logging = chkLogging.Checked;
             Properties.Settings.Default.Save();
+            setupLogging();
             if (updateTimerBool)
                 updateTimer();
             setupProxySettings();
@@ -599,224 +612,235 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void changeWallpaper()
         {
-            Logging.LogMessageToFile("Changing wallpaper...");
-            BackgroundWorker bw = new BackgroundWorker();
-            bw.WorkerSupportsCancellation = true;
-            bw.WorkerReportsProgress = true;
-            bw.DoWork += new DoWorkEventHandler(
-        delegate(object o, DoWorkEventArgs args)
-        {
-            if (noResultCount >= 20)
-            {
-                noResultCount = 0;
-                MessageBox.Show("No Results After 20 Retries. Disabling RWC.", "Reddit Wallpaper Changer: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Logging.LogMessageToFile("No results after 20 retries.");
-                updateStatus("RWC Disabled.");
-                changeWallpaperTimer.Enabled = false;
-                return;
-            }
-            updateStatus("Finding New Wallpaper");
-            Random random = new Random();
-            string[] randomT = { "&t=day", "&t=year", "&t=all", "&t=month", "&t=week" };
-            string[] randomSort = { "&sort=relevance", "&sort=hot", "&sort=top", "&sort=comments" };
-            string query = HttpUtility.UrlEncode(Properties.Settings.Default.searchQuery) + "+self%3Ano+((url%3A.png+OR+url%3A.jpg+OR+url%3A.jpeg)+OR+(url%3Aimgur.png+OR+url%3Aimgur.jpg+OR+url%3Aimgur.jpeg)+OR+(url%3Adeviantart))";
-            String formURL = "http://www.reddit.com/r/";
-            String subreddits = Properties.Settings.Default.subredditsUsed.Replace(" ", "").Replace("www.reddit.com/", "").Replace("reddit.com/", "").Replace("http://", "").Replace("/r/", "");
+            Logging.LogMessageToFile("Changing wallpaper.");
+            var bw = new BackgroundWorker();
 
-            var rand = new Random();
-            string[] subs = subreddits.Split('+');
-            string sub = subs[rand.Next(0, subs.Length)];
-            updateStatus("Sub: " + sub);
-            Logging.LogMessageToFile("Sellected sub to search: " + sub);
-
-            if (sub.Equals(""))
-            {
-                formURL += "all";
-
-            }
-            else
-            {
-                if (sub.Contains("/m/"))
+            // BackgroundWorker bw = new BackgroundWorker();
+            // bw.WorkerSupportsCancellation = true;
+            // bw.WorkerReportsProgress = true;
+            // bw.DoWork += new DoWorkEventHandler(delegate(object o, DoWorkEventArgs args)
+             bw.DoWork += delegate
+             {
+                Logging.LogMessageToFile("The background worker to find a wallpaper has started successfully.");
+                if (noResultCount >= 20)
                 {
-                    formURL = "http://www.reddit.com/" + subreddits.Replace("http://", "").Replace("https://", "").Replace("user/", "u/");
-                }
-                else
-                {
-                    formURL += sub;
-                }
-
-            }
-            int wallpaperGrabType = Properties.Settings.Default.wallpaperGrabType;
-            switch (wallpaperGrabType)
-            {
-                case 0:
-                    formURL += "/search.json?q=" + query + randomSort[random.Next(0, 4)] + randomT[random.Next(0, 5)] + "&restrict_sr=on";
-                    break;
-                case 1:
-                    formURL += "/search.json?q=" + query + "&sort=new&restrict_sr=on";
-                    break;
-                case 2:
-                    formURL += "/search.json?q=" + query + "&sort=hot&restrict_sr=on&t=day";
-
-                    break;
-                case 3:
-                    formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=hour";
-                    break;
-                case 4:
-                    formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=day";
-                    break;
-                case 5:
-                    formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=week";
-                    break;
-                case 6:
-                    formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=month";
-                    break;
-                case 7:
-                    formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=year";
-                    break;
-                case 8:
-                    formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=all";
-                    break;
-                case 9:
-                    formURL += "/random.json?p=" + (System.Guid.NewGuid().ToString());
-                    break;
-            }
-
-            String jsonData = "";
-            bool failedDownload = false;
-            // Console.WriteLine(formURL);
-            using (WebClient client = new WebClient())
-            {
-                client.Proxy = null;
-
-                // Use a proxy if specified
-                if (Properties.Settings.Default.useProxy == true)
-                {
-                    WebProxy proxy = new WebProxy(Properties.Settings.Default.proxyAddress);
-
-                    if (Properties.Settings.Default.proxyAuth == true)
-                    {
-                        proxy.Credentials = new NetworkCredential(Properties.Settings.Default.proxyUser, Properties.Settings.Default.proxyPass);
-                        proxy.UseDefaultCredentials = false;
-                        proxy.BypassProxyOnLocal = false;
-                    }
-
-                    client.Proxy = proxy;
-                }
-               
-                try
-                {
-                    Logging.LogMessageToFile("Attempting to download: " + formURL);
-                    jsonData = client.DownloadString(formURL);
-
-                }
-                catch (System.Net.WebException Ex)
-                {
-                    if (Ex.Message == "The remote server returned an error: (503) Server Unavailable.")
-                    {
-                        updateStatus("Reddit Server Unavailable, try again later.");
-                        Logging.LogMessageToFile("Reddit Server Unavailable, try again later.");
-                    }
-                    failedDownload = true;
-                }
-                client.Dispose();
-            }
-            try
-            {
-                if (jsonData.Length == 0)
-                {
-                    updateStatus("Subreddit Probably Doesn't Exist");
-                    Logging.LogMessageToFile("Subreddit probably does not exist.");
-                    ++noResultCount;
-                    failedDownload = true;
-                    breakBetweenChange.Enabled = true;
+                    noResultCount = 0;
+                    MessageBox.Show("No Results After 20 Retries. Disabling Reddit Wallpaper Changer.", "Reddit Wallpaper Changer: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Logging.LogMessageToFile("No results after 20 retries. Disabeling Reddit Wallpaper Changer.");
+                    updateStatus("RWC Disabled.");
+                    changeWallpaperTimer.Enabled = false;
                     return;
                 }
-                JToken redditResult;
-                if (wallpaperGrabType == 9)
+                updateStatus("Finding New Wallpaper");
+                Random random = new Random();
+                string[] randomT = { "&t=day", "&t=year", "&t=all", "&t=month", "&t=week" };
+                string[] randomSort = { "&sort=relevance", "&sort=hot", "&sort=top", "&sort=comments", "&sort=new" };
+                string query = HttpUtility.UrlEncode(Properties.Settings.Default.searchQuery) + "+self%3Ano+((url%3A.png+OR+url%3A.jpg+OR+url%3A.jpeg)+OR+(url%3Aimgur.png+OR+url%3Aimgur.jpg+OR+url%3Aimgur.jpeg)+OR+(url%3Adeviantart))";
+                String formURL = "http://www.reddit.com/r/";
+                String subreddits = Properties.Settings.Default.subredditsUsed.Replace(" ", "").Replace("www.reddit.com/", "").Replace("reddit.com/", "").Replace("http://", "").Replace("/r/", "");
+
+                var rand = new Random();
+                string[] subs = subreddits.Split('+');
+                string sub = subs[rand.Next(0, subs.Length)];
+                updateStatus("Sub: " + sub);
+                Logging.LogMessageToFile("Sellected sub to search: " + sub);
+
+                if (sub.Equals(""))
                 {
-                    redditResult = JToken.Parse(jsonData);
-                    redditResult = (JToken.Parse(redditResult.First.ToString())["data"]["children"]);
+                    formURL += "all";
+
                 }
                 else
                 {
-                    redditResult = JToken.Parse(jsonData)["data"]["children"];
-                }
-                if ((!failedDownload) || (!(redditResult.ToString().Length < 3)))
-                {
+                    if (sub.Contains("/m/"))
+                    {
+                        formURL = "http://www.reddit.com/" + subreddits.Replace("http://", "").Replace("https://", "").Replace("user/", "u/");
+                    }
+                    else
+                    {
+                        formURL += sub;
+                    }
 
-                    JToken token = null;
+                }
+                int wallpaperGrabType = Properties.Settings.Default.wallpaperGrabType;
+                switch (wallpaperGrabType)
+                {
+                    case 0:
+                        formURL += "/search.json?q=" + query + randomSort[random.Next(0, 4)] + randomT[random.Next(0, 5)] + "&restrict_sr=on";
+                        Logging.LogMessageToFile("Full URL Search String: " + formURL);
+                        break;
+                    case 1:
+                        formURL += "/search.json?q=" + query + "&sort=new&restrict_sr=on";
+                        Logging.LogMessageToFile("Full URL Search String: " + formURL);
+                        break;
+                    case 2:
+                        formURL += "/search.json?q=" + query + "&sort=hot&restrict_sr=on&t=day";
+                        Logging.LogMessageToFile("Full URL Search String: " + formURL);
+                        break;
+                    case 3:
+                        formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=hour";
+                        Logging.LogMessageToFile("Full URL Search String: " + formURL);
+                        break;
+                    case 4:
+                        formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=day";
+                        Logging.LogMessageToFile("Full URL Search String: " + formURL);
+                        break;
+                    case 5:
+                        formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=week";
+                        Logging.LogMessageToFile("Full URL Search String: " + formURL);
+                        break;
+                    case 6:
+                        formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=month";
+                        Logging.LogMessageToFile("Full URL Search String: " + formURL);
+                        break;
+                    case 7:
+                        formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=year";
+                        Logging.LogMessageToFile("Full URL Search String: " + formURL);
+                        break;
+                    case 8:
+                        formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=all";
+                        Logging.LogMessageToFile("Full URL Search String: " + formURL);
+                        break;
+                    case 9:
+                        formURL += "/random.json?p=" + (System.Guid.NewGuid().ToString());
+                        Logging.LogMessageToFile("Full URL Search String: " + formURL);
+                        break;
+                }
+
+                String jsonData = "";
+                bool failedDownload = false;
+                using (WebClient client = new WebClient())
+                {
+                    client.Proxy = null;
+
+                    // Use a proxy if specified
+                    if (Properties.Settings.Default.useProxy == true)
+                    {
+                        WebProxy proxy = new WebProxy(Properties.Settings.Default.proxyAddress);
+
+                        if (Properties.Settings.Default.proxyAuth == true)
+                        {
+                            proxy.Credentials = new NetworkCredential(Properties.Settings.Default.proxyUser, Properties.Settings.Default.proxyPass);
+                            proxy.UseDefaultCredentials = false;
+                            proxy.BypassProxyOnLocal = false;
+                        }
+
+                        client.Proxy = proxy;
+                    }
+               
                     try
                     {
-                        IEnumerable<JToken> redditResultReversed = redditResult.Reverse();
-                        foreach (JToken toke in redditResultReversed)
-                        {
-                            if (!historyRepeated.Contains(toke["data"]["id"].ToString()))
-                            {
-                                token = toke;
-                            }
-                        }
-                        bool needsChange = false;
-                        if (token == null)
-                        {
-                            if (redditResult.Count() == 0)
-                            {
-                                ++noResultCount;
-                                Logging.LogMessageToFile("Result Count = 0, Changing Wallpaper.");
-                                needsChange = true;
-                                changeWallpaper();
-                            }
-                            else
-                            {
-                                historyRepeated.Clear();
-                                int randIndex = r.Next(0, redditResult.Count() - 1);
-                                token = redditResult.ElementAt(randIndex);
-
-                            }
-                        }
-                        if (!needsChange)
-                        {
-                            if (wallpaperGrabType != 0)
-                            {
-
-                                currentThread = "http://reddit.com" + token["data"]["permalink"].ToString();
-                                Logging.LogMessageToFile("Found a wallpaper! Title: " + token["data"]["title"].ToString() + ", URL: " + token["data"]["url"].ToString() + ", ThreadID: " + token["data"]["id"].ToString());
-                                setWallpaper(token["data"]["url"].ToString(), token["data"]["title"].ToString(), token["data"]["id"].ToString());
-                            }
-                            else
-                            {
-                                token = redditResult.ElementAt(random.Next(0, redditResult.Count() - 1));
-                                currentThread = "http://reddit.com" + token["data"]["permalink"].ToString();
-                                Logging.LogMessageToFile("Found a wallpaper! Title: " + token["data"]["title"].ToString() + ", URL: " + token["data"]["url"].ToString() + ", ThreadID: " + token["data"]["id"].ToString());
-                                setWallpaper(token["data"]["url"].ToString(), token["data"]["title"].ToString(), token["data"]["id"].ToString());
-
-                            }
-                        }
+                        Logging.LogMessageToFile("Searching Reddit for a wallpaper.");
+                        jsonData = client.DownloadString(formURL);
 
                     }
-                    catch (System.InvalidOperationException)
+                    catch (System.Net.WebException Ex)
                     {
-                        updateStatus("Your query is bringing up no results.");
-                        Logging.LogMessageToFile("No results from the search query.");
+                        if (Ex.Message == "The remote server returned an error: (503) Server Unavailable.")
+                        {
+                            updateStatus("Reddit Server Unavailable, try again later.");
+                            Logging.LogMessageToFile("Reddit Server Unavailable, try again later.");
+                        }
+                        failedDownload = true;
+                    }
+                    client.Dispose();
+                }
+                try
+                {
+                    if (jsonData.Length == 0)
+                    {
+                        updateStatus("Subreddit Probably Doesn't Exist");
+                        Logging.LogMessageToFile("Subreddit probably does not exist.");
+                        ++noResultCount;
                         failedDownload = true;
                         breakBetweenChange.Enabled = true;
+                        return;
                     }
+                    JToken redditResult;
+                    if (wallpaperGrabType == 9)
+                    {
+                        redditResult = JToken.Parse(jsonData);
+                        redditResult = (JToken.Parse(redditResult.First.ToString())["data"]["children"]);
+                    }
+                    else
+                    {
+                        redditResult = JToken.Parse(jsonData)["data"]["children"];
+                    }
+                    if ((!failedDownload) || (!(redditResult.ToString().Length < 3)))
+                    {
+
+                        JToken token = null;
+                        try
+                        {
+                            IEnumerable<JToken> redditResultReversed = redditResult.Reverse();
+                            foreach (JToken toke in redditResultReversed)
+                            {
+                                if (!historyRepeated.Contains(toke["data"]["id"].ToString()))
+                                {
+                                    token = toke;
+                                }
+                            }
+                            bool needsChange = false;
+                            if (token == null)
+                            {
+                                if (redditResult.Count() == 0)
+                                {
+                                    ++noResultCount;
+                                    Logging.LogMessageToFile("No search results, trying to change wallpaper again.");
+                                    needsChange = true;
+                                    changeWallpaper();
+                                }
+                                else
+                                {
+                                    historyRepeated.Clear();
+                                    int randIndex = r.Next(0, redditResult.Count() - 1);
+                                    token = redditResult.ElementAt(randIndex);
+
+                                }
+                            }
+                            if (!needsChange)
+                            {
+                                if (wallpaperGrabType != 0)
+                                {
+
+                                    currentThread = "http://reddit.com" + token["data"]["permalink"].ToString();
+                                    Logging.LogMessageToFile("Found a wallpaper! Title: " + token["data"]["title"].ToString() + ", URL: " + token["data"]["url"].ToString() + ", ThreadID: " + token["data"]["id"].ToString());
+                                    setWallpaper(token["data"]["url"].ToString(), token["data"]["title"].ToString(), token["data"]["id"].ToString());
+                                }
+                                else
+                                {
+                                    token = redditResult.ElementAt(random.Next(0, redditResult.Count() - 1));
+                                    currentThread = "http://reddit.com" + token["data"]["permalink"].ToString();
+                                    Logging.LogMessageToFile("Found a wallpaper! Title: " + token["data"]["title"].ToString() + ", URL: " + token["data"]["url"].ToString() + ", ThreadID: " + token["data"]["id"].ToString());
+                                    setWallpaper(token["data"]["url"].ToString(), token["data"]["title"].ToString(), token["data"]["id"].ToString());
+
+                                }
+                            }
+
+                        }
+                        catch (System.InvalidOperationException)
+                        {
+                            updateStatus("Your query is bringing up no results.");
+                            Logging.LogMessageToFile("No results from the search query.");
+                            failedDownload = true;
+                            breakBetweenChange.Enabled = true;
+                        }
 
 
+                    }
+                    else
+                    {
+                        breakBetweenChange.Enabled = true;
+                    }
                 }
-                else
+                catch (JsonReaderException ex)
                 {
+                    Logging.LogMessageToFile("Unexpected error: " + ex.Message);
                     breakBetweenChange.Enabled = true;
+
                 }
-            }
-            catch (JsonReaderException ex)
-            {
-                Logging.LogMessageToFile("Unexpected error: " + ex.Message);
-                breakBetweenChange.Enabled = true;
 
-            }
-
-        });
+            };
 
             bw.RunWorkerAsync();
         }
@@ -853,193 +877,210 @@ namespace Reddit_Wallpaper_Changer
             if (list.Contains(url))
             {
                 updateStatus("Wallpaper is blacklisted.");
+                Logging.LogMessageToFile("The selected wallpaper has been blacklisted, searching again.");
                 changeWallpaperTimer.Enabled = false;
                 changeWallpaper();
                 return;
             }
 
-            BackgroundWorker bw = new BackgroundWorker();
-            bw.WorkerReportsProgress = true;
-            bw.WorkerSupportsCancellation = true;
-            bw.DoWork += new DoWorkEventHandler(
-        delegate(object o, DoWorkEventArgs args)
-        {
-            Uri uri2 = new Uri(url);
-            string extention2 = System.IO.Path.GetExtension(uri2.LocalPath);
-
-            historyMenuStrip.Hide();
-            BeginInvoke((MethodInvoker)delegate
+            List<string> historyList = new List<string>();
+            foreach (DataGridViewRow item in historyDataGrid.Rows)
             {
-                updateStatus("Setting Wallpaper");
-
-            });
-            string url2 = url.ToLower();
-            if (url.Equals(null) || url.Length.Equals(0))
-            {
-                changeWallpaperTimer.Enabled = true;
+                if (item.Cells[4].Value != null)
+                {
+                    list.Add(item.Cells[4].Value.ToString());
+                }
             }
-            else
+
+            if (historyList.Contains(url))
             {
-                if (url2.Contains("imgur.com/a/"))
+                updateStatus("Wallpaper already used this session.");
+                Logging.LogMessageToFile("The selected wallpaper has already been used this session, searching again.");
+                changeWallpaperTimer.Enabled = false;
+                changeWallpaper();
+                return;
+            }
+
+            var bw = new BackgroundWorker();
+            bw.DoWork += delegate
+            {
+                Uri uri2 = new Uri(url);
+                string extention2 = System.IO.Path.GetExtension(uri2.LocalPath);
+
+                historyMenuStrip.Hide();
+                BeginInvoke((MethodInvoker)delegate
                 {
-                    string jsonresult;
-                    string imgurid = url.Replace("https://", "").Replace("http://", "").Replace("imgur.com/a/", "").Replace("//", "").Replace("/", "");
-                    var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.imgur.com/3/album/" + imgurid);
-                    httpWebRequest.ContentType = "application/json";
-                    httpWebRequest.Accept = "*/*";
-                    httpWebRequest.Method = "GET";
-                    httpWebRequest.Headers.Add("Authorization", "Client-ID 355f2ab533c2ac7");
+                    updateStatus("Setting Wallpaper");
 
-                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                    {
-                        jsonresult = streamReader.ReadToEnd();
-
-                    }
-                    JToken imgurResult = JToken.Parse(jsonresult)["data"]["images"];
-                    int i = imgurResult.Count();
-                    int selc = 0;
-                    if (i - 1 != 0)
-                    {
-                        selc = r.Next(0, i - 1);
-
-                    }
-                    JToken img = imgurResult.ElementAt(selc);
-                    url = img["link"].ToString();
-                }
-                else if (!ImageExtensions.Contains(extention2.ToUpper()) && (url2.Contains("deviantart")))
-                {
-                    string jsonresult;
-                    var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://backend.deviantart.com/oembed?url=" + url);
-                    httpWebRequest.ContentType = "application/json";
-                    httpWebRequest.Accept = "*/*";
-                    httpWebRequest.Method = "GET";
-
-                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                    {
-                        jsonresult = streamReader.ReadToEnd();
-
-                    }
-                    JToken imgResult = JToken.Parse(jsonresult);
-                    url = imgResult["url"].ToString();
-
-                }
-                else if (!ImageExtensions.Contains(extention2.ToUpper()) && (url2.Contains("imgur.com")))
-                {
-                    string jsonresult;
-                    string imgurid = url.Replace("https://", "").Replace("http://", "").Replace("imgur.com/", "").Replace("//", "").Replace("/", "");
-                    var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.imgur.com/3/image/" + imgurid);
-                    httpWebRequest.ContentType = "application/json";
-                    httpWebRequest.Accept = "*/*";
-                    httpWebRequest.Method = "GET";
-                    httpWebRequest.Headers.Add("Authorization", "Client-ID 355f2ab533c2ac7");
-
-                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                    {
-                        jsonresult = streamReader.ReadToEnd();
-
-                    }
-                    JToken imgResult = JToken.Parse(jsonresult);
-                    url = imgResult["data"]["link"].ToString();
-                }
-                Uri uri = new Uri(url);
-                string extention = System.IO.Path.GetExtension(uri.LocalPath);
-                string filename = "currentWallpaper" + extention;
-                string wallpaperFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), filename);
-                Properties.Settings.Default.url = url;
-                Properties.Settings.Default.threadTitle = title;
-                Properties.Settings.Default.currentWallpaperUrl = url;
-                Properties.Settings.Default.currentWallpaperName = title + extention;
-                Properties.Settings.Default.threadID = threadID;
-                Properties.Settings.Default.Save();
-
-                Logging.LogMessageToFile("URL: " + url);
-                Logging.LogMessageToFile("Title: " + title);
-                Logging.LogMessageToFile("Thread ID: " + threadID);
-
-                if (ImageExtensions.Contains(extention.ToUpper()))
-                {
-                    if (System.IO.File.Exists(wallpaperFile))
-                    {
-                        try
-                        {
-                            System.IO.File.Delete(wallpaperFile);
-                        }
-                        catch (System.IO.IOException Ex)
-                        {
-                            Logging.LogMessageToFile("Unexpected error: " + Ex.Message);
-
-                        }
-                    }
-                    try
-                    {
-                        WebClient webClient = Proxy.setProxy();
-                        webClient.DownloadFile(uri.AbsoluteUri, @wallpaperFile);
-                        SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, @wallpaperFile, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
-                        historyRepeated.Add(threadID);
-                        noResultCount = 0;
-                        BeginInvoke((MethodInvoker)delegate
-                        {
-                            updateStatus("Wallpaper Changed");
-                        });
-                        Logging.LogMessageToFile("Wallapper set successfully!");
-                    }
-                    catch (System.Net.WebException Ex)
-                    {
-                        Logging.LogMessageToFile("Unexpected Error: " + Ex.Message);
-
-                    }
-                }
-                else
+                });
+                string url2 = url.ToLower();
+                if (url.Equals(null) || url.Length.Equals(0))
                 {
                     changeWallpaperTimer.Enabled = true;
                 }
-
-            }
-
-            WebClient wc = Proxy.setProxy();
-            byte[] bytes = wc.DownloadData(url);
-
-            if (bytes.Count().Equals(0))
-            {
-                changeWallpaperTimer.Enabled = true;
-            }
-            else
-            {
-                try
+                else
                 {
-
-                    MemoryStream ms = new MemoryStream(bytes);
-                    memoryStreamImage = System.Drawing.Image.FromStream(ms);
-                    ms.Dispose();
-                    ms.Close();
-
-                    if (currentWallpaper != null)
+                    if (url2.Contains("imgur.com/a/"))
                     {
-                        currentWallpaper.Dispose();
+                        string jsonresult;
+                        string imgurid = url.Replace("https://", "").Replace("http://", "").Replace("imgur.com/a/", "").Replace("//", "").Replace("/", "");
+                        var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.imgur.com/3/album/" + imgurid);
+                        httpWebRequest.ContentType = "application/json";
+                        httpWebRequest.Accept = "*/*";
+                        httpWebRequest.Method = "GET";
+                        httpWebRequest.Headers.Add("Authorization", "Client-ID 355f2ab533c2ac7");
+
+                        var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                        {
+                            jsonresult = streamReader.ReadToEnd();
+
+                        }
+                        JToken imgurResult = JToken.Parse(jsonresult)["data"]["images"];
+                        int i = imgurResult.Count();
+                        int selc = 0;
+                        if (i - 1 != 0)
+                        {
+                            selc = r.Next(0, i - 1);
+
+                        }
+                        JToken img = imgurResult.ElementAt(selc);
+                        url = img["link"].ToString();
+                    }
+                    else if (!ImageExtensions.Contains(extention2.ToUpper()) && (url2.Contains("deviantart")))
+                    {
+                        string jsonresult;
+                        var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://backend.deviantart.com/oembed?url=" + url);
+                        httpWebRequest.ContentType = "application/json";
+                        httpWebRequest.Accept = "*/*";
+                        httpWebRequest.Method = "GET";
+
+                        var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                        {
+                            jsonresult = streamReader.ReadToEnd();
+
+                        }
+                        JToken imgResult = JToken.Parse(jsonresult);
+                        url = imgResult["url"].ToString();
 
                     }
-                    currentWallpaper = new Bitmap(memoryStreamImage);
-                    dataGridNumber += 1;
+                    else if (!ImageExtensions.Contains(extention2.ToUpper()) && (url2.Contains("imgur.com")))
+                    {
+                        string jsonresult;
+                        string imgurid = url.Replace("https://", "").Replace("http://", "").Replace("imgur.com/", "").Replace("//", "").Replace("/", "");
+                        var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.imgur.com/3/image/" + imgurid);
+                        httpWebRequest.ContentType = "application/json";
+                        httpWebRequest.Accept = "*/*";
+                        httpWebRequest.Method = "GET";
+                        httpWebRequest.Headers.Add("Authorization", "Client-ID 355f2ab533c2ac7");
 
-                    SetGrid(new Bitmap(memoryStreamImage, new Size(100, 100)), title, dataGridNumber, threadID, url);
-                    memoryStreamImage.Dispose();
+                        var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                        {
+                            jsonresult = streamReader.ReadToEnd();
+
+                        }
+                        JToken imgResult = JToken.Parse(jsonresult);
+                        url = imgResult["data"]["link"].ToString();
+                    }
+                    Uri uri = new Uri(url);
+                    string extention = System.IO.Path.GetExtension(uri.LocalPath);
+                    string filename = "currentWallpaper" + extention;
+                    string wallpaperFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), filename);
+                    Properties.Settings.Default.url = url;
+                    Properties.Settings.Default.threadTitle = title;
+                    Properties.Settings.Default.currentWallpaperUrl = url;
+                    Properties.Settings.Default.currentWallpaperName = title + extention;
+                    Properties.Settings.Default.threadID = threadID;
+                    Properties.Settings.Default.Save();
+
+                    Logging.LogMessageToFile("URL: " + url);
+                    Logging.LogMessageToFile("Title: " + title);
+                    Logging.LogMessageToFile("Thread ID: " + threadID);
+
+                    if (ImageExtensions.Contains(extention.ToUpper()))
+                    {
+                        if (System.IO.File.Exists(wallpaperFile))
+                        {
+                            try
+                            {
+                                System.IO.File.Delete(wallpaperFile);
+                            }
+                            catch (System.IO.IOException Ex)
+                            {
+                                Logging.LogMessageToFile("Unexpected error: " + Ex.Message);
+
+                            }
+                        }
+                        try
+                        {
+                            WebClient webClient = Proxy.setProxy();
+                            webClient.DownloadFile(uri.AbsoluteUri, @wallpaperFile);
+                            SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, @wallpaperFile, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
+                            historyRepeated.Add(threadID);
+                            noResultCount = 0;
+                            BeginInvoke((MethodInvoker)delegate
+                            {
+                                updateStatus("Wallpaper Changed!");
+                            });
+                            Logging.LogMessageToFile("Wallapper set successfully!");
+                        }
+                        catch (System.Net.WebException Ex)
+                        {
+                            Logging.LogMessageToFile("Unexpected Error: " + Ex.Message);
+
+                        }
+                    }
+                    else
+                    {
+                        changeWallpaperTimer.Enabled = true;
+                    }
 
                 }
-                catch (ArgumentException Ex)
+
+                WebClient wc = Proxy.setProxy();
+                byte[] bytes = wc.DownloadData(url);
+
+                if (bytes.Count().Equals(0))
                 {
-                    Logging.LogMessageToFile("Unexpected Error: " + Ex.Message);
-                    dataGridNumber += 1;
-                    SetGrid(null, title, dataGridNumber, threadID, url);
-                    historyDataGrid.Rows[0].Visible = false;
-                    breakBetweenChange.Enabled = true;
+                    changeWallpaperTimer.Enabled = true;
                 }
+                else
+                {
+                    try
+                    {
 
-                wc.Dispose();
-            }
-        });
+                        MemoryStream ms = new MemoryStream(bytes);
+                        memoryStreamImage = System.Drawing.Image.FromStream(ms);
+                        ms.Dispose();
+                        ms.Close();
+
+                        if (currentWallpaper != null)
+                        {
+                            currentWallpaper.Dispose();
+
+                        }
+                        currentWallpaper = new Bitmap(memoryStreamImage);
+                        dataGridNumber += 1;
+
+                        SetGrid(new Bitmap(memoryStreamImage, new Size(100, 100)), title, dataGridNumber, threadID, url);
+                        memoryStreamImage.Dispose();
+
+                    }
+                    catch (ArgumentException Ex)
+                    {
+                        Logging.LogMessageToFile("Unexpected Error: " + Ex.Message);
+                        dataGridNumber += 1;
+                        SetGrid(null, title, dataGridNumber, threadID, url);
+                        historyDataGrid.Rows[0].Visible = false;
+                        breakBetweenChange.Enabled = true;
+                    }
+
+                    wc.Dispose();
+                }
+            };
+
             bw.RunWorkerAsync();
         }
 
@@ -1347,7 +1388,7 @@ namespace Reddit_Wallpaper_Changer
             Form searchWizard = new SearchWizard(this);
             searchWizard.Show();
         }
-
+        
         private void breakBetweenChange_Tick(object sender, EventArgs e)
         {
             breakBetweenChange.Enabled = false;
@@ -1726,6 +1767,7 @@ namespace Reddit_Wallpaper_Changer
 
                 if(blacklistProgress.Value == 100)
                 {
+                    // this.blacklistDataGrid.Sort(this.blacklistDataGrid.Columns[2], ListSortDirection.Descending);
                     this.Invoke((MethodInvoker)delegate
                     {
                         blacklistProgress.Value = 0;
@@ -1795,6 +1837,26 @@ namespace Reddit_Wallpaper_Changer
             { 
 
             }
+        }
+
+        //======================================================================
+        // Open the bug form on GitHub
+        //======================================================================
+        private void btnBug_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/Rawns/Reddit-Wallpaper-Changer/issues/new");
+        }
+
+        //======================================================================
+        // Open the log form
+        //======================================================================
+        private void btnLog_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start(AppDomain.CurrentDomain.BaseDirectory + @"\Log\RWC.log");
+            }
+            catch { }
         }
     }
 }

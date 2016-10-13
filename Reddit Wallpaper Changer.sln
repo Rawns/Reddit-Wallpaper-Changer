@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reddit Wallpaper Changer", "Reddit Wallpaper Changer\Reddit Wallpaper Changer.csproj", "{E7DD94D8-2127-46C3-B8F1-167B7815CA12}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Reddit Wallpaper Changer Installer", "Reddit Wallpaper Changer Installer\Reddit Wallpaper Changer Installer.vdproj", "{518C1467-6B9F-4A63-AA0E-5D1174BA2C3B}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Reddit-Wallpaper-Changer-Installer", "Reddit Wallpaper Changer Installer\Reddit Wallpaper Changer Installer.vdproj", "{518C1467-6B9F-4A63-AA0E-5D1174BA2C3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
