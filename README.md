@@ -14,7 +14,4 @@ Reddit Wallpaper Changer is a lightweight C# application for Windows that will s
 
 
 # Installation
-RWC is a portable 'no install' app. Either:
-
-- ~~Download and run the latest MSI installer!~~  Currently withdrawn due to an installation bug.   
-- Download the self extracting zip file, or download the manual zip file and extract the contents to a folder of your choice (like C:\RWC) and run! 
+Either download the latest MSI installer or download the self extracting zip file from the [releases page](https://github.com/Rawns/Reddit-Wallpaper-Changer/releases)
