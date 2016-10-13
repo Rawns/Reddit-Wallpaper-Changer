@@ -1,6 +1,7 @@
-Version 1.0.8.1
-- Only one subreddit per wallpaper search will be used (chosen at random) from the users list of Subreddits to search, improving searching relibailty/randomness and also allowing users to significently increase the list of subreddits to search for wallpapers.    
-- Added additional application logging functionalty.   
-- Logging is now enabled by default.
-- Made the update window slightly bigger, and added scroll bar so the changes can be viewed more easily.
-
+Version 1.0.8.2
+- Wallpapers are now checked to see if they've already been used in the current session
+- Modified the process for searching/setting a wallpaper
+- Added additional logging functionality
+- Status text will now display the selected sub being searched for wallpapers
+- Added scrollbar to the blacklisted panel for when lots of wallpapers are blocked
+- Added button to the About screen to open the log file directly
