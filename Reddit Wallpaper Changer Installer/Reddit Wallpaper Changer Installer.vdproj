@@ -40,7 +40,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7045F5B4C62B199454F20CCC3A47C985"
+        "OwnerKey" = "8:_450B816E19CA4F579B99326351197ECE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -52,7 +52,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_450B816E19CA4F579B99326351197ECE"
+        "OwnerKey" = "8:_7045F5B4C62B199454F20CCC3A47C985"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -422,7 +422,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_8D349D2A25CA4EA6BEBFF854D01D9ADA"
             {
-            "Name" = "8:Reddit Wallpaper Changer (Active)"
+            "Name" = "8:Reddit Wallpaper Changer"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
