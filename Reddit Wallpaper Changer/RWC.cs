@@ -871,7 +871,7 @@ namespace Reddit_Wallpaper_Changer
         private void setWallpaper(string url, string title, string threadID)
         {
             Logging.LogMessageToFile("Setting wallpaper.");
-            XDocument xml = XDocument.Load("Blacklist.xml");
+            XDocument xml = XDocument.Load(AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml");
             var list = xml.Descendants("URL").Select(x => x.Value).ToList();
 
             if (list.Contains(url))
