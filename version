@@ -1,3 +1,3 @@
-Version 1.0.8.2
+Version 1.0.8.3
 - Fixed issue with loading the Blacklisted.xml file before setting a new wallpaper (causes RWC to appear to hang on first load). Shout out to Reddit user /u/padrino257 for the spot.
 - A couple of minor code changes. 
