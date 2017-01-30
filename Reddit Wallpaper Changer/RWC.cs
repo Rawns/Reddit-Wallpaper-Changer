@@ -871,6 +871,29 @@ namespace Reddit_Wallpaper_Changer
         private void setWallpaper(string url, string title, string threadID)
         {
             Logging.LogMessageToFile("Setting wallpaper.");
+
+            // Check if the image that has been found has been deleted from imgur
+            if (url.Contains("imgur"))
+            {
+
+                // A request for a deleted image on Imgur will return status code 302 & redirect to http://i.imgur.com/removed.png returning status code 200
+                HttpWebRequest imgurRequest = (HttpWebRequest)WebRequest.Create(url);
+                imgurRequest.Method = "HEAD";
+                imgurRequest.AllowAutoRedirect = false;
+                HttpWebResponse imgurResponse = imgurRequest.GetResponse() as HttpWebResponse;
+
+                // If anything other than OK, assume that image has been deleted
+                if (imgurResponse.StatusCode.ToString() != "OK")
+                {
+                    updateStatus("Wallpaper was deleted from Imgur.");
+                    Logging.LogMessageToFile("The selected wallpaper was deleted from Imgur, searching again.");
+                    noResultCount++;
+                    changeWallpaperTimer.Enabled = false;
+                    changeWallpaper();
+                    return;
+                }
+            }
+
             XDocument xml = XDocument.Load(AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml");
             var list = xml.Descendants("URL").Select(x => x.Value).ToList();
 
