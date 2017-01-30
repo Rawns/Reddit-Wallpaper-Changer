@@ -140,6 +140,11 @@
     <None Include="Resources\about.png" />
     <None Include="Resources\display_green.png" />
     <None Include="Resources\display_grey.png" />
+    <None Include="Resources\donate.png" />
+    <None Include="Resources\reddit.png" />
+    <None Include="Resources\bug.png" />
+    <None Include="Resources\information16x16.png" />
+    <None Include="Resources\Browse.png" />
     <Content Include="Resources\rwc.ico" />
     <Content Include="Resources\data.png" />
     <Content Include="Resources\information.png" />
@@ -147,6 +152,8 @@
     <Content Include="Resources\panel.png" />
     <None Include="Resources\update.png" />
     <None Include="Resources\update_disabled.png" />
+    <None Include="Resources\update16x16.png" />
+    <None Include="Resources\save.png" />
     <Content Include="Resources\Wizard.png" />
   </ItemGroup>
   <ItemGroup>

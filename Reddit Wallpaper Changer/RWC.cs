@@ -55,6 +55,20 @@ namespace Reddit_Wallpaper_Changer
         {
             InitializeComponent();
             SystemEvents.PowerModeChanged += OnPowerChange;
+
+            ToolTip tt = new ToolTip();
+            tt.AutoPopDelay = 5000;
+            tt.InitialDelay = 1000;
+            tt.ReshowDelay = 500;
+            tt.ShowAlways = true;
+            tt.ToolTipTitle = "RWC";
+            tt.SetToolTip(this.saveButton, "Saves your changes.");
+            tt.SetToolTip(this.btnSubreddit, "Having issues? You can get support by posting on the Reddit Wallpaper Changer Subreddit.");
+            tt.SetToolTip(this.btnBug, "Spotted a bug? Open a ticket on GitHub by clicking here!");
+            tt.SetToolTip(this.btnDonate, "Reddit Wallpaper Changer is maintained by one guy in his own time! If you'd like to say 'thanks' and get him a beer, click here! :)");
+            tt.SetToolTip(this.btnUpdate, "Click here to manually check for updates.");
+            tt.SetToolTip(this.btnLog, "Click here to open the RWC log file in your default text editor.");
+            tt.SetToolTip(this.btnBrowse, "Sellect the downlaod destination for saved wallpapers.");
         }
 
         //======================================================================
@@ -296,7 +310,7 @@ namespace Reddit_Wallpaper_Changer
             //Set the current version for update check and label set.
 
             currentVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
-            versionLabel.Text = currentVersion;
+            lblVersion.Text = "Current Version: " + currentVersion;
 
             //Set the Tray checkbox up
             startInTrayCheckBox.Checked = Properties.Settings.Default.startInTray;
@@ -1160,7 +1174,7 @@ namespace Reddit_Wallpaper_Changer
             }
             else
             {
-                toolTip1.Active = false;
+                // toolTip1.Active = false;
                 // deleteWindowsMenu();
             }
         }
@@ -1593,23 +1607,23 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         // Add current wallpaper to favourites
         //======================================================================
-        public void Favourite()
-        {
-            XDocument doc = XDocument.Load(AppDomain.CurrentDomain.BaseDirectory + "Favourites.xml");
-            XElement favourite = doc.Element("Favourites");
-            favourite.Add(new XElement("Wallpaper",
-                new XElement("URL", "http://some.wallpaper/link.jpeg"),
-                new XElement("Title", "Another Wallpaper!"),
-                new XElement("ThreadID", "Thread ID here")));
-            doc.Save("Favourites.xml");
+        //public void Favourite()
+        //{
+        //    XDocument doc = XDocument.Load(AppDomain.CurrentDomain.BaseDirectory + "Favourites.xml");
+        //    XElement favourite = doc.Element("Favourites");
+        //    favourite.Add(new XElement("Wallpaper",
+        //        new XElement("URL", "http://some.wallpaper/link.jpeg"),
+        //        new XElement("Title", "Another Wallpaper!"),
+        //        new XElement("ThreadID", "Thread ID here")));
+        //    doc.Save("Favourites.xml");
 
-            faveWallpaperMenuItem.Checked = true;
+        //    faveWallpaperMenuItem.Checked = true;
 
-            taskIcon.BalloonTipIcon = ToolTipIcon.Info;
-            taskIcon.BalloonTipTitle = "Favourite Wallpaper!";
-            taskIcon.BalloonTipText = "The current Wallpaper has been added to your favourites successfully!";
-            taskIcon.ShowBalloonTip(750);
-        }
+        //    taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+        //    taskIcon.BalloonTipTitle = "Favourite Wallpaper!";
+        //    taskIcon.BalloonTipText = "The current Wallpaper has been added to your favourites successfully!";
+        //    taskIcon.ShowBalloonTip(750);
+        //}
 
         //======================================================================
         //Add current wallpaper to blacklist
@@ -1671,10 +1685,10 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         // Click on favourite menu
         //======================================================================
-        private void faveWallpaperMenuItem_Click(object sender, EventArgs e)
-        {
-            Favourite();
-        }
+        //private void faveWallpaperMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    Favourite();
+        //}
 
         //======================================================================
         // Click on blacklist menu
@@ -1857,6 +1871,24 @@ namespace Reddit_Wallpaper_Changer
                 System.Diagnostics.Process.Start(AppDomain.CurrentDomain.BaseDirectory + @"\Log\RWC.log");
             }
             catch { }
+        }
+
+        //======================================================================
+        // Donation button
+        //======================================================================
+        private void btnDonate_Click(object sender, EventArgs e)
+        {    
+            System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=S9YSLJS5DXDT8");
+        }
+
+        private void groupBox3_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void aboutPanel_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
