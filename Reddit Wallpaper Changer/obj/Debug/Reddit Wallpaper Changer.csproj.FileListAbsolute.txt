@@ -62,6 +62,3 @@ C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Deb
 C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.Update.resources
 C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.csproj.GenerateResource.Cache
 E:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\bin\Debug\Newtonsoft.Json.dll
-C:\Users\Benedikt\Source\Repos\Reddit-Wallpaper-Changer-padrino257\Reddit Wallpaper Changer\bin\Debug\Reddit Wallpaper Changer.exe.config
-C:\Users\Benedikt\Source\Repos\Reddit-Wallpaper-Changer-padrino257\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.exe
-C:\Users\Benedikt\Source\Repos\Reddit-Wallpaper-Changer-padrino257\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.pdb
