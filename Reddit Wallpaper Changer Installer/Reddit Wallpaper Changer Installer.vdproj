@@ -300,7 +300,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Reddit Wallpaper Changer"
         "ProductCode" = "8:{BCA5721A-FBD4-4E3B-9A46-F502166212DD}"
-        "PackageCode" = "8:{3C43FED5-CBEC-4FA8-A446-82A72675876B}"
+        "PackageCode" = "8:{6F6EC799-21C8-491A-B68E-34D314169AD5}"
         "UpgradeCode" = "8:{661C805E-7AE7-4E81-99F6-A78BD746890C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
