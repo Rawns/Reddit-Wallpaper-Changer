@@ -11,24 +11,24 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         public static void createXML()
         {
-            string fave = AppDomain.CurrentDomain.BaseDirectory + "Favourites.xml";
+            // string fave = AppDomain.CurrentDomain.BaseDirectory + "Favourites.xml";
             string black = AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml";
 
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
 
-            if (!File.Exists(fave))
-            {
-                XmlWriter writer = XmlWriter.Create(fave, settings);
-                writer.WriteStartDocument();
-                writer.WriteComment("This file stores a list of any wallpapers you flag as a favourite.");
-                writer.WriteStartElement("Favourites");
-                writer.WriteEndElement();
-                writer.WriteEndDocument();
-                writer.Flush();
-                writer.Close();
-                Logging.LogMessageToFile("New Favourites.xml file created successfully.");
-            }
+            //if (!File.Exists(fave))
+            //{
+            //    XmlWriter writer = XmlWriter.Create(fave, settings);
+            //    writer.WriteStartDocument();
+            //    writer.WriteComment("This file stores a list of any wallpapers you flag as a favourite.");
+            //    writer.WriteStartElement("Favourites");
+            //    writer.WriteEndElement();
+            //    writer.WriteEndDocument();
+            //    writer.Flush();
+            //    writer.Close();
+            //    Logging.LogMessageToFile("New Favourites.xml file created successfully.");
+            //}
 
             if (!File.Exists(black))
             {

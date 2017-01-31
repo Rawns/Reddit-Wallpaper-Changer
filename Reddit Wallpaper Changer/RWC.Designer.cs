@@ -127,6 +127,7 @@
             this.blacklistButton = new System.Windows.Forms.Button();
             this.blacklistMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.unblacklistWallpaper = new System.Windows.Forms.ToolStripMenuItem();
+            this.chkAutoSave = new System.Windows.Forms.CheckBox();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -181,7 +182,7 @@
             this.settingsToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(180, 192);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(180, 170);
             // 
             // statusMenuItem1
             // 
@@ -257,11 +258,12 @@
             // 
             // groupBox9
             // 
+            this.groupBox9.Controls.Add(this.chkAutoSave);
             this.groupBox9.Controls.Add(this.btnBrowse);
             this.groupBox9.Controls.Add(this.txtSavePath);
-            this.groupBox9.Location = new System.Drawing.Point(12, 316);
+            this.groupBox9.Location = new System.Drawing.Point(10, 300);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(352, 56);
+            this.groupBox9.Size = new System.Drawing.Size(352, 71);
             this.groupBox9.TabIndex = 13;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Wallpaper Save Location:";
@@ -270,7 +272,7 @@
             // 
             this.btnBrowse.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.Browse;
             this.btnBrowse.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnBrowse.Location = new System.Drawing.Point(262, 21);
+            this.btnBrowse.Location = new System.Drawing.Point(262, 19);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.btnBrowse.Size = new System.Drawing.Size(75, 25);
@@ -282,7 +284,7 @@
             // 
             // txtSavePath
             // 
-            this.txtSavePath.Location = new System.Drawing.Point(13, 22);
+            this.txtSavePath.Location = new System.Drawing.Point(13, 20);
             this.txtSavePath.Name = "txtSavePath";
             this.txtSavePath.Size = new System.Drawing.Size(238, 22);
             this.txtSavePath.TabIndex = 0;
@@ -314,9 +316,9 @@
             this.groupBox5.Controls.Add(this.chkProxy);
             this.groupBox5.Controls.Add(this.chkAutoStart);
             this.groupBox5.Controls.Add(this.chkStartInTray);
-            this.groupBox5.Location = new System.Drawing.Point(12, 176);
+            this.groupBox5.Location = new System.Drawing.Point(10, 165);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(352, 134);
+            this.groupBox5.Size = new System.Drawing.Size(352, 130);
             this.groupBox5.TabIndex = 10;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Behind The Scenes:";
@@ -336,7 +338,7 @@
             // txtPass
             // 
             this.txtPass.Enabled = false;
-            this.txtPass.Location = new System.Drawing.Point(137, 99);
+            this.txtPass.Location = new System.Drawing.Point(137, 100);
             this.txtPass.Name = "txtPass";
             this.txtPass.PasswordChar = '*';
             this.txtPass.Size = new System.Drawing.Size(200, 22);
@@ -405,7 +407,7 @@
             // 
             this.saveButton.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.save;
             this.saveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.saveButton.Location = new System.Drawing.Point(274, 375);
+            this.saveButton.Location = new System.Drawing.Point(271, 375);
             this.saveButton.Name = "saveButton";
             this.saveButton.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.saveButton.Size = new System.Drawing.Size(75, 25);
@@ -424,7 +426,7 @@
             this.groupBox2.Controls.Add(this.searchQuery);
             this.groupBox2.Controls.Add(this.changeTimeType);
             this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Location = new System.Drawing.Point(12, 87);
+            this.groupBox2.Location = new System.Drawing.Point(10, 77);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(352, 83);
             this.groupBox2.TabIndex = 1;
@@ -522,7 +524,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.wallpaperGrabType);
-            this.groupBox1.Location = new System.Drawing.Point(12, 6);
+            this.groupBox1.Location = new System.Drawing.Point(10, 0);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(352, 75);
             this.groupBox1.TabIndex = 0;
@@ -713,7 +715,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(6, 50);
+            this.label10.Location = new System.Drawing.Point(6, 25);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(91, 13);
             this.label10.TabIndex = 8;
@@ -727,7 +729,7 @@
             this.rawnsLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rawnsLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.rawnsLink.LinkColor = System.Drawing.Color.SteelBlue;
-            this.rawnsLink.Location = new System.Drawing.Point(103, 51);
+            this.rawnsLink.Location = new System.Drawing.Point(142, 25);
             this.rawnsLink.Name = "rawnsLink";
             this.rawnsLink.Size = new System.Drawing.Size(64, 13);
             this.rawnsLink.TabIndex = 7;
@@ -754,11 +756,11 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(6, 25);
+            this.label3.Location = new System.Drawing.Point(6, 49);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(73, 13);
+            this.label3.Size = new System.Drawing.Size(136, 13);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Created By:";
+            this.label3.Text = "Origionally Created By:";
             // 
             // redditLink
             // 
@@ -768,7 +770,7 @@
             this.redditLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.redditLink.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.redditLink.LinkColor = System.Drawing.Color.SteelBlue;
-            this.redditLink.Location = new System.Drawing.Point(103, 25);
+            this.redditLink.Location = new System.Drawing.Point(142, 49);
             this.redditLink.Name = "redditLink";
             this.redditLink.Size = new System.Drawing.Size(59, 13);
             this.redditLink.TabIndex = 2;
@@ -1238,6 +1240,16 @@
             this.unblacklistWallpaper.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.unblacklistWallpaper.Click += new System.EventHandler(this.unblacklistWallpaper_Click);
             // 
+            // chkAutoSave
+            // 
+            this.chkAutoSave.AutoSize = true;
+            this.chkAutoSave.Location = new System.Drawing.Point(13, 48);
+            this.chkAutoSave.Name = "chkAutoSave";
+            this.chkAutoSave.Size = new System.Drawing.Size(146, 17);
+            this.chkAutoSave.TabIndex = 2;
+            this.chkAutoSave.Text = "Auto Save Wallpapers? ";
+            this.chkAutoSave.UseVisualStyleBackColor = true;
+            // 
             // RWC
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1396,6 +1408,7 @@
         private System.Windows.Forms.GroupBox groupBox10;
         private System.Windows.Forms.Button btnLog;
         private System.Windows.Forms.Button btnDonate;
+        private System.Windows.Forms.CheckBox chkAutoSave;
     }
 }
 

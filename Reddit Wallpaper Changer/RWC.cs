@@ -76,6 +76,7 @@ namespace Reddit_Wallpaper_Changer
             tt.SetToolTip(this.wallpaperGrabType, "Choose how you want to find a wallpaper.");
             tt.SetToolTip(this.changeTimeValue, "Choose how oftern to change your wallpaper.");
             tt.SetToolTip(this.subredditTextBox, "Enter the subs to scrape for wallpaper (eg, wallpaper, earthporn etc).\r\nMultiple subs can be provided and separated with a +.");
+            tt.SetToolTip(this.chkAutoSave, "Enable this to automatically save all wallpapers to the above directory.");
 
             // Monitors
 
@@ -179,11 +180,12 @@ namespace Reddit_Wallpaper_Changer
             }
 
             Logging.LogMessageToFile("Save location for wallpapers set to " + Properties.Settings.Default.defaultSaveLocation);
+            Logging.LogMessageToFile("Auto Save All Wallpapers: " + Properties.Settings.Default.autoSave);
             Logging.LogMessageToFile("Wallpaper Grab Type: " + Properties.Settings.Default.wallpaperGrabType);
             Logging.LogMessageToFile("Selected Subreddits: " + Properties.Settings.Default.subredditsUsed);
             Logging.LogMessageToFile("Search Query: " + Properties.Settings.Default.searchQuery);
             Logging.LogMessageToFile("Change wallpaper every " + Properties.Settings.Default.changeTimeValue + " " + changeTimeType.Text);
-            Logging.LogMessageToFile("Detected " + screens + " display(s) attached.");
+            Logging.LogMessageToFile("Detected " + screens + " display(s).");
 
         }
 
@@ -200,6 +202,7 @@ namespace Reddit_Wallpaper_Changer
             }
 
             txtSavePath.Text = Properties.Settings.Default.defaultSaveLocation;
+            chkAutoSave.Checked = Properties.Settings.Default.autoSave;
             
         }
 
@@ -602,6 +605,7 @@ namespace Reddit_Wallpaper_Changer
             Properties.Settings.Default.proxyUser = txtUser.Text;
             Properties.Settings.Default.proxyPass = txtPass.Text;
             Properties.Settings.Default.defaultSaveLocation = txtSavePath.Text;
+            Properties.Settings.Default.autoSave = chkAutoSave.Checked;
             Properties.Settings.Default.logging = chkLogging.Checked;
             Properties.Settings.Default.Save();
             setupLogging();
@@ -1020,6 +1024,7 @@ namespace Reddit_Wallpaper_Changer
                     string extention = System.IO.Path.GetExtension(uri.LocalPath);
                     string filename = "currentWallpaper" + extention;
                     string wallpaperFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), filename);
+                    Properties.Settings.Default.currentWallpaperFile = wallpaperFile;
                     Properties.Settings.Default.url = url;
                     Properties.Settings.Default.threadTitle = title;
                     Properties.Settings.Default.currentWallpaperUrl = url;
@@ -1057,6 +1062,11 @@ namespace Reddit_Wallpaper_Changer
                                 updateStatus("Wallpaper Changed!");
                             });
                             Logging.LogMessageToFile("Wallapper set successfully!");
+                            
+                            if (Properties.Settings.Default.autoSave == true)
+                            {
+                                AutoSave();
+                            }
                         }
                         catch (System.Net.WebException Ex)
                         {
@@ -1336,12 +1346,24 @@ namespace Reddit_Wallpaper_Changer
             // saveWallpaper.ShowDialog();
             try
             {
-                currentWallpaper.Save(Properties.Settings.Default.defaultSaveLocation + @"\" + Properties.Settings.Default.currentWallpaperName);
-                taskIcon.BalloonTipIcon = ToolTipIcon.Info;
-                taskIcon.BalloonTipTitle = "Wallpaper Saved!";
-                taskIcon.BalloonTipText = "Wallpaper saved to " + Properties.Settings.Default.defaultSaveLocation + @"\" + Properties.Settings.Default.currentWallpaperName;
-                taskIcon.ShowBalloonTip(750);
-                Logging.LogMessageToFile("Saved " + Properties.Settings.Default.currentWallpaperName + " to " + Properties.Settings.Default.defaultSaveLocation); 
+                if (!File.Exists(Properties.Settings.Default.defaultSaveLocation + @"\" + Properties.Settings.Default.currentWallpaperName))
+                {
+
+                    System.IO.File.Copy(Properties.Settings.Default.currentWallpaperFile, Properties.Settings.Default.defaultSaveLocation + @"\" + Properties.Settings.Default.currentWallpaperName);
+                    taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+                    taskIcon.BalloonTipTitle = "Wallpaper Saved!";
+                    taskIcon.BalloonTipText = "Wallpaper saved to " + Properties.Settings.Default.defaultSaveLocation + @"\" + Properties.Settings.Default.currentWallpaperName;
+                    taskIcon.ShowBalloonTip(750);
+                    Logging.LogMessageToFile("Saved " + Properties.Settings.Default.currentWallpaperName + " to " + Properties.Settings.Default.defaultSaveLocation);
+                }
+                else
+                {
+                    taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+                    taskIcon.BalloonTipTitle = "Already Saved!";
+                    taskIcon.BalloonTipText = "No need to save this wallpaper as it already exists in your wallpapers folder! :)";
+                    taskIcon.ShowBalloonTip(750);
+                }
+ 
             }
             catch (Exception Ex)
             {
@@ -1717,7 +1739,7 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
-        // Set wallpaper from selected histore entry
+        // Set wallpaper from selected history entry
         //======================================================================
         private void useThisWallpapertoolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1847,7 +1869,7 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
-        // Remove a previously blacklisted wallpaper
+        // Select multi wallpaper type
         //======================================================================
         private void comboType_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -1897,6 +1919,35 @@ namespace Reddit_Wallpaper_Changer
         private void btnDonate_Click(object sender, EventArgs e)
         {    
             System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=S9YSLJS5DXDT8");
+        }
+
+        //======================================================================
+        // Auto save all wallpapers
+        //======================================================================
+        private void AutoSave()
+        {
+            try
+            {
+                if (!File.Exists(Properties.Settings.Default.defaultSaveLocation + @"\" + Properties.Settings.Default.currentWallpaperName))
+                {
+
+                    System.IO.File.Copy(Properties.Settings.Default.currentWallpaperFile, Properties.Settings.Default.defaultSaveLocation + @"\" + Properties.Settings.Default.currentWallpaperName);
+                    Logging.LogMessageToFile("Auto saved " + Properties.Settings.Default.currentWallpaperName + " to " + Properties.Settings.Default.defaultSaveLocation);
+                }
+                else
+                {
+                    Logging.LogMessageToFile("Not auto saving " + Properties.Settings.Default.currentWallpaperName + " because it already exists.");  
+                }
+            }
+            catch (Exception Ex)
+            {
+                taskIcon.BalloonTipIcon = ToolTipIcon.Error;
+                taskIcon.BalloonTipTitle = "Error Saving!";
+                taskIcon.BalloonTipText = "Unable to automatically save the wallpaper. :(";
+                taskIcon.ShowBalloonTip(750);
+                Logging.LogMessageToFile("Error automatically saving wallpaper: " + Ex.Message);
+            }
+
         }
 
         private void groupBox3_Enter(object sender, EventArgs e)
