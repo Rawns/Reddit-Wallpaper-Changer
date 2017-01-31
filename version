@@ -1,6 +1,6 @@
 Version 1.0.8.4
 - Added: Auto Save All Wallpapers option
 - Added: A few small UI additions to Settings and About screens 
-- Updated: Added some more additional logging 
-- Updated: The previous three log files are archived (log files are truncated when they hit 1Mb)
+- Updated: Added some additional logging 
+- Updated: Log files are truncated when they hit 1Mb (three log files are kept for archiving)
 - Updated: Some minor code adjustments/general tidying 
