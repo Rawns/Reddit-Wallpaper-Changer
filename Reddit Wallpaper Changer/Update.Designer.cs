@@ -41,18 +41,21 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(359, 40);
             this.label1.TabIndex = 0;
-            this.label1.Text = "A newer version of Reddit Wallpaper Changer is available!  Click to begin updatin" +
-    "g.";
+            this.label1.Text = "A newer version of Reddit Wallpaper Changer is available!  \r\nClick \'Upgrade\' to b" +
+    "egin the automatic upgrade process.";
             // 
             // btnUpdate
             // 
-            this.btnUpdate.BackgroundImage = global::Reddit_Wallpaper_Changer.Properties.Resources.update;
             this.btnUpdate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnUpdate.Location = new System.Drawing.Point(451, 9);
+            this.btnUpdate.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.update_32x32;
+            this.btnUpdate.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnUpdate.Location = new System.Drawing.Point(383, 9);
             this.btnUpdate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(40, 40);
+            this.btnUpdate.Size = new System.Drawing.Size(108, 40);
             this.btnUpdate.TabIndex = 1;
+            this.btnUpdate.Text = "&Upgrade";
+            this.btnUpdate.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 

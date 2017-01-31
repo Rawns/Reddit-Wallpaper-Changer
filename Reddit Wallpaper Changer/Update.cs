@@ -34,6 +34,7 @@ namespace Reddit_Wallpaper_Changer
                 };
                 wc.DownloadFileCompleted += (s, a) =>
                 {
+                    Logging.LogMessageToFile("Update downloaded.");
                     progressBar.Visible = false;
                 // any other code to process the file
                     try
@@ -70,7 +71,7 @@ namespace Reddit_Wallpaper_Changer
             }
         }
 
-        //======================================================================
+        
         // Code to run on form load
         //======================================================================
         private void Update_Load(object sender, EventArgs e)

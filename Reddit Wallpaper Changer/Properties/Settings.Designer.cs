@@ -274,5 +274,17 @@ namespace Reddit_Wallpaper_Changer.Properties {
                 this["currentWallpaperUrl"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string currentWallpaperFile {
+            get {
+                return ((string)(this["currentWallpaperFile"]));
+            }
+            set {
+                this["currentWallpaperFile"] = value;
+            }
+        }
     }
 }

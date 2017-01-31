@@ -4,10 +4,13 @@ Based on [RWC-Source](https://github.com/JosephRobidoux/RWC-Source) originally c
 # About
 Reddit Wallpaper Changer is a lightweight C# application for Windows that will scrape Reddit for desktop wallpapers. You can specify which subs to scrape from and how oftern to rotate your wallpaper.
 
-# Current Version - 1.0.8.3
-- Fixed issue with loading the Blacklisted.xml file before setting a new wallpaper (causes RWC to appear to hang on first load). Shout out to Reddit user /u/padrino257 for the spot.
-- A couple of minor code changes.
+# Current Version - 1.0.8.4
+- Added: Auto Save All Wallpapers option
+- Added: A few small UI additions to Settings and About screens 
+- Updated: Added some more additional logging 
+- Updated: The previous three log files are archived (log files are truncated when they hit 1Mb)
+- Updated: Some few minor code tidying 
 
 
 # Installation
-Either download the latest MSI installer or download the self extracting zip file from the [releases page](https://github.com/Rawns/Reddit-Wallpaper-Changer/releases)
+Download the latest MSI installer from the [releases page](https://github.com/Rawns/Reddit-Wallpaper-Changer/releases)
