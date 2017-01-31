@@ -34,7 +34,6 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.statusMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.faveWallpaperMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.blockWallpaperMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeWallpaperMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,12 +53,12 @@
             this.chkAuth = new System.Windows.Forms.CheckBox();
             this.txtProxyServer = new System.Windows.Forms.TextBox();
             this.chkProxy = new System.Windows.Forms.CheckBox();
-            this.autoStartCheckBox = new System.Windows.Forms.CheckBox();
-            this.startInTrayCheckBox = new System.Windows.Forms.CheckBox();
+            this.chkAutoStart = new System.Windows.Forms.CheckBox();
+            this.chkStartInTray = new System.Windows.Forms.CheckBox();
             this.saveButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.searchWizardButton = new System.Windows.Forms.Button();
+            this.btnWizard = new System.Windows.Forms.Button();
             this.changeTimeValue = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.searchQuery = new System.Windows.Forms.TextBox();
@@ -174,7 +173,6 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusMenuItem1,
             this.toolStripSeparator1,
-            this.faveWallpaperMenuItem,
             this.toolStripMenuItem1,
             this.blockWallpaperMenuItem,
             this.changeWallpaperMenuItem,
@@ -201,11 +199,6 @@
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(176, 6);
-            // 
-            // faveWallpaperMenuItem
-            // 
-            this.faveWallpaperMenuItem.Name = "faveWallpaperMenuItem";
-            this.faveWallpaperMenuItem.Size = new System.Drawing.Size(179, 22);
             // 
             // toolStripMenuItem1
             // 
@@ -319,8 +312,8 @@
             this.groupBox5.Controls.Add(this.chkAuth);
             this.groupBox5.Controls.Add(this.txtProxyServer);
             this.groupBox5.Controls.Add(this.chkProxy);
-            this.groupBox5.Controls.Add(this.autoStartCheckBox);
-            this.groupBox5.Controls.Add(this.startInTrayCheckBox);
+            this.groupBox5.Controls.Add(this.chkAutoStart);
+            this.groupBox5.Controls.Add(this.chkStartInTray);
             this.groupBox5.Location = new System.Drawing.Point(12, 176);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(352, 134);
@@ -388,25 +381,25 @@
             this.chkProxy.UseVisualStyleBackColor = true;
             this.chkProxy.CheckedChanged += new System.EventHandler(this.chkProxy_CheckedChanged);
             // 
-            // autoStartCheckBox
+            // chkAutoStart
             // 
-            this.autoStartCheckBox.AutoSize = true;
-            this.autoStartCheckBox.Location = new System.Drawing.Point(13, 23);
-            this.autoStartCheckBox.Name = "autoStartCheckBox";
-            this.autoStartCheckBox.Size = new System.Drawing.Size(83, 17);
-            this.autoStartCheckBox.TabIndex = 4;
-            this.autoStartCheckBox.Text = "Auto Start?";
-            this.autoStartCheckBox.UseVisualStyleBackColor = true;
+            this.chkAutoStart.AutoSize = true;
+            this.chkAutoStart.Location = new System.Drawing.Point(13, 23);
+            this.chkAutoStart.Name = "chkAutoStart";
+            this.chkAutoStart.Size = new System.Drawing.Size(83, 17);
+            this.chkAutoStart.TabIndex = 4;
+            this.chkAutoStart.Text = "Auto Start?";
+            this.chkAutoStart.UseVisualStyleBackColor = true;
             // 
-            // startInTrayCheckBox
+            // chkStartInTray
             // 
-            this.startInTrayCheckBox.AutoSize = true;
-            this.startInTrayCheckBox.Location = new System.Drawing.Point(137, 23);
-            this.startInTrayCheckBox.Name = "startInTrayCheckBox";
-            this.startInTrayCheckBox.Size = new System.Drawing.Size(90, 17);
-            this.startInTrayCheckBox.TabIndex = 3;
-            this.startInTrayCheckBox.Text = "Start In Tray?";
-            this.startInTrayCheckBox.UseVisualStyleBackColor = true;
+            this.chkStartInTray.AutoSize = true;
+            this.chkStartInTray.Location = new System.Drawing.Point(137, 23);
+            this.chkStartInTray.Name = "chkStartInTray";
+            this.chkStartInTray.Size = new System.Drawing.Size(90, 17);
+            this.chkStartInTray.TabIndex = 3;
+            this.chkStartInTray.Text = "Start In Tray?";
+            this.chkStartInTray.UseVisualStyleBackColor = true;
             // 
             // saveButton
             // 
@@ -425,7 +418,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Controls.Add(this.searchWizardButton);
+            this.groupBox2.Controls.Add(this.btnWizard);
             this.groupBox2.Controls.Add(this.changeTimeValue);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.searchQuery);
@@ -449,22 +442,22 @@
             this.label9.Text = "Truly Random does not use search queries.";
             this.label9.Visible = false;
             // 
-            // searchWizardButton
+            // btnWizard
             // 
-            this.searchWizardButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("searchWizardButton.BackgroundImage")));
-            this.searchWizardButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.searchWizardButton.Cursor = System.Windows.Forms.Cursors.Help;
-            this.searchWizardButton.Location = new System.Drawing.Point(299, 10);
-            this.searchWizardButton.Name = "searchWizardButton";
-            this.searchWizardButton.Size = new System.Drawing.Size(38, 33);
-            this.searchWizardButton.TabIndex = 9;
-            this.searchWizardButton.UseVisualStyleBackColor = true;
-            this.searchWizardButton.Click += new System.EventHandler(this.searchWizardButton_Click);
+            this.btnWizard.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnWizard.BackgroundImage")));
+            this.btnWizard.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnWizard.Cursor = System.Windows.Forms.Cursors.Help;
+            this.btnWizard.Location = new System.Drawing.Point(305, 12);
+            this.btnWizard.Name = "btnWizard";
+            this.btnWizard.Size = new System.Drawing.Size(32, 32);
+            this.btnWizard.TabIndex = 9;
+            this.btnWizard.UseVisualStyleBackColor = true;
+            this.btnWizard.Click += new System.EventHandler(this.searchWizardButton_Click);
             // 
             // changeTimeValue
             // 
             this.changeTimeValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.changeTimeValue.Location = new System.Drawing.Point(202, 47);
+            this.changeTimeValue.Location = new System.Drawing.Point(202, 50);
             this.changeTimeValue.Maximum = new decimal(new int[] {
             60,
             0,
@@ -487,7 +480,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(18, 50);
+            this.label6.Location = new System.Drawing.Point(18, 53);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(79, 13);
             this.label6.TabIndex = 7;
@@ -509,7 +502,7 @@
             "Minutes",
             "Hours",
             "Days"});
-            this.changeTimeType.Location = new System.Drawing.Point(268, 46);
+            this.changeTimeType.Location = new System.Drawing.Point(268, 50);
             this.changeTimeType.Name = "changeTimeType";
             this.changeTimeType.Size = new System.Drawing.Size(69, 21);
             this.changeTimeType.TabIndex = 6;
@@ -1347,12 +1340,12 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.LinkLabel redditLink;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.CheckBox startInTrayCheckBox;
+        private System.Windows.Forms.CheckBox chkStartInTray;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.SaveFileDialog saveWallpaper;
         private System.Windows.Forms.Timer checkInternetTimer;
         private System.Windows.Forms.Label noticeLabel;
-        private System.Windows.Forms.Button searchWizardButton;
+        private System.Windows.Forms.Button btnWizard;
         private System.Windows.Forms.Timer breakBetweenChange;
         private System.Windows.Forms.Button monitorButton;
         private System.Windows.Forms.Panel monitorPanel;
@@ -1369,9 +1362,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ThreadLink;
         private System.Windows.Forms.DataGridViewTextBoxColumn imageURL;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.CheckBox autoStartCheckBox;
+        private System.Windows.Forms.CheckBox chkAutoStart;
         private System.Windows.Forms.LinkLabel rawnsLink;
-        private System.Windows.Forms.ToolStripMenuItem faveWallpaperMenuItem;
         private System.Windows.Forms.ToolStripMenuItem blockWallpaperMenuItem;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.GroupBox groupBox9;

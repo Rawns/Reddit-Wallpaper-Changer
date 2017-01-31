@@ -62,13 +62,31 @@ namespace Reddit_Wallpaper_Changer
             tt.ReshowDelay = 500;
             tt.ShowAlways = true;
             tt.ToolTipTitle = "RWC";
-            tt.SetToolTip(this.saveButton, "Saves your changes.");
+            tt.ToolTipIcon = ToolTipIcon.Info;            
+
+            // Settings
+            tt.SetToolTip(this.chkAutoStart, "Run Reddit Wallpaper Changer when your computer starts.");
+            tt.SetToolTip(this.chkStartInTray, "Start Reddit Wallpaper Changer minimised.");
+            tt.SetToolTip(this.chkLogging, "Enable logging. The log file can be accessed from the 'About' window.");
+            tt.SetToolTip(this.chkProxy, "Configure a proxy server for Reddit Wallpaper Changer to use.");
+            tt.SetToolTip(this.chkAuth, "Enable if your proxy server requires authentication.");
+            tt.SetToolTip(this.btnBrowse, "Sellect the downlaod destination for saved wallpapers.");
+            tt.SetToolTip(this.saveButton, "Saves your settings.");
+            tt.SetToolTip(this.btnWizard, "Open the Search wizard.");
+            tt.SetToolTip(this.wallpaperGrabType, "Choose how you want to find a wallpaper.");
+            tt.SetToolTip(this.changeTimeValue, "Choose how oftern to change your wallpaper.");
+            tt.SetToolTip(this.subredditTextBox, "Enter the subs to scrape for wallpaper (eg, wallpaper, earthporn etc).\r\nMultiple subs can be provided and separated with a +.");
+
+            // Monitors
+
+
+            // About
             tt.SetToolTip(this.btnSubreddit, "Having issues? You can get support by posting on the Reddit Wallpaper Changer Subreddit.");
             tt.SetToolTip(this.btnBug, "Spotted a bug? Open a ticket on GitHub by clicking here!");
             tt.SetToolTip(this.btnDonate, "Reddit Wallpaper Changer is maintained by one guy in his own time! If you'd like to say 'thanks' and get him a beer, click here! :)");
             tt.SetToolTip(this.btnUpdate, "Click here to manually check for updates.");
             tt.SetToolTip(this.btnLog, "Click here to open the RWC log file in your default text editor.");
-            tt.SetToolTip(this.btnBrowse, "Sellect the downlaod destination for saved wallpapers.");
+            
         }
 
         //======================================================================
@@ -313,9 +331,9 @@ namespace Reddit_Wallpaper_Changer
             lblVersion.Text = "Current Version: " + currentVersion;
 
             //Set the Tray checkbox up
-            startInTrayCheckBox.Checked = Properties.Settings.Default.startInTray;
+            chkStartInTray.Checked = Properties.Settings.Default.startInTray;
 
-            autoStartCheckBox.Checked = Properties.Settings.Default.autoStart;
+            chkAutoStart.Checked = Properties.Settings.Default.autoStart;
 
         }
 
@@ -486,7 +504,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            Logging.LogMessageToFile("Manually checking for updates.");
+            Logging.LogMessageToFile("Manual check for updates initiated.");
 
             btnUpdate.Enabled = false;
             btnUpdate.Text = "Checking....";
@@ -564,13 +582,13 @@ namespace Reddit_Wallpaper_Changer
         private void saveData()
         {
             bool updateTimerBool = false;
-            if (Properties.Settings.Default.autoStart != autoStartCheckBox.Checked)
+            if (Properties.Settings.Default.autoStart != chkAutoStart.Checked)
             {
-                startup(autoStartCheckBox.Checked);
+                startup(chkAutoStart.Checked);
             }
 
-            Properties.Settings.Default.startInTray = startInTrayCheckBox.Checked;
-            Properties.Settings.Default.autoStart = autoStartCheckBox.Checked;
+            Properties.Settings.Default.startInTray = chkStartInTray.Checked;
+            Properties.Settings.Default.autoStart = chkAutoStart.Checked;
             Properties.Settings.Default.wallpaperGrabType = wallpaperGrabType.SelectedIndex;
             Properties.Settings.Default.subredditsUsed = subredditTextBox.Text;
             Properties.Settings.Default.searchQuery = searchQuery.Text;
@@ -1121,7 +1139,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void RWC_Shown(object sender, EventArgs e)
         {
-            if (startInTrayCheckBox.Checked)
+            if (chkStartInTray.Checked)
             {
                 fakeClose(false);
             }

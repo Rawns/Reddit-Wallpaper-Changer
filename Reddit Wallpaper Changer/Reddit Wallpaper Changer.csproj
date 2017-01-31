@@ -154,6 +154,7 @@
     <None Include="Resources\update_disabled.png" />
     <None Include="Resources\update16x16.png" />
     <None Include="Resources\save.png" />
+    <None Include="Resources\update_32x32.png" />
     <Content Include="Resources\Wizard.png" />
   </ItemGroup>
   <ItemGroup>

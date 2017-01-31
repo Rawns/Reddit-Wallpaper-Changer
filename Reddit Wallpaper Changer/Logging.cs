@@ -26,7 +26,35 @@ namespace Reddit_Wallpaper_Changer
                     {
                         try
                         {
-                            File.Delete(logfiledir + @"\RWC.log");
+                            if (File.Exists(logfiledir + @"\RWC1.log"))
+                            {
+                                if (File.Exists(logfiledir + @"\RWC2.log"))
+                                {
+                                    if (File.Exists(logfiledir + @"\RWC3.log"))
+                                    {
+                                        File.Delete(logfiledir + @"\RWC3.log");
+                                        System.IO.File.Move(logfiledir + @"\RWC2.log", logfiledir + @"\RWC3.log");
+                                        System.IO.File.Move(logfiledir + @"\RWC1.log", logfiledir + @"\RWC2.log");
+                                        System.IO.File.Move(logfiledir + @"\RWC.log", logfiledir + @"\RWC1.log");
+                                    }
+                                    else
+                                    {
+                                        System.IO.File.Move(logfiledir + @"\RWC2.log", logfiledir + @"\RWC3.log");
+                                        System.IO.File.Move(logfiledir + @"\RWC1.log", logfiledir + @"\RWC2.log");
+                                        System.IO.File.Move(logfiledir + @"\RWC.log", logfiledir + @"\RWC1.log");
+                                    }
+
+                                }
+                                else
+                                {
+                                    System.IO.File.Move(logfiledir + @"\RWC1.log", logfiledir + @"\RWC2.log");
+                                    System.IO.File.Move(logfiledir + @"\RWC.log", logfiledir + @"\RWC1.log");
+                                }
+                            }
+                            else
+                            {
+                                System.IO.File.Move(logfiledir + @"\RWC.log", logfiledir + @"\RWC1.log");
+                            }
                         }
                         catch
                         {
