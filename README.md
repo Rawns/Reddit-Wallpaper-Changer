@@ -7,9 +7,9 @@ Reddit Wallpaper Changer is a lightweight C# application for Windows that will s
 # Current Version - 1.0.8.4
 - Added: Auto Save All Wallpapers option
 - Added: A few small UI additions to Settings and About screens 
-- Updated: Added some more additional logging 
-- Updated: The previous three log files are archived (log files are truncated when they hit 1Mb)
-- Updated: Some few minor code tidying 
+- Updated: Added some additional logging 
+- Updated: Log files are truncated when they hit 1Mb (three log files are kept for archiving)
+- Updated: Some minor code adjustments/general tidying 
 
 
 # Installation
