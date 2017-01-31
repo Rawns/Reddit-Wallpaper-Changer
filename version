@@ -3,4 +3,4 @@ Version 1.0.8.4
 - Added: A few small UI additions to Settings and About screens 
 - Updated: Added some more additional logging 
 - Updated: The previous three log files are archived (log files are truncated when they hit 1Mb)
-- Updated: Some few minor code tidying 
+- Updated: Some minor code adjustments/general tidying 
