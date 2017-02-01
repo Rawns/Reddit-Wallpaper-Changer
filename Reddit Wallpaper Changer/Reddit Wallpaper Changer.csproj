@@ -102,6 +102,7 @@
     <Compile Include="SearchWizard.Designer.cs">
       <DependentUpon>SearchWizard.cs</DependentUpon>
     </Compile>
+    <Compile Include="ActiveDesktop.cs" />
     <Compile Include="Xml.cs" />
     <EmbeddedResource Include="RWC.resx">
       <DependentUpon>RWC.cs</DependentUpon>

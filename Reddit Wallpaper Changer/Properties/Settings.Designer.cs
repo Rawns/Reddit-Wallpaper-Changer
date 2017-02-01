@@ -286,5 +286,17 @@ namespace Reddit_Wallpaper_Changer.Properties {
                 this["currentWallpaperFile"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool wallpaperFade {
+            get {
+                return ((bool)(this["wallpaperFade"]));
+            }
+            set {
+                this["wallpaperFade"] = value;
+            }
+        }
     }
 }

@@ -16,17 +16,34 @@ using System.Runtime.InteropServices;
 using System.Collections;
 using Microsoft.Win32;
 using System.Xml.Linq;
+using System.Threading;
 
 namespace Reddit_Wallpaper_Changer
 {
     public partial class RWC : Form
     {
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        private static extern Int32 SystemParametersInfo(UInt32 uiAction, UInt32
-        uiParam, String pvParam, UInt32 fWinIni);
-        private static UInt32 SPI_SETDESKWALLPAPER = 20;
-        private static UInt32 SPIF_UPDATEINIFILE = 0x0001;
-        private static UInt32 SPIF_SENDWININICHANGE = 0x0002;
+        public static extern int SendMessageTimeout(
+                  IntPtr hWnd,      // handle to destination window
+                  uint Msg,       // message
+                  IntPtr wParam,  // first message parameter
+                  IntPtr lParam,   // second message parameter
+                  uint fuFlags,
+                  uint uTimeout,
+                  out IntPtr result
+
+                  );
+
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern IntPtr FindWindow(string lpClassName, IntPtr ZeroOnly);
+
+
+        //[DllImport("user32.dll", CharSet = CharSet.Auto)]
+        //private static extern Int32 SystemParametersInfo(UInt32 uiAction, UInt32
+        //uiParam, String pvParam, UInt32 fWinIni);
+        //private static UInt32 SPI_SETDESKWALLPAPER = 20;
+        //private static UInt32 SPIF_UPDATEINIFILE = 0x0001;
+        //private static UInt32 SPIF_SENDWININICHANGE = 0x0002;
 
         public static readonly List<string> ImageExtensions = new List<string> { ".JPG", ".JPE", ".BMP", ".GIF", ".PNG" };
         bool realClose = false;
@@ -907,6 +924,30 @@ namespace Reddit_Wallpaper_Changer
         private void setWallpaper(string url, string title, string threadID)
         {
             Logging.LogMessageToFile("Setting wallpaper.");
+
+            // Check if the image that has been found has been deleted from imgur
+            if (url.Contains("imgur"))
+            {
+
+                // A request for a deleted image on Imgur will return status code 302 & redirect to http://i.imgur.com/removed.png returning status code 200
+                HttpWebRequest imgurRequest = (HttpWebRequest)WebRequest.Create(url);
+                imgurRequest.Method = "HEAD";
+                imgurRequest.AllowAutoRedirect = false;
+                HttpWebResponse imgurResponse = imgurRequest.GetResponse() as HttpWebResponse;
+
+                // If anything other than OK, assume that image has been deleted
+                if (imgurResponse.StatusCode.ToString() != "OK")
+                {
+                    updateStatus("Wallpaper was deleted from Imgur.");
+                    Logging.LogMessageToFile("The selected wallpaper was deleted from Imgur, searching again.");
+                    noResultCount++;
+                    changeWallpaperTimer.Enabled = false;
+                    changeWallpaper();
+                    return;
+                }
+            }
+
+
             XDocument xml = XDocument.Load(AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml");
             var list = xml.Descendants("URL").Select(x => x.Value).ToList();
 
@@ -1054,14 +1095,37 @@ namespace Reddit_Wallpaper_Changer
                         {
                             WebClient webClient = Proxy.setProxy();
                             webClient.DownloadFile(uri.AbsoluteUri, @wallpaperFile);
-                            SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, @wallpaperFile, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
+
+                            if (Properties.Settings.Default.wallpaperFade == true)
+                            {
+                                ActiveDesktop();
+
+                                ThreadStart threadStarter = () =>
+                                {
+                                    Reddit_Wallpaper_Changer.ActiveDesktop.IActiveDesktop _activeDesktop = Reddit_Wallpaper_Changer.ActiveDesktop.ActiveDesktopWrapper.GetActiveDesktop();
+                                    _activeDesktop.SetWallpaper(wallpaperFile, 0);
+                                    _activeDesktop.ApplyChanges(Reddit_Wallpaper_Changer.ActiveDesktop.AD_Apply.ALL | Reddit_Wallpaper_Changer.ActiveDesktop.AD_Apply.FORCE);
+
+                                    Marshal.ReleaseComObject(_activeDesktop);
+                                };
+                                Thread thread = new Thread(threadStarter);
+                                thread.SetApartmentState(ApartmentState.STA);
+                                thread.Start();
+                                thread.Join(2000);
+                            }
+                            else
+                            {
+                                Reddit_Wallpaper_Changer.ActiveDesktop.SystemParametersInfo(Reddit_Wallpaper_Changer.ActiveDesktop.SPI_SETDESKWALLPAPER, 0, @wallpaperFile, Reddit_Wallpaper_Changer.ActiveDesktop.SPIF_UPDATEINIFILE | Reddit_Wallpaper_Changer.ActiveDesktop.SPIF_SENDWININICHANGE);
+
+                            }
+
                             historyRepeated.Add(threadID);
                             noResultCount = 0;
                             BeginInvoke((MethodInvoker)delegate
                             {
                                 updateStatus("Wallpaper Changed!");
                             });
-                            Logging.LogMessageToFile("Wallapper set successfully!");
+                            Logging.LogMessageToFile("Wallpaper changed!");
                             
                             if (Properties.Settings.Default.autoSave == true)
                             {
@@ -1947,6 +2011,16 @@ namespace Reddit_Wallpaper_Changer
                 taskIcon.ShowBalloonTip(750);
                 Logging.LogMessageToFile("Error automatically saving wallpaper: " + Ex.Message);
             }
+
+        }
+
+        //======================================================================
+        // Enable Active Desktop for wallpaper fade effect
+        //======================================================================
+        public static void ActiveDesktop()
+        {
+            IntPtr result = IntPtr.Zero;
+            SendMessageTimeout(FindWindow("Progman", IntPtr.Zero), 0x52c, IntPtr.Zero, IntPtr.Zero, 0, 500, out result);
 
         }
 
