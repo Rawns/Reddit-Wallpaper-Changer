@@ -42,12 +42,12 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.chkAutoSave = new System.Windows.Forms.CheckBox();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.txtSavePath = new System.Windows.Forms.TextBox();
             this.statuslabel = new System.Windows.Forms.Label();
             this.noticeLabel = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.chkLogging = new System.Windows.Forms.CheckBox();
             this.txtPass = new System.Windows.Forms.TextBox();
             this.txtUser = new System.Windows.Forms.TextBox();
             this.chkAuth = new System.Windows.Forms.CheckBox();
@@ -127,7 +127,6 @@
             this.blacklistButton = new System.Windows.Forms.Button();
             this.blacklistMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.unblacklistWallpaper = new System.Windows.Forms.ToolStripMenuItem();
-            this.chkAutoSave = new System.Windows.Forms.CheckBox();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -268,6 +267,16 @@
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Wallpaper Save Location:";
             // 
+            // chkAutoSave
+            // 
+            this.chkAutoSave.AutoSize = true;
+            this.chkAutoSave.Location = new System.Drawing.Point(13, 48);
+            this.chkAutoSave.Name = "chkAutoSave";
+            this.chkAutoSave.Size = new System.Drawing.Size(146, 17);
+            this.chkAutoSave.TabIndex = 2;
+            this.chkAutoSave.Text = "Auto Save Wallpapers? ";
+            this.chkAutoSave.UseVisualStyleBackColor = true;
+            // 
             // btnBrowse
             // 
             this.btnBrowse.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.Browse;
@@ -308,7 +317,6 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.chkLogging);
             this.groupBox5.Controls.Add(this.txtPass);
             this.groupBox5.Controls.Add(this.txtUser);
             this.groupBox5.Controls.Add(this.chkAuth);
@@ -322,18 +330,6 @@
             this.groupBox5.TabIndex = 10;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Behind The Scenes:";
-            // 
-            // chkLogging
-            // 
-            this.chkLogging.AutoSize = true;
-            this.chkLogging.Checked = true;
-            this.chkLogging.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkLogging.Location = new System.Drawing.Point(262, 23);
-            this.chkLogging.Name = "chkLogging";
-            this.chkLogging.Size = new System.Drawing.Size(74, 17);
-            this.chkLogging.TabIndex = 10;
-            this.chkLogging.Text = "Logging?";
-            this.chkLogging.UseVisualStyleBackColor = true;
             // 
             // txtPass
             // 
@@ -1240,16 +1236,6 @@
             this.unblacklistWallpaper.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.unblacklistWallpaper.Click += new System.EventHandler(this.unblacklistWallpaper_Click);
             // 
-            // chkAutoSave
-            // 
-            this.chkAutoSave.AutoSize = true;
-            this.chkAutoSave.Location = new System.Drawing.Point(13, 48);
-            this.chkAutoSave.Name = "chkAutoSave";
-            this.chkAutoSave.Size = new System.Drawing.Size(146, 17);
-            this.chkAutoSave.TabIndex = 2;
-            this.chkAutoSave.Text = "Auto Save Wallpapers? ";
-            this.chkAutoSave.UseVisualStyleBackColor = true;
-            // 
             // RWC
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1402,7 +1388,6 @@
         private System.Windows.Forms.ProgressBar blacklistProgress;
         private System.Windows.Forms.TableLayoutPanel monitorLayoutPanel;
         private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.CheckBox chkLogging;
         private System.Windows.Forms.Label typeDescription;
         private System.Windows.Forms.Button btnBug;
         private System.Windows.Forms.GroupBox groupBox10;

@@ -253,18 +253,6 @@ namespace Reddit_Wallpaper_Changer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool logging {
-            get {
-                return ((bool)(this["logging"]));
-            }
-            set {
-                this["logging"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string currentWallpaperUrl {
             get {
@@ -289,7 +277,7 @@ namespace Reddit_Wallpaper_Changer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool wallpaperFade {
             get {
                 return ((bool)(this["wallpaperFade"]));

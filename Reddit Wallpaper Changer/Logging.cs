@@ -10,8 +10,6 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         public static void LogMessageToFile(string msg)
         {
-            if (Properties.Settings.Default.logging == true)
-            {
                 StreamWriter sw = null;
                 string hostName = System.Environment.MachineName;
                 string logfiledir = AppDomain.CurrentDomain.BaseDirectory + @"\Log";
@@ -72,7 +70,7 @@ namespace Reddit_Wallpaper_Changer
                 catch
                 {
                 }
-            }
+
         }
 
     }

@@ -23,28 +23,11 @@ namespace Reddit_Wallpaper_Changer
     public partial class RWC : Form
     {
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern int SendMessageTimeout(
-                  IntPtr hWnd,      // handle to destination window
-                  uint Msg,       // message
-                  IntPtr wParam,  // first message parameter
-                  IntPtr lParam,   // second message parameter
-                  uint fuFlags,
-                  uint uTimeout,
-                  out IntPtr result
-
-                  );
+        public static extern int SendMessageTimeout(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam, uint fuFlags, uint uTimeout, out IntPtr result);
 
         [DllImport("user32.dll", SetLastError = true)]
         static extern IntPtr FindWindow(string lpClassName, IntPtr ZeroOnly);
-
-
-        //[DllImport("user32.dll", CharSet = CharSet.Auto)]
-        //private static extern Int32 SystemParametersInfo(UInt32 uiAction, UInt32
-        //uiParam, String pvParam, UInt32 fWinIni);
-        //private static UInt32 SPI_SETDESKWALLPAPER = 20;
-        //private static UInt32 SPIF_UPDATEINIFILE = 0x0001;
-        //private static UInt32 SPIF_SENDWININICHANGE = 0x0002;
-
+    
         public static readonly List<string> ImageExtensions = new List<string> { ".JPG", ".JPE", ".BMP", ".GIF", ".PNG" };
         bool realClose = false;
         Color selectedBackColor = Color.FromArgb(214, 234, 244);
@@ -64,8 +47,6 @@ namespace Reddit_Wallpaper_Changer
         Boolean enabledOnSleep;
         ArrayList historyRepeated = new ArrayList();
         int noResultCount = 0;
-
-
         BackgroundWorker bw = new BackgroundWorker();
 
         public RWC()
@@ -84,7 +65,6 @@ namespace Reddit_Wallpaper_Changer
             // Settings
             tt.SetToolTip(this.chkAutoStart, "Run Reddit Wallpaper Changer when your computer starts.");
             tt.SetToolTip(this.chkStartInTray, "Start Reddit Wallpaper Changer minimised.");
-            tt.SetToolTip(this.chkLogging, "Enable logging. The log file can be accessed from the 'About' window.");
             tt.SetToolTip(this.chkProxy, "Configure a proxy server for Reddit Wallpaper Changer to use.");
             tt.SetToolTip(this.chkAuth, "Enable if your proxy server requires authentication.");
             tt.SetToolTip(this.btnBrowse, "Sellect the downlaod destination for saved wallpapers.");
@@ -104,7 +84,12 @@ namespace Reddit_Wallpaper_Changer
             tt.SetToolTip(this.btnDonate, "Reddit Wallpaper Changer is maintained by one guy in his own time! If you'd like to say 'thanks' and get him a beer, click here! :)");
             tt.SetToolTip(this.btnUpdate, "Click here to manually check for updates.");
             tt.SetToolTip(this.btnLog, "Click here to open the RWC log file in your default text editor.");
-            
+
+            Logging.LogMessageToFile("===================================================================================================================");
+            Logging.LogMessageToFile("Reddit Wallpaper Changer Version " + Assembly.GetEntryAssembly().GetName().Version.ToString());
+            Logging.LogMessageToFile("RWC is starting.");
+            Logging.LogMessageToFile("RWC Interface Loaded.");
+
         }
 
         //======================================================================
@@ -152,18 +137,12 @@ namespace Reddit_Wallpaper_Changer
             r = new Random();
             taskIcon.Visible = true;
             setupSavedWallpaperLocation();
-            setupLogging();
             setupProxySettings();
             setupButtons();
             setupPanels();
             setupOthers();
             setupForm();
-
-            if (Properties.Settings.Default.logging == true)
-            {
-                loggingStartup();
-            }
-
+            logSettings();
             deleteOldVersion();
             Xml.createXML();
             populateBlacklistHistory();
@@ -174,32 +153,24 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         // Log startup info
         //======================================================================
-        private void loggingStartup()
+        private void logSettings()
         {
             int screens = Screen.AllScreens.Count();
 
-            Logging.LogMessageToFile("==================================================================================================");
-            Logging.LogMessageToFile("Reddit Wallpaper Changer Version " + Assembly.GetEntryAssembly().GetName().Version.ToString());
-            Logging.LogMessageToFile("RWC is starting.");
-            Logging.LogMessageToFile("RWC Interface Loaded.");
+            
             Logging.LogMessageToFile("Auto Start: " + Properties.Settings.Default.autoStart);
             Logging.LogMessageToFile("Start In Tray: " + Properties.Settings.Default.startInTray);
-
+            Logging.LogMessageToFile("Proxy Enabled: " + Properties.Settings.Default.useProxy);
             if (Properties.Settings.Default.useProxy == true)
             {
-                Logging.LogMessageToFile("Proxy Enabled: " + Properties.Settings.Default.proxyAddress);
-
-                if (Properties.Settings.Default.proxyAuth == true)
-                {
-                    Logging.LogMessageToFile("Proxy Username: " + Properties.Settings.Default.proxyUser);
-                    Logging.LogMessageToFile("Proxy Password: **********");
-                }
+                Logging.LogMessageToFile("Proxy Address:" + Properties.Settings.Default.proxyAddress);
+                Logging.LogMessageToFile("Proxy Authentication: " + Properties.Settings.Default.proxyAuth);
             }
-
             Logging.LogMessageToFile("Save location for wallpapers set to " + Properties.Settings.Default.defaultSaveLocation);
             Logging.LogMessageToFile("Auto Save All Wallpapers: " + Properties.Settings.Default.autoSave);
             Logging.LogMessageToFile("Wallpaper Grab Type: " + Properties.Settings.Default.wallpaperGrabType);
             Logging.LogMessageToFile("Selected Subreddits: " + Properties.Settings.Default.subredditsUsed);
+            Logging.LogMessageToFile("Wallpaper Fade Effect: " + Properties.Settings.Default.wallpaperFade);
             Logging.LogMessageToFile("Search Query: " + Properties.Settings.Default.searchQuery);
             Logging.LogMessageToFile("Change wallpaper every " + Properties.Settings.Default.changeTimeValue + " " + changeTimeType.Text);
             Logging.LogMessageToFile("Detected " + screens + " display(s).");
@@ -221,25 +192,6 @@ namespace Reddit_Wallpaper_Changer
             txtSavePath.Text = Properties.Settings.Default.defaultSaveLocation;
             chkAutoSave.Checked = Properties.Settings.Default.autoSave;
             
-        }
-
-        //======================================================================
-        // Setup the logging check box
-        //======================================================================
-        private void setupLogging()
-        {
-            chkLogging.Checked = Properties.Settings.Default.logging;
-
-            if (Properties.Settings.Default.logging == false)
-            {
-                btnLog.Enabled = false;
-                btnLog.Text = "Logging Disabled";
-            } 
-            else
-            {
-                btnLog.Enabled = true;
-                btnLog.Text = "Open Log File";
-            }
         }
 
         //======================================================================
@@ -330,31 +282,15 @@ namespace Reddit_Wallpaper_Changer
                 Properties.Settings.Default.Save();
             }
 
-            //Set the Wallpaper Type to Random
             wallpaperGrabType.SelectedIndex = Properties.Settings.Default.wallpaperGrabType;
-
-            //Setting the Subreddit Textbox to the default Settings
             subredditTextBox.Text = Properties.Settings.Default.subredditsUsed;
-
-            //Set the Search Query text
             searchQuery.Text = Properties.Settings.Default.searchQuery;
-
-            //Set the Time Value
             changeTimeValue.Value = Properties.Settings.Default.changeTimeValue;
-
-            //Set the Time Type
             changeTimeType.SelectedIndex = Properties.Settings.Default.changeTimeType;
-
-            //Set the current version for update check and label set.
-
+            chkStartInTray.Checked = Properties.Settings.Default.startInTray;
+            chkAutoStart.Checked = Properties.Settings.Default.autoStart;
             currentVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
             lblVersion.Text = "Current Version: " + currentVersion;
-
-            //Set the Tray checkbox up
-            chkStartInTray.Checked = Properties.Settings.Default.startInTray;
-
-            chkAutoStart.Checked = Properties.Settings.Default.autoStart;
-
         }
 
         //======================================================================
@@ -574,7 +510,6 @@ namespace Reddit_Wallpaper_Changer
             btnUpdate.Text = "Check For Updates";
             btnUpdate.Enabled = true;
         }
-        
 
 
         //======================================================================
@@ -623,9 +558,8 @@ namespace Reddit_Wallpaper_Changer
             Properties.Settings.Default.proxyPass = txtPass.Text;
             Properties.Settings.Default.defaultSaveLocation = txtSavePath.Text;
             Properties.Settings.Default.autoSave = chkAutoSave.Checked;
-            Properties.Settings.Default.logging = chkLogging.Checked;
             Properties.Settings.Default.Save();
-            setupLogging();
+            logSettings();
             if (updateTimerBool)
                 updateTimer();
             setupProxySettings();
@@ -674,7 +608,7 @@ namespace Reddit_Wallpaper_Changer
             // bw.DoWork += new DoWorkEventHandler(delegate(object o, DoWorkEventArgs args)
              bw.DoWork += delegate
              {
-                Logging.LogMessageToFile("The background worker to find a wallpaper has started successfully.");
+                Logging.LogMessageToFile("The background worker started successfully and is looking for a wallpaper.");
                 if (noResultCount >= 20)
                 {
                     noResultCount = 0;
@@ -764,24 +698,9 @@ namespace Reddit_Wallpaper_Changer
                 bool failedDownload = false;
                 using (WebClient client = new WebClient())
                 {
-                    client.Proxy = null;
+                     WebClient wc = Proxy.setProxy();
 
-                    // Use a proxy if specified
-                    if (Properties.Settings.Default.useProxy == true)
-                    {
-                        WebProxy proxy = new WebProxy(Properties.Settings.Default.proxyAddress);
-
-                        if (Properties.Settings.Default.proxyAuth == true)
-                        {
-                            proxy.Credentials = new NetworkCredential(Properties.Settings.Default.proxyUser, Properties.Settings.Default.proxyPass);
-                            proxy.UseDefaultCredentials = false;
-                            proxy.BypassProxyOnLocal = false;
-                        }
-
-                        client.Proxy = proxy;
-                    }
-               
-                    try
+                     try
                     {
                         Logging.LogMessageToFile("Searching Reddit for a wallpaper.");
                         jsonData = client.DownloadString(formURL);
@@ -923,14 +842,37 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void setWallpaper(string url, string title, string threadID)
         {
-            Logging.LogMessageToFile("Setting wallpaper.");
+            HttpWebRequest imageCheck = (HttpWebRequest)WebRequest.Create(url);
+            // imageCheck.Timeout = 5000;
+
+            imageCheck.Method = "HEAD";
+            imageCheck.AllowAutoRedirect = false;
+            var imageResponse = imageCheck.GetResponse();
+
+            // If anything other than OK, assume that image has been deleted
+            if (!imageResponse.ContentType.StartsWith("image/"))
+            {
+                imageCheck.Abort();
+                updateStatus("Non-image URL.");
+                Logging.LogMessageToFile("Not a direct wallpaper URL, searching again.");
+                noResultCount++;
+                changeWallpaperTimer.Enabled = false;
+                changeWallpaper();
+                return;
+            }
+            else
+            {
+                imageCheck.Abort();
+                Logging.LogMessageToFile("The chosen URL is for an image.");
+            }
+            
 
             // Check if the image that has been found has been deleted from imgur
             if (url.Contains("imgur"))
             {
-
                 // A request for a deleted image on Imgur will return status code 302 & redirect to http://i.imgur.com/removed.png returning status code 200
                 HttpWebRequest imgurRequest = (HttpWebRequest)WebRequest.Create(url);
+                // imgurRequest.Timeout = 5000;
                 imgurRequest.Method = "HEAD";
                 imgurRequest.AllowAutoRedirect = false;
                 HttpWebResponse imgurResponse = imgurRequest.GetResponse() as HttpWebResponse;
@@ -938,6 +880,7 @@ namespace Reddit_Wallpaper_Changer
                 // If anything other than OK, assume that image has been deleted
                 if (imgurResponse.StatusCode.ToString() != "OK")
                 {
+                    imgurRequest.Abort();
                     updateStatus("Wallpaper was deleted from Imgur.");
                     Logging.LogMessageToFile("The selected wallpaper was deleted from Imgur, searching again.");
                     noResultCount++;
@@ -945,8 +888,15 @@ namespace Reddit_Wallpaper_Changer
                     changeWallpaper();
                     return;
                 }
+                else
+                {
+                    imgurRequest.Abort();
+                    Logging.LogMessageToFile("The chosen wallpaper is still available on Imgur.");
+                }
             }
 
+
+            Logging.LogMessageToFile("Setting wallpaper.");
 
             XDocument xml = XDocument.Load(AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml");
             var list = xml.Descendants("URL").Select(x => x.Value).ToList();
@@ -1747,7 +1697,7 @@ namespace Reddit_Wallpaper_Changer
             taskIcon.BalloonTipText = "The current Wallpaper has been blacklisted! Finding a new wallpaper...";
             taskIcon.ShowBalloonTip(750);
 
-            Logging.LogMessageToFile("Wallpaper Blacklisted! Wallpaper Title, " + Properties.Settings.Default.threadTitle + ", URL: " + Properties.Settings.Default.threadTitle + ", ThreadID: " + Properties.Settings.Default.threadID);
+            Logging.LogMessageToFile("Wallpaper Blacklisted! Wallpaper Title: " + Properties.Settings.Default.threadTitle + ", URL: " + Properties.Settings.Default.url + ", ThreadID: " + Properties.Settings.Default.threadID);
 
             wallpaperChangeTimer.Enabled = false;
             wallpaperChangeTimer.Enabled = true;
@@ -1775,7 +1725,7 @@ namespace Reddit_Wallpaper_Changer
             taskIcon.BalloonTipText = "The historical Wallpaper has been blacklisted!";
             taskIcon.ShowBalloonTip(750);
 
-            Logging.LogMessageToFile("Wallpaper Blacklisted! Wallpaper, " + title + ", URL: " + url + ", ThreadID: " + threadid);
+            Logging.LogMessageToFile("Wallpaper Blacklisted! Wallpaper Title: " + title + ", URL: " + url + ", ThreadID: " + threadid);
 
             if (url == Properties.Settings.Default.currentWallpaperUrl)
             {
