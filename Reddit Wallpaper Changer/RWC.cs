@@ -144,7 +144,7 @@ namespace Reddit_Wallpaper_Changer
             setupOthers();
             setupForm();
             logSettings();
-            deleteOldVersion();
+            UpgradeCleanup.deleteOldVersion();
             Xml.createXML();
             populateBlacklistHistory();
             updateStatus("RWC Setup Initated.");
@@ -204,21 +204,6 @@ namespace Reddit_Wallpaper_Changer
             key = Registry.ClassesRoot.CreateSubKey("Folder\\shell\\Change Wallpaper", RegistryKeyPermissionCheck.ReadWriteSubTree);
             key = Registry.ClassesRoot.CreateSubKey("Folder\\shell\\Change Wallpaper\\command", RegistryKeyPermissionCheck.ReadWriteSubTree);
             key.SetValue("", Application.ExecutablePath);
-        }
-
-        //======================================================================
-        // Delete old executalbe after an update
-        //======================================================================
-        private void deleteOldVersion()
-        {
-            try
-            {
-                File.Delete(System.Reflection.Assembly.GetExecutingAssembly().Location + ".old");
-            }
-            catch (Exception ex)
-            {
-                Logging.LogMessageToFile("Error removing old version: " + ex.Message);
-            }
         }
 
         //======================================================================
@@ -611,11 +596,11 @@ namespace Reddit_Wallpaper_Changer
              bw.DoWork += delegate
              {
                 Logging.LogMessageToFile("The background worker started successfully and is looking for a wallpaper.");
-                if (noResultCount >= 20)
+                if (noResultCount >= 50)
                 {
                     noResultCount = 0;
-                    MessageBox.Show("No Results After 20 Retries. Disabling Reddit Wallpaper Changer.", "Reddit Wallpaper Changer: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Logging.LogMessageToFile("No results after 20 retries. Disabeling Reddit Wallpaper Changer.");
+                    MessageBox.Show("No Results After 50 Retries. Disabling Reddit Wallpaper Changer.", "Reddit Wallpaper Changer: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Logging.LogMessageToFile("No results after 50 retries. Disabeling Reddit Wallpaper Changer.");
                     updateStatus("RWC Disabled.");
                     changeWallpaperTimer.Enabled = false;
                     return;
@@ -1289,7 +1274,6 @@ namespace Reddit_Wallpaper_Changer
         {
             wallpaperChangeTimer.Enabled = false;
             wallpaperChangeTimer.Enabled = true;
-
             changeWallpaperTimer.Enabled = true;
         }
 
@@ -1521,6 +1505,7 @@ namespace Reddit_Wallpaper_Changer
             }
         }
 
+        //TODO: Pick up multi monitor again, 
         //======================================================================
         // Change monitor colour based on click
         //======================================================================
@@ -1659,7 +1644,7 @@ namespace Reddit_Wallpaper_Changer
             }
         }
 
-
+        //TODO: Must do something with this sometime! 
         //======================================================================
         // Add current wallpaper to favourites
         //======================================================================
@@ -1973,16 +1958,6 @@ namespace Reddit_Wallpaper_Changer
         {
             IntPtr result = IntPtr.Zero;
             SendMessageTimeout(FindWindow("Progman", IntPtr.Zero), 0x52c, IntPtr.Zero, IntPtr.Zero, 0, 500, out result);
-
-        }
-
-        private void groupBox3_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void aboutPanel_Paint(object sender, PaintEventArgs e)
-        {
 
         }
     }

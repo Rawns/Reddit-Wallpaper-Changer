@@ -591,7 +591,6 @@
             this.aboutPanel.Size = new System.Drawing.Size(375, 405);
             this.aboutPanel.TabIndex = 3;
             this.aboutPanel.Visible = false;
-            this.aboutPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.aboutPanel_Paint);
             // 
             // groupBox10
             // 
@@ -628,7 +627,6 @@
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Update";
-            this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
             // versionLabel
             // 

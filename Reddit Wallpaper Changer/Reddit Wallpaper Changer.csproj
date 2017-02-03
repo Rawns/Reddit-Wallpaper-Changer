@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InternetCheck.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="Proxy.cs" />
     <Compile Include="Quotes.cs" />
@@ -104,6 +105,7 @@
       <DependentUpon>SearchWizard.cs</DependentUpon>
     </Compile>
     <Compile Include="ActiveDesktop.cs" />
+    <Compile Include="UpgradeCleanup.cs" />
     <Compile Include="Xml.cs" />
     <EmbeddedResource Include="RWC.resx">
       <DependentUpon>RWC.cs</DependentUpon>
