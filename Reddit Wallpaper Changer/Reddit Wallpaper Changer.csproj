@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="Logging.cs" />
     <Compile Include="Proxy.cs" />
+    <Compile Include="Quotes.cs" />
     <Compile Include="RWC.cs">
       <SubType>Form</SubType>
     </Compile>

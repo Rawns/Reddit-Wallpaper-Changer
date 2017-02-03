@@ -74,6 +74,7 @@ namespace Reddit_Wallpaper_Changer
             tt.SetToolTip(this.changeTimeValue, "Choose how oftern to change your wallpaper.");
             tt.SetToolTip(this.subredditTextBox, "Enter the subs to scrape for wallpaper (eg, wallpaper, earthporn etc).\r\nMultiple subs can be provided and separated with a +.");
             tt.SetToolTip(this.chkAutoSave, "Enable this to automatically save all wallpapers to the above directory.");
+            tt.SetToolTip(this.chkFade, "Enable this for a faded wallpaper transition using Active Desktop.\r\nDisable this option if you experience any issues when the wallpaper changes.");
 
             // Monitors
 
@@ -289,6 +290,7 @@ namespace Reddit_Wallpaper_Changer
             changeTimeType.SelectedIndex = Properties.Settings.Default.changeTimeType;
             chkStartInTray.Checked = Properties.Settings.Default.startInTray;
             chkAutoStart.Checked = Properties.Settings.Default.autoStart;
+            chkFade.Checked = Properties.Settings.Default.wallpaperFade;
             currentVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
             lblVersion.Text = "Current Version: " + currentVersion;
         }

@@ -127,6 +127,7 @@
             this.blacklistButton = new System.Windows.Forms.Button();
             this.blacklistMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.unblacklistWallpaper = new System.Windows.Forms.ToolStripMenuItem();
+            this.chkFade = new System.Windows.Forms.CheckBox();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -317,6 +318,7 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.chkFade);
             this.groupBox5.Controls.Add(this.txtPass);
             this.groupBox5.Controls.Add(this.txtUser);
             this.groupBox5.Controls.Add(this.chkAuth);
@@ -1236,6 +1238,16 @@
             this.unblacklistWallpaper.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.unblacklistWallpaper.Click += new System.EventHandler(this.unblacklistWallpaper_Click);
             // 
+            // chkFade
+            // 
+            this.chkFade.AutoSize = true;
+            this.chkFade.Location = new System.Drawing.Point(249, 23);
+            this.chkFade.Name = "chkFade";
+            this.chkFade.Size = new System.Drawing.Size(88, 17);
+            this.chkFade.TabIndex = 10;
+            this.chkFade.Text = "Fade Effect?";
+            this.chkFade.UseVisualStyleBackColor = true;
+            // 
             // RWC
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1394,6 +1406,7 @@
         private System.Windows.Forms.Button btnLog;
         private System.Windows.Forms.Button btnDonate;
         private System.Windows.Forms.CheckBox chkAutoSave;
+        private System.Windows.Forms.CheckBox chkFade;
     }
 }
 
