@@ -48,6 +48,7 @@ namespace Reddit_Wallpaper_Changer
         ArrayList historyRepeated = new ArrayList();
         int noResultCount = 0;
         BackgroundWorker bw = new BackgroundWorker();
+        Blacklist blacklist;
 
         public RWC()
         {
@@ -131,24 +132,37 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void RWC_Load(object sender, EventArgs e)
         {
-            Xml.deleteDummy();
-
             this.Size = new Size(391, 508);
             updateStatus("RWC Setup Initating.");
             r = new Random();
             taskIcon.Visible = true;
             setupSavedWallpaperLocation();
+            setupAppDataLocation();
             setupProxySettings();
             setupButtons();
-            setupPanels();
+            setupPanels();          
             setupOthers();
             setupForm();
             logSettings();
             UpgradeCleanup.deleteOldVersion();
-            Xml.createXML();
+            blacklist = new Blacklist(Properties.Settings.Default.AppDataPath + @"\Blacklist.xml");           
             populateBlacklistHistory();
             updateStatus("RWC Setup Initated.");
             checkInternetTimer.Enabled = true;
+        }
+
+        //======================================================================
+        // Set up a folder to place Logs, Blacklists, Favorites etc. in
+        //======================================================================
+        private void setupAppDataLocation()
+        {
+            if (Properties.Settings.Default.AppDataPath == "")
+            {
+                // If it has not been set before, or is not set by the user, create a new folder in %APPDATA%
+                String appDataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Reddit Wallpaper Changer";
+                System.IO.Directory.CreateDirectory(appDataFolderPath);
+                Properties.Settings.Default.AppDataPath = appDataFolderPath;
+            }     
         }
 
         //======================================================================
@@ -185,14 +199,15 @@ namespace Reddit_Wallpaper_Changer
         {
             if (Properties.Settings.Default.defaultSaveLocation == "")
             {
-                System.IO.Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "Saved Wallpapers");
-                Properties.Settings.Default.defaultSaveLocation = AppDomain.CurrentDomain.BaseDirectory + "Saved Wallpapers";
+                // if the user hasn't set a path yet, create a new directory in My Pictures
+                String savedWallpaperPath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + @"\Saved Wallpapers";
+                System.IO.Directory.CreateDirectory(savedWallpaperPath);
+                Properties.Settings.Default.defaultSaveLocation = savedWallpaperPath;
                 Properties.Settings.Default.Save();
             }
 
             txtSavePath.Text = Properties.Settings.Default.defaultSaveLocation;
-            chkAutoSave.Checked = Properties.Settings.Default.autoSave;
-            
+            chkAutoSave.Checked = Properties.Settings.Default.autoSave;            
         }
 
         //======================================================================
@@ -883,12 +898,9 @@ namespace Reddit_Wallpaper_Changer
             }
 
 
-            Logging.LogMessageToFile("Setting wallpaper.");
+            Logging.LogMessageToFile("Setting wallpaper.");          
 
-            XDocument xml = XDocument.Load(AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml");
-            var list = xml.Descendants("URL").Select(x => x.Value).ToList();
-
-            if (list.Contains(url))
+            if (blacklist.containsURL(url))
             {
                 updateStatus("Wallpaper is blacklisted.");
                 Logging.LogMessageToFile("The selected wallpaper has been blacklisted, searching again.");
@@ -902,7 +914,7 @@ namespace Reddit_Wallpaper_Changer
             {
                 if (item.Cells[4].Value != null)
                 {
-                    list.Add(item.Cells[4].Value.ToString());
+                    historyList.Add(item.Cells[4].Value.ToString());
                 }
             }
 
@@ -1671,20 +1683,16 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         public void Blacklist()
         {
-            XDocument doc = XDocument.Load(AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml");
-            XElement blacklist = doc.Element("Blacklisted");
-            blacklist.Add(new XElement("Wallpaper",
-                new XElement("URL", Properties.Settings.Default.url),
-                new XElement("Title", Properties.Settings.Default.threadTitle),
-                new XElement("ThreadID", Properties.Settings.Default.threadID)));
-            doc.Save("Blacklist.xml");
+            blacklist.addEntry(Properties.Settings.Default.url, Properties.Settings.Default.threadTitle, Properties.Settings.Default.threadID);          
 
             taskIcon.BalloonTipIcon = ToolTipIcon.Info;
             taskIcon.BalloonTipTitle = "Wallpaper Blacklisted!";
             taskIcon.BalloonTipText = "The current Wallpaper has been blacklisted! Finding a new wallpaper...";
             taskIcon.ShowBalloonTip(750);
 
-            Logging.LogMessageToFile("Wallpaper Blacklisted! Wallpaper Title: " + Properties.Settings.Default.threadTitle + ", URL: " + Properties.Settings.Default.url + ", ThreadID: " + Properties.Settings.Default.threadID);
+            Logging.LogMessageToFile("Wallpaper Blacklisted! Wallpaper Title: " + Properties.Settings.Default.threadTitle + 
+                ", URL: " + Properties.Settings.Default.url + 
+                ", ThreadID: " + Properties.Settings.Default.threadID);
 
             wallpaperChangeTimer.Enabled = false;
             wallpaperChangeTimer.Enabled = true;
@@ -1699,13 +1707,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         public void MenuBlacklist(string url, string title, string threadid)
         {
-            XDocument doc = XDocument.Load(AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml");
-            XElement blacklist = doc.Element("Blacklisted");
-            blacklist.Add(new XElement("Wallpaper",
-                new XElement("URL", url),
-                new XElement("Title", title),
-                new XElement("ThreadID", threadid)));
-            doc.Save(AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml");
+            blacklist.addEntry(url, title, threadid);           
 
             taskIcon.BalloonTipIcon = ToolTipIcon.Info;
             taskIcon.BalloonTipTitle = "Wallpaper Blacklisted!";
@@ -1776,9 +1778,7 @@ namespace Reddit_Wallpaper_Changer
         {
             try
             {
-                XmlDocument doc = new XmlDocument();
-                doc.Load(AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml");
-                XmlNodeList list = doc.SelectNodes("Blacklisted/Wallpaper");
+                XmlNodeList list = blacklist.getXMLContent("Blacklist");                
 
                 int count = list.Count;
                 int i = 0;                
@@ -1844,29 +1844,9 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void unblacklistWallpaper_Click(object sender, EventArgs e)
         {
-            string path = AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml";
-            string url = (blacklistDataGrid.Rows[currentMouseOverRow].Cells[4].Value.ToString());
-
-            try
-            {
-                XmlDocument xml = new XmlDocument();
-                xml.Load(path);
-                foreach (XmlNode node in xml.SelectNodes("Blacklisted/Wallpaper"))
-                {
-                    if (node.SelectSingleNode("URL").InnerText == url)
-                    {
-                        node.ParentNode.RemoveChild(node);
-                    }
-                }
-
-                xml.Save(path);
-                Logging.LogMessageToFile("Wallpaper removed from the blacklist. URL: " + url);
-                populateBlacklistHistory();
-            }
-            catch (Exception ex)
-            {
-                Logging.LogMessageToFile("Unexpected Error: " + ex.Message);
-            }   
+            String url = (blacklistDataGrid.Rows[currentMouseOverRow].Cells[4].Value.ToString());
+            blacklist.removeEntry(url);
+            populateBlacklistHistory();
         }
 
         //======================================================================
@@ -1909,7 +1889,7 @@ namespace Reddit_Wallpaper_Changer
         {
             try
             {
-                System.Diagnostics.Process.Start(AppDomain.CurrentDomain.BaseDirectory + @"\Log\RWC.log");
+                System.Diagnostics.Process.Start(Properties.Settings.Default.AppDataPath + @"\Logs\RWC.log");
             }
             catch { }
         }
