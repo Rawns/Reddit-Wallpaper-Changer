@@ -1,5 +1,8 @@
 Version 1.0.8.5
-- Added: Wallpaper fade effect during rotation
+- Added: Wallpaper fade transition effect
+- Added: Extra check to ensure URL is for an image
+- Added: Check for Imgur links to ensure wallpaper has not been removed
+- Updated: Increased retry attempts form 20 to 50
 - Updated: Default Save location for Wallpapers now subfolder in My Pictures
 - Updated: Log files now stored in AppData
 - Updated: Blacklist now stored in AppData
