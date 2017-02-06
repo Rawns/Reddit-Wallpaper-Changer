@@ -27,7 +27,7 @@ namespace Reddit_Wallpaper_Changer
         [DllImport("user32.dll", SetLastError = true)]
         static extern IntPtr FindWindow(string lpClassName, IntPtr ZeroOnly);
     
-        public static readonly List<string> ImageExtensions = new List<string> { ".JPG", ".JPE", ".BMP", ".GIF", ".PNG" };
+        public static readonly List<string> ImageExtensions = new List<string> { ".JPG", ".JPEG", ".BMP", ".GIF", ".PNG" };
         bool realClose = false;
         Color selectedBackColor = Color.FromArgb(214, 234, 244);
         Color selectedBorderColor = Color.FromArgb(130, 195, 228);
@@ -161,6 +161,7 @@ namespace Reddit_Wallpaper_Changer
                 String appDataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Reddit Wallpaper Changer";
                 System.IO.Directory.CreateDirectory(appDataFolderPath);
                 Properties.Settings.Default.AppDataPath = appDataFolderPath;
+                Properties.Settings.Default.Save();
             }     
         }
 
