@@ -15,7 +15,6 @@ using System.Xml;
 using System.Runtime.InteropServices;
 using System.Collections;
 using Microsoft.Win32;
-using System.Xml.Linq;
 using System.Threading;
 
 namespace Reddit_Wallpaper_Changer

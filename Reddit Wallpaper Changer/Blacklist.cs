@@ -1,9 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -17,6 +14,15 @@ namespace Reddit_Wallpaper_Changer
         {
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
+
+            //======================================================================
+            // Legacy: Copy Blacklist.xml from RWC directory to AppData directory.
+            //======================================================================
+            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml"))
+            {
+                File.Copy(AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml", filepath, true);
+                File.Delete(AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml");
+            }
 
             if (!File.Exists(filepath))
             {
