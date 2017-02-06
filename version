@@ -7,3 +7,4 @@ Version 1.0.8.5
 - Updated: Log files now stored in AppData
 - Updated: Blacklist now stored in AppData
 - Updated: Some code restructure/tidying
+- Changed: Logging now always enabled
