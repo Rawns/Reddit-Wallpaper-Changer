@@ -253,18 +253,6 @@ namespace Reddit_Wallpaper_Changer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool logging {
-            get {
-                return ((bool)(this["logging"]));
-            }
-            set {
-                this["logging"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string currentWallpaperUrl {
             get {
@@ -284,6 +272,30 @@ namespace Reddit_Wallpaper_Changer.Properties {
             }
             set {
                 this["currentWallpaperFile"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool wallpaperFade {
+            get {
+                return ((bool)(this["wallpaperFade"]));
+            }
+            set {
+                this["wallpaperFade"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AppDataPath {
+            get {
+                return ((string)(this["AppDataPath"]));
+            }
+            set {
+                this["AppDataPath"] = value;
             }
         }
     }

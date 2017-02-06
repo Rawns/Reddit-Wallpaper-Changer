@@ -1,7 +1,9 @@
-Version 1.0.8.4
-- Added: Auto Save All Wallpapers option
-- Added: A few small UI additions to Settings and About screens 
-- Added: Started adding some tooltip help  
-- Updated: Added some additional logging 
-- Updated: Log files are truncated when they hit 1Mb (three log files are kept for archiving)
-- Updated: Some minor code adjustments/general tidying 
+Version 1.0.8.5
+- Added: Wallpaper fade transition effect
+- Added: Extra check to ensure URL is for an image
+- Added: Check for Imgur links to ensure wallpaper has not been removed
+- Updated: Increased retry attempts form 20 to 50
+- Updated: Default Save location for Wallpapers now subfolder in My Pictures
+- Updated: Log files now stored in AppData
+- Updated: Blacklist now stored in AppData
+- Updated: Some code restructure/tidying

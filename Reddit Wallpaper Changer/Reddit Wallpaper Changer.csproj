@@ -73,8 +73,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blacklist.cs" />
+    <Compile Include="InternetCheck.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="Proxy.cs" />
+    <Compile Include="Quotes.cs" />
     <Compile Include="RWC.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,7 +105,8 @@
     <Compile Include="SearchWizard.Designer.cs">
       <DependentUpon>SearchWizard.cs</DependentUpon>
     </Compile>
-    <Compile Include="Xml.cs" />
+    <Compile Include="ActiveDesktop.cs" />
+    <Compile Include="UpgradeCleanup.cs" />
     <EmbeddedResource Include="RWC.resx">
       <DependentUpon>RWC.cs</DependentUpon>
     </EmbeddedResource>

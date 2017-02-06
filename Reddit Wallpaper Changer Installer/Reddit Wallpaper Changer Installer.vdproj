@@ -240,7 +240,7 @@
         {
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_4D8D091475BE414084D527C4A579AAAA"
             {
-            "DefaultLocation" = "8:C:\\[ProductName]"
+            "DefaultLocation" = "8:[ProgramFilesFolder]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -300,7 +300,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Reddit Wallpaper Changer"
         "ProductCode" = "8:{BCA5721A-FBD4-4E3B-9A46-F502166212DD}"
-        "PackageCode" = "8:{6F6EC799-21C8-491A-B68E-34D314169AD5}"
+        "PackageCode" = "8:{494E9DD6-94A5-4D71-8D66-B8BC01DB33A2}"
         "UpgradeCode" = "8:{661C805E-7AE7-4E81-99F6-A78BD746890C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
