@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blacklist.cs" />
     <Compile Include="InternetCheck.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="Proxy.cs" />
@@ -106,7 +107,6 @@
     </Compile>
     <Compile Include="ActiveDesktop.cs" />
     <Compile Include="UpgradeCleanup.cs" />
-    <Compile Include="Xml.cs" />
     <EmbeddedResource Include="RWC.resx">
       <DependentUpon>RWC.cs</DependentUpon>
     </EmbeddedResource>
@@ -131,6 +131,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Xml.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
