@@ -13,6 +13,7 @@ Reddit Wallpaper Changer is a lightweight C# application for Windows that will s
 - Updated: Log files now stored in AppData
 - Updated: Blacklist now stored in AppData
 - Updated: Some code restructure/tidying
+- Changed: Logging always enabled
 
 # Installation
 Download the latest MSI installer from the [releases page](https://github.com/Rawns/Reddit-Wallpaper-Changer/releases)
