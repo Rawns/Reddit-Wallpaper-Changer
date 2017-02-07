@@ -310,5 +310,17 @@ namespace Reddit_Wallpaper_Changer.Properties {
                 this["updateSettings"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool manualOverride {
+            get {
+                return ((bool)(this["manualOverride"]));
+            }
+            set {
+                this["manualOverride"] = value;
+            }
+        }
     }
 }

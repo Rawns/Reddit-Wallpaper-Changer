@@ -918,14 +918,20 @@ namespace Reddit_Wallpaper_Changer
                 }
             }
 
-            if (historyList.Contains(url))
+            if (Properties.Settings.Default.manualOverride == false)
             {
-                updateStatus("Wallpaper already used this session.");
-                Logging.LogMessageToFile("The selected wallpaper has already been used this session, searching again.");
-                changeWallpaperTimer.Enabled = false;
-                changeWallpaper();
-                return;
+                if (historyList.Contains(url))
+                {
+                    updateStatus("Wallpaper already used this session.");
+                    Logging.LogMessageToFile("The selected wallpaper has already been used this session, searching again.");
+                    changeWallpaperTimer.Enabled = false;
+                    changeWallpaper();
+                    return;
+                }
             }
+
+            Properties.Settings.Default.manualOverride = false;
+            Properties.Settings.Default.Save();
 
             var bw = new BackgroundWorker();
             bw.DoWork += delegate
@@ -1746,6 +1752,11 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void useThisWallpapertoolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Logging.LogMessageToFile("Setting a historical wallpaper (bypassing 'use once' check).");
+            // Set a flag to bypass the 'check if already used' code.. 
+            Properties.Settings.Default.manualOverride = true;
+            Properties.Settings.Default.Save();
+
             string url = (historyDataGrid.Rows[currentMouseOverRow].Cells[4].Value.ToString());
             string title = (historyDataGrid.Rows[currentMouseOverRow].Cells[1].Value.ToString());
             string threadid = (historyDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
