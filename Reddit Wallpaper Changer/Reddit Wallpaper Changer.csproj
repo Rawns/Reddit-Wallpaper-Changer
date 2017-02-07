@@ -89,7 +89,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SaveSettings.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="SetGridCallback.cs" />
     <Compile Include="Update.cs">
       <SubType>Form</SubType>

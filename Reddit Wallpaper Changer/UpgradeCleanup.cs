@@ -13,7 +13,10 @@ namespace Reddit_Wallpaper_Changer
         {
             try
             {
-                File.Delete(System.Reflection.Assembly.GetExecutingAssembly().Location + ".old");
+                if (File.Exists(System.Reflection.Assembly.GetExecutingAssembly().Location + ".old"))
+                {
+                    File.Delete(System.Reflection.Assembly.GetExecutingAssembly().Location + ".old");
+                }
             }
             catch (Exception ex)
             {

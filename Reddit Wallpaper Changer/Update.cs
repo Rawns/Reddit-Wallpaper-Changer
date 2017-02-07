@@ -16,7 +16,16 @@ namespace Reddit_Wallpaper_Changer
             textBox1.Text = latestVersion.Replace("\n", System.Environment.NewLine);
             this.RWC = RWC;
         }
-   
+
+        //======================================================================
+        // Code to run on form load
+        //======================================================================
+        private void Update_Load(object sender, EventArgs e)
+        {
+            this.BringToFront();
+            this.TopMost = true;
+        }
+
         //======================================================================
         // Begin updating RWC
         //======================================================================
@@ -38,7 +47,7 @@ namespace Reddit_Wallpaper_Changer
                 // Run this code once the download is completed
                 wc.DownloadFileCompleted += (s, a) =>
                 {
-                    Logging.LogMessageToFile("Update downloaded.");
+                    Logging.LogMessageToFile("Update successfully downloaded.");
                     progressBar.Visible = false;
                
                     try
@@ -48,7 +57,7 @@ namespace Reddit_Wallpaper_Changer
                         // Properties.Settings.Default.Save();
                         //run the program again and close this one
 
-                        Logging.LogMessageToFile("Lanuching installer and exiting");
+                        Logging.LogMessageToFile("Launching installer and exiting.");
                         System.Diagnostics.Process.Start(temp + "Reddit.Wallpaper.Changer.msi");
                         System.Environment.Exit(0);
 
@@ -69,15 +78,6 @@ namespace Reddit_Wallpaper_Changer
                 MessageBox.Show("Error Updating: " + ex.Message, "RWC", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Logging.LogMessageToFile("Error Updating: " + ex.Message);
             }
-        }
-
-        
-        // Code to run on form load
-        //======================================================================
-        private void Update_Load(object sender, EventArgs e)
-        {
-            this.BringToFront();
-            this.TopMost = true;
         }
 
         //======================================================================

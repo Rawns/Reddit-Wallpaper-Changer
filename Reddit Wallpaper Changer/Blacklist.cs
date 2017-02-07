@@ -15,9 +15,7 @@ namespace Reddit_Wallpaper_Changer
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
 
-            //======================================================================
-            // Legacy: Copy Blacklist.xml from RWC directory to AppData directory.
-            //======================================================================
+            // Legacy: Copy Blacklist.xml from RWC directory to AppData directory, then delete.
             if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml"))
             {
                 File.Copy(AppDomain.CurrentDomain.BaseDirectory + "Blacklist.xml", filepath, true);
