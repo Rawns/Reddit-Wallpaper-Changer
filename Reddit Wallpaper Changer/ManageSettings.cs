@@ -64,6 +64,7 @@ namespace Reddit_Wallpaper_Changer
             }
             catch (Exception ex)
             {
+                Logging.LogMessageToFile("Unexpected error exporting settings: " + ex.Message);
                 MessageBox.Show("Unexpected error exporting settings to XML: " + ex.Message, "Error Exporting!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -117,9 +118,10 @@ namespace Reddit_Wallpaper_Changer
                         Properties.Settings.Default.wallpaperFade = Boolean.Parse(xn["WallpaperFade"].InnerText);
                         Properties.Settings.Default.Save();
 
+                        Logging.LogMessageToFile("Settings have been successfully imported. Restarting RWC.");
                         MessageBox.Show("Settings file imported successfully.\r\n\r\n" +
-                            "Note: If a proxy is use and requires authentication, you must manually enter the credentials.\r\n\r\n" +
-                            "RWC will now be restarted for the new settings to take effect.", "Settings Imported", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            "Note: If a proxy is specified that requires authentication, you must manually enter the credentials.\r\n\r\n" +
+                            "RWC will now restart so the new settings take effect.", "Settings Imported", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         // Close and re-launch RWC to apply changes. 
                         System.Diagnostics.Process.Start(System.Reflection.Assembly.GetExecutingAssembly().Location);
@@ -127,7 +129,9 @@ namespace Reddit_Wallpaper_Changer
                     }
                     catch (Exception ex)
                     {
+                        Logging.LogMessageToFile("Unexpected error importing settings file: " + ex.Message);
                         MessageBox.Show("Unexpected error importing settings from XML: " + ex.Message, "Error Importing!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                     }
                 }
             }

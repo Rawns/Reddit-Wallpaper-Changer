@@ -410,7 +410,7 @@
             this.chkStartInTray.AutoSize = true;
             this.chkStartInTray.Location = new System.Drawing.Point(137, 23);
             this.chkStartInTray.Name = "chkStartInTray";
-            this.chkStartInTray.Size = new System.Drawing.Size(91, 17);
+            this.chkStartInTray.Size = new System.Drawing.Size(90, 17);
             this.chkStartInTray.TabIndex = 3;
             this.chkStartInTray.Text = "Start In Tray?";
             this.chkStartInTray.UseVisualStyleBackColor = true;
@@ -526,7 +526,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(18, 20);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(115, 13);
+            this.label2.Size = new System.Drawing.Size(114, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Reddit Search Query:";
             // 
@@ -611,9 +611,9 @@
             // 
             this.groupBox11.Controls.Add(this.btnExport);
             this.groupBox11.Controls.Add(this.btnImport);
-            this.groupBox11.Location = new System.Drawing.Point(11, 284);
+            this.groupBox11.Location = new System.Drawing.Point(11, 281);
             this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(351, 67);
+            this.groupBox11.Size = new System.Drawing.Size(351, 63);
             this.groupBox11.TabIndex = 5;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "User Settings";
@@ -622,7 +622,7 @@
             // 
             this.btnExport.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.export;
             this.btnExport.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnExport.Location = new System.Drawing.Point(145, 29);
+            this.btnExport.Location = new System.Drawing.Point(151, 25);
             this.btnExport.Name = "btnExport";
             this.btnExport.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.btnExport.Size = new System.Drawing.Size(113, 25);
@@ -634,7 +634,7 @@
             // btnImport
             // 
             this.btnImport.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.import;
-            this.btnImport.Location = new System.Drawing.Point(9, 29);
+            this.btnImport.Location = new System.Drawing.Point(9, 25);
             this.btnImport.Name = "btnImport";
             this.btnImport.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.btnImport.Size = new System.Drawing.Size(113, 25);
@@ -697,7 +697,7 @@
             this.lblVersion.ForeColor = System.Drawing.Color.Black;
             this.lblVersion.Location = new System.Drawing.Point(148, 30);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(91, 13);
+            this.lblVersion.Size = new System.Drawing.Size(90, 13);
             this.lblVersion.TabIndex = 6;
             this.lblVersion.Text = "Current Version:";
             // 
@@ -935,7 +935,7 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(8, 22);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(89, 13);
+            this.label7.Size = new System.Drawing.Size(88, 13);
             this.label7.TabIndex = 9;
             this.label7.Text = "Wallpaper Type:";
             // 
