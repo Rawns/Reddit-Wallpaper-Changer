@@ -298,5 +298,17 @@ namespace Reddit_Wallpaper_Changer.Properties {
                 this["AppDataPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool updateSettings {
+            get {
+                return ((bool)(this["updateSettings"]));
+            }
+            set {
+                this["updateSettings"] = value;
+            }
+        }
     }
 }

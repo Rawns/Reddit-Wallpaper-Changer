@@ -52,6 +52,15 @@ namespace Reddit_Wallpaper_Changer
         public RWC()
         {
             InitializeComponent();
+
+            // Copy user settings from previous application version if necessary
+            if (Properties.Settings.Default.updateSettings)
+            {
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.updateSettings = false;
+                Properties.Settings.Default.Save();
+            }
+
             SystemEvents.PowerModeChanged += OnPowerChange;
 
             ToolTip tt = new ToolTip();
@@ -172,7 +181,6 @@ namespace Reddit_Wallpaper_Changer
         {
             int screens = Screen.AllScreens.Count();
 
-            
             Logging.LogMessageToFile("Auto Start: " + Properties.Settings.Default.autoStart);
             Logging.LogMessageToFile("Start In Tray: " + Properties.Settings.Default.startInTray);
             Logging.LogMessageToFile("Proxy Enabled: " + Properties.Settings.Default.useProxy);
@@ -181,6 +189,7 @@ namespace Reddit_Wallpaper_Changer
                 Logging.LogMessageToFile("Proxy Address:" + Properties.Settings.Default.proxyAddress);
                 Logging.LogMessageToFile("Proxy Authentication: " + Properties.Settings.Default.proxyAuth);
             }
+            Logging.LogMessageToFile("AppData Directory: " + Properties.Settings.Default.AppDataPath);
             Logging.LogMessageToFile("Save location for wallpapers set to " + Properties.Settings.Default.defaultSaveLocation);
             Logging.LogMessageToFile("Auto Save All Wallpapers: " + Properties.Settings.Default.autoSave);
             Logging.LogMessageToFile("Wallpaper Grab Type: " + Properties.Settings.Default.wallpaperGrabType);

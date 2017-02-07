@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Net;
+using System.IO;
+
 namespace Reddit_Wallpaper_Changer
 {
     public partial class Update : Form
@@ -22,8 +24,8 @@ namespace Reddit_Wallpaper_Changer
         {
             Logging.LogMessageToFile("Updating Reddit Wallpaper Changer.");
             btnUpdate.Enabled = false;
-            btnUpdate.BackgroundImage = Properties.Resources.update_disabled;
             progressBar.Visible = true;
+            string temp = Path.GetTempPath();
 
             try
             {
@@ -32,24 +34,23 @@ namespace Reddit_Wallpaper_Changer
                 {
                     progressBar.Value = a.ProgressPercentage;
                 };
+
+                // Run this code once the download is completed
                 wc.DownloadFileCompleted += (s, a) =>
                 {
                     Logging.LogMessageToFile("Update downloaded.");
                     progressBar.Visible = false;
-                // any other code to process the file
+               
                     try
                     {
                         //Update Settings
-                        Properties.Settings.Default.UpgradeRequired = true;
-                        Properties.Settings.Default.Save();
-
+                        // Properties.Settings.Default.UpgradeRequired = true;
+                        // Properties.Settings.Default.Save();
                         //run the program again and close this one
-                        System.Diagnostics.Process.Start(System.Reflection.Assembly.GetExecutingAssembly().Location.Replace(".old", ""));
 
-
-                        //close this one
+                        Logging.LogMessageToFile("Lanuching installer and exiting");
+                        System.Diagnostics.Process.Start(temp + "Reddit.Wallpaper.Changer.msi");
                         System.Environment.Exit(0);
-                        //Application.Exit();
 
                     }
                     catch (Exception ex)
@@ -58,10 +59,9 @@ namespace Reddit_Wallpaper_Changer
                         Logging.LogMessageToFile("Error Updating: " + ex.Message);
                     }
                 };
-                System.IO.File.Move(System.Reflection.Assembly.GetExecutingAssembly().Location, System.Reflection.Assembly.GetExecutingAssembly().Location + ".old");
-                wc.DownloadFileAsync(new Uri("https://github.com/Rawns/Reddit-Wallpaper-Changer/releases/download/release/Reddit.Wallpaper.Changer.exe"),
-                    @"" + System.Reflection.Assembly.GetExecutingAssembly().Location);
 
+                // Download the latest MSI instaler to the users Temp folder
+                wc.DownloadFileAsync(new Uri("https://github.com/Rawns/Reddit-Wallpaper-Changer/releases/download/release/Reddit.Wallpaper.Changer.msi"), temp + "Reddit.Wallpaper.Changer.msi");
                 wc.Dispose();
             }
             catch (Exception ex)
