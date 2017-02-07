@@ -30,7 +30,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="proxyAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)">[Proxy]:[Port]</Value>
+      <Value Profile="(Default)">address:port</Value>
     </Setting>
     <Setting Name="proxyAuth" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -70,6 +70,9 @@
     </Setting>
     <Setting Name="AppDataPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="updateSettings" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

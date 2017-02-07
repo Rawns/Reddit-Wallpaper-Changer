@@ -48,6 +48,7 @@
             this.statuslabel = new System.Windows.Forms.Label();
             this.noticeLabel = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.chkFade = new System.Windows.Forms.CheckBox();
             this.txtPass = new System.Windows.Forms.TextBox();
             this.txtUser = new System.Windows.Forms.TextBox();
             this.chkAuth = new System.Windows.Forms.CheckBox();
@@ -70,6 +71,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.wallpaperGrabType = new System.Windows.Forms.ComboBox();
             this.aboutPanel = new System.Windows.Forms.Panel();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.btnExport = new System.Windows.Forms.Button();
+            this.btnImport = new System.Windows.Forms.Button();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.btnLog = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -127,7 +131,6 @@
             this.blacklistButton = new System.Windows.Forms.Button();
             this.blacklistMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.unblacklistWallpaper = new System.Windows.Forms.ToolStripMenuItem();
-            this.chkFade = new System.Windows.Forms.CheckBox();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -136,6 +139,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.changeTimeValue)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.aboutPanel.SuspendLayout();
+            this.groupBox11.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -332,6 +336,16 @@
             this.groupBox5.TabIndex = 10;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Behind The Scenes:";
+            // 
+            // chkFade
+            // 
+            this.chkFade.AutoSize = true;
+            this.chkFade.Location = new System.Drawing.Point(249, 23);
+            this.chkFade.Name = "chkFade";
+            this.chkFade.Size = new System.Drawing.Size(88, 17);
+            this.chkFade.TabIndex = 10;
+            this.chkFade.Text = "Fade Effect?";
+            this.chkFade.UseVisualStyleBackColor = true;
             // 
             // txtPass
             // 
@@ -583,6 +597,7 @@
             this.aboutPanel.BackColor = System.Drawing.SystemColors.Control;
             this.aboutPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.aboutPanel.ContextMenuStrip = this.contextMenuStrip1;
+            this.aboutPanel.Controls.Add(this.groupBox11);
             this.aboutPanel.Controls.Add(this.groupBox10);
             this.aboutPanel.Controls.Add(this.groupBox3);
             this.aboutPanel.Controls.Add(this.groupBox4);
@@ -591,6 +606,44 @@
             this.aboutPanel.Size = new System.Drawing.Size(375, 405);
             this.aboutPanel.TabIndex = 3;
             this.aboutPanel.Visible = false;
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.btnExport);
+            this.groupBox11.Controls.Add(this.btnImport);
+            this.groupBox11.Location = new System.Drawing.Point(11, 281);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(351, 63);
+            this.groupBox11.TabIndex = 5;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "User Settings";
+            // 
+            // btnExport
+            // 
+            this.btnExport.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.export;
+            this.btnExport.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnExport.Location = new System.Drawing.Point(151, 25);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.btnExport.Size = new System.Drawing.Size(113, 25);
+            this.btnExport.TabIndex = 1;
+            this.btnExport.Text = "Export";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
+            // btnImport
+            // 
+            this.btnImport.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.import;
+            this.btnImport.Location = new System.Drawing.Point(9, 25);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.btnImport.Size = new System.Drawing.Size(113, 25);
+            this.btnImport.TabIndex = 0;
+            this.btnImport.Text = "Import";
+            this.btnImport.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnImport.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
             // groupBox10
             // 
@@ -1236,16 +1289,6 @@
             this.unblacklistWallpaper.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.unblacklistWallpaper.Click += new System.EventHandler(this.unblacklistWallpaper_Click);
             // 
-            // chkFade
-            // 
-            this.chkFade.AutoSize = true;
-            this.chkFade.Location = new System.Drawing.Point(249, 23);
-            this.chkFade.Name = "chkFade";
-            this.chkFade.Size = new System.Drawing.Size(88, 17);
-            this.chkFade.TabIndex = 10;
-            this.chkFade.Text = "Fade Effect?";
-            this.chkFade.UseVisualStyleBackColor = true;
-            // 
             // RWC
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1283,6 +1326,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.aboutPanel.ResumeLayout(false);
+            this.groupBox11.ResumeLayout(false);
             this.groupBox10.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
@@ -1405,6 +1449,9 @@
         private System.Windows.Forms.Button btnDonate;
         private System.Windows.Forms.CheckBox chkAutoSave;
         private System.Windows.Forms.CheckBox chkFade;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private System.Windows.Forms.Button btnExport;
+        private System.Windows.Forms.Button btnImport;
     }
 }
 
