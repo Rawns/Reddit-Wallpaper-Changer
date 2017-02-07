@@ -133,7 +133,7 @@ namespace Reddit_Wallpaper_Changer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("[Proxy]:[Port]")]
+        [global::System.Configuration.DefaultSettingValueAttribute("address:port")]
         public string proxyAddress {
             get {
                 return ((string)(this["proxyAddress"]));

@@ -96,9 +96,11 @@ namespace Reddit_Wallpaper_Changer
             // About
             tt.SetToolTip(this.btnSubreddit, "Having issues? You can get support by posting on the Reddit Wallpaper Changer Subreddit.");
             tt.SetToolTip(this.btnBug, "Spotted a bug? Open a ticket on GitHub by clicking here!");
-            tt.SetToolTip(this.btnDonate, "Reddit Wallpaper Changer is maintained by one guy in his own time! If you'd like to say 'thanks' and get him a beer, click here! :)");
+            tt.SetToolTip(this.btnDonate, "Reddit Wallpaper Changer is maintained by one guy in his own time!\r\nIf you'd like to say 'thanks' by getting him a beer, click here! :)");
             tt.SetToolTip(this.btnUpdate, "Click here to manually check for updates.");
             tt.SetToolTip(this.btnLog, "Click here to open the RWC log file in your default text editor.");
+            tt.SetToolTip(this.btnImport, "Import custom settings from an XML file.");
+            tt.SetToolTip(this.btnExport, "Export your current settings into an XML file.");
 
         }
 
@@ -1937,6 +1939,22 @@ namespace Reddit_Wallpaper_Changer
             IntPtr result = IntPtr.Zero;
             SendMessageTimeout(FindWindow("Progman", IntPtr.Zero), 0x52c, IntPtr.Zero, IntPtr.Zero, 0, 500, out result);
 
+        }
+
+        //======================================================================
+        // Import settings
+        //======================================================================
+        private void btnImport_Click(object sender, EventArgs e)
+        {
+            ManageSettings.Import();
+        }
+
+        //======================================================================
+        // Export settings
+        //======================================================================
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            ManageSettings.Export();
         }
     }
 }

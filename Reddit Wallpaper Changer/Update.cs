@@ -52,11 +52,6 @@ namespace Reddit_Wallpaper_Changer
                
                     try
                     {
-                        //Update Settings
-                        // Properties.Settings.Default.UpgradeRequired = true;
-                        // Properties.Settings.Default.Save();
-                        //run the program again and close this one
-
                         Logging.LogMessageToFile("Launching installer and exiting.");
                         System.Diagnostics.Process.Start(temp + "Reddit.Wallpaper.Changer.msi");
                         System.Environment.Exit(0);
