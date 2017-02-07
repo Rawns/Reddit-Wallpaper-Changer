@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_343905F7FD9C461D88896C75F0E3EC63"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_450B816E19CA4F579B99326351197ECE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -150,6 +156,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_343905F7FD9C461D88896C75F0E3EC63"
+            {
+            "SourcePath" = "8:Banner.bmp"
+            "TargetName" = "8:Banner.bmp"
+            "Tag" = "8:"
+            "Folder" = "8:_4D8D091475BE414084D527C4A579AAAA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7045F5B4C62B199454F20CCC3A47C985"
             {
             "AssemblyRegister" = "3:1"
@@ -289,15 +315,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Reddit Wallpaper Changer"
-        "ProductCode" = "8:{BCA5721A-FBD4-4E3B-9A46-F502166212DD}"
-        "PackageCode" = "8:{494E9DD6-94A5-4D71-8D66-B8BC01DB33A2}"
+        "ProductCode" = "8:{2D4A3B54-856A-42BD-A9CF-C2EF2FC92E36}"
+        "PackageCode" = "8:{354935D5-32C1-4D71-BBB7-95AA91E2D046}"
         "UpgradeCode" = "8:{661C805E-7AE7-4E81-99F6-A78BD746890C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.8"
+        "ProductVersion" = "8:1.0.9"
         "Manufacturer" = "8:Paul Rawnsley"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://www.reddit.com/r/rwallpaperchanger/"
@@ -457,7 +483,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_343905F7FD9C461D88896C75F0E3EC63"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "CopyrightWarning"
@@ -505,7 +532,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_343905F7FD9C461D88896C75F0E3EC63"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -527,7 +555,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_343905F7FD9C461D88896C75F0E3EC63"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -549,7 +578,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_343905F7FD9C461D88896C75F0E3EC63"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "ReadmeText"
@@ -605,7 +635,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_343905F7FD9C461D88896C75F0E3EC63"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "ShowProgress"
@@ -649,7 +680,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_343905F7FD9C461D88896C75F0E3EC63"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "CopyrightWarning"
@@ -697,7 +729,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_343905F7FD9C461D88896C75F0E3EC63"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -719,7 +752,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_343905F7FD9C461D88896C75F0E3EC63"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "ReadmeText"
@@ -766,7 +800,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_343905F7FD9C461D88896C75F0E3EC63"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "InstallAllUsersVisible"
@@ -816,7 +851,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_343905F7FD9C461D88896C75F0E3EC63"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -847,7 +883,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_343905F7FD9C461D88896C75F0E3EC63"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "UpdateText"
@@ -891,7 +928,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_343905F7FD9C461D88896C75F0E3EC63"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "ShowProgress"
