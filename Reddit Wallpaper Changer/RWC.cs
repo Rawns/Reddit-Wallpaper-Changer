@@ -1925,9 +1925,10 @@ namespace Reddit_Wallpaper_Changer
                 // Remove illegal characters from the post title
                 foreach (char c in Path.GetInvalidFileNameChars())
                 {
-                    fileName = fileName.Replace(c.ToString(), "");
-                    Logging.LogMessageToFile("Removed illegal characters from post title: " + fileName);              
+                    fileName = fileName.Replace(c.ToString(), "");                                  
                 }
+
+                Logging.LogMessageToFile("Removed illegal characters from post title: " + fileName);
 
                 if (!File.Exists(Properties.Settings.Default.defaultSaveLocation + @"\" + fileName))
                 {
