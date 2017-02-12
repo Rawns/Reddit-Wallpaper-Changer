@@ -1921,14 +1921,18 @@ namespace Reddit_Wallpaper_Changer
             try
             {
                 String fileName = Properties.Settings.Default.currentWallpaperName;
-                
+
                 // Remove illegal characters from the post title
+                bool changed = false;                    
                 foreach (char c in Path.GetInvalidFileNameChars())
                 {
+                    if (fileName.Contains(c))
+                        changed = true;                    
                     fileName = fileName.Replace(c.ToString(), "");                                  
                 }
 
-                Logging.LogMessageToFile("Removed illegal characters from post title: " + fileName);
+                if (changed)
+                    Logging.LogMessageToFile("Removed illegal characters from post title: " + fileName);
 
                 if (!File.Exists(Properties.Settings.Default.defaultSaveLocation + @"\" + fileName))
                 {
