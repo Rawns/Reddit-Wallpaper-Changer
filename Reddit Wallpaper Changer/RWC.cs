@@ -1928,7 +1928,7 @@ namespace Reddit_Wallpaper_Changer
                 {
                     if (fileName.Contains(c))
                         changed = true;                    
-                    fileName = fileName.Replace(c.ToString(), "");                                  
+                    fileName = fileName.Replace(c.ToString(), "_");                                  
                 }
 
                 if (changed)
