@@ -1224,7 +1224,7 @@ namespace Reddit_Wallpaper_Changer
             if (!realClose)
             {
                 e.Cancel = true;
-                fakeClose(true);
+                fakeClose(true);            
             }
             else
             {
@@ -1943,15 +1943,29 @@ namespace Reddit_Wallpaper_Changer
         {
             try
             {
-                if (!File.Exists(Properties.Settings.Default.defaultSaveLocation + @"\" + Properties.Settings.Default.currentWallpaperName))
+                String fileName = Properties.Settings.Default.currentWallpaperName;
+
+                // Remove illegal characters from the post title
+                bool changed = false;                    
+                foreach (char c in Path.GetInvalidFileNameChars())
+                {
+                    if (fileName.Contains(c))
+                        changed = true;                    
+                    fileName = fileName.Replace(c.ToString(), "_");                                  
+                }
+
+                if (changed)
+                    Logging.LogMessageToFile("Removed illegal characters from post title: " + fileName);
+
+                if (!File.Exists(Properties.Settings.Default.defaultSaveLocation + @"\" + fileName))
                 {
 
-                    System.IO.File.Copy(Properties.Settings.Default.currentWallpaperFile, Properties.Settings.Default.defaultSaveLocation + @"\" + Properties.Settings.Default.currentWallpaperName);
-                    Logging.LogMessageToFile("Auto saved " + Properties.Settings.Default.currentWallpaperName + " to " + Properties.Settings.Default.defaultSaveLocation);
+                    System.IO.File.Copy(Properties.Settings.Default.currentWallpaperFile, Properties.Settings.Default.defaultSaveLocation + @"\" + fileName);
+                    Logging.LogMessageToFile("Auto saved " + fileName + " to " + Properties.Settings.Default.defaultSaveLocation);
                 }
                 else
                 {
-                    Logging.LogMessageToFile("Not auto saving " + Properties.Settings.Default.currentWallpaperName + " because it already exists.");  
+                    Logging.LogMessageToFile("Not auto saving " + fileName + " because it already exists.");  
                 }
             }
             catch (Exception Ex)
