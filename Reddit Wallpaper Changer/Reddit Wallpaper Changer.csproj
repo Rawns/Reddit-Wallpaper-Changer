@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="ActiveDesktop.cs" />
     <Compile Include="UpgradeCleanup.cs" />
+    <Compile Include="Validation.cs" />
     <EmbeddedResource Include="RWC.resx">
       <DependentUpon>RWC.cs</DependentUpon>
     </EmbeddedResource>

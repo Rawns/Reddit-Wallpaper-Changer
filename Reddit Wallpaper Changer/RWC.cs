@@ -21,12 +21,14 @@ namespace Reddit_Wallpaper_Changer
 {
     public partial class RWC : Form
     {
+        #region Windows API
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern int SendMessageTimeout(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam, uint fuFlags, uint uTimeout, out IntPtr result);
 
         [DllImport("user32.dll", SetLastError = true)]
         static extern IntPtr FindWindow(string lpClassName, IntPtr ZeroOnly);
-    
+        #endregion
+
         public static readonly List<string> ImageExtensions = new List<string> { ".JPG", ".JPEG", ".BMP", ".GIF", ".PNG" };
         bool realClose = false;
         Color selectedBackColor = Color.FromArgb(214, 234, 244);
@@ -792,9 +794,9 @@ namespace Reddit_Wallpaper_Changer
                                      Logging.LogMessageToFile("Found a wallpaper! Title: " + token["data"]["title"].ToString() + ", URL: " + token["data"]["url"].ToString() + ", ThreadID: " + token["data"]["id"].ToString());
 
                                      // check URL 
-                                     if (checkImg(token["data"]["url"].ToString()))
+                                     if (Validation.checkImg(token["data"]["url"].ToString()))
                                      {
-                                         if (checkImgur(token["data"]["url"].ToString()))
+                                         if (Validation.checkImgur(token["data"]["url"].ToString()))
                                          {
                                              setWallpaper(token["data"]["url"].ToString(), token["data"]["title"].ToString(), token["data"]["id"].ToString());
                                          }
@@ -805,12 +807,10 @@ namespace Reddit_Wallpaper_Changer
                                              ++noResultCount;
                                              restartTimer(breakBetweenChange);
                                              changeWallpaper();
-
                                          }
                                      }
                                      else
                                      {
-
                                          updateStatus("Non-image URL.");
                                          Logging.LogMessageToFile("Not a direct wallpaper URL, searching again.");
                                          ++noResultCount;
@@ -825,9 +825,9 @@ namespace Reddit_Wallpaper_Changer
                                      Logging.LogMessageToFile("Found a wallpaper! Title: " + token["data"]["title"].ToString() + ", URL: " + token["data"]["url"].ToString() + ", ThreadID: " + token["data"]["id"].ToString());
 
                                      // check URL 
-                                     if (checkImg(token["data"]["url"].ToString()))
+                                     if (Validation.checkImg(token["data"]["url"].ToString()))
                                      {
-                                         if (checkImgur(token["data"]["url"].ToString()))
+                                         if (Validation.checkImgur(token["data"]["url"].ToString()))
                                          {
                                              setWallpaper(token["data"]["url"].ToString(), token["data"]["title"].ToString(), token["data"]["id"].ToString());
                                          }
@@ -838,12 +838,10 @@ namespace Reddit_Wallpaper_Changer
                                              ++noResultCount;
                                              restartTimer(breakBetweenChange);
                                              changeWallpaper();
-
                                          }
                                      }
                                      else
                                      {
-
                                          updateStatus("Non-image URL.");
                                          Logging.LogMessageToFile("Not a direct wallpaper URL, searching again.");
                                          ++noResultCount;
@@ -878,66 +876,6 @@ namespace Reddit_Wallpaper_Changer
         }
         delegate void SetTextCallback(string text);
 
-
-        //======================================================================
-        // Check URL is for an image
-        //======================================================================
-        private bool checkImg(string url)
-        {
-            if (!url.Contains("deviantart"))
-            {
-                updateStatus("Checking URL is valid.");
-                HttpWebRequest imageCheck = (HttpWebRequest)WebRequest.Create(url);
-                imageCheck.Timeout = 5000;
-                imageCheck.Method = "HEAD";
-                imageCheck.AllowAutoRedirect = false;
-                var imageResponse = imageCheck.GetResponse();
-
-                // If anything other than OK, assume that image has been deleted
-                if (!imageResponse.ContentType.StartsWith("image/"))
-                {
-                    imageCheck.Abort();
-                    return false;
-                }
-                else
-                {
-                    imageCheck.Abort();
-                    Logging.LogMessageToFile("The chosen URL is for an image.");
-                    return true;
-                }
-            }
-            return true;
-        }
-
-        //======================================================================
-        // Check imgur link is not dead
-        //======================================================================
-        private bool checkImgur(string url)
-        {
-            if (url.Contains("imgur"))
-            {
-                // A request for a deleted image on Imgur will return status code 302 & redirect to http://i.imgur.com/removed.png returning status code 200
-                updateStatus("Checking Imgur link is not dead.");
-                HttpWebRequest imgurRequest = (HttpWebRequest)WebRequest.Create(url);
-                imgurRequest.Timeout = 5000;
-                imgurRequest.Method = "HEAD";
-                imgurRequest.AllowAutoRedirect = false;
-                HttpWebResponse imgurResponse = imgurRequest.GetResponse() as HttpWebResponse;
-
-                if (imgurResponse.StatusCode.ToString() != "OK")
-                {
-                    imgurRequest.Abort();
-                    return false;
-                }
-                else
-                {
-                    imgurRequest.Abort();
-                    Logging.LogMessageToFile("The chosen wallpaper is still available on Imgur.");
-                    return true;
-                }
-            }
-            return true;
-        }
 
         //======================================================================
         // Update status
@@ -1817,6 +1755,8 @@ namespace Reddit_Wallpaper_Changer
             wallpaperChangeTimer.Enabled = false;
             wallpaperChangeTimer.Enabled = true;
             changeWallpaperTimer.Enabled = true;
+
+            
 
             populateBlacklistHistory();
 

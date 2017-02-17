@@ -367,7 +367,7 @@
             // 
             this.chkAuth.AutoSize = true;
             this.chkAuth.Enabled = false;
-            this.chkAuth.Location = new System.Drawing.Point(13, 81);
+            this.chkAuth.Location = new System.Drawing.Point(13, 79);
             this.chkAuth.Name = "chkAuth";
             this.chkAuth.Size = new System.Drawing.Size(108, 17);
             this.chkAuth.TabIndex = 7;
@@ -409,7 +409,7 @@
             this.chkStartInTray.AutoSize = true;
             this.chkStartInTray.Location = new System.Drawing.Point(137, 23);
             this.chkStartInTray.Name = "chkStartInTray";
-            this.chkStartInTray.Size = new System.Drawing.Size(90, 17);
+            this.chkStartInTray.Size = new System.Drawing.Size(91, 17);
             this.chkStartInTray.TabIndex = 3;
             this.chkStartInTray.Text = "Start In Tray?";
             this.chkStartInTray.UseVisualStyleBackColor = true;
@@ -525,7 +525,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(18, 20);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(114, 13);
+            this.label2.Size = new System.Drawing.Size(115, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Reddit Search Query:";
             // 
@@ -696,7 +696,7 @@
             this.lblVersion.ForeColor = System.Drawing.Color.Black;
             this.lblVersion.Location = new System.Drawing.Point(148, 30);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(90, 13);
+            this.lblVersion.Size = new System.Drawing.Size(91, 13);
             this.lblVersion.TabIndex = 6;
             this.lblVersion.Text = "Current Version:";
             // 
@@ -918,7 +918,7 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(8, 22);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(88, 13);
+            this.label7.Size = new System.Drawing.Size(89, 13);
             this.label7.TabIndex = 9;
             this.label7.Text = "Wallpaper Type:";
             // 
