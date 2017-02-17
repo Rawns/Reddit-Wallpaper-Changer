@@ -740,7 +740,7 @@ namespace Reddit_Wallpaper_Changer
                         Logging.LogMessageToFile("Subreddit probably does not exist.");
                         ++noResultCount;
                         failedDownload = true;
-                        breakBetweenChange.Enabled = true;
+                        restartTimer(breakBetweenChange);
                         return;
                     }
                     JToken redditResult;
@@ -806,18 +806,18 @@ namespace Reddit_Wallpaper_Changer
                             updateStatus("Your query is bringing up no results.");
                             Logging.LogMessageToFile("No results from the search query.");
                             failedDownload = true;
-                            breakBetweenChange.Enabled = true;
+                            restartTimer(breakBetweenChange);
                         }
                     }
                     else
                     {
-                        breakBetweenChange.Enabled = true;
+                        restartTimer(breakBetweenChange);
                     }
                 }
                 catch (JsonReaderException ex)
                 {
                     Logging.LogMessageToFile("Unexpected error: " + ex.Message);
-                    breakBetweenChange.Enabled = true;
+                    restartTimer(breakBetweenChange);
                 }
             };
 
@@ -845,16 +845,26 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
+        // Restart Timer from BackgroundWorker
+        //======================================================================
+
+        private void restartTimer(System.Windows.Forms.Timer timer)
+        {
+            this.Invoke((MethodInvoker)(() => { timer.Enabled = true; }));
+        }
+
+        //======================================================================
         // Set the wallpaper
         //======================================================================
         private void setWallpaper(string url, string title, string threadID)
         {
             HttpWebRequest imageCheck = (HttpWebRequest)WebRequest.Create(url);
-            // imageCheck.Timeout = 5000;
 
+
+            imageCheck.Timeout = 5000;
             updateStatus("Checking URL is valid.");
             imageCheck.Method = "HEAD";
-            imageCheck.AllowAutoRedirect = false;
+            imageCheck.AllowAutoRedirect = false;            
             var imageResponse = imageCheck.GetResponse();
 
             // If anything other than OK, assume that image has been deleted
@@ -955,7 +965,7 @@ namespace Reddit_Wallpaper_Changer
                 string url2 = url.ToLower();
                 if (url.Equals(null) || url.Length.Equals(0))
                 {
-                    changeWallpaperTimer.Enabled = true;
+                    restartTimer(changeWallpaperTimer);
                 }
                 else
                 {
@@ -1102,7 +1112,7 @@ namespace Reddit_Wallpaper_Changer
                     }
                     else
                     {
-                        changeWallpaperTimer.Enabled = true;
+                        restartTimer(changeWallpaperTimer);
                     }
 
                 }
@@ -1112,7 +1122,7 @@ namespace Reddit_Wallpaper_Changer
 
                 if (bytes.Count().Equals(0))
                 {
-                    changeWallpaperTimer.Enabled = true;
+                    restartTimer(changeWallpaperTimer);
                 }
                 else
                 {
@@ -1142,7 +1152,7 @@ namespace Reddit_Wallpaper_Changer
                         dataGridNumber += 1;
                         SetGrid(null, title, dataGridNumber, threadID, url);
                         historyDataGrid.Rows[0].Visible = false;
-                        breakBetweenChange.Enabled = true;
+                        restartTimer(breakBetweenChange);
                     }
 
                     wc.Dispose();
