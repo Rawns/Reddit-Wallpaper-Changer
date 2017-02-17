@@ -91,6 +91,7 @@ namespace Reddit_Wallpaper_Changer
             tt.SetToolTip(this.chkFade, "Enable this for a faded wallpaper transition using Active Desktop.\r\nDisable this option if you experience any issues when the wallpaper changes.");
 
             // Monitors
+            tt.SetToolTip(this.comboType, "Choose how to display wallpapers with multiple monitors.");
 
 
             // About
@@ -103,6 +104,8 @@ namespace Reddit_Wallpaper_Changer
             tt.SetToolTip(this.btnExport, "Export your current settings into an XML file.");
 
         }
+
+        public int screens { get; set; }
 
         //======================================================================
         // Wallpaper layout styles
@@ -203,6 +206,7 @@ namespace Reddit_Wallpaper_Changer
             Logging.LogMessageToFile("Search Query: " + Properties.Settings.Default.searchQuery);
             Logging.LogMessageToFile("Change wallpaper every " + Properties.Settings.Default.changeTimeValue + " " + changeTimeType.Text);
             Logging.LogMessageToFile("Detected " + screens + " display(s).");
+            Logging.LogMessageToFile("Wallpaper Position: " + Properties.Settings.Default.wallpaperPosition);
 
         }
 
@@ -310,7 +314,7 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
-        // Setup the four panels
+        // Setup the five panels
         //======================================================================
         private void setupPanels()
         {
@@ -428,7 +432,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         // Monitor button click
         //======================================================================
-        private void monitorButton_Click_1(object sender, EventArgs e)
+        private void monitorButton_Click(object sender, EventArgs e)
         {
             if (selectedPanel != monitorPanel)
             {
@@ -438,6 +442,7 @@ namespace Reddit_Wallpaper_Changer
                 selectButton(monitorButton);
                 selectedButton = monitorButton;
                 selectedPanel = monitorPanel;
+                monitorPanel_Paint();
             }
         }
 
@@ -847,6 +852,7 @@ namespace Reddit_Wallpaper_Changer
             HttpWebRequest imageCheck = (HttpWebRequest)WebRequest.Create(url);
             // imageCheck.Timeout = 5000;
 
+            updateStatus("Checking URL is valid.");
             imageCheck.Method = "HEAD";
             imageCheck.AllowAutoRedirect = false;
             var imageResponse = imageCheck.GetResponse();
@@ -867,9 +873,10 @@ namespace Reddit_Wallpaper_Changer
                 imageCheck.Abort();
                 Logging.LogMessageToFile("The chosen URL is for an image.");
             }
-            
+
 
             // Check if the image that has been found has been deleted from imgur
+            updateStatus("Checking Imgur link is not dead.");
             if (url.Contains("imgur"))
             {
                 // A request for a deleted image on Imgur will return status code 302 & redirect to http://i.imgur.com/removed.png returning status code 200
@@ -1272,7 +1279,6 @@ namespace Reddit_Wallpaper_Changer
                 statusMenuItem1.ForeColor = Color.Red;
                 statusMenuItem1.Text = "Not Running";
                 Logging.LogMessageToFile("Not Running.");
-
             }
 
         }
@@ -1470,74 +1476,117 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         // Add a button for each attached monitor 
         //======================================================================
-        private void monitorPanel_Paint(object sender, PaintEventArgs e)
+        public void monitorPanel_Paint()
         {
-            if (!monitorsCreated)
+            // Remove existing monitor pictures
+            foreach (Control item in monitorPanel.Controls.OfType<PictureBox>())
             {
-                monitorsCreated = true;
+                monitorPanel.Controls.Remove(item);
+            }
 
-                int screens = Screen.AllScreens.Count();
+            // Remove existing monitor labels
+            foreach (Control item in monitorLayoutPanel.Controls.OfType<Label>())
+            {
+                monitorLayoutPanel.Controls.Remove(item);
+            }
+            
+            // Get number of attached monitors8
+            int screens = Screen.AllScreens.Count();
 
-                if (screens == 1)
+            // Set default monitor icon
+            var img = Properties.Resources.display_enabled;
+
+            // Disable options if only one monitor is detected and fix wallpaper type to tiled
+            if (screens == 1)
+            {
+                Properties.Settings.Default.wallpaperPosition = "Tile";
+                Properties.Settings.Default.Save();
+                comboType.Enabled = false;
+                
+            }
+
+            // Auto add a table to nest the monitor icons 
+            this.monitorLayoutPanel.Refresh();
+            this.monitorLayoutPanel.ColumnStyles.Clear();
+            this.monitorLayoutPanel.ColumnCount = screens;
+            this.monitorLayoutPanel.RowCount = 2;           
+            this.monitorLayoutPanel.AutoSize = true;
+
+            // Change the monitor icon if stretched is enabled
+            if (comboType.Text == "Stretched")
+            {
+                img = Properties.Resources.display_green;
+            }
+
+            int z = 0;
+            foreach (var screen in Screen.AllScreens.OrderBy(i => i.Bounds.X))
+            {
+                if (comboType.Text == "Multiple")
                 {
-                    comboType.Enabled = false;
-                    monitorSaveButton.Enabled = false;
-                    comboType.Text = "-";
+                    if (z == 1)
+                    {
+                        img = Properties.Resources.display_grey;
+                    }
+                    else if (z == 2)
+                    {
+                        img = Properties.Resources.display_disabled;
+                    }
                 }
 
-                this.monitorLayoutPanel.ColumnStyles.Clear();
-                this.monitorLayoutPanel.ColumnCount = screens;
-                this.monitorLayoutPanel.RowCount = 2;           
-                this.monitorLayoutPanel.AutoSize = true;
+                var percent = 100f / screens;
+                this.monitorLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, percent));
 
-                int z = 0;
-                foreach (var screen in Screen.AllScreens.OrderBy(i => i.Bounds.X))
+                PictureBox monitor = new PictureBox
                 {
-                    var percent = 100f / screens;
-                    this.monitorLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, percent));
+                    Name = "MonitorPic" + z,
+                    Size = new Size(95, 75),
+                    BackgroundImageLayout = ImageLayout.Stretch,
+                    BackgroundImage = img,
+                    Anchor = System.Windows.Forms.AnchorStyles.None,                    
+                };
 
-                    PictureBox monitor = new PictureBox
-                    {
-                        Name = "MonitorPic" + z,
-                        Size = new Size(95, 75),
-                        BackgroundImageLayout = ImageLayout.Stretch,
-                        BackgroundImage = Properties.Resources.display_enabled,
-                        Anchor = System.Windows.Forms.AnchorStyles.None
-                    };
+                Label rez = new Label
+                {
+                    Name = "MonitorLabel" + z,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Font = new Font("Segoe UI", 10),
+                    ForeColor = Color.Black,
+                    BackColor = Color.Transparent,
+                    Text = screen.Bounds.Width + "x" + screen.Bounds.Height,
+                    Anchor = System.Windows.Forms.AnchorStyles.Bottom,
+                };
 
-                    Label rez = new Label
-                    {
-                        Name = "MonitorLabel" + z,
-                        TextAlign = ContentAlignment.MiddleCenter,
-                        Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                        ForeColor = Color.Black,
-                        BackColor = Color.Transparent,
-                        Text = screen.Bounds.Width + "x" + screen.Bounds.Height,
-                        Anchor = System.Windows.Forms.AnchorStyles.Bottom
-                    };
+                this.monitorLayoutPanel.Controls.Add(monitor, z, 0);
+                this.monitorLayoutPanel.Controls.Add(rez, z, 1);
 
-                    this.monitorLayoutPanel.Controls.Add(monitor, z, 0);
-                    this.monitorLayoutPanel.Controls.Add(rez, z, 1);
-                    z++;
-                }
+                z++;    
             }
         }
 
-        //TODO: Pick up multi monitor again, 
         //======================================================================
         // Change monitor colour based on click
         //======================================================================
-        // private void monitor_Click(object sender, MouseEventArgs e)
-        //{
-        //    if (((Button)sender).BackgroundImage == Properties.Resources.display_disabled)
-        //    {
-        //        ((Button)sender).BackgroundImage = Properties.Resources.display_enabled;
-        //    }
-        //    else
-        //    {
-        //        ((Button)sender).BackgroundImage = Properties.Resources.display_disabled;
-        //    }
-        //}
+        private void comboType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboType.Text == "Tile")
+            {
+                Properties.Settings.Default.wallpaperPosition = "Tile";
+                Properties.Settings.Default.Save();
+                monitorPanel_Paint();  
+            }
+            else if (comboType.Text == "Stretch")
+            {
+                Properties.Settings.Default.wallpaperPosition = "Stretch";
+                Properties.Settings.Default.Save();
+                monitorPanel_Paint();
+            }
+            else if (comboType.Text == "Multiple")
+            {
+                Properties.Settings.Default.wallpaperPosition = "Multiple";
+                Properties.Settings.Default.Save();
+                monitorPanel_Paint();
+            }
+        }
 
         //======================================================================
         // History grid mouse click
@@ -1591,7 +1640,6 @@ namespace Reddit_Wallpaper_Changer
                     this.label2.Visible = true;
                     this.searchQuery.Visible = true;
                     this.label9.Visible = false;
-
                 }
             }
         }
@@ -1662,7 +1710,7 @@ namespace Reddit_Wallpaper_Changer
             }
         }
 
-        //TODO: Must do something with this sometime! 
+        //TODO: Must do something with this sometime.....maybe....
         //======================================================================
         // Add current wallpaper to favourites
         //======================================================================
@@ -1732,7 +1780,7 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
-        // Click on favourite menu
+        // TODO: Click on favourite menu
         //======================================================================
         //private void faveWallpaperMenuItem_Click(object sender, EventArgs e)
         //{
@@ -1753,7 +1801,7 @@ namespace Reddit_Wallpaper_Changer
         private void useThisWallpapertoolStripMenuItem_Click(object sender, EventArgs e)
         {
             Logging.LogMessageToFile("Setting a historical wallpaper (bypassing 'use once' check).");
-            // Set a flag to bypass the 'check if already used' code.. 
+            // Set a flag to bypass the 'check if already used' code.
             Properties.Settings.Default.manualOverride = true;
             Properties.Settings.Default.Save();
 
@@ -1858,31 +1906,6 @@ namespace Reddit_Wallpaper_Changer
             String url = (blacklistDataGrid.Rows[currentMouseOverRow].Cells[4].Value.ToString());
             blacklist.removeEntry(url);
             populateBlacklistHistory();
-        }
-
-        //======================================================================
-        // Select multi wallpaper type
-        //======================================================================
-        private void comboType_SelectedValueChanged(object sender, EventArgs e)
-        {
-            int screens = Screen.AllScreens.Count();
-
-            if (comboType.Text == "Tiled")
-            { 
-
-            }
-            else if(comboType.Text == "Centered")
-            {
-
-            }
-            else if(comboType.Text == "Fill")
-            {
-
-            }
-            else if(comboType.Text == "Stretched")
-            { 
-
-            }
         }
 
         //======================================================================
