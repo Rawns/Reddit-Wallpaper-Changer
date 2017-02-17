@@ -94,7 +94,6 @@
             this.monitorLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.monitorSaveButton = new System.Windows.Forms.Button();
             this.comboType = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.historyPanel = new System.Windows.Forms.Panel();
@@ -601,7 +600,7 @@
             this.aboutPanel.Controls.Add(this.groupBox10);
             this.aboutPanel.Controls.Add(this.groupBox3);
             this.aboutPanel.Controls.Add(this.groupBox4);
-            this.aboutPanel.Location = new System.Drawing.Point(416, 47);
+            this.aboutPanel.Location = new System.Drawing.Point(415, 385);
             this.aboutPanel.Name = "aboutPanel";
             this.aboutPanel.Size = new System.Drawing.Size(375, 405);
             this.aboutPanel.TabIndex = 3;
@@ -837,12 +836,11 @@
             this.monitorPanel.Controls.Add(this.groupBox8);
             this.monitorPanel.Controls.Add(this.label8);
             this.monitorPanel.Controls.Add(this.groupBox7);
-            this.monitorPanel.Location = new System.Drawing.Point(462, 25);
+            this.monitorPanel.Location = new System.Drawing.Point(474, 3);
             this.monitorPanel.Name = "monitorPanel";
             this.monitorPanel.Size = new System.Drawing.Size(375, 405);
             this.monitorPanel.TabIndex = 4;
             this.monitorPanel.Visible = false;
-            this.monitorPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.monitorPanel_Paint);
             // 
             // typeDescription
             // 
@@ -887,7 +885,6 @@
             // 
             // groupBox7
             // 
-            this.groupBox7.Controls.Add(this.monitorSaveButton);
             this.groupBox7.Controls.Add(this.comboType);
             this.groupBox7.Controls.Add(this.label7);
             this.groupBox7.Location = new System.Drawing.Point(11, 177);
@@ -896,19 +893,6 @@
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Settings";
-            // 
-            // monitorSaveButton
-            // 
-            this.monitorSaveButton.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.save;
-            this.monitorSaveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.monitorSaveButton.Location = new System.Drawing.Point(261, 48);
-            this.monitorSaveButton.Name = "monitorSaveButton";
-            this.monitorSaveButton.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.monitorSaveButton.Size = new System.Drawing.Size(70, 25);
-            this.monitorSaveButton.TabIndex = 11;
-            this.monitorSaveButton.Text = "Save";
-            this.monitorSaveButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.monitorSaveButton.UseVisualStyleBackColor = true;
             // 
             // comboType
             // 
@@ -920,15 +904,14 @@
             this.comboType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboType.FormattingEnabled = true;
             this.comboType.Items.AddRange(new object[] {
-            "Tiled",
-            "Centre",
+            "Tile",
             "Stretch",
-            ""});
+            "Multiple"});
             this.comboType.Location = new System.Drawing.Point(103, 19);
             this.comboType.Name = "comboType";
             this.comboType.Size = new System.Drawing.Size(228, 21);
             this.comboType.TabIndex = 10;
-            this.comboType.SelectedValueChanged += new System.EventHandler(this.comboType_SelectedValueChanged);
+            this.comboType.SelectedIndexChanged += new System.EventHandler(this.comboType_SelectedIndexChanged);
             // 
             // label7
             // 
@@ -1133,7 +1116,7 @@
             this.monitorButton.Text = "Monitor(s)";
             this.monitorButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.monitorButton.UseVisualStyleBackColor = false;
-            this.monitorButton.Click += new System.EventHandler(this.monitorButton_Click_1);
+            this.monitorButton.Click += new System.EventHandler(this.monitorButton_Click);
             // 
             // historyMenuStrip
             // 
@@ -1404,7 +1387,6 @@
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.ComboBox comboType;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button monitorSaveButton;
         private System.Windows.Forms.ContextMenuStrip historyMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem useThisWallpaperToolStripMenuItem;
         private System.Windows.Forms.Label statuslabel;
