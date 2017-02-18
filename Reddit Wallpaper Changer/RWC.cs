@@ -85,14 +85,14 @@ namespace Reddit_Wallpaper_Changer
             tt.SetToolTip(this.chkProxy, "Configure a proxy server for Reddit Wallpaper Changer to use.");
             tt.SetToolTip(this.chkAuth, "Enable if your proxy server requires authentication.");
             tt.SetToolTip(this.btnBrowse, "Sellect the downlaod destination for saved wallpapers.");
-            tt.SetToolTip(this.saveButton, "Saves your settings.");
+            tt.SetToolTip(this.btnSave, "Saves your settings.");
             tt.SetToolTip(this.btnWizard, "Open the Search wizard.");
             tt.SetToolTip(this.wallpaperGrabType, "Choose how you want to find a wallpaper.");
             tt.SetToolTip(this.changeTimeValue, "Choose how oftern to change your wallpaper.");
             tt.SetToolTip(this.subredditTextBox, "Enter the subs to scrape for wallpaper (eg, wallpaper, earthporn etc).\r\nMultiple subs can be provided and separated with a +.");
             tt.SetToolTip(this.chkAutoSave, "Enable this to automatically save all wallpapers to the above directory.");
             tt.SetToolTip(this.chkFade, "Enable this for a faded wallpaper transition using Active Desktop.\r\nDisable this option if you experience any issues when the wallpaper changes.");
-            tt.SetToolTip(this.chkNotifications, "Disables all RWC notifications.");
+            tt.SetToolTip(this.chkNotifications, "Disables all RWC System Tray/Notification Centre notifications.");
 
             // Monitors
             tt.SetToolTip(this.comboType, "Choose how to display wallpapers with multiple monitors.");
@@ -804,7 +804,7 @@ namespace Reddit_Wallpaper_Changer
                                      {
                                          if (Validation.checkImgur(token["data"]["url"].ToString()))
                                          {
-                                             setWallpaper(token["data"]["url"].ToString(), token["data"]["title"].ToString(), token["data"]["id"].ToString(), RWC.Style.Center);
+                                             setWallpaper(token["data"]["url"].ToString(), token["data"]["title"].ToString(), token["data"]["id"].ToString());
                                          }
                                          else
                                          {
@@ -835,7 +835,7 @@ namespace Reddit_Wallpaper_Changer
                                      {
                                          if (Validation.checkImgur(token["data"]["url"].ToString()))
                                          {
-                                             setWallpaper(token["data"]["url"].ToString(), token["data"]["title"].ToString(), token["data"]["id"].ToString(), RWC.Style.Center);
+                                             setWallpaper(token["data"]["url"].ToString(), token["data"]["title"].ToString(), token["data"]["id"].ToString());
                                          }
                                          else
                                          {
@@ -913,7 +913,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         // Set the wallpaper
         //======================================================================
-        private void setWallpaper(string url, string title, string threadID, Style style)
+        private void setWallpaper(string url, string title, string threadID)
         {
             Logging.LogMessageToFile("Setting wallpaper.");      
 
@@ -925,40 +925,6 @@ namespace Reddit_Wallpaper_Changer
                 changeWallpaper();
                 return;
             }
-
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
-
-            if (style == Style.Fill)
-            {
-                key.SetValue(@"WallpaperStyle", 10.ToString());
-                key.SetValue(@"TileWallpaper", 0.ToString());
-            }
-            if (style == Style.Fit)
-            {
-                key.SetValue(@"WallpaperStyle", 6.ToString());
-                key.SetValue(@"TileWallpaper", 0.ToString());
-            }
-            if (style == Style.Span) // Windows 8 or newer only!
-            {
-                key.SetValue(@"WallpaperStyle", 22.ToString());
-                key.SetValue(@"TileWallpaper", 0.ToString());
-            }
-            if (style == Style.Stretch)
-            {
-                key.SetValue(@"WallpaperStyle", 2.ToString());
-                key.SetValue(@"TileWallpaper", 0.ToString());
-            }
-            if (style == Style.Tile)
-            {
-                key.SetValue(@"WallpaperStyle", 0.ToString());
-                key.SetValue(@"TileWallpaper", 1.ToString());
-            }
-            if (style == Style.Center)
-            {
-                key.SetValue(@"WallpaperStyle", 0.ToString());
-                key.SetValue(@"TileWallpaper", 0.ToString());
-            }
-
 
             List<string> historyList = new List<string>();
             foreach (DataGridViewRow item in historyDataGrid.Rows)
@@ -1550,17 +1516,21 @@ namespace Reddit_Wallpaper_Changer
         public void monitorPanel_Paint()
         {
             // Remove existing monitor pictures
-            foreach (Control item in monitorPanel.Controls.OfType<PictureBox>())
+            foreach (Control item in monitorLayoutPanel.Controls.OfType<PictureBox>())
             {
-                monitorPanel.Controls.Remove(item);
+                monitorLayoutPanel.Controls.Remove(item);
+                item.Dispose();
             }
 
             // Remove existing monitor labels
             foreach (Control item in monitorLayoutPanel.Controls.OfType<Label>())
             {
                 monitorLayoutPanel.Controls.Remove(item);
+                item.Dispose();
             }
-            
+
+            comboType.Text = Properties.Settings.Default.wallpaperStyle;
+
             // Get number of attached monitors8
             int screens = Screen.AllScreens.Count();
 
@@ -1568,41 +1538,24 @@ namespace Reddit_Wallpaper_Changer
             var img = Properties.Resources.display_enabled;
 
             // Disable options if only one monitor is detected and fix wallpaper type to tiled
-            if (screens == 1)
-            {
-                Properties.Settings.Default.wallpaperStyle = "Tile";
-                Properties.Settings.Default.Save();
-                comboType.Enabled = false;
-                
-            }
+            //if (screens == 1)
+            //{
+            //    Properties.Settings.Default.wallpaperStyle = "Tile";
+            //    Properties.Settings.Default.Save();
+            //    comboType.Enabled = false;
+            //}
 
             // Auto add a table to nest the monitor icons 
             this.monitorLayoutPanel.Refresh();
             this.monitorLayoutPanel.ColumnStyles.Clear();
             this.monitorLayoutPanel.ColumnCount = screens;
-            this.monitorLayoutPanel.RowCount = 2;           
+            this.monitorLayoutPanel.RowCount = 2;
+            this.monitorLayoutPanel.ColumnCount = 1;
             this.monitorLayoutPanel.AutoSize = true;
-
-            // Change the monitor icon if stretched is enabled
-            if (comboType.Text == "Stretched")
-            {
-                img = Properties.Resources.display_green;
-            }
 
             int z = 0;
             foreach (var screen in Screen.AllScreens.OrderBy(i => i.Bounds.X))
-            {
-                if (comboType.Text == "Multiple")
-                {
-                    if (z == 1)
-                    {
-                        img = Properties.Resources.display_grey;
-                    }
-                    else if (z == 2)
-                    {
-                        img = Properties.Resources.display_disabled;
-                    }
-                }
+            {                  
 
                 var percent = 100f / screens;
                 this.monitorLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, percent));
@@ -1631,31 +1584,6 @@ namespace Reddit_Wallpaper_Changer
                 this.monitorLayoutPanel.Controls.Add(rez, z, 1);
 
                 z++;    
-            }
-        }
-
-        //======================================================================
-        // Change monitor colour based on click
-        //======================================================================
-        private void comboType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboType.Text == "Tile")
-            {
-                Properties.Settings.Default.wallpaperStyle = "Tile";
-                Properties.Settings.Default.Save();
-                monitorPanel_Paint();  
-            }
-            else if (comboType.Text == "Stretch")
-            {
-                Properties.Settings.Default.wallpaperStyle = "Stretch";
-                Properties.Settings.Default.Save();
-                monitorPanel_Paint();
-            }
-            else if (comboType.Text == "Multiple")
-            {
-                Properties.Settings.Default.wallpaperStyle = "Multiple";
-                Properties.Settings.Default.Save();
-                monitorPanel_Paint();
             }
         }
 
@@ -1887,7 +1815,7 @@ namespace Reddit_Wallpaper_Changer
             string url = (historyDataGrid.Rows[currentMouseOverRow].Cells[4].Value.ToString());
             string title = (historyDataGrid.Rows[currentMouseOverRow].Cells[1].Value.ToString());
             string threadid = (historyDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
-            setWallpaper(url, title, threadid, RWC.Style.Center);
+            setWallpaper(url, title, threadid);
         }
 
         //======================================================================
@@ -2085,6 +2013,65 @@ namespace Reddit_Wallpaper_Changer
         private void btnExport_Click(object sender, EventArgs e)
         {
             ManageSettings.Export();
+        }
+
+        //======================================================================
+        // Save Walpaper Type
+        //======================================================================
+        private void btnMonitorSave_Click(object sender, EventArgs e)
+        {
+
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
+
+            if (comboType.Text == "Fill")
+            {
+                Properties.Settings.Default.wallpaperStyle = "Fill";
+                Properties.Settings.Default.Save();
+                key.SetValue(@"WallpaperStyle", 10.ToString());
+                key.SetValue(@"TileWallpaper", 0.ToString());
+                monitorPanel_Paint();
+            }
+            else if (comboType.Text == "Fit")
+            {
+                Properties.Settings.Default.wallpaperStyle = "Fit";
+                Properties.Settings.Default.Save();
+                key.SetValue(@"WallpaperStyle", 6.ToString());
+                key.SetValue(@"TileWallpaper", 0.ToString());
+                monitorPanel_Paint();
+            }
+            else if (comboType.Text == "Span")
+            {
+                Properties.Settings.Default.wallpaperStyle = "Span";
+                Properties.Settings.Default.Save();
+                key.SetValue(@"WallpaperStyle", 22.ToString());
+                key.SetValue(@"TileWallpaper", 0.ToString());
+                monitorPanel_Paint();
+            }
+            else if (comboType.Text == "Stretch")
+            {
+                Properties.Settings.Default.wallpaperStyle = "Stretch";
+                Properties.Settings.Default.Save();
+                key.SetValue(@"WallpaperStyle", 2.ToString());
+                key.SetValue(@"TileWallpaper", 0.ToString());
+                monitorPanel_Paint();
+            }
+            else if (comboType.Text == "Tile")
+            {
+                Properties.Settings.Default.wallpaperStyle = "Tile";
+                Properties.Settings.Default.Save();
+                key.SetValue(@"WallpaperStyle", 0.ToString());
+                key.SetValue(@"TileWallpaper", 1.ToString());
+                monitorPanel_Paint();
+            }
+            else if (comboType.Text == "Center")
+            {
+                Properties.Settings.Default.wallpaperStyle = "Center";
+                Properties.Settings.Default.Save();
+                key.SetValue(@"WallpaperStyle", 0.ToString());
+                key.SetValue(@"TileWallpaper", 0.ToString());
+                monitorPanel_Paint();
+            }
+
         }
     }
 }

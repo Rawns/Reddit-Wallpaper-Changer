@@ -59,7 +59,7 @@
             this.txtSavePath = new System.Windows.Forms.TextBox();
             this.statuslabel = new System.Windows.Forms.Label();
             this.noticeLabel = new System.Windows.Forms.Label();
-            this.saveButton = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
             this.btnWizard = new System.Windows.Forms.Button();
@@ -97,6 +97,7 @@
             this.monitorLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.btnMonitorSave = new System.Windows.Forms.Button();
             this.comboType = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.historyPanel = new System.Windows.Forms.Panel();
@@ -169,7 +170,7 @@
             this.configurePanel.Controls.Add(this.groupBox9);
             this.configurePanel.Controls.Add(this.statuslabel);
             this.configurePanel.Controls.Add(this.noticeLabel);
-            this.configurePanel.Controls.Add(this.saveButton);
+            this.configurePanel.Controls.Add(this.btnSave);
             this.configurePanel.Controls.Add(this.groupBox2);
             this.configurePanel.Controls.Add(this.groupBox1);
             this.configurePanel.Location = new System.Drawing.Point(0, 65);
@@ -314,9 +315,9 @@
             this.chkFade.AutoSize = true;
             this.chkFade.Location = new System.Drawing.Point(177, 16);
             this.chkFade.Name = "chkFade";
-            this.chkFade.Size = new System.Drawing.Size(88, 17);
+            this.chkFade.Size = new System.Drawing.Size(144, 17);
             this.chkFade.TabIndex = 13;
-            this.chkFade.Text = "Fade Effect?";
+            this.chkFade.Text = "Wallpaper Fade Effect?";
             this.chkFade.UseVisualStyleBackColor = true;
             // 
             // chkAutoStart
@@ -451,19 +452,19 @@
             this.noticeLabel.Size = new System.Drawing.Size(0, 13);
             this.noticeLabel.TabIndex = 11;
             // 
-            // saveButton
+            // btnSave
             // 
-            this.saveButton.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.save;
-            this.saveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.saveButton.Location = new System.Drawing.Point(272, 369);
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.saveButton.Size = new System.Drawing.Size(75, 25);
-            this.saveButton.TabIndex = 2;
-            this.saveButton.Text = "Save";
-            this.saveButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            this.btnSave.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.save;
+            this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSave.Location = new System.Drawing.Point(272, 369);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.btnSave.Size = new System.Drawing.Size(75, 25);
+            this.btnSave.TabIndex = 2;
+            this.btnSave.Text = "Save";
+            this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // groupBox2
             // 
@@ -637,7 +638,7 @@
             this.aboutPanel.Controls.Add(this.groupBox10);
             this.aboutPanel.Controls.Add(this.groupBox3);
             this.aboutPanel.Controls.Add(this.groupBox4);
-            this.aboutPanel.Location = new System.Drawing.Point(433, 155);
+            this.aboutPanel.Location = new System.Drawing.Point(409, 385);
             this.aboutPanel.Name = "aboutPanel";
             this.aboutPanel.Size = new System.Drawing.Size(375, 405);
             this.aboutPanel.TabIndex = 3;
@@ -891,7 +892,7 @@
             this.groupBox8.Controls.Add(this.monitorLayoutPanel);
             this.groupBox8.Location = new System.Drawing.Point(11, 3);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(351, 163);
+            this.groupBox8.Size = new System.Drawing.Size(351, 168);
             this.groupBox8.TabIndex = 4;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Detected Monitor(s)";
@@ -900,13 +901,13 @@
             // 
             this.monitorLayoutPanel.AutoSize = true;
             this.monitorLayoutPanel.ColumnCount = 1;
-            this.monitorLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.monitorLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.monitorLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.monitorLayoutPanel.Location = new System.Drawing.Point(3, 18);
             this.monitorLayoutPanel.Name = "monitorLayoutPanel";
             this.monitorLayoutPanel.RowCount = 1;
             this.monitorLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.monitorLayoutPanel.Size = new System.Drawing.Size(345, 142);
+            this.monitorLayoutPanel.Size = new System.Drawing.Size(345, 147);
             this.monitorLayoutPanel.TabIndex = 3;
             // 
             // label8
@@ -922,6 +923,7 @@
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.btnMonitorSave);
             this.groupBox7.Controls.Add(this.comboType);
             this.groupBox7.Controls.Add(this.label7);
             this.groupBox7.Location = new System.Drawing.Point(11, 177);
@@ -930,6 +932,20 @@
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Settings";
+            // 
+            // btnMonitorSave
+            // 
+            this.btnMonitorSave.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.save;
+            this.btnMonitorSave.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnMonitorSave.Location = new System.Drawing.Point(256, 51);
+            this.btnMonitorSave.Name = "btnMonitorSave";
+            this.btnMonitorSave.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.btnMonitorSave.Size = new System.Drawing.Size(75, 25);
+            this.btnMonitorSave.TabIndex = 11;
+            this.btnMonitorSave.Text = "Save";
+            this.btnMonitorSave.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.btnMonitorSave.UseVisualStyleBackColor = true;
+            this.btnMonitorSave.Click += new System.EventHandler(this.btnMonitorSave_Click);
             // 
             // comboType
             // 
@@ -941,14 +957,16 @@
             this.comboType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboType.FormattingEnabled = true;
             this.comboType.Items.AddRange(new object[] {
-            "Tile",
+            "Fill",
+            "Fit",
+            "Span",
             "Stretch",
-            "Multiple"});
+            "Tile",
+            "Center"});
             this.comboType.Location = new System.Drawing.Point(103, 19);
             this.comboType.Name = "comboType";
             this.comboType.Size = new System.Drawing.Size(228, 21);
             this.comboType.TabIndex = 10;
-            this.comboType.SelectedIndexChanged += new System.EventHandler(this.comboType_SelectedIndexChanged);
             // 
             // label7
             // 
@@ -1376,7 +1394,7 @@
 
         private System.Windows.Forms.Panel configurePanel;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox wallpaperGrabType;
@@ -1477,6 +1495,7 @@
         private System.Windows.Forms.CheckBox chkProxy;
         private System.Windows.Forms.CheckBox chkAutoSave;
         private System.Windows.Forms.CheckBox chkNotifications;
+        private System.Windows.Forms.Button btnMonitorSave;
     }
 }
 
