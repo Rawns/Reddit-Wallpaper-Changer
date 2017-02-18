@@ -1,4 +1,4 @@
-Version 1.0.9.0
+Version 1.0.10.0
 - Added: Import/Export user settings (Available in the 'About' panel)
 - Added: New upgrade mechanism for future releases using MSI
 - Added: User settings transferred after future upgrades using MSI
