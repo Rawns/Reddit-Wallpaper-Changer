@@ -326,12 +326,12 @@ namespace Reddit_Wallpaper_Changer.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Tile")]
-        public string wallpaperPosition {
+        public string wallpaperStyle {
             get {
-                return ((string)(this["wallpaperPosition"]));
+                return ((string)(this["wallpaperStyle"]));
             }
             set {
-                this["wallpaperPosition"] = value;
+                this["wallpaperStyle"] = value;
             }
         }
         
@@ -344,6 +344,18 @@ namespace Reddit_Wallpaper_Changer.Properties {
             }
             set {
                 this["sizeValidation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool disableNotifications {
+            get {
+                return ((bool)(this["disableNotifications"]));
+            }
+            set {
+                this["disableNotifications"] = value;
             }
         }
     }

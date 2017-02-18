@@ -77,10 +77,13 @@
     <Setting Name="manualOverride" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="wallpaperPosition" Type="System.String" Scope="User">
+    <Setting Name="wallpaperStyle" Type="System.String" Scope="User">
       <Value Profile="(Default)">Tile</Value>
     </Setting>
     <Setting Name="sizeValidation" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="disableNotifications" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>

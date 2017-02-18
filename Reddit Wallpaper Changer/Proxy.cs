@@ -3,6 +3,9 @@ using System.Net;
 
 namespace Reddit_Wallpaper_Changer
 {
+    /// <summary>
+    /// Class for checking and setting a proxy server
+    /// </summary>
     class Proxy
     {
         //======================================================================

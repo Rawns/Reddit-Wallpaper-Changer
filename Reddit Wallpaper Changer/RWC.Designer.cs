@@ -41,21 +41,24 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.tabSettingsControl = new System.Windows.Forms.TabControl();
+            this.tabSettings = new System.Windows.Forms.TabPage();
             this.chkAutoSave = new System.Windows.Forms.CheckBox();
-            this.btnBrowse = new System.Windows.Forms.Button();
-            this.txtSavePath = new System.Windows.Forms.TextBox();
-            this.statuslabel = new System.Windows.Forms.Label();
-            this.noticeLabel = new System.Windows.Forms.Label();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.chkNotifications = new System.Windows.Forms.CheckBox();
             this.chkFade = new System.Windows.Forms.CheckBox();
+            this.chkAutoStart = new System.Windows.Forms.CheckBox();
+            this.chkStartInTray = new System.Windows.Forms.CheckBox();
+            this.tabProxy = new System.Windows.Forms.TabPage();
             this.txtPass = new System.Windows.Forms.TextBox();
             this.txtUser = new System.Windows.Forms.TextBox();
             this.chkAuth = new System.Windows.Forms.CheckBox();
             this.txtProxyServer = new System.Windows.Forms.TextBox();
             this.chkProxy = new System.Windows.Forms.CheckBox();
-            this.chkAutoStart = new System.Windows.Forms.CheckBox();
-            this.chkStartInTray = new System.Windows.Forms.CheckBox();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.btnBrowse = new System.Windows.Forms.Button();
+            this.txtSavePath = new System.Windows.Forms.TextBox();
+            this.statuslabel = new System.Windows.Forms.Label();
+            this.noticeLabel = new System.Windows.Forms.Label();
             this.saveButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -132,8 +135,10 @@
             this.unblacklistWallpaper = new System.Windows.Forms.ToolStripMenuItem();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            this.tabSettingsControl.SuspendLayout();
+            this.tabSettings.SuspendLayout();
+            this.tabProxy.SuspendLayout();
             this.groupBox9.SuspendLayout();
-            this.groupBox5.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.changeTimeValue)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -160,10 +165,10 @@
             this.configurePanel.BackColor = System.Drawing.SystemColors.Control;
             this.configurePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.configurePanel.ContextMenuStrip = this.contextMenuStrip1;
+            this.configurePanel.Controls.Add(this.tabSettingsControl);
             this.configurePanel.Controls.Add(this.groupBox9);
             this.configurePanel.Controls.Add(this.statuslabel);
             this.configurePanel.Controls.Add(this.noticeLabel);
-            this.configurePanel.Controls.Add(this.groupBox5);
             this.configurePanel.Controls.Add(this.saveButton);
             this.configurePanel.Controls.Add(this.groupBox2);
             this.configurePanel.Controls.Add(this.groupBox1);
@@ -259,27 +264,154 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // groupBox9
+            // tabSettingsControl
             // 
-            this.groupBox9.Controls.Add(this.chkAutoSave);
-            this.groupBox9.Controls.Add(this.btnBrowse);
-            this.groupBox9.Controls.Add(this.txtSavePath);
-            this.groupBox9.Location = new System.Drawing.Point(10, 300);
-            this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(352, 71);
-            this.groupBox9.TabIndex = 13;
-            this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "Wallpaper Save Location:";
+            this.tabSettingsControl.Controls.Add(this.tabSettings);
+            this.tabSettingsControl.Controls.Add(this.tabProxy);
+            this.tabSettingsControl.Location = new System.Drawing.Point(10, 166);
+            this.tabSettingsControl.Name = "tabSettingsControl";
+            this.tabSettingsControl.SelectedIndex = 0;
+            this.tabSettingsControl.Size = new System.Drawing.Size(352, 128);
+            this.tabSettingsControl.TabIndex = 14;
+            // 
+            // tabSettings
+            // 
+            this.tabSettings.BackColor = System.Drawing.SystemColors.Control;
+            this.tabSettings.Controls.Add(this.chkAutoSave);
+            this.tabSettings.Controls.Add(this.chkNotifications);
+            this.tabSettings.Controls.Add(this.chkFade);
+            this.tabSettings.Controls.Add(this.chkAutoStart);
+            this.tabSettings.Controls.Add(this.chkStartInTray);
+            this.tabSettings.Location = new System.Drawing.Point(4, 22);
+            this.tabSettings.Name = "tabSettings";
+            this.tabSettings.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSettings.Size = new System.Drawing.Size(344, 102);
+            this.tabSettings.TabIndex = 0;
+            this.tabSettings.Text = "RWC Settings:";
             // 
             // chkAutoSave
             // 
             this.chkAutoSave.AutoSize = true;
-            this.chkAutoSave.Location = new System.Drawing.Point(13, 48);
+            this.chkAutoSave.Location = new System.Drawing.Point(17, 62);
             this.chkAutoSave.Name = "chkAutoSave";
             this.chkAutoSave.Size = new System.Drawing.Size(146, 17);
-            this.chkAutoSave.TabIndex = 2;
+            this.chkAutoSave.TabIndex = 15;
             this.chkAutoSave.Text = "Auto Save Wallpapers? ";
             this.chkAutoSave.UseVisualStyleBackColor = true;
+            // 
+            // chkNotifications
+            // 
+            this.chkNotifications.AutoSize = true;
+            this.chkNotifications.Location = new System.Drawing.Point(177, 39);
+            this.chkNotifications.Name = "chkNotifications";
+            this.chkNotifications.Size = new System.Drawing.Size(138, 17);
+            this.chkNotifications.TabIndex = 14;
+            this.chkNotifications.Text = "Disable Notifications?";
+            this.chkNotifications.UseVisualStyleBackColor = true;
+            // 
+            // chkFade
+            // 
+            this.chkFade.AutoSize = true;
+            this.chkFade.Location = new System.Drawing.Point(177, 16);
+            this.chkFade.Name = "chkFade";
+            this.chkFade.Size = new System.Drawing.Size(88, 17);
+            this.chkFade.TabIndex = 13;
+            this.chkFade.Text = "Fade Effect?";
+            this.chkFade.UseVisualStyleBackColor = true;
+            // 
+            // chkAutoStart
+            // 
+            this.chkAutoStart.AutoSize = true;
+            this.chkAutoStart.Location = new System.Drawing.Point(17, 16);
+            this.chkAutoStart.Name = "chkAutoStart";
+            this.chkAutoStart.Size = new System.Drawing.Size(83, 17);
+            this.chkAutoStart.TabIndex = 12;
+            this.chkAutoStart.Text = "Auto Start?";
+            this.chkAutoStart.UseVisualStyleBackColor = true;
+            // 
+            // chkStartInTray
+            // 
+            this.chkStartInTray.AutoSize = true;
+            this.chkStartInTray.Location = new System.Drawing.Point(17, 39);
+            this.chkStartInTray.Name = "chkStartInTray";
+            this.chkStartInTray.Size = new System.Drawing.Size(90, 17);
+            this.chkStartInTray.TabIndex = 11;
+            this.chkStartInTray.Text = "Start In Tray?";
+            this.chkStartInTray.UseVisualStyleBackColor = true;
+            // 
+            // tabProxy
+            // 
+            this.tabProxy.BackColor = System.Drawing.SystemColors.Control;
+            this.tabProxy.Controls.Add(this.txtPass);
+            this.tabProxy.Controls.Add(this.txtUser);
+            this.tabProxy.Controls.Add(this.chkAuth);
+            this.tabProxy.Controls.Add(this.txtProxyServer);
+            this.tabProxy.Controls.Add(this.chkProxy);
+            this.tabProxy.Location = new System.Drawing.Point(4, 22);
+            this.tabProxy.Name = "tabProxy";
+            this.tabProxy.Padding = new System.Windows.Forms.Padding(3);
+            this.tabProxy.Size = new System.Drawing.Size(344, 102);
+            this.tabProxy.TabIndex = 1;
+            this.tabProxy.Text = "Proxy Server:";
+            // 
+            // txtPass
+            // 
+            this.txtPass.Enabled = false;
+            this.txtPass.Location = new System.Drawing.Point(129, 72);
+            this.txtPass.Name = "txtPass";
+            this.txtPass.PasswordChar = '*';
+            this.txtPass.Size = new System.Drawing.Size(200, 22);
+            this.txtPass.TabIndex = 14;
+            // 
+            // txtUser
+            // 
+            this.txtUser.Enabled = false;
+            this.txtUser.Location = new System.Drawing.Point(129, 44);
+            this.txtUser.Name = "txtUser";
+            this.txtUser.Size = new System.Drawing.Size(200, 22);
+            this.txtUser.TabIndex = 13;
+            // 
+            // chkAuth
+            // 
+            this.chkAuth.AutoSize = true;
+            this.chkAuth.Enabled = false;
+            this.chkAuth.Location = new System.Drawing.Point(9, 46);
+            this.chkAuth.Name = "chkAuth";
+            this.chkAuth.Size = new System.Drawing.Size(108, 17);
+            this.chkAuth.TabIndex = 12;
+            this.chkAuth.Text = "Authentication?";
+            this.chkAuth.UseVisualStyleBackColor = true;
+            this.chkAuth.CheckedChanged += new System.EventHandler(this.chkAuth_CheckedChanged);
+            // 
+            // txtProxyServer
+            // 
+            this.txtProxyServer.Enabled = false;
+            this.txtProxyServer.Location = new System.Drawing.Point(129, 14);
+            this.txtProxyServer.Name = "txtProxyServer";
+            this.txtProxyServer.Size = new System.Drawing.Size(200, 22);
+            this.txtProxyServer.TabIndex = 11;
+            // 
+            // chkProxy
+            // 
+            this.chkProxy.AutoSize = true;
+            this.chkProxy.Location = new System.Drawing.Point(9, 16);
+            this.chkProxy.Name = "chkProxy";
+            this.chkProxy.Size = new System.Drawing.Size(89, 17);
+            this.chkProxy.TabIndex = 10;
+            this.chkProxy.Text = "Use a Proxy?";
+            this.chkProxy.UseVisualStyleBackColor = true;
+            this.chkProxy.CheckedChanged += new System.EventHandler(this.chkProxy_CheckedChanged);
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.btnBrowse);
+            this.groupBox9.Controls.Add(this.txtSavePath);
+            this.groupBox9.Location = new System.Drawing.Point(10, 300);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(352, 60);
+            this.groupBox9.TabIndex = 13;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Wallpaper Save Location:";
             // 
             // btnBrowse
             // 
@@ -319,106 +451,11 @@
             this.noticeLabel.Size = new System.Drawing.Size(0, 13);
             this.noticeLabel.TabIndex = 11;
             // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.chkFade);
-            this.groupBox5.Controls.Add(this.txtPass);
-            this.groupBox5.Controls.Add(this.txtUser);
-            this.groupBox5.Controls.Add(this.chkAuth);
-            this.groupBox5.Controls.Add(this.txtProxyServer);
-            this.groupBox5.Controls.Add(this.chkProxy);
-            this.groupBox5.Controls.Add(this.chkAutoStart);
-            this.groupBox5.Controls.Add(this.chkStartInTray);
-            this.groupBox5.Location = new System.Drawing.Point(10, 165);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(352, 130);
-            this.groupBox5.TabIndex = 10;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Behind The Scenes:";
-            // 
-            // chkFade
-            // 
-            this.chkFade.AutoSize = true;
-            this.chkFade.Location = new System.Drawing.Point(249, 23);
-            this.chkFade.Name = "chkFade";
-            this.chkFade.Size = new System.Drawing.Size(88, 17);
-            this.chkFade.TabIndex = 10;
-            this.chkFade.Text = "Fade Effect?";
-            this.chkFade.UseVisualStyleBackColor = true;
-            // 
-            // txtPass
-            // 
-            this.txtPass.Enabled = false;
-            this.txtPass.Location = new System.Drawing.Point(137, 100);
-            this.txtPass.Name = "txtPass";
-            this.txtPass.PasswordChar = '*';
-            this.txtPass.Size = new System.Drawing.Size(200, 22);
-            this.txtPass.TabIndex = 9;
-            // 
-            // txtUser
-            // 
-            this.txtUser.Enabled = false;
-            this.txtUser.Location = new System.Drawing.Point(137, 74);
-            this.txtUser.Name = "txtUser";
-            this.txtUser.Size = new System.Drawing.Size(200, 22);
-            this.txtUser.TabIndex = 8;
-            // 
-            // chkAuth
-            // 
-            this.chkAuth.AutoSize = true;
-            this.chkAuth.Enabled = false;
-            this.chkAuth.Location = new System.Drawing.Point(13, 79);
-            this.chkAuth.Name = "chkAuth";
-            this.chkAuth.Size = new System.Drawing.Size(108, 17);
-            this.chkAuth.TabIndex = 7;
-            this.chkAuth.Text = "Authentication?";
-            this.chkAuth.UseVisualStyleBackColor = true;
-            this.chkAuth.CheckedChanged += new System.EventHandler(this.chkAuth_CheckedChanged);
-            // 
-            // txtProxyServer
-            // 
-            this.txtProxyServer.Enabled = false;
-            this.txtProxyServer.Location = new System.Drawing.Point(137, 48);
-            this.txtProxyServer.Name = "txtProxyServer";
-            this.txtProxyServer.Size = new System.Drawing.Size(200, 22);
-            this.txtProxyServer.TabIndex = 6;
-            // 
-            // chkProxy
-            // 
-            this.chkProxy.AutoSize = true;
-            this.chkProxy.Location = new System.Drawing.Point(13, 51);
-            this.chkProxy.Name = "chkProxy";
-            this.chkProxy.Size = new System.Drawing.Size(89, 17);
-            this.chkProxy.TabIndex = 5;
-            this.chkProxy.Text = "Use a Proxy?";
-            this.chkProxy.UseVisualStyleBackColor = true;
-            this.chkProxy.CheckedChanged += new System.EventHandler(this.chkProxy_CheckedChanged);
-            // 
-            // chkAutoStart
-            // 
-            this.chkAutoStart.AutoSize = true;
-            this.chkAutoStart.Location = new System.Drawing.Point(13, 23);
-            this.chkAutoStart.Name = "chkAutoStart";
-            this.chkAutoStart.Size = new System.Drawing.Size(83, 17);
-            this.chkAutoStart.TabIndex = 4;
-            this.chkAutoStart.Text = "Auto Start?";
-            this.chkAutoStart.UseVisualStyleBackColor = true;
-            // 
-            // chkStartInTray
-            // 
-            this.chkStartInTray.AutoSize = true;
-            this.chkStartInTray.Location = new System.Drawing.Point(137, 23);
-            this.chkStartInTray.Name = "chkStartInTray";
-            this.chkStartInTray.Size = new System.Drawing.Size(91, 17);
-            this.chkStartInTray.TabIndex = 3;
-            this.chkStartInTray.Text = "Start In Tray?";
-            this.chkStartInTray.UseVisualStyleBackColor = true;
-            // 
             // saveButton
             // 
             this.saveButton.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.save;
             this.saveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.saveButton.Location = new System.Drawing.Point(271, 375);
+            this.saveButton.Location = new System.Drawing.Point(272, 369);
             this.saveButton.Name = "saveButton";
             this.saveButton.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.saveButton.Size = new System.Drawing.Size(75, 25);
@@ -525,7 +562,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(18, 20);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(115, 13);
+            this.label2.Size = new System.Drawing.Size(114, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Reddit Search Query:";
             // 
@@ -696,7 +733,7 @@
             this.lblVersion.ForeColor = System.Drawing.Color.Black;
             this.lblVersion.Location = new System.Drawing.Point(148, 30);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(91, 13);
+            this.lblVersion.Size = new System.Drawing.Size(90, 13);
             this.lblVersion.TabIndex = 6;
             this.lblVersion.Text = "Current Version:";
             // 
@@ -918,7 +955,7 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(8, 22);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(89, 13);
+            this.label7.Size = new System.Drawing.Size(88, 13);
             this.label7.TabIndex = 9;
             this.label7.Text = "Wallpaper Type:";
             // 
@@ -1276,7 +1313,7 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1192, 470);
+            this.ClientSize = new System.Drawing.Size(1192, 666);
             this.Controls.Add(this.blacklistPanel);
             this.Controls.Add(this.historyPanel);
             this.Controls.Add(this.aboutPanel);
@@ -1299,10 +1336,13 @@
             this.configurePanel.ResumeLayout(false);
             this.configurePanel.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
+            this.tabSettingsControl.ResumeLayout(false);
+            this.tabSettings.ResumeLayout(false);
+            this.tabSettings.PerformLayout();
+            this.tabProxy.ResumeLayout(false);
+            this.tabProxy.PerformLayout();
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.changeTimeValue)).EndInit();
@@ -1374,8 +1414,6 @@
         private System.Windows.Forms.Button btnSubreddit;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.LinkLabel redditLink;
-        private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.CheckBox chkStartInTray;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.SaveFileDialog saveWallpaper;
         private System.Windows.Forms.Timer checkInternetTimer;
@@ -1396,18 +1434,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ThreadLink;
         private System.Windows.Forms.DataGridViewTextBoxColumn imageURL;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.CheckBox chkAutoStart;
         private System.Windows.Forms.LinkLabel rawnsLink;
         private System.Windows.Forms.ToolStripMenuItem blockWallpaperMenuItem;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.GroupBox groupBox9;
         private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.TextBox txtSavePath;
-        private System.Windows.Forms.TextBox txtPass;
-        private System.Windows.Forms.TextBox txtUser;
-        private System.Windows.Forms.CheckBox chkAuth;
-        private System.Windows.Forms.TextBox txtProxyServer;
-        private System.Windows.Forms.CheckBox chkProxy;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ToolStripMenuItem blacklistWallpapertoolStripMenuItem;
         private System.Windows.Forms.Panel blacklistPanel;
@@ -1429,11 +1461,22 @@
         private System.Windows.Forms.GroupBox groupBox10;
         private System.Windows.Forms.Button btnLog;
         private System.Windows.Forms.Button btnDonate;
-        private System.Windows.Forms.CheckBox chkAutoSave;
-        private System.Windows.Forms.CheckBox chkFade;
         private System.Windows.Forms.GroupBox groupBox11;
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Button btnImport;
+        private System.Windows.Forms.TabControl tabSettingsControl;
+        private System.Windows.Forms.TabPage tabSettings;
+        private System.Windows.Forms.CheckBox chkFade;
+        private System.Windows.Forms.CheckBox chkAutoStart;
+        private System.Windows.Forms.CheckBox chkStartInTray;
+        private System.Windows.Forms.TabPage tabProxy;
+        private System.Windows.Forms.TextBox txtPass;
+        private System.Windows.Forms.TextBox txtUser;
+        private System.Windows.Forms.CheckBox chkAuth;
+        private System.Windows.Forms.TextBox txtProxyServer;
+        private System.Windows.Forms.CheckBox chkProxy;
+        private System.Windows.Forms.CheckBox chkAutoSave;
+        private System.Windows.Forms.CheckBox chkNotifications;
     }
 }
 
