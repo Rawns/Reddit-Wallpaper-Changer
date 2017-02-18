@@ -95,7 +95,7 @@ namespace Reddit_Wallpaper_Changer
             tt.SetToolTip(this.chkNotifications, "Disables all RWC System Tray/Notification Centre notifications.");
 
             // Monitors
-            tt.SetToolTip(this.comboType, "Choose how to display wallpapers with multiple monitors.");
+            tt.SetToolTip(this.btnWallpaperHelp, "Show info on the different wallpaper styles.");
 
 
             // About
@@ -1530,6 +1530,7 @@ namespace Reddit_Wallpaper_Changer
             }
 
             comboType.Text = Properties.Settings.Default.wallpaperStyle;
+            SetExample();
 
             // Get number of attached monitors8
             int screens = Screen.AllScreens.Count();
@@ -1584,6 +1585,38 @@ namespace Reddit_Wallpaper_Changer
                 this.monitorLayoutPanel.Controls.Add(rez, z, 1);
 
                 z++;    
+            }
+        }
+
+
+        //======================================================================
+        // Set the example wallpaper image
+        //======================================================================
+        public void SetExample()
+        {
+            if (comboType.Text == "Fill")
+            {
+                picStyles.Image = Properties.Resources.fill;
+            }
+            else if (comboType.Text == "Fit")
+            {
+                picStyles.Image = Properties.Resources.fit;
+            }
+            else if (comboType.Text == "Span")
+            {
+                picStyles.Image = Properties.Resources.span;
+            }
+            else if (comboType.Text == "Stretch")
+            {
+                picStyles.Image = Properties.Resources.stretch;
+            }
+            else if (comboType.Text == "Tile")
+            {
+                picStyles.Image = Properties.Resources.tile;
+            }
+            else if (comboType.Text == "Center")
+            {
+                picStyles.Image = Properties.Resources.centre;
             }
         }
 
@@ -2016,7 +2049,7 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
-        // Save Walpaper Type
+        // Save Walpaper Layout Type
         //======================================================================
         private void btnMonitorSave_Click(object sender, EventArgs e)
         {
@@ -2072,6 +2105,25 @@ namespace Reddit_Wallpaper_Changer
                 monitorPanel_Paint();
             }
 
+            MessageBox.Show("Wallpaper style successfully changed to: " + comboType.Text, "Saved!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        }
+
+        //======================================================================
+        // Populate info box on chosen style
+        //======================================================================
+        private void comboType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetExample();
+        }
+
+        //======================================================================
+        // Open the wallpaper style info window
+        //======================================================================
+        private void btnWallpaperHelp_Click(object sender, EventArgs e)
+        {
+            Form WallpaperTypes = new WallpaperTypes();
+            WallpaperTypes.Show();
         }
     }
 }

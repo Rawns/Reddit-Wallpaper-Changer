@@ -104,6 +104,12 @@
     <Compile Include="ActiveDesktop.cs" />
     <Compile Include="UpgradeCleanup.cs" />
     <Compile Include="Validation.cs" />
+    <Compile Include="WallpaperTypes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WallpaperTypes.Designer.cs">
+      <DependentUpon>WallpaperTypes.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="RWC.resx">
       <DependentUpon>RWC.cs</DependentUpon>
     </EmbeddedResource>
@@ -117,6 +123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Update.resx">
       <DependentUpon>Update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WallpaperTypes.resx">
+      <DependentUpon>WallpaperTypes.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -147,6 +156,11 @@
     <None Include="Resources\Browse.png" />
     <None Include="Resources\import.png" />
     <None Include="Resources\export.png" />
+    <None Include="Resources\centre.png" />
+    <None Include="Resources\fill.png" />
+    <None Include="Resources\fit.png" />
+    <None Include="Resources\help.png" />
+    <None Include="Resources\cross.png" />
     <Content Include="Resources\rwc.ico" />
     <Content Include="Resources\data.png" />
     <Content Include="Resources\information.png" />
@@ -157,6 +171,9 @@
     <None Include="Resources\update16x16.png" />
     <None Include="Resources\save.png" />
     <None Include="Resources\update_32x32.png" />
+    <None Include="Resources\span.png" />
+    <None Include="Resources\tile.png" />
+    <None Include="Resources\stretch.png" />
     <Content Include="Resources\Wizard.png" />
   </ItemGroup>
   <ItemGroup>

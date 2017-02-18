@@ -78,7 +78,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="wallpaperStyle" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Tile</Value>
+      <Value Profile="(Default)">Stretch</Value>
     </Setting>
     <Setting Name="sizeValidation" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

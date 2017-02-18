@@ -325,7 +325,7 @@ namespace Reddit_Wallpaper_Changer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Tile")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Stretch")]
         public string wallpaperStyle {
             get {
                 return ((string)(this["wallpaperStyle"]));

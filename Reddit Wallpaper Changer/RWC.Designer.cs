@@ -92,11 +92,12 @@
             this.label3 = new System.Windows.Forms.Label();
             this.redditLink = new System.Windows.Forms.LinkLabel();
             this.monitorPanel = new System.Windows.Forms.Panel();
-            this.typeDescription = new System.Windows.Forms.Label();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.monitorLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.btnWallpaperHelp = new System.Windows.Forms.Button();
+            this.picStyles = new System.Windows.Forms.PictureBox();
             this.btnMonitorSave = new System.Windows.Forms.Button();
             this.comboType = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -151,6 +152,7 @@
             this.monitorPanel.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picStyles)).BeginInit();
             this.historyPanel.SuspendLayout();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.historyDataGrid)).BeginInit();
@@ -638,7 +640,7 @@
             this.aboutPanel.Controls.Add(this.groupBox10);
             this.aboutPanel.Controls.Add(this.groupBox3);
             this.aboutPanel.Controls.Add(this.groupBox4);
-            this.aboutPanel.Location = new System.Drawing.Point(409, 385);
+            this.aboutPanel.Location = new System.Drawing.Point(402, 451);
             this.aboutPanel.Name = "aboutPanel";
             this.aboutPanel.Size = new System.Drawing.Size(375, 405);
             this.aboutPanel.TabIndex = 3;
@@ -870,7 +872,6 @@
             this.monitorPanel.BackColor = System.Drawing.SystemColors.Control;
             this.monitorPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.monitorPanel.ContextMenuStrip = this.contextMenuStrip1;
-            this.monitorPanel.Controls.Add(this.typeDescription);
             this.monitorPanel.Controls.Add(this.groupBox8);
             this.monitorPanel.Controls.Add(this.label8);
             this.monitorPanel.Controls.Add(this.groupBox7);
@@ -880,13 +881,6 @@
             this.monitorPanel.TabIndex = 4;
             this.monitorPanel.Visible = false;
             // 
-            // typeDescription
-            // 
-            this.typeDescription.Location = new System.Drawing.Point(11, 267);
-            this.typeDescription.Name = "typeDescription";
-            this.typeDescription.Size = new System.Drawing.Size(351, 70);
-            this.typeDescription.TabIndex = 5;
-            // 
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.monitorLayoutPanel);
@@ -895,7 +889,7 @@
             this.groupBox8.Size = new System.Drawing.Size(351, 168);
             this.groupBox8.TabIndex = 4;
             this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Detected Monitor(s)";
+            this.groupBox8.Text = "Detected Monitor(s):";
             // 
             // monitorLayoutPanel
             // 
@@ -914,30 +908,50 @@
             // 
             this.label8.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.Red;
-            this.label8.Location = new System.Drawing.Point(11, 335);
+            this.label8.Location = new System.Drawing.Point(7, 373);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(351, 54);
+            this.label8.Size = new System.Drawing.Size(355, 27);
             this.label8.TabIndex = 2;
-            this.label8.Text = "Multiple monitor support is under development and not yet functional.";
+            this.label8.Text = "In Development!";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.btnWallpaperHelp);
+            this.groupBox7.Controls.Add(this.picStyles);
             this.groupBox7.Controls.Add(this.btnMonitorSave);
             this.groupBox7.Controls.Add(this.comboType);
             this.groupBox7.Controls.Add(this.label7);
             this.groupBox7.Location = new System.Drawing.Point(11, 177);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(351, 86);
+            this.groupBox7.Size = new System.Drawing.Size(351, 193);
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Settings";
+            this.groupBox7.Text = "Wallpaper Settings:";
+            // 
+            // btnWallpaperHelp
+            // 
+            this.btnWallpaperHelp.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.help;
+            this.btnWallpaperHelp.Location = new System.Drawing.Point(320, 16);
+            this.btnWallpaperHelp.Name = "btnWallpaperHelp";
+            this.btnWallpaperHelp.Size = new System.Drawing.Size(25, 25);
+            this.btnWallpaperHelp.TabIndex = 13;
+            this.btnWallpaperHelp.UseVisualStyleBackColor = true;
+            this.btnWallpaperHelp.Click += new System.EventHandler(this.btnWallpaperHelp_Click);
+            // 
+            // picStyles
+            // 
+            this.picStyles.Location = new System.Drawing.Point(47, 61);
+            this.picStyles.Name = "picStyles";
+            this.picStyles.Size = new System.Drawing.Size(256, 104);
+            this.picStyles.TabIndex = 12;
+            this.picStyles.TabStop = false;
             // 
             // btnMonitorSave
             // 
             this.btnMonitorSave.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.save;
             this.btnMonitorSave.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnMonitorSave.Location = new System.Drawing.Point(256, 51);
+            this.btnMonitorSave.Location = new System.Drawing.Point(240, 16);
             this.btnMonitorSave.Name = "btnMonitorSave";
             this.btnMonitorSave.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.btnMonitorSave.Size = new System.Drawing.Size(75, 25);
@@ -963,19 +977,20 @@
             "Stretch",
             "Tile",
             "Center"});
-            this.comboType.Location = new System.Drawing.Point(103, 19);
+            this.comboType.Location = new System.Drawing.Point(92, 19);
             this.comboType.Name = "comboType";
-            this.comboType.Size = new System.Drawing.Size(228, 21);
+            this.comboType.Size = new System.Drawing.Size(142, 21);
             this.comboType.TabIndex = 10;
+            this.comboType.SelectedIndexChanged += new System.EventHandler(this.comboType_SelectedIndexChanged);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(8, 22);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(88, 13);
+            this.label7.Size = new System.Drawing.Size(79, 13);
             this.label7.TabIndex = 9;
-            this.label7.Text = "Wallpaper Type:";
+            this.label7.Text = "Wallpaper Fit:";
             // 
             // historyPanel
             // 
@@ -1378,6 +1393,7 @@
             this.groupBox8.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picStyles)).EndInit();
             this.historyPanel.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.historyDataGrid)).EndInit();
@@ -1474,7 +1490,6 @@
         private System.Windows.Forms.ProgressBar blacklistProgress;
         private System.Windows.Forms.TableLayoutPanel monitorLayoutPanel;
         private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.Label typeDescription;
         private System.Windows.Forms.Button btnBug;
         private System.Windows.Forms.GroupBox groupBox10;
         private System.Windows.Forms.Button btnLog;
@@ -1496,6 +1511,8 @@
         private System.Windows.Forms.CheckBox chkAutoSave;
         private System.Windows.Forms.CheckBox chkNotifications;
         private System.Windows.Forms.Button btnMonitorSave;
+        private System.Windows.Forms.PictureBox picStyles;
+        private System.Windows.Forms.Button btnWallpaperHelp;
     }
 }
 
