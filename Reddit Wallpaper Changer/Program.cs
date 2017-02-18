@@ -13,7 +13,10 @@ namespace Reddit_Wallpaper_Changer
         /// The main entry point for the application.
         /// </summary>
         ///
+
         static Mutex mutex = new Mutex(false, "RedditWallpaperChanger_byUgleh");
+
+
 
         [STAThread]
         static void Main()

@@ -322,5 +322,41 @@ namespace Reddit_Wallpaper_Changer.Properties {
                 this["manualOverride"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Stretch")]
+        public string wallpaperStyle {
+            get {
+                return ((string)(this["wallpaperStyle"]));
+            }
+            set {
+                this["wallpaperStyle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool sizeValidation {
+            get {
+                return ((bool)(this["sizeValidation"]));
+            }
+            set {
+                this["sizeValidation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool disableNotifications {
+            get {
+                return ((bool)(this["disableNotifications"]));
+            }
+            set {
+                this["disableNotifications"] = value;
+            }
+        }
     }
 }

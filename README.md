@@ -4,15 +4,17 @@ Based on [RWC-Source](https://github.com/JosephRobidoux/RWC-Source) originally c
 # About
 Reddit Wallpaper Changer is a lightweight C# application for Windows that will scrape Reddit for desktop wallpapers. You can specify which subs to scrape from and how oftern to rotate your wallpaper.
 
-# Current Version - 1.0.9.0
-- Added: Import/Export user settings (Available in the 'About' panel)
-- Added: New upgrade mechanism for future releases using MSI
-- Added: User settings transferred after future upgrades using MSI
-- Added: Logging of some additional startup info
-- Fixed: An issue re-using a wallpaper from the history pannel
-- Fixed: Removed a duplicate stretched image on Upgrade button (when clicked)
-- Fixed: Made Upgrade window larger so change log is not truncated 
-- Removed: Some obsolete files no longer used
+# Current Version - 1.0.10.0
+- Added: "Wallpaper Fit" options (Fit, Fill, Span, Stretch, Tile, Centre).
+- Added: Example icons for selected Wallpaper Style type. 
+- Added: "Disable Notifications" option for silent running when in minimised. 
+- Fixed: Issue with the checking of Imgur & DeviantArt links.
+- Fixed: Issue with saving of wallpapers with illegal characters in their name. 
+- Updated: Added "Disable Notification" into settings import/export.
+- Updated: Additional logging for some unexpected errors. 
+- Changed: Small UI change to the Settings panel to allow for new options. 
+
+Shoutout to Reddit user /u/padrino257 for assisting with the squishing some bugs. :)
 
 # Installation
 Download the latest MSI installer from the [releases page](https://github.com/Rawns/Reddit-Wallpaper-Changer/releases)

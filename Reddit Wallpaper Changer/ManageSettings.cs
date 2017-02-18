@@ -50,6 +50,7 @@ namespace Reddit_Wallpaper_Changer
                         writer.WriteElementString("DefaultSaveLocation", Properties.Settings.Default.defaultSaveLocation);
                         writer.WriteElementString("AutoSave", Properties.Settings.Default.autoSave.ToString());
                         writer.WriteElementString("WallpaperFade", Properties.Settings.Default.wallpaperFade.ToString());
+                        writer.WriteElementString("DisableNotifications", Properties.Settings.Default.disableNotifications.ToString());
                         writer.WriteEndElement();
                         writer.WriteEndDocument();
                     }
@@ -116,6 +117,7 @@ namespace Reddit_Wallpaper_Changer
                         Properties.Settings.Default.defaultSaveLocation = xn["DefaultSaveLocation"].InnerText;
                         Properties.Settings.Default.autoSave = Boolean.Parse(xn["AutoSave"].InnerText);
                         Properties.Settings.Default.wallpaperFade = Boolean.Parse(xn["WallpaperFade"].InnerText);
+                        Properties.Settings.Default.disableNotifications = Boolean.Parse(xn["DisableNotifications"].InnerText);
                         Properties.Settings.Default.Save();
 
                         Logging.LogMessageToFile("Settings have been successfully imported. Restarting RWC.");

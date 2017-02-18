@@ -182,11 +182,15 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(208, 293);
+            this.button2.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.save;
+            this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button2.Location = new System.Drawing.Point(192, 287);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(96, 23);
+            this.button2.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.button2.Size = new System.Drawing.Size(112, 29);
             this.button2.TabIndex = 19;
             this.button2.Text = "Finish and Save";
+            this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
