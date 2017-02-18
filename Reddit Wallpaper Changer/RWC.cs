@@ -502,7 +502,7 @@ namespace Reddit_Wallpaper_Changer
                 if (!latestVersion.ToString().Contains(currentVersion.Trim().ToString()))
                 {
                     Logging.LogMessageToFile("Current Version: " + currentVersion + ". " + "Latest version: " + latestVersion);
-                    DialogResult choice = MessageBox.Show("You are running version " + currentVersion + "." + Environment.NewLine + "Download version " + latestVersion + " now?", "Update Avaiable!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult choice = MessageBox.Show("You are running version " + currentVersion + ".\r\n\r\n" + "Download version " + latestVersion.Split(new[] { '\r', '\n' }).FirstOrDefault() + " now?", "Update Avaiable!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                     if (choice == DialogResult.Yes)
                     {
@@ -1355,32 +1355,40 @@ namespace Reddit_Wallpaper_Changer
             startupTimer.Enabled = false;
             WebClient wc = Proxy.setProxy();
 
-            try
+            var bw = new BackgroundWorker();
+            bw.DoWork += delegate
             {
-                String latestVersion = wc.DownloadString("https://raw.githubusercontent.com/Rawns/Reddit-Wallpaper-Changer/master/version");
-                if (!latestVersion.Contains(currentVersion.Trim().ToString()))
-                {
-                    Form Update = new Update(latestVersion, this);
-                    Update.Show();
-                }
-                else
-                {
-                    changeWallpaperTimer.Enabled = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                if (Properties.Settings.Default.disableNotifications == false)
-                {
-                    taskIcon.BalloonTipIcon = ToolTipIcon.Error;
-                    taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer!";
-                    taskIcon.BalloonTipText = "Error checking for updates.";
-                    taskIcon.ShowBalloonTip(750);
-                }
-                Logging.LogMessageToFile("Error checking for updates: " + ex.Message);
-            }
 
-            wc.Dispose();
+                try
+                {
+                    String latestVersion = wc.DownloadString("https://raw.githubusercontent.com/Rawns/Reddit-Wallpaper-Changer/master/version");
+                    if (!latestVersion.Contains(currentVersion.Trim().ToString()))
+                    {
+                        Form Update = new Update(latestVersion, this);
+                        this.Invoke((MethodInvoker)delegate() {
+                            Update.Show();
+                        });
+                    }
+                    else
+                    {
+                        changeWallpaperTimer.Enabled = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (Properties.Settings.Default.disableNotifications == false)
+                    {
+                        taskIcon.BalloonTipIcon = ToolTipIcon.Error;
+                        taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer!";
+                        taskIcon.BalloonTipText = "Error checking for updates.";
+                        taskIcon.ShowBalloonTip(750);
+                    }
+                    Logging.LogMessageToFile("Error checking for updates: " + ex.Message);
+                }
+
+                wc.Dispose();
+            };
+            bw.RunWorkerAsync();
         }
 
 
@@ -1431,6 +1439,7 @@ namespace Reddit_Wallpaper_Changer
                         taskIcon.BalloonTipText = "Wallpaper saved to " + Properties.Settings.Default.defaultSaveLocation + @"\" + Properties.Settings.Default.currentWallpaperName;
                         taskIcon.ShowBalloonTip(750);
                     }
+                    updateStatus("Wallpaper saved!");
                     Logging.LogMessageToFile("Saved " + Properties.Settings.Default.currentWallpaperName + " to " + Properties.Settings.Default.defaultSaveLocation);
                 }
                 else
@@ -1442,6 +1451,8 @@ namespace Reddit_Wallpaper_Changer
                         taskIcon.BalloonTipText = "No need to save this wallpaper as it already exists in your wallpapers folder! :)";
                         taskIcon.ShowBalloonTip(750);
                     }
+                    updateStatus("Wallpaper already saved!");
+                    Logging.LogMessageToFile("Wallpaper has already been saved!");
                 }
  
             }
@@ -1454,6 +1465,7 @@ namespace Reddit_Wallpaper_Changer
                     taskIcon.BalloonTipText = "Unable to save the wallpaper locally. :(";
                     taskIcon.ShowBalloonTip(750);
                 }
+                updateStatus("Error saving wallpaper!");
                 Logging.LogMessageToFile("Error Saving Wallpaper: " + Ex.Message);
             }
         }

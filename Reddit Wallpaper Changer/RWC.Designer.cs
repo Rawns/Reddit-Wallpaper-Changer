@@ -637,7 +637,7 @@
             this.aboutPanel.Controls.Add(this.groupBox10);
             this.aboutPanel.Controls.Add(this.groupBox3);
             this.aboutPanel.Controls.Add(this.groupBox4);
-            this.aboutPanel.Location = new System.Drawing.Point(415, 385);
+            this.aboutPanel.Location = new System.Drawing.Point(433, 155);
             this.aboutPanel.Name = "aboutPanel";
             this.aboutPanel.Size = new System.Drawing.Size(375, 405);
             this.aboutPanel.TabIndex = 3;
