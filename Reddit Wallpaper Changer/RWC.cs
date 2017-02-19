@@ -93,6 +93,7 @@ namespace Reddit_Wallpaper_Changer
             tt.SetToolTip(this.chkAutoSave, "Enable this to automatically save all wallpapers to the above directory.");
             tt.SetToolTip(this.chkFade, "Enable this for a faded wallpaper transition using Active Desktop.\r\nDisable this option if you experience any issues when the wallpaper changes.");
             tt.SetToolTip(this.chkNotifications, "Disables all RWC System Tray/Notification Centre notifications.");
+            tt.SetToolTip(this.chkFitWallpaper, "Requires downloaded wallpapers to be at least the size of your monitor.");
 
             // Monitors
             tt.SetToolTip(this.btnWallpaperHelp, "Show info on the different wallpaper styles.");
@@ -587,6 +588,7 @@ namespace Reddit_Wallpaper_Changer
             Properties.Settings.Default.defaultSaveLocation = txtSavePath.Text;
             Properties.Settings.Default.autoSave = chkAutoSave.Checked;
             Properties.Settings.Default.disableNotifications = chkNotifications.Checked;
+            Properties.Settings.Default.fitWallpaper = chkFitWallpaper.Checked;
             Properties.Settings.Default.Save();
             logSettings();
             if (updateTimerBool)
@@ -766,12 +768,19 @@ namespace Reddit_Wallpaper_Changer
                         JToken token = null;
                         try
                         {
+                             bool fitWallpaper = Properties.Settings.Default.fitWallpaper;
                             IEnumerable<JToken> redditResultReversed = redditResult.Reverse();
                             foreach (JToken toke in redditResultReversed)
                             {
                                 if (!historyRepeated.Contains(toke["data"]["id"].ToString()))
                                 {
-                                    token = toke;
+                                    if (!fitWallpaper || (
+                                       toke["data"]["preview"]["images"][0]["source"]["width"].ToObject<int>() >= Screen.PrimaryScreen.Bounds.Width &&
+                                       toke["data"]["preview"]["images"][0]["source"]["height"].ToObject<int>() >= Screen.PrimaryScreen.Bounds.Height
+                                    ))
+                                    {
+                                        token = toke;
+                                    }
                                 }
                             }
                             bool needsChange = false;
