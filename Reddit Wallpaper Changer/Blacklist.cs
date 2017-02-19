@@ -67,10 +67,11 @@ namespace Reddit_Wallpaper_Changer
                     if (node.SelectSingleNode("URL").InnerText == url)
                     {
                         node.ParentNode.RemoveChild(node);
+                        Logging.LogMessageToFile("Wallpaper removed from the blacklist. URL: " + url);
                     }
 
                     xml.Save(blacklistPath);
-                    Logging.LogMessageToFile("Wallpaper removed from the blacklist. URL: " + url);
+
                 }
             }
             catch (Exception ex)

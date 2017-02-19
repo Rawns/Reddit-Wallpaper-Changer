@@ -1214,18 +1214,23 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void startup(bool add)
         {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(
-                       @"Software\Microsoft\Windows\CurrentVersion\Run", true);
-            if (add)
-            {
-                //Surround path with " " to make sure that there are no problems
-                //if path contains spaces.
-                key.SetValue("RWC", "\"" + Application.ExecutablePath + "\"");
-            }
-            else
-                key.DeleteValue("RWC");
+            try {
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+                if (add)
+                {
+                    //Surround path with " " to make sure that there are no problems
+                    //if path contains spaces.
+                    key.SetValue("RWC", "\"" + Application.ExecutablePath + "\"");
+                }
+                else
+                    key.DeleteValue("RWC");
 
-            key.Close();
+                key.Close();
+            }
+            catch (Exception ex)
+            {
+                Logging.LogMessageToFile("Error setting RWC to load on startup: " + ex.Message);
+            }
         }
 
         //======================================================================
@@ -1321,19 +1326,15 @@ namespace Reddit_Wallpaper_Changer
             startupTimer.Enabled = false;
             WebClient wc = Proxy.setProxy();
 
-            var bw = new BackgroundWorker();
-            bw.DoWork += delegate
-            {
-
                 try
                 {
                     String latestVersion = wc.DownloadString("https://raw.githubusercontent.com/Rawns/Reddit-Wallpaper-Changer/master/version");
                     if (!latestVersion.Contains(currentVersion.Trim().ToString()))
                     {
-                        Form Update = new Update(latestVersion, this);
-                        this.Invoke((MethodInvoker)delegate() {
+
+                            Form Update = new Update(latestVersion, this);
                             Update.Show();
-                        });
+
                     }
                     else
                     {
@@ -1353,8 +1354,6 @@ namespace Reddit_Wallpaper_Changer
                 }
 
                 wc.Dispose();
-            };
-            bw.RunWorkerAsync();
         }
 
 
@@ -1460,7 +1459,6 @@ namespace Reddit_Wallpaper_Changer
             noticeLabel.Text = "Checking Internet Connection...";
             if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
             {
-                noticeLabel.Text = "";
                 checkInternetTimer.Enabled = false;
                 updateTimer();
                 startupTimer.Enabled = true;
