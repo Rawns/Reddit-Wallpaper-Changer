@@ -135,6 +135,7 @@
             this.blacklistButton = new System.Windows.Forms.Button();
             this.blacklistMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.unblacklistWallpaper = new System.Windows.Forms.ToolStripMenuItem();
+            this.chkFitWallpaper = new System.Windows.Forms.CheckBox();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.tabSettingsControl.SuspendLayout();
@@ -280,6 +281,7 @@
             // tabSettings
             // 
             this.tabSettings.BackColor = System.Drawing.SystemColors.Control;
+            this.tabSettings.Controls.Add(this.chkFitWallpaper);
             this.tabSettings.Controls.Add(this.chkAutoSave);
             this.tabSettings.Controls.Add(this.chkNotifications);
             this.tabSettings.Controls.Add(this.chkFade);
@@ -1342,6 +1344,16 @@
             this.unblacklistWallpaper.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.unblacklistWallpaper.Click += new System.EventHandler(this.unblacklistWallpaper_Click);
             // 
+            // chkFitWallpaper
+            // 
+            this.chkFitWallpaper.AutoSize = true;
+            this.chkFitWallpaper.Location = new System.Drawing.Point(177, 62);
+            this.chkFitWallpaper.Name = "chkFitWallpaper";
+            this.chkFitWallpaper.Size = new System.Drawing.Size(146, 17);
+            this.chkFitWallpaper.TabIndex = 16;
+            this.chkFitWallpaper.Text = "Force wallpapers to fit?";
+            this.chkFitWallpaper.UseVisualStyleBackColor = true;
+            // 
             // RWC
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1513,6 +1525,7 @@
         private System.Windows.Forms.Button btnMonitorSave;
         private System.Windows.Forms.PictureBox picStyles;
         private System.Windows.Forms.Button btnWallpaperHelp;
+        private System.Windows.Forms.CheckBox chkFitWallpaper;
     }
 }
 
