@@ -1296,6 +1296,7 @@ namespace Reddit_Wallpaper_Changer
                 statusMenuItem1.ForeColor = Color.Red;
                 statusMenuItem1.Text = "Not Running";
                 Logging.LogMessageToFile("Not Running.");
+
             }
 
         }
