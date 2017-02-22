@@ -43,6 +43,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabSettingsControl = new System.Windows.Forms.TabControl();
             this.tabSettings = new System.Windows.Forms.TabPage();
+            this.chkFitWallpaper = new System.Windows.Forms.CheckBox();
             this.chkAutoSave = new System.Windows.Forms.CheckBox();
             this.chkNotifications = new System.Windows.Forms.CheckBox();
             this.chkFade = new System.Windows.Forms.CheckBox();
@@ -78,6 +79,7 @@
             this.btnExport = new System.Windows.Forms.Button();
             this.btnImport = new System.Windows.Forms.Button();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.btnUpload = new System.Windows.Forms.Button();
             this.btnLog = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.versionLabel = new System.Windows.Forms.Label();
@@ -135,7 +137,6 @@
             this.blacklistButton = new System.Windows.Forms.Button();
             this.blacklistMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.unblacklistWallpaper = new System.Windows.Forms.ToolStripMenuItem();
-            this.chkFitWallpaper = new System.Windows.Forms.CheckBox();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.tabSettingsControl.SuspendLayout();
@@ -293,6 +294,16 @@
             this.tabSettings.Size = new System.Drawing.Size(344, 102);
             this.tabSettings.TabIndex = 0;
             this.tabSettings.Text = "RWC Settings:";
+            // 
+            // chkFitWallpaper
+            // 
+            this.chkFitWallpaper.AutoSize = true;
+            this.chkFitWallpaper.Location = new System.Drawing.Point(177, 62);
+            this.chkFitWallpaper.Name = "chkFitWallpaper";
+            this.chkFitWallpaper.Size = new System.Drawing.Size(146, 17);
+            this.chkFitWallpaper.TabIndex = 16;
+            this.chkFitWallpaper.Text = "Force wallpapers to fit?";
+            this.chkFitWallpaper.UseVisualStyleBackColor = true;
             // 
             // chkAutoSave
             // 
@@ -642,7 +653,7 @@
             this.aboutPanel.Controls.Add(this.groupBox10);
             this.aboutPanel.Controls.Add(this.groupBox3);
             this.aboutPanel.Controls.Add(this.groupBox4);
-            this.aboutPanel.Location = new System.Drawing.Point(402, 451);
+            this.aboutPanel.Location = new System.Drawing.Point(414, 305);
             this.aboutPanel.Name = "aboutPanel";
             this.aboutPanel.Size = new System.Drawing.Size(375, 405);
             this.aboutPanel.TabIndex = 3;
@@ -666,7 +677,7 @@
             this.btnExport.Location = new System.Drawing.Point(151, 25);
             this.btnExport.Name = "btnExport";
             this.btnExport.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.btnExport.Size = new System.Drawing.Size(113, 25);
+            this.btnExport.Size = new System.Drawing.Size(133, 25);
             this.btnExport.TabIndex = 1;
             this.btnExport.Text = "Export";
             this.btnExport.UseVisualStyleBackColor = true;
@@ -678,7 +689,7 @@
             this.btnImport.Location = new System.Drawing.Point(9, 25);
             this.btnImport.Name = "btnImport";
             this.btnImport.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.btnImport.Size = new System.Drawing.Size(113, 25);
+            this.btnImport.Size = new System.Drawing.Size(133, 25);
             this.btnImport.TabIndex = 0;
             this.btnImport.Text = "Import";
             this.btnImport.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -688,6 +699,7 @@
             // 
             // groupBox10
             // 
+            this.groupBox10.Controls.Add(this.btnUpload);
             this.groupBox10.Controls.Add(this.btnLog);
             this.groupBox10.Location = new System.Drawing.Point(11, 208);
             this.groupBox10.Name = "groupBox10";
@@ -695,6 +707,20 @@
             this.groupBox10.TabIndex = 4;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Log File";
+            // 
+            // btnUpload
+            // 
+            this.btnUpload.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.pastebin;
+            this.btnUpload.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnUpload.Location = new System.Drawing.Point(151, 26);
+            this.btnUpload.Name = "btnUpload";
+            this.btnUpload.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.btnUpload.Size = new System.Drawing.Size(133, 25);
+            this.btnUpload.TabIndex = 1;
+            this.btnUpload.Text = "Send to Pastebin";
+            this.btnUpload.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.btnUpload.UseVisualStyleBackColor = true;
+            this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
             // 
             // btnLog
             // 
@@ -902,7 +928,7 @@
             this.monitorLayoutPanel.Location = new System.Drawing.Point(3, 18);
             this.monitorLayoutPanel.Name = "monitorLayoutPanel";
             this.monitorLayoutPanel.RowCount = 1;
-            this.monitorLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.monitorLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.monitorLayoutPanel.Size = new System.Drawing.Size(345, 147);
             this.monitorLayoutPanel.TabIndex = 3;
             // 
@@ -1344,21 +1370,11 @@
             this.unblacklistWallpaper.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.unblacklistWallpaper.Click += new System.EventHandler(this.unblacklistWallpaper_Click);
             // 
-            // chkFitWallpaper
-            // 
-            this.chkFitWallpaper.AutoSize = true;
-            this.chkFitWallpaper.Location = new System.Drawing.Point(177, 62);
-            this.chkFitWallpaper.Name = "chkFitWallpaper";
-            this.chkFitWallpaper.Size = new System.Drawing.Size(146, 17);
-            this.chkFitWallpaper.TabIndex = 16;
-            this.chkFitWallpaper.Text = "Force wallpapers to fit?";
-            this.chkFitWallpaper.UseVisualStyleBackColor = true;
-            // 
             // RWC
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1192, 666);
+            this.ClientSize = new System.Drawing.Size(1192, 809);
             this.Controls.Add(this.blacklistPanel);
             this.Controls.Add(this.historyPanel);
             this.Controls.Add(this.aboutPanel);
@@ -1526,6 +1542,7 @@
         private System.Windows.Forms.PictureBox picStyles;
         private System.Windows.Forms.Button btnWallpaperHelp;
         private System.Windows.Forms.CheckBox chkFitWallpaper;
+        private System.Windows.Forms.Button btnUpload;
     }
 }
 

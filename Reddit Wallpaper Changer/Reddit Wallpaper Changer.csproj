@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Blacklist.cs" />
     <Compile Include="Logging.cs" />
+    <Compile Include="Pastebin.cs" />
     <Compile Include="Proxy.cs" />
     <Compile Include="Quotes.cs" />
     <Compile Include="RWC.cs">
@@ -161,6 +162,7 @@
     <None Include="Resources\fit.png" />
     <None Include="Resources\help.png" />
     <None Include="Resources\cross.png" />
+    <None Include="Resources\pastebin.png" />
     <Content Include="Resources\rwc.ico" />
     <Content Include="Resources\data.png" />
     <Content Include="Resources\information.png" />

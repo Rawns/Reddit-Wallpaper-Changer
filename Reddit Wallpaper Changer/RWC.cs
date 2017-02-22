@@ -107,6 +107,7 @@ namespace Reddit_Wallpaper_Changer
             tt.SetToolTip(this.btnLog, "Click here to open the RWC log file in your default text editor.");
             tt.SetToolTip(this.btnImport, "Import custom settings from an XML file.");
             tt.SetToolTip(this.btnExport, "Export your current settings into an XML file.");
+            tt.SetToolTip(this.btnUpload, "Having issues? Click here to automatically upload your log file to Pastebin!");
 
         }
 
@@ -1523,43 +1524,33 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         public void monitorPanel_Paint()
         {
-            // Remove existing monitor pictures
+            // Create list of controls and then remove them all
+            List<Control> controlsToRemove = new List<Control>();
             foreach (Control item in monitorLayoutPanel.Controls.OfType<PictureBox>())
             {
-                monitorLayoutPanel.Controls.Remove(item);
-                item.Dispose();
+                controlsToRemove.Add(item);
+            }
+            
+            foreach (Control item in monitorLayoutPanel.Controls.OfType<Label>())
+            {
+                controlsToRemove.Add(item);
             }
 
-            // Remove existing monitor labels
-            foreach (Control item in monitorLayoutPanel.Controls.OfType<Label>())
+            foreach (Control item in controlsToRemove)
             {
                 monitorLayoutPanel.Controls.Remove(item);
                 item.Dispose();
             }
 
-            comboType.Text = Properties.Settings.Default.wallpaperStyle;
-            SetExample();
-
-            // Get number of attached monitors8
+            // Get number of attached monitors
             int screens = Screen.AllScreens.Count();
 
-            // Set default monitor icon
-            var img = Properties.Resources.display_enabled;
-
-            // Disable options if only one monitor is detected and fix wallpaper type to tiled
-            //if (screens == 1)
-            //{
-            //    Properties.Settings.Default.wallpaperStyle = "Tile";
-            //    Properties.Settings.Default.Save();
-            //    comboType.Enabled = false;
-            //}
-
-            // Auto add a table to nest the monitor icons 
+            // Auto add a table to nest the monitor images and labels
             this.monitorLayoutPanel.Refresh();
             this.monitorLayoutPanel.ColumnStyles.Clear();
+            this.monitorLayoutPanel.RowStyles.Clear();
             this.monitorLayoutPanel.ColumnCount = screens;
             this.monitorLayoutPanel.RowCount = 2;
-            this.monitorLayoutPanel.ColumnCount = 1;
             this.monitorLayoutPanel.AutoSize = true;
 
             int z = 0;
@@ -1574,26 +1565,30 @@ namespace Reddit_Wallpaper_Changer
                     Name = "MonitorPic" + z,
                     Size = new Size(95, 75),
                     BackgroundImageLayout = ImageLayout.Stretch,
-                    BackgroundImage = img,
+                    BackgroundImage = Properties.Resources.display_enabled,
                     Anchor = System.Windows.Forms.AnchorStyles.None,                    
                 };
 
-                Label rez = new Label
+                Label resolution = new Label
                 {
                     Name = "MonitorLabel" + z,
                     TextAlign = ContentAlignment.MiddleCenter,
-                    Font = new Font("Segoe UI", 10),
+                    Font = new Font("Segoe UI", 9),
                     ForeColor = Color.Black,
                     BackColor = Color.Transparent,
-                    Text = screen.Bounds.Width + "x" + screen.Bounds.Height,
-                    Anchor = System.Windows.Forms.AnchorStyles.Bottom,
+                    AutoSize = true,
+                    Text = "DISPLAY " + z + "\r\n" + screen.Bounds.Width + "x" + screen.Bounds.Height,
+                    Anchor = System.Windows.Forms.AnchorStyles.None,
                 };
 
                 this.monitorLayoutPanel.Controls.Add(monitor, z, 0);
-                this.monitorLayoutPanel.Controls.Add(rez, z, 1);
+                this.monitorLayoutPanel.Controls.Add(resolution, z, 1);
 
                 z++;    
             }
+
+            comboType.Text = Properties.Settings.Default.wallpaperStyle;
+            SetExample();
         }
 
 
@@ -2132,6 +2127,14 @@ namespace Reddit_Wallpaper_Changer
         {
             Form WallpaperTypes = new WallpaperTypes();
             WallpaperTypes.Show();
+        }
+
+        //======================================================================
+        // Upload log file to Pastebin
+        //======================================================================
+        private void btnUpload_Click(object sender, EventArgs e)
+        {
+            Pastebin.UploadLog();
         }
     }
 }

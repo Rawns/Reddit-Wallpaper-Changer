@@ -273,6 +273,16 @@ namespace Reddit_Wallpaper_Changer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap pastebin {
+            get {
+                object obj = ResourceManager.GetObject("pastebin", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap reddit {
             get {
                 object obj = ResourceManager.GetObject("reddit", resourceCulture);
