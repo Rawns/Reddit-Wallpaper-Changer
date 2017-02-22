@@ -2134,7 +2134,11 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void btnUpload_Click(object sender, EventArgs e)
         {
+            btnUpload.Enabled = false;
+            btnUpload.Text = "Uploading...";
             Pastebin.UploadLog();
+            btnUpload.Text = "Upload";
+            btnUpload.Enabled = true;
         }
     }
 }

@@ -674,10 +674,10 @@
             // 
             this.btnExport.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.export;
             this.btnExport.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnExport.Location = new System.Drawing.Point(151, 25);
+            this.btnExport.Location = new System.Drawing.Point(125, 25);
             this.btnExport.Name = "btnExport";
             this.btnExport.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.btnExport.Size = new System.Drawing.Size(133, 25);
+            this.btnExport.Size = new System.Drawing.Size(110, 25);
             this.btnExport.TabIndex = 1;
             this.btnExport.Text = "Export";
             this.btnExport.UseVisualStyleBackColor = true;
@@ -689,7 +689,7 @@
             this.btnImport.Location = new System.Drawing.Point(9, 25);
             this.btnImport.Name = "btnImport";
             this.btnImport.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.btnImport.Size = new System.Drawing.Size(133, 25);
+            this.btnImport.Size = new System.Drawing.Size(110, 25);
             this.btnImport.TabIndex = 0;
             this.btnImport.Text = "Import";
             this.btnImport.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -712,12 +712,12 @@
             // 
             this.btnUpload.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.pastebin;
             this.btnUpload.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnUpload.Location = new System.Drawing.Point(151, 26);
+            this.btnUpload.Location = new System.Drawing.Point(125, 26);
             this.btnUpload.Name = "btnUpload";
             this.btnUpload.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.btnUpload.Size = new System.Drawing.Size(133, 25);
+            this.btnUpload.Size = new System.Drawing.Size(110, 25);
             this.btnUpload.TabIndex = 1;
-            this.btnUpload.Text = "Send to Pastebin";
+            this.btnUpload.Text = "Upload";
             this.btnUpload.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.btnUpload.UseVisualStyleBackColor = true;
             this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
@@ -729,9 +729,9 @@
             this.btnLog.Location = new System.Drawing.Point(9, 26);
             this.btnLog.Name = "btnLog";
             this.btnLog.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.btnLog.Size = new System.Drawing.Size(133, 25);
+            this.btnLog.Size = new System.Drawing.Size(110, 25);
             this.btnLog.TabIndex = 0;
-            this.btnLog.Text = "Open Log File";
+            this.btnLog.Text = "Open Log";
             this.btnLog.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.btnLog.UseVisualStyleBackColor = true;
             this.btnLog.Click += new System.EventHandler(this.btnLog_Click);

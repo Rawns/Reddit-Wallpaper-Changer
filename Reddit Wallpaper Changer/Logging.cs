@@ -16,7 +16,7 @@ namespace Reddit_Wallpaper_Changer
             System.IO.Directory.CreateDirectory(logfiledir);
 
             //======================================================================
-            // Legacy: Copy Blacklist.xml from RWC directory to AppData directory.
+            // Legacy: Remove old logs
             //======================================================================    
             if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + @"Log\RWC.log"))
             {
@@ -27,7 +27,7 @@ namespace Reddit_Wallpaper_Changer
             if (File.Exists(logfiledir + @"\RWC.log"))
             {
                 long length = new System.IO.FileInfo(logfiledir + @"\RWC.log").Length;
-                long max = 1048576;
+                long max = 512000;
 
                 if (length >= max)
                 {
