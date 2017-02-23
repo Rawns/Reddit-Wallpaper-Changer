@@ -640,11 +640,19 @@ namespace Reddit_Wallpaper_Changer
                 if (noResultCount >= 50)
                 {
                     noResultCount = 0;
-                    MessageBox.Show("No Results After 50 Retries. Disabling Reddit Wallpaper Changer.", "Reddit Wallpaper Changer: Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Logging.LogMessageToFile("No results after 50 retries. Disabeling Reddit Wallpaper Changer.");
-                    updateStatus("RWC Disabled.");
-                    changeWallpaperTimer.Enabled = false;
-                    return;
+
+                     if (Properties.Settings.Default.disableNotifications == false)
+                     {
+                         taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+                         taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer";
+                         taskIcon.BalloonTipText = "No Results After 50 attempts. Disabling Reddit Wallpaper Changer.";
+                         taskIcon.ShowBalloonTip(700);
+                     }
+
+                     Logging.LogMessageToFile("No results after 50 retries. Disabeling Reddit Wallpaper Changer.");
+                     updateStatus("RWC Disabled.");
+                     changeWallpaperTimer.Enabled = false;
+                     return;
                 }
                 updateStatus("Finding New Wallpaper");
                 Random random = new Random();
@@ -2142,7 +2150,7 @@ namespace Reddit_Wallpaper_Changer
             
             var uploaded = await Task.Run(Pastebin.UploadLog);
 
-            this.btnUpload.Text = "Upload";
+            this.btnUpload.Text = "Upload Log";
             this.btnUpload.Enabled = true;
 
             if (uploaded == true)
