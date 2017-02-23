@@ -96,6 +96,7 @@ namespace Reddit_Wallpaper_Changer
             tt.SetToolTip(this.chkFitWallpaper, "Enable this option to ensure that wallpapers matching your resolution are applied.\r\n\r\n" +
                 "NOTE: If you have multiple screens, it will validate wallpaper sizes against the ENTIRE desktop area and not just your primary display (eg, 3840x1080 for two 1980x1080 displays).\r\n" +
                 "Best suited to single monitors, or duel monitors with matching resolutions. If you experience a lack of wallpapers, try disabeling this option.");
+            tt.SetToolTip(this.chkSuppressDuplicates, "Enable this option if you don't mind the occasional repeating wallpaper in the same session.");
 
             // Monitors
             tt.SetToolTip(this.btnWallpaperHelp, "Show info on the different wallpaper styles.");
@@ -320,6 +321,8 @@ namespace Reddit_Wallpaper_Changer
             chkAutoStart.Checked = Properties.Settings.Default.autoStart;
             chkFade.Checked = Properties.Settings.Default.wallpaperFade;
             chkNotifications.Checked = Properties.Settings.Default.disableNotifications;
+            chkFitWallpaper.Checked = Properties.Settings.Default.fitWallpaper;
+            chkSuppressDuplicates.Checked = Properties.Settings.Default.suppressDuplicates;
             currentVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
             lblVersion.Text = "Current Version: " + currentVersion;
         }
@@ -597,6 +600,7 @@ namespace Reddit_Wallpaper_Changer
             Properties.Settings.Default.autoSave = chkAutoSave.Checked;
             Properties.Settings.Default.disableNotifications = chkNotifications.Checked;
             Properties.Settings.Default.fitWallpaper = chkFitWallpaper.Checked;
+            Properties.Settings.Default.suppressDuplicates = chkSuppressDuplicates.Checked;
             Properties.Settings.Default.Save();
             logSettings();
             if (updateTimerBool)
@@ -959,13 +963,16 @@ namespace Reddit_Wallpaper_Changer
 
             if (Properties.Settings.Default.manualOverride == false)
             {
-                if (historyList.Contains(url))
+                if (Properties.Settings.Default.suppressDuplicates == true)
                 {
-                    updateStatus("Wallpaper already used this session.");
-                    Logging.LogMessageToFile("The selected wallpaper has already been used this session, searching again.");
-                    changeWallpaperTimer.Enabled = false;
-                    changeWallpaper();
-                    return;
+                    if (historyList.Contains(url))
+                    {
+                        updateStatus("Wallpaper already used this session.");
+                        Logging.LogMessageToFile("The selected wallpaper has already been used this session, searching again.");
+                        changeWallpaperTimer.Enabled = false;
+                        changeWallpaper();
+                        return;
+                    }
                 }
             }
 

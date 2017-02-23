@@ -137,6 +137,7 @@
             this.blacklistButton = new System.Windows.Forms.Button();
             this.blacklistMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.unblacklistWallpaper = new System.Windows.Forms.ToolStripMenuItem();
+            this.chkSuppressDuplicates = new System.Windows.Forms.CheckBox();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.tabSettingsControl.SuspendLayout();
@@ -282,6 +283,7 @@
             // tabSettings
             // 
             this.tabSettings.BackColor = System.Drawing.SystemColors.Control;
+            this.tabSettings.Controls.Add(this.chkSuppressDuplicates);
             this.tabSettings.Controls.Add(this.chkFitWallpaper);
             this.tabSettings.Controls.Add(this.chkAutoSave);
             this.tabSettings.Controls.Add(this.chkNotifications);
@@ -298,7 +300,7 @@
             // chkFitWallpaper
             // 
             this.chkFitWallpaper.AutoSize = true;
-            this.chkFitWallpaper.Location = new System.Drawing.Point(177, 62);
+            this.chkFitWallpaper.Location = new System.Drawing.Point(177, 56);
             this.chkFitWallpaper.Name = "chkFitWallpaper";
             this.chkFitWallpaper.Size = new System.Drawing.Size(153, 17);
             this.chkFitWallpaper.TabIndex = 16;
@@ -308,7 +310,7 @@
             // chkAutoSave
             // 
             this.chkAutoSave.AutoSize = true;
-            this.chkAutoSave.Location = new System.Drawing.Point(17, 62);
+            this.chkAutoSave.Location = new System.Drawing.Point(17, 56);
             this.chkAutoSave.Name = "chkAutoSave";
             this.chkAutoSave.Size = new System.Drawing.Size(146, 17);
             this.chkAutoSave.TabIndex = 15;
@@ -318,7 +320,7 @@
             // chkNotifications
             // 
             this.chkNotifications.AutoSize = true;
-            this.chkNotifications.Location = new System.Drawing.Point(177, 39);
+            this.chkNotifications.Location = new System.Drawing.Point(177, 33);
             this.chkNotifications.Name = "chkNotifications";
             this.chkNotifications.Size = new System.Drawing.Size(138, 17);
             this.chkNotifications.TabIndex = 14;
@@ -328,7 +330,7 @@
             // chkFade
             // 
             this.chkFade.AutoSize = true;
-            this.chkFade.Location = new System.Drawing.Point(177, 16);
+            this.chkFade.Location = new System.Drawing.Point(177, 10);
             this.chkFade.Name = "chkFade";
             this.chkFade.Size = new System.Drawing.Size(144, 17);
             this.chkFade.TabIndex = 13;
@@ -338,7 +340,7 @@
             // chkAutoStart
             // 
             this.chkAutoStart.AutoSize = true;
-            this.chkAutoStart.Location = new System.Drawing.Point(17, 16);
+            this.chkAutoStart.Location = new System.Drawing.Point(17, 10);
             this.chkAutoStart.Name = "chkAutoStart";
             this.chkAutoStart.Size = new System.Drawing.Size(83, 17);
             this.chkAutoStart.TabIndex = 12;
@@ -348,7 +350,7 @@
             // chkStartInTray
             // 
             this.chkStartInTray.AutoSize = true;
-            this.chkStartInTray.Location = new System.Drawing.Point(17, 39);
+            this.chkStartInTray.Location = new System.Drawing.Point(17, 33);
             this.chkStartInTray.Name = "chkStartInTray";
             this.chkStartInTray.Size = new System.Drawing.Size(90, 17);
             this.chkStartInTray.TabIndex = 11;
@@ -1371,6 +1373,16 @@
             this.unblacklistWallpaper.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.unblacklistWallpaper.Click += new System.EventHandler(this.unblacklistWallpaper_Click);
             // 
+            // chkSuppressDuplicates
+            // 
+            this.chkSuppressDuplicates.AutoSize = true;
+            this.chkSuppressDuplicates.Location = new System.Drawing.Point(17, 79);
+            this.chkSuppressDuplicates.Name = "chkSuppressDuplicates";
+            this.chkSuppressDuplicates.Size = new System.Drawing.Size(135, 17);
+            this.chkSuppressDuplicates.TabIndex = 17;
+            this.chkSuppressDuplicates.Text = "Suppress Duplicates?";
+            this.chkSuppressDuplicates.UseVisualStyleBackColor = true;
+            // 
             // RWC
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1544,6 +1556,7 @@
         private System.Windows.Forms.Button btnWallpaperHelp;
         private System.Windows.Forms.CheckBox chkFitWallpaper;
         private System.Windows.Forms.Button btnUpload;
+        private System.Windows.Forms.CheckBox chkSuppressDuplicates;
     }
 }
 

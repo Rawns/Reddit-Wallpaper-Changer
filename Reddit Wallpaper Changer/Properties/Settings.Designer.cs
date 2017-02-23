@@ -382,5 +382,17 @@ namespace Reddit_Wallpaper_Changer.Properties {
                 this["logUrl"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool suppressDuplicates {
+            get {
+                return ((bool)(this["suppressDuplicates"]));
+            }
+            set {
+                this["suppressDuplicates"] = value;
+            }
+        }
     }
 }

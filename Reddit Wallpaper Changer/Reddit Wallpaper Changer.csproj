@@ -94,6 +94,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ManageSettings.cs" />
+    <Compile Include="SuperSecret.cs" />
     <Compile Include="Update.cs">
       <SubType>Form</SubType>
     </Compile>
