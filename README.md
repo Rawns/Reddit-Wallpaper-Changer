@@ -6,12 +6,11 @@ Reddit Wallpaper Changer is a lightweight C# application for Windows that will s
 
 # Current Version - 1.0.11.0
 - Added: Button to instantly upload log file to Pastebin.
+- Added: Wallpaper size validation (ensures wallpapers match your resolution)
 - Fixed: Monitor detection now working (supports up to 3 monitors currently)
 - Fixed: Tool tip text for 'Auto Save Wallpapers' option
 - Fixed: Bug where choosing 7+ days to change wallpaper caused RWC to crash
 - Changed: "No results after 50 attempts" now a notification instead of message box
-
-Shoutout to Reddit user /u/padrino257 for assisting with the squishing some bugs. :)
 
 # Installation
 Download the latest MSI installer from the [releases page](https://github.com/Rawns/Reddit-Wallpaper-Changer/releases)
