@@ -74,6 +74,12 @@
     <Compile Include="Blacklist.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="Pastebin.cs" />
+    <Compile Include="PopupInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PopupInfo.Designer.cs">
+      <DependentUpon>PopupInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Proxy.cs" />
     <Compile Include="Quotes.cs" />
     <Compile Include="RWC.cs">
@@ -111,6 +117,9 @@
     <Compile Include="WallpaperTypes.Designer.cs">
       <DependentUpon>WallpaperTypes.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="PopupInfo.resx">
+      <DependentUpon>PopupInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="RWC.resx">
       <DependentUpon>RWC.cs</DependentUpon>
     </EmbeddedResource>

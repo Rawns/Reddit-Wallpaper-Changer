@@ -17,6 +17,7 @@ using System.Collections;
 using Microsoft.Win32;
 using System.Threading;
 using System.Windows;
+using System.Threading.Tasks;
 
 namespace Reddit_Wallpaper_Changer
 {
@@ -40,7 +41,7 @@ namespace Reddit_Wallpaper_Changer
         int dataGridNumber;                                          
         Bitmap currentWallpaper;
         String currentThread;
-        Boolean monitorsCreated = false;
+        // Boolean monitorsCreated = false;
         ArrayList monitorRec = new ArrayList();
         Image memoryStreamImage;
         Random r;
@@ -90,7 +91,7 @@ namespace Reddit_Wallpaper_Changer
             tt.SetToolTip(this.wallpaperGrabType, "Choose how you want to find a wallpaper.");
             tt.SetToolTip(this.changeTimeValue, "Choose how oftern to change your wallpaper.");
             tt.SetToolTip(this.subredditTextBox, "Enter the subs to scrape for wallpaper (eg, wallpaper, earthporn etc).\r\nMultiple subs can be provided and separated with a +.");
-            tt.SetToolTip(this.chkAutoSave, "Enable this to automatically save all wallpapers to the above directory.");
+            tt.SetToolTip(this.chkAutoSave, "Enable this to automatically save all wallpapers to the below directory.");
             tt.SetToolTip(this.chkFade, "Enable this for a faded wallpaper transition using Active Desktop.\r\nDisable this option if you experience any issues when the wallpaper changes.");
             tt.SetToolTip(this.chkNotifications, "Disables all RWC System Tray/Notification Centre notifications.");
             tt.SetToolTip(this.chkFitWallpaper, "Requires downloaded wallpapers to be at least the size of your monitor.");
@@ -418,7 +419,6 @@ namespace Reddit_Wallpaper_Changer
                 selectButton(historyButton);
                 selectedButton = historyButton;
                 selectedPanel = historyPanel;
-
             }
         }
 
@@ -1170,6 +1170,9 @@ namespace Reddit_Wallpaper_Changer
             };
 
             bw.RunWorkerAsync();
+            //PopupInfo info = new PopupInfo();
+            //info.StartPosition = FormStartPosition.CenterParent;
+            //info.Show();
         }
 
         delegate void SetGridCallback(Bitmap img, string title, int dataGridNumber, string threadID, string url);
@@ -2132,13 +2135,26 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         // Upload log file to Pastebin
         //======================================================================
-        private void btnUpload_Click(object sender, EventArgs e)
+        private async void btnUpload_Click(object sender, EventArgs e)
         {
-            btnUpload.Enabled = false;
-            btnUpload.Text = "Uploading...";
-            Pastebin.UploadLog();
-            btnUpload.Text = "Upload";
-            btnUpload.Enabled = true;
+            this.btnUpload.Enabled = false;
+            this.btnUpload.Text = "Uploading...";
+            
+            var uploaded = await Task.Run(Pastebin.UploadLog);
+
+            this.btnUpload.Text = "Upload";
+            this.btnUpload.Enabled = true;
+
+            if (uploaded == true)
+            {
+                Clipboard.SetText(Properties.Settings.Default.logUrl);
+                MessageBox.Show("Your logfile has been uploaded to Pastebin successfully.\r\n" +
+                    "The URL to the Paste has been copied to your clipboard.", "Upload successful!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("The upload of your logfile to Pastebin failed. Check the log for details, or upload your log manually.", "Upload failed!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

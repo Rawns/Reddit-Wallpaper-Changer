@@ -370,5 +370,17 @@ namespace Reddit_Wallpaper_Changer.Properties {
                 this["fitWallpaper"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string logUrl {
+            get {
+                return ((string)(this["logUrl"]));
+            }
+            set {
+                this["logUrl"] = value;
+            }
+        }
     }
 }
