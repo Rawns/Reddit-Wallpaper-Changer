@@ -572,6 +572,7 @@
             this.changeTimeType.Name = "changeTimeType";
             this.changeTimeType.Size = new System.Drawing.Size(69, 21);
             this.changeTimeType.TabIndex = 6;
+            this.changeTimeType.SelectedIndexChanged += new System.EventHandler(this.changeTimeType_SelectedIndexChanged);
             // 
             // label2
             // 

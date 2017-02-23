@@ -109,7 +109,6 @@
       <DependentUpon>SearchWizard.cs</DependentUpon>
     </Compile>
     <Compile Include="ActiveDesktop.cs" />
-    <Compile Include="UpgradeCleanup.cs" />
     <Compile Include="Validation.cs" />
     <Compile Include="WallpaperTypes.cs">
       <SubType>Form</SubType>

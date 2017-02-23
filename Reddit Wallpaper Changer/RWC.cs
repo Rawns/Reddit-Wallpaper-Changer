@@ -169,7 +169,6 @@ namespace Reddit_Wallpaper_Changer
             setupOthers();
             setupForm();
             logSettings();
-            UpgradeCleanup.deleteOldVersion();
             blacklist = new Blacklist(Properties.Settings.Default.AppDataPath + @"\Blacklist.xml");           
             populateBlacklistHistory();
             updateStatus("RWC Setup Initated.");
@@ -566,6 +565,12 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void saveData()
         {
+            if (changeTimeType.Text == "Days" && changeTimeValue.Value >= 8)
+            {
+                MessageBox.Show("Sorry, but upper limit for wallpaper changes is 7 Days!", "Too many days!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             bool updateTimerBool = false;
             if (Properties.Settings.Default.autoStart != chkAutoStart.Checked)
             {
@@ -603,6 +608,7 @@ namespace Reddit_Wallpaper_Changer
         private void updateTimer()
         {
             wallpaperChangeTimer.Enabled = false;
+
             if (Properties.Settings.Default.changeTimeType == 0) //Minutes
             {
                 wallpaperChangeTimer.Interval = (int)TimeSpan.FromMinutes(Properties.Settings.Default.changeTimeValue).TotalMilliseconds;
@@ -615,6 +621,7 @@ namespace Reddit_Wallpaper_Changer
             {
                 wallpaperChangeTimer.Interval = (int)TimeSpan.FromDays(Properties.Settings.Default.changeTimeValue).TotalMilliseconds;
             }
+                       
             wallpaperChangeTimer.Enabled = true;
         }
 
@@ -645,11 +652,11 @@ namespace Reddit_Wallpaper_Changer
                      {
                          taskIcon.BalloonTipIcon = ToolTipIcon.Info;
                          taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer";
-                         taskIcon.BalloonTipText = "No Results After 50 attempts. Disabling Reddit Wallpaper Changer.";
+                         taskIcon.BalloonTipText = "No results after 50 attempts. Disabling Reddit Wallpaper Changer.";
                          taskIcon.ShowBalloonTip(700);
                      }
 
-                     Logging.LogMessageToFile("No results after 50 retries. Disabeling Reddit Wallpaper Changer.");
+                     Logging.LogMessageToFile("No results after 50 attempts. Disabeling Reddit Wallpaper Changer.");
                      updateStatus("RWC Disabled.");
                      changeWallpaperTimer.Enabled = false;
                      return;
@@ -2162,6 +2169,18 @@ namespace Reddit_Wallpaper_Changer
             else
             {
                 MessageBox.Show("The upload of your logfile to Pastebin failed. Check the log for details, or upload your log manually.", "Upload failed!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        //======================================================================
+        // Check for more than 7 days
+        //======================================================================
+        private void changeTimeType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (changeTimeType.Text == "Days" && changeTimeValue.Value >= 8)
+            {
+                MessageBox.Show("Sorry, but upper limit for wallpaper changes is 7 Days!", "Too many days!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                changeTimeValue.Value = 7;
             }
         }
     }
