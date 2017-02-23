@@ -16,7 +16,6 @@ using System.Runtime.InteropServices;
 using System.Collections;
 using Microsoft.Win32;
 using System.Threading;
-using System.Windows;
 using System.Threading.Tasks;
 
 namespace Reddit_Wallpaper_Changer
@@ -73,7 +72,7 @@ namespace Reddit_Wallpaper_Changer
             SystemEvents.PowerModeChanged += OnPowerChange;
 
             ToolTip tt = new ToolTip();
-            tt.AutoPopDelay = 5000;
+            tt.AutoPopDelay = 7500;
             tt.InitialDelay = 1000;
             tt.ReshowDelay = 500;
             tt.ShowAlways = true;
@@ -94,7 +93,9 @@ namespace Reddit_Wallpaper_Changer
             tt.SetToolTip(this.chkAutoSave, "Enable this to automatically save all wallpapers to the below directory.");
             tt.SetToolTip(this.chkFade, "Enable this for a faded wallpaper transition using Active Desktop.\r\nDisable this option if you experience any issues when the wallpaper changes.");
             tt.SetToolTip(this.chkNotifications, "Disables all RWC System Tray/Notification Centre notifications.");
-            tt.SetToolTip(this.chkFitWallpaper, "Requires downloaded wallpapers to be at least the size of your monitor.");
+            tt.SetToolTip(this.chkFitWallpaper, "Enable this option to ensure that wallpapers matching your resolution are applied.\r\n\r\n" +
+                "NOTE: If you have multiple screens, it will validate wallpaper sizes against the ENTIRE desktop area and not just your primary display (eg, 3840x1080 for two 1980x1080 displays).\r\n" +
+                "Best suited to single monitors, or duel monitors with matching resolutions. If you experience a lack of wallpapers, try disabeling this option.");
 
             // Monitors
             tt.SetToolTip(this.btnWallpaperHelp, "Show info on the different wallpaper styles.");
@@ -215,6 +216,7 @@ namespace Reddit_Wallpaper_Changer
             Logging.LogMessageToFile("Change wallpaper every " + Properties.Settings.Default.changeTimeValue + " " + changeTimeType.Text);
             Logging.LogMessageToFile("Detected " + screens + " display(s).");
             Logging.LogMessageToFile("Wallpaper Position: " + Properties.Settings.Default.wallpaperStyle);
+            Logging.LogMessageToFile("Validate wallpaper size: " + Properties.Settings.Default.fitWallpaper);
 
         }
 
@@ -784,20 +786,15 @@ namespace Reddit_Wallpaper_Changer
                         JToken token = null;
                         try
                         {
-                             bool fitWallpaper = Properties.Settings.Default.fitWallpaper;
+                            
                             IEnumerable<JToken> redditResultReversed = redditResult.Reverse();
                             foreach (JToken toke in redditResultReversed)
                             {
                                 if (!historyRepeated.Contains(toke["data"]["id"].ToString()))
                                 {
-                                    if (!fitWallpaper || (
-                                       toke["data"]["preview"]["images"][0]["source"]["width"].ToObject<int>() >= Screen.PrimaryScreen.Bounds.Width &&
-                                       toke["data"]["preview"]["images"][0]["source"]["height"].ToObject<int>() >= Screen.PrimaryScreen.Bounds.Height
-                                    ))
-                                    {
-                                        token = toke;
-                                    }
+                                    token = toke;
                                 }
+                                
                             }
                             bool needsChange = false;
                             if (token == null)
@@ -1092,6 +1089,27 @@ namespace Reddit_Wallpaper_Changer
                         {
                             WebClient webClient = Proxy.setProxy();
                             webClient.DownloadFile(uri.AbsoluteUri, @wallpaperFile);
+
+                            if (Properties.Settings.Default.fitWallpaper == true)
+                            {
+                                string screenWidth = SystemInformation.VirtualScreen.Width.ToString();
+                                string screenHeight = SystemInformation.VirtualScreen.Height.ToString();
+
+                                var img = Image.FromFile(wallpaperFile);
+                                string wallpaperWidth = img.Width.ToString();
+                                string wallpaperHeight = img.Height.ToString();
+
+                                if (!screenWidth.Equals(wallpaperWidth) || !screenHeight.Equals(wallpaperHeight))
+                                {
+                                    Logging.LogMessageToFile("Wallpaper size mismatch. Screen: " + screenWidth + "x" + screenHeight + ", Wallpaper: " + wallpaperWidth + "x" + wallpaperHeight);
+                                    updateStatus("Wallpaper resolution mismatch.");
+                                    ++noResultCount;
+                                    restartTimer(breakBetweenChange);
+                                    changeWallpaper();
+                                    return;
+                                }
+
+                            }
 
                             if (Properties.Settings.Default.wallpaperFade == true)
                             {

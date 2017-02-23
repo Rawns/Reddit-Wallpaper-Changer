@@ -300,9 +300,9 @@
             this.chkFitWallpaper.AutoSize = true;
             this.chkFitWallpaper.Location = new System.Drawing.Point(177, 62);
             this.chkFitWallpaper.Name = "chkFitWallpaper";
-            this.chkFitWallpaper.Size = new System.Drawing.Size(146, 17);
+            this.chkFitWallpaper.Size = new System.Drawing.Size(153, 17);
             this.chkFitWallpaper.TabIndex = 16;
-            this.chkFitWallpaper.Text = "Force wallpapers to fit?";
+            this.chkFitWallpaper.Text = "Validate wallpaper sizes?";
             this.chkFitWallpaper.UseVisualStyleBackColor = true;
             // 
             // chkAutoSave
