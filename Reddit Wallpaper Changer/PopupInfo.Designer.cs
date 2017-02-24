@@ -28,52 +28,56 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.imgWallpaper = new System.Windows.Forms.PictureBox();
+            this.lnkWallpaper = new System.Windows.Forms.LinkLabel();
+            ((System.ComponentModel.ISupportInitialize)(this.imgWallpaper)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // lblTitle
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 23);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(78, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Wallpaper Title";
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Location = new System.Drawing.Point(16, 23);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(78, 13);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "Wallpaper Title";
             // 
-            // pictureBox1
+            // imgWallpaper
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(153, 13);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
+            this.imgWallpaper.BackgroundImage = global::Reddit_Wallpaper_Changer.Properties.Resources.display_enabled;
+            this.imgWallpaper.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.imgWallpaper.Location = new System.Drawing.Point(188, 13);
+            this.imgWallpaper.Name = "imgWallpaper";
+            this.imgWallpaper.Size = new System.Drawing.Size(100, 65);
+            this.imgWallpaper.TabIndex = 3;
+            this.imgWallpaper.TabStop = false;
             // 
-            // linkLabel1
+            // lnkWallpaper
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(16, 50);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(125, 13);
-            this.linkLabel1.TabIndex = 4;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Taken from /r/Wallpaper";
+            this.lnkWallpaper.AutoSize = true;
+            this.lnkWallpaper.Location = new System.Drawing.Point(16, 50);
+            this.lnkWallpaper.Name = "lnkWallpaper";
+            this.lnkWallpaper.Size = new System.Drawing.Size(125, 13);
+            this.lnkWallpaper.TabIndex = 4;
+            this.lnkWallpaper.TabStop = true;
+            this.lnkWallpaper.Text = "Taken from /r/Wallpaper";
             // 
             // PopupInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(265, 83);
-            this.Controls.Add(this.linkLabel1);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(300, 90);
+            this.Controls.Add(this.lnkWallpaper);
+            this.Controls.Add(this.imgWallpaper);
+            this.Controls.Add(this.lblTitle);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.Name = "PopupInfo";
-            this.Opacity = 0.25D;
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.Opacity = 0.5D;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.main_FormClosing);
+            this.Load += new System.EventHandler(this.PopupInfo_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.imgWallpaper)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -81,8 +85,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.PictureBox imgWallpaper;
+        private System.Windows.Forms.LinkLabel lnkWallpaper;
     }
 }

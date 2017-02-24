@@ -394,5 +394,17 @@ namespace Reddit_Wallpaper_Changer.Properties {
                 this["suppressDuplicates"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool wallpaperInfoPopup {
+            get {
+                return ((bool)(this["wallpaperInfoPopup"]));
+            }
+            set {
+                this["wallpaperInfoPopup"] = value;
+            }
+        }
     }
 }

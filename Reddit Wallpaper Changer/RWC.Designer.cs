@@ -43,6 +43,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabSettingsControl = new System.Windows.Forms.TabControl();
             this.tabSettings = new System.Windows.Forms.TabPage();
+            this.chkSuppressDuplicates = new System.Windows.Forms.CheckBox();
             this.chkFitWallpaper = new System.Windows.Forms.CheckBox();
             this.chkAutoSave = new System.Windows.Forms.CheckBox();
             this.chkNotifications = new System.Windows.Forms.CheckBox();
@@ -137,7 +138,8 @@
             this.blacklistButton = new System.Windows.Forms.Button();
             this.blacklistMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.unblacklistWallpaper = new System.Windows.Forms.ToolStripMenuItem();
-            this.chkSuppressDuplicates = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.chkWallpaperInfoPopup = new System.Windows.Forms.CheckBox();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.tabSettingsControl.SuspendLayout();
@@ -283,6 +285,7 @@
             // tabSettings
             // 
             this.tabSettings.BackColor = System.Drawing.SystemColors.Control;
+            this.tabSettings.Controls.Add(this.chkWallpaperInfoPopup);
             this.tabSettings.Controls.Add(this.chkSuppressDuplicates);
             this.tabSettings.Controls.Add(this.chkFitWallpaper);
             this.tabSettings.Controls.Add(this.chkAutoSave);
@@ -297,12 +300,22 @@
             this.tabSettings.TabIndex = 0;
             this.tabSettings.Text = "RWC Settings:";
             // 
+            // chkSuppressDuplicates
+            // 
+            this.chkSuppressDuplicates.AutoSize = true;
+            this.chkSuppressDuplicates.Location = new System.Drawing.Point(17, 79);
+            this.chkSuppressDuplicates.Name = "chkSuppressDuplicates";
+            this.chkSuppressDuplicates.Size = new System.Drawing.Size(135, 17);
+            this.chkSuppressDuplicates.TabIndex = 17;
+            this.chkSuppressDuplicates.Text = "Suppress Duplicates?";
+            this.chkSuppressDuplicates.UseVisualStyleBackColor = true;
+            // 
             // chkFitWallpaper
             // 
             this.chkFitWallpaper.AutoSize = true;
             this.chkFitWallpaper.Location = new System.Drawing.Point(177, 56);
             this.chkFitWallpaper.Name = "chkFitWallpaper";
-            this.chkFitWallpaper.Size = new System.Drawing.Size(153, 17);
+            this.chkFitWallpaper.Size = new System.Drawing.Size(154, 17);
             this.chkFitWallpaper.TabIndex = 16;
             this.chkFitWallpaper.Text = "Validate wallpaper sizes?";
             this.chkFitWallpaper.UseVisualStyleBackColor = true;
@@ -352,7 +365,7 @@
             this.chkStartInTray.AutoSize = true;
             this.chkStartInTray.Location = new System.Drawing.Point(17, 33);
             this.chkStartInTray.Name = "chkStartInTray";
-            this.chkStartInTray.Size = new System.Drawing.Size(90, 17);
+            this.chkStartInTray.Size = new System.Drawing.Size(91, 17);
             this.chkStartInTray.TabIndex = 11;
             this.chkStartInTray.Text = "Start In Tray?";
             this.chkStartInTray.UseVisualStyleBackColor = true;
@@ -581,7 +594,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(18, 20);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(114, 13);
+            this.label2.Size = new System.Drawing.Size(115, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Reddit Search Query:";
             // 
@@ -767,7 +780,7 @@
             this.lblVersion.ForeColor = System.Drawing.Color.Black;
             this.lblVersion.Location = new System.Drawing.Point(148, 30);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(90, 13);
+            this.lblVersion.Size = new System.Drawing.Size(91, 13);
             this.lblVersion.TabIndex = 6;
             this.lblVersion.Text = "Current Version:";
             // 
@@ -787,6 +800,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.button1);
             this.groupBox4.Controls.Add(this.btnDonate);
             this.groupBox4.Controls.Add(this.btnBug);
             this.groupBox4.Controls.Add(this.label10);
@@ -1373,15 +1387,25 @@
             this.unblacklistWallpaper.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.unblacklistWallpaper.Click += new System.EventHandler(this.unblacklistWallpaper_Click);
             // 
-            // chkSuppressDuplicates
+            // button1
             // 
-            this.chkSuppressDuplicates.AutoSize = true;
-            this.chkSuppressDuplicates.Location = new System.Drawing.Point(17, 79);
-            this.chkSuppressDuplicates.Name = "chkSuppressDuplicates";
-            this.chkSuppressDuplicates.Size = new System.Drawing.Size(135, 17);
-            this.chkSuppressDuplicates.TabIndex = 17;
-            this.chkSuppressDuplicates.Text = "Suppress Duplicates?";
-            this.chkSuppressDuplicates.UseVisualStyleBackColor = true;
+            this.button1.Location = new System.Drawing.Point(9, 79);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // chkWallpaperInfoPopup
+            // 
+            this.chkWallpaperInfoPopup.AutoSize = true;
+            this.chkWallpaperInfoPopup.Location = new System.Drawing.Point(177, 79);
+            this.chkWallpaperInfoPopup.Name = "chkWallpaperInfoPopup";
+            this.chkWallpaperInfoPopup.Size = new System.Drawing.Size(145, 17);
+            this.chkWallpaperInfoPopup.TabIndex = 18;
+            this.chkWallpaperInfoPopup.Text = "Wallpaper Info Popup?";
+            this.chkWallpaperInfoPopup.UseVisualStyleBackColor = true;
             // 
             // RWC
             // 
@@ -1557,6 +1581,8 @@
         private System.Windows.Forms.CheckBox chkFitWallpaper;
         private System.Windows.Forms.Button btnUpload;
         private System.Windows.Forms.CheckBox chkSuppressDuplicates;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox chkWallpaperInfoPopup;
     }
 }
 

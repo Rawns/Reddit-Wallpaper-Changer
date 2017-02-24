@@ -65,6 +65,9 @@ namespace Reddit_Wallpaper_Changer
             }
 
             Logging.LogMessageToFile("===================================================================================================================");
+            Random random = new Random();
+            int db = random.Next(0, 1000);
+            if (db == 500) { SuperSecret.DickButt(); };
             Logging.LogMessageToFile("Reddit Wallpaper Changer Version " + Assembly.GetEntryAssembly().GetName().Version.ToString());
             Logging.LogMessageToFile("RWC is starting.");
             Logging.LogMessageToFile("RWC Interface Loaded.");
@@ -96,7 +99,9 @@ namespace Reddit_Wallpaper_Changer
             tt.SetToolTip(this.chkFitWallpaper, "Enable this option to ensure that wallpapers matching your resolution are applied.\r\n\r\n" +
                 "NOTE: If you have multiple screens, it will validate wallpaper sizes against the ENTIRE desktop area and not just your primary display (eg, 3840x1080 for two 1980x1080 displays).\r\n" +
                 "Best suited to single monitors, or duel monitors with matching resolutions. If you experience a lack of wallpapers, try disabeling this option.");
-            tt.SetToolTip(this.chkSuppressDuplicates, "Enable this option if you don't mind the occasional repeating wallpaper in the same session.");
+            tt.SetToolTip(this.chkSuppressDuplicates, "Disable this option if you don't mind the occasional repeating wallpaper in the same session.");
+            tt.SetToolTip(this.chkWallpaperInfoPopup, "Displays a mini wallpaper info popup at the bottom right of your primary display for 5 seconds.\r\n" +
+                "Note: The 'Disable Notifications' option suppresses this popup.");
 
             // Monitors
             tt.SetToolTip(this.btnWallpaperHelp, "Show info on the different wallpaper styles.");
@@ -218,6 +223,7 @@ namespace Reddit_Wallpaper_Changer
             Logging.LogMessageToFile("Detected " + screens + " display(s).");
             Logging.LogMessageToFile("Wallpaper Position: " + Properties.Settings.Default.wallpaperStyle);
             Logging.LogMessageToFile("Validate wallpaper size: " + Properties.Settings.Default.fitWallpaper);
+            Logging.LogMessageToFile("Wallpaper Info Popup: " + Properties.Settings.Default.wallpaperInfoPopup);
 
         }
 
@@ -323,6 +329,7 @@ namespace Reddit_Wallpaper_Changer
             chkNotifications.Checked = Properties.Settings.Default.disableNotifications;
             chkFitWallpaper.Checked = Properties.Settings.Default.fitWallpaper;
             chkSuppressDuplicates.Checked = Properties.Settings.Default.suppressDuplicates;
+            chkWallpaperInfoPopup.Checked = Properties.Settings.Default.wallpaperInfoPopup;
             currentVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
             lblVersion.Text = "Current Version: " + currentVersion;
         }
@@ -601,6 +608,7 @@ namespace Reddit_Wallpaper_Changer
             Properties.Settings.Default.disableNotifications = chkNotifications.Checked;
             Properties.Settings.Default.fitWallpaper = chkFitWallpaper.Checked;
             Properties.Settings.Default.suppressDuplicates = chkSuppressDuplicates.Checked;
+            Properties.Settings.Default.wallpaperInfoPopup = chkWallpaperInfoPopup.Checked;
             Properties.Settings.Default.Save();
             logSettings();
             if (updateTimerBool)
@@ -633,7 +641,7 @@ namespace Reddit_Wallpaper_Changer
 
         //======================================================================
         // Start the timer for regular wallpaper changing
-        //======================================================================
+        ////======================================================================
         private void wallpaperChangeTimer_Tick(object sender, EventArgs e)
         {
             changeWallpaperTimer.Enabled = true;
@@ -1210,9 +1218,25 @@ namespace Reddit_Wallpaper_Changer
             };
 
             bw.RunWorkerAsync();
-            //PopupInfo info = new PopupInfo();
-            //info.StartPosition = FormStartPosition.CenterParent;
-            //info.Show();
+
+            if (Properties.Settings.Default.disableNotifications == false)
+            {
+                int formx = 300;
+                int formy = 90;
+
+                int screenx = Screen.PrimaryScreen.Bounds.Width;
+                int screeny = Screen.PrimaryScreen.Bounds.Height;
+
+                int popupx = screenx - formx - 50;
+                int popupy = screeny - formy - 50;
+
+                MessageBox.Show("Primary Screen: " + screenx + "x" + screeny + "\r\n" +
+                    "Popup Location: " + popupx + "x" + popupy);
+
+                PopupInfo popup = new PopupInfo();
+                popup.Location = new Point(popupx, popupy);
+                popup.Show();
+            }
         }
 
         delegate void SetGridCallback(Bitmap img, string title, int dataGridNumber, string threadID, string url);
@@ -2207,6 +2231,22 @@ namespace Reddit_Wallpaper_Changer
                 MessageBox.Show("Sorry, but upper limit for wallpaper changes is 7 Days!", "Too many days!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 changeTimeValue.Value = 7;
             }
+        }
+
+        //======================================================================
+        // Form close
+        //======================================================================
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            wallpaperChangeTimer.Enabled = false;
+            changeWallpaperTimer.Enabled = false;
+            Logging.LogMessageToFile("Reddit Wallpaper Changer is shitting down.");
+            Logging.LogMessageToFile("===================================================================================================================");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+ 
         }
     }
 }
