@@ -1156,7 +1156,27 @@ namespace Reddit_Wallpaper_Changer
                                 updateStatus("Wallpaper Changed!");
                             });
                             Logging.LogMessageToFile("Wallpaper changed!");
-                            
+
+
+                            if (Properties.Settings.Default.disableNotifications == false && Properties.Settings.Default.wallpaperInfoPopup == true)
+                            {
+                                int formx = 300;
+                                int formy = 90;
+
+                                int screenx = Screen.PrimaryScreen.Bounds.Width;
+                                int screeny = Screen.PrimaryScreen.Bounds.Height;
+
+                                int popupx = screenx - formx - 50;
+                                int popupy = screeny - formy - 50;
+
+                                BeginInvoke((MethodInvoker)delegate
+                                {
+                                    PopupInfo popup = new PopupInfo(url2, title);
+                                    popup.Location = new Point(popupx, popupy);
+                                    popup.Show();
+                                });
+                            }
+
                             if (Properties.Settings.Default.autoSave == true)
                             {
                                 AutoSave();
@@ -1218,25 +1238,6 @@ namespace Reddit_Wallpaper_Changer
             };
 
             bw.RunWorkerAsync();
-
-            if (Properties.Settings.Default.disableNotifications == false)
-            {
-                int formx = 300;
-                int formy = 90;
-
-                int screenx = Screen.PrimaryScreen.Bounds.Width;
-                int screeny = Screen.PrimaryScreen.Bounds.Height;
-
-                int popupx = screenx - formx - 50;
-                int popupy = screeny - formy - 50;
-
-                MessageBox.Show("Primary Screen: " + screenx + "x" + screeny + "\r\n" +
-                    "Popup Location: " + popupx + "x" + popupy);
-
-                PopupInfo popup = new PopupInfo();
-                popup.Location = new Point(popupx, popupy);
-                popup.Show();
-            }
         }
 
         delegate void SetGridCallback(Bitmap img, string title, int dataGridNumber, string threadID, string url);
