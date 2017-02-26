@@ -43,6 +43,8 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabSettingsControl = new System.Windows.Forms.TabControl();
             this.tabSettings = new System.Windows.Forms.TabPage();
+            this.chkSuppressDuplicates = new System.Windows.Forms.CheckBox();
+            this.chkFitWallpaper = new System.Windows.Forms.CheckBox();
             this.chkAutoSave = new System.Windows.Forms.CheckBox();
             this.chkNotifications = new System.Windows.Forms.CheckBox();
             this.chkFade = new System.Windows.Forms.CheckBox();
@@ -78,6 +80,7 @@
             this.btnExport = new System.Windows.Forms.Button();
             this.btnImport = new System.Windows.Forms.Button();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.btnUpload = new System.Windows.Forms.Button();
             this.btnLog = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.versionLabel = new System.Windows.Forms.Label();
@@ -135,6 +138,8 @@
             this.blacklistButton = new System.Windows.Forms.Button();
             this.blacklistMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.unblacklistWallpaper = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1 = new System.Windows.Forms.Button();
+            this.chkWallpaperInfoPopup = new System.Windows.Forms.CheckBox();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.tabSettingsControl.SuspendLayout();
@@ -280,6 +285,9 @@
             // tabSettings
             // 
             this.tabSettings.BackColor = System.Drawing.SystemColors.Control;
+            this.tabSettings.Controls.Add(this.chkWallpaperInfoPopup);
+            this.tabSettings.Controls.Add(this.chkSuppressDuplicates);
+            this.tabSettings.Controls.Add(this.chkFitWallpaper);
             this.tabSettings.Controls.Add(this.chkAutoSave);
             this.tabSettings.Controls.Add(this.chkNotifications);
             this.tabSettings.Controls.Add(this.chkFade);
@@ -292,10 +300,30 @@
             this.tabSettings.TabIndex = 0;
             this.tabSettings.Text = "RWC Settings:";
             // 
+            // chkSuppressDuplicates
+            // 
+            this.chkSuppressDuplicates.AutoSize = true;
+            this.chkSuppressDuplicates.Location = new System.Drawing.Point(17, 79);
+            this.chkSuppressDuplicates.Name = "chkSuppressDuplicates";
+            this.chkSuppressDuplicates.Size = new System.Drawing.Size(135, 17);
+            this.chkSuppressDuplicates.TabIndex = 17;
+            this.chkSuppressDuplicates.Text = "Suppress Duplicates?";
+            this.chkSuppressDuplicates.UseVisualStyleBackColor = true;
+            // 
+            // chkFitWallpaper
+            // 
+            this.chkFitWallpaper.AutoSize = true;
+            this.chkFitWallpaper.Location = new System.Drawing.Point(177, 56);
+            this.chkFitWallpaper.Name = "chkFitWallpaper";
+            this.chkFitWallpaper.Size = new System.Drawing.Size(154, 17);
+            this.chkFitWallpaper.TabIndex = 16;
+            this.chkFitWallpaper.Text = "Validate wallpaper sizes?";
+            this.chkFitWallpaper.UseVisualStyleBackColor = true;
+            // 
             // chkAutoSave
             // 
             this.chkAutoSave.AutoSize = true;
-            this.chkAutoSave.Location = new System.Drawing.Point(17, 62);
+            this.chkAutoSave.Location = new System.Drawing.Point(17, 56);
             this.chkAutoSave.Name = "chkAutoSave";
             this.chkAutoSave.Size = new System.Drawing.Size(146, 17);
             this.chkAutoSave.TabIndex = 15;
@@ -305,7 +333,7 @@
             // chkNotifications
             // 
             this.chkNotifications.AutoSize = true;
-            this.chkNotifications.Location = new System.Drawing.Point(177, 39);
+            this.chkNotifications.Location = new System.Drawing.Point(177, 33);
             this.chkNotifications.Name = "chkNotifications";
             this.chkNotifications.Size = new System.Drawing.Size(138, 17);
             this.chkNotifications.TabIndex = 14;
@@ -315,7 +343,7 @@
             // chkFade
             // 
             this.chkFade.AutoSize = true;
-            this.chkFade.Location = new System.Drawing.Point(177, 16);
+            this.chkFade.Location = new System.Drawing.Point(177, 10);
             this.chkFade.Name = "chkFade";
             this.chkFade.Size = new System.Drawing.Size(144, 17);
             this.chkFade.TabIndex = 13;
@@ -325,7 +353,7 @@
             // chkAutoStart
             // 
             this.chkAutoStart.AutoSize = true;
-            this.chkAutoStart.Location = new System.Drawing.Point(17, 16);
+            this.chkAutoStart.Location = new System.Drawing.Point(17, 10);
             this.chkAutoStart.Name = "chkAutoStart";
             this.chkAutoStart.Size = new System.Drawing.Size(83, 17);
             this.chkAutoStart.TabIndex = 12;
@@ -335,9 +363,9 @@
             // chkStartInTray
             // 
             this.chkStartInTray.AutoSize = true;
-            this.chkStartInTray.Location = new System.Drawing.Point(17, 39);
+            this.chkStartInTray.Location = new System.Drawing.Point(17, 33);
             this.chkStartInTray.Name = "chkStartInTray";
-            this.chkStartInTray.Size = new System.Drawing.Size(90, 17);
+            this.chkStartInTray.Size = new System.Drawing.Size(91, 17);
             this.chkStartInTray.TabIndex = 11;
             this.chkStartInTray.Text = "Start In Tray?";
             this.chkStartInTray.UseVisualStyleBackColor = true;
@@ -559,13 +587,14 @@
             this.changeTimeType.Name = "changeTimeType";
             this.changeTimeType.Size = new System.Drawing.Size(69, 21);
             this.changeTimeType.TabIndex = 6;
+            this.changeTimeType.SelectedIndexChanged += new System.EventHandler(this.changeTimeType_SelectedIndexChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(18, 20);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(114, 13);
+            this.label2.Size = new System.Drawing.Size(115, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Reddit Search Query:";
             // 
@@ -640,7 +669,7 @@
             this.aboutPanel.Controls.Add(this.groupBox10);
             this.aboutPanel.Controls.Add(this.groupBox3);
             this.aboutPanel.Controls.Add(this.groupBox4);
-            this.aboutPanel.Location = new System.Drawing.Point(402, 451);
+            this.aboutPanel.Location = new System.Drawing.Point(414, 99);
             this.aboutPanel.Name = "aboutPanel";
             this.aboutPanel.Size = new System.Drawing.Size(375, 405);
             this.aboutPanel.TabIndex = 3;
@@ -661,10 +690,10 @@
             // 
             this.btnExport.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.export;
             this.btnExport.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnExport.Location = new System.Drawing.Point(151, 25);
+            this.btnExport.Location = new System.Drawing.Point(125, 25);
             this.btnExport.Name = "btnExport";
             this.btnExport.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.btnExport.Size = new System.Drawing.Size(113, 25);
+            this.btnExport.Size = new System.Drawing.Size(110, 25);
             this.btnExport.TabIndex = 1;
             this.btnExport.Text = "Export";
             this.btnExport.UseVisualStyleBackColor = true;
@@ -676,7 +705,7 @@
             this.btnImport.Location = new System.Drawing.Point(9, 25);
             this.btnImport.Name = "btnImport";
             this.btnImport.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.btnImport.Size = new System.Drawing.Size(113, 25);
+            this.btnImport.Size = new System.Drawing.Size(110, 25);
             this.btnImport.TabIndex = 0;
             this.btnImport.Text = "Import";
             this.btnImport.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -686,6 +715,7 @@
             // 
             // groupBox10
             // 
+            this.groupBox10.Controls.Add(this.btnUpload);
             this.groupBox10.Controls.Add(this.btnLog);
             this.groupBox10.Location = new System.Drawing.Point(11, 208);
             this.groupBox10.Name = "groupBox10";
@@ -694,6 +724,20 @@
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Log File";
             // 
+            // btnUpload
+            // 
+            this.btnUpload.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.pastebin;
+            this.btnUpload.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnUpload.Location = new System.Drawing.Point(125, 26);
+            this.btnUpload.Name = "btnUpload";
+            this.btnUpload.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.btnUpload.Size = new System.Drawing.Size(110, 25);
+            this.btnUpload.TabIndex = 1;
+            this.btnUpload.Text = "Upload Log";
+            this.btnUpload.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.btnUpload.UseVisualStyleBackColor = true;
+            this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
+            // 
             // btnLog
             // 
             this.btnLog.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.information16x16;
@@ -701,9 +745,9 @@
             this.btnLog.Location = new System.Drawing.Point(9, 26);
             this.btnLog.Name = "btnLog";
             this.btnLog.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.btnLog.Size = new System.Drawing.Size(133, 25);
+            this.btnLog.Size = new System.Drawing.Size(110, 25);
             this.btnLog.TabIndex = 0;
-            this.btnLog.Text = "Open Log File";
+            this.btnLog.Text = "Open Log";
             this.btnLog.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.btnLog.UseVisualStyleBackColor = true;
             this.btnLog.Click += new System.EventHandler(this.btnLog_Click);
@@ -736,7 +780,7 @@
             this.lblVersion.ForeColor = System.Drawing.Color.Black;
             this.lblVersion.Location = new System.Drawing.Point(148, 30);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(90, 13);
+            this.lblVersion.Size = new System.Drawing.Size(91, 13);
             this.lblVersion.TabIndex = 6;
             this.lblVersion.Text = "Current Version:";
             // 
@@ -756,6 +800,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.button1);
             this.groupBox4.Controls.Add(this.btnDonate);
             this.groupBox4.Controls.Add(this.btnBug);
             this.groupBox4.Controls.Add(this.label10);
@@ -900,7 +945,7 @@
             this.monitorLayoutPanel.Location = new System.Drawing.Point(3, 18);
             this.monitorLayoutPanel.Name = "monitorLayoutPanel";
             this.monitorLayoutPanel.RowCount = 1;
-            this.monitorLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.monitorLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.monitorLayoutPanel.Size = new System.Drawing.Size(345, 147);
             this.monitorLayoutPanel.TabIndex = 3;
             // 
@@ -1342,11 +1387,31 @@
             this.unblacklistWallpaper.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.unblacklistWallpaper.Click += new System.EventHandler(this.unblacklistWallpaper_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(9, 79);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // chkWallpaperInfoPopup
+            // 
+            this.chkWallpaperInfoPopup.AutoSize = true;
+            this.chkWallpaperInfoPopup.Location = new System.Drawing.Point(177, 79);
+            this.chkWallpaperInfoPopup.Name = "chkWallpaperInfoPopup";
+            this.chkWallpaperInfoPopup.Size = new System.Drawing.Size(145, 17);
+            this.chkWallpaperInfoPopup.TabIndex = 18;
+            this.chkWallpaperInfoPopup.Text = "Wallpaper Info Popup?";
+            this.chkWallpaperInfoPopup.UseVisualStyleBackColor = true;
+            // 
             // RWC
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1192, 666);
+            this.ClientSize = new System.Drawing.Size(1192, 809);
             this.Controls.Add(this.blacklistPanel);
             this.Controls.Add(this.historyPanel);
             this.Controls.Add(this.aboutPanel);
@@ -1513,6 +1578,11 @@
         private System.Windows.Forms.Button btnMonitorSave;
         private System.Windows.Forms.PictureBox picStyles;
         private System.Windows.Forms.Button btnWallpaperHelp;
+        private System.Windows.Forms.CheckBox chkFitWallpaper;
+        private System.Windows.Forms.Button btnUpload;
+        private System.Windows.Forms.CheckBox chkSuppressDuplicates;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox chkWallpaperInfoPopup;
     }
 }
 

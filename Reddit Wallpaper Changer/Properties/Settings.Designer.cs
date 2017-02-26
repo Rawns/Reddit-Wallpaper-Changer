@@ -358,5 +358,53 @@ namespace Reddit_Wallpaper_Changer.Properties {
                 this["disableNotifications"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool fitWallpaper {
+            get {
+                return ((bool)(this["fitWallpaper"]));
+            }
+            set {
+                this["fitWallpaper"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string logUrl {
+            get {
+                return ((string)(this["logUrl"]));
+            }
+            set {
+                this["logUrl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool suppressDuplicates {
+            get {
+                return ((bool)(this["suppressDuplicates"]));
+            }
+            set {
+                this["suppressDuplicates"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool wallpaperInfoPopup {
+            get {
+                return ((bool)(this["wallpaperInfoPopup"]));
+            }
+            set {
+                this["wallpaperInfoPopup"] = value;
+            }
+        }
     }
 }

@@ -73,6 +73,13 @@
   <ItemGroup>
     <Compile Include="Blacklist.cs" />
     <Compile Include="Logging.cs" />
+    <Compile Include="Pastebin.cs" />
+    <Compile Include="PopupInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PopupInfo.Designer.cs">
+      <DependentUpon>PopupInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Proxy.cs" />
     <Compile Include="Quotes.cs" />
     <Compile Include="RWC.cs">
@@ -87,6 +94,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ManageSettings.cs" />
+    <Compile Include="SuperSecret.cs" />
     <Compile Include="Update.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,7 +110,6 @@
       <DependentUpon>SearchWizard.cs</DependentUpon>
     </Compile>
     <Compile Include="ActiveDesktop.cs" />
-    <Compile Include="UpgradeCleanup.cs" />
     <Compile Include="Validation.cs" />
     <Compile Include="WallpaperTypes.cs">
       <SubType>Form</SubType>
@@ -110,6 +117,9 @@
     <Compile Include="WallpaperTypes.Designer.cs">
       <DependentUpon>WallpaperTypes.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="PopupInfo.resx">
+      <DependentUpon>PopupInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="RWC.resx">
       <DependentUpon>RWC.cs</DependentUpon>
     </EmbeddedResource>
@@ -161,6 +171,7 @@
     <None Include="Resources\fit.png" />
     <None Include="Resources\help.png" />
     <None Include="Resources\cross.png" />
+    <None Include="Resources\pastebin.png" />
     <Content Include="Resources\rwc.ico" />
     <Content Include="Resources\data.png" />
     <Content Include="Resources\information.png" />
