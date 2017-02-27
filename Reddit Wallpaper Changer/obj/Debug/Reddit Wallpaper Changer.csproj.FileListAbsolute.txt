@@ -63,9 +63,7 @@ C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Deb
 C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.csproj.GenerateResource.Cache
 E:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\bin\Debug\Newtonsoft.Json.dll
 C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\bin\Debug\Newtonsoft.Json.dll
-C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.csprojResolveAssemblyReference.cache
 E:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.WallpaperTypes.resources
 E:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.PopupInfo.resources
 C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.PopupInfo.resources
 C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.WallpaperTypes.resources
-E:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.csprojResolveAssemblyReference.cache

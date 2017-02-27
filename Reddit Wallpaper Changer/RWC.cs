@@ -56,6 +56,8 @@ namespace Reddit_Wallpaper_Changer
         {
             InitializeComponent();
 
+
+
             // Copy user settings from previous application version if necessary (part of the upgrade proxess)
             if (Properties.Settings.Default.updateSettings)
             {
@@ -105,7 +107,6 @@ namespace Reddit_Wallpaper_Changer
 
             // Monitors
             tt.SetToolTip(this.btnWallpaperHelp, "Show info on the different wallpaper styles.");
-
 
             // About
             tt.SetToolTip(this.btnSubreddit, "Having issues? You can get support by posting on the Reddit Wallpaper Changer Subreddit.");
@@ -164,6 +165,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void RWC_Load(object sender, EventArgs e)
         {
+            this.FormClosing += new FormClosingEventHandler(RWC_FormClosing);
             this.Size = new Size(391, 508);
             updateStatus("RWC Setup Initating.");
             r = new Random();
@@ -1319,12 +1321,11 @@ namespace Reddit_Wallpaper_Changer
             if (!realClose)
             {
                 e.Cancel = true;
-                fakeClose(true);            
+                fakeClose(true);
             }
             else
             {
-                // toolTip1.Active = false;
-                // deleteWindowsMenu();
+
             }
         }
 
@@ -1351,6 +1352,10 @@ namespace Reddit_Wallpaper_Changer
         {
             Logging.LogMessageToFile("Exiting Reddit Wallpaper Changer.");
             realClose = true;
+            wallpaperChangeTimer.Enabled = false;
+            changeWallpaperTimer.Enabled = false;
+            Logging.LogMessageToFile("Reddit Wallpaper Changer is shitting down.");
+            Logging.LogMessageToFile("===================================================================================================================");
             Application.Exit();
         }
 
@@ -2237,17 +2242,19 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         // Form close
         //======================================================================
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            wallpaperChangeTimer.Enabled = false;
-            changeWallpaperTimer.Enabled = false;
-            Logging.LogMessageToFile("Reddit Wallpaper Changer is shitting down.");
-            Logging.LogMessageToFile("===================================================================================================================");
-        }
+        //protected override void OnFormClosing(FormClosingEventArgs e)
+        //{
+
+        //}
 
         private void button1_Click(object sender, EventArgs e)
         {
  
+        }
+
+        private void chkStartInTray_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

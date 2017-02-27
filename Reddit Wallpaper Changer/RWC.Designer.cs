@@ -43,6 +43,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabSettingsControl = new System.Windows.Forms.TabControl();
             this.tabSettings = new System.Windows.Forms.TabPage();
+            this.chkWallpaperInfoPopup = new System.Windows.Forms.CheckBox();
             this.chkSuppressDuplicates = new System.Windows.Forms.CheckBox();
             this.chkFitWallpaper = new System.Windows.Forms.CheckBox();
             this.chkAutoSave = new System.Windows.Forms.CheckBox();
@@ -138,8 +139,6 @@
             this.blacklistButton = new System.Windows.Forms.Button();
             this.blacklistMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.unblacklistWallpaper = new System.Windows.Forms.ToolStripMenuItem();
-            this.button1 = new System.Windows.Forms.Button();
-            this.chkWallpaperInfoPopup = new System.Windows.Forms.CheckBox();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.tabSettingsControl.SuspendLayout();
@@ -300,6 +299,16 @@
             this.tabSettings.TabIndex = 0;
             this.tabSettings.Text = "RWC Settings:";
             // 
+            // chkWallpaperInfoPopup
+            // 
+            this.chkWallpaperInfoPopup.AutoSize = true;
+            this.chkWallpaperInfoPopup.Location = new System.Drawing.Point(177, 79);
+            this.chkWallpaperInfoPopup.Name = "chkWallpaperInfoPopup";
+            this.chkWallpaperInfoPopup.Size = new System.Drawing.Size(145, 17);
+            this.chkWallpaperInfoPopup.TabIndex = 18;
+            this.chkWallpaperInfoPopup.Text = "Wallpaper Info Popup?";
+            this.chkWallpaperInfoPopup.UseVisualStyleBackColor = true;
+            // 
             // chkSuppressDuplicates
             // 
             this.chkSuppressDuplicates.AutoSize = true;
@@ -369,6 +378,7 @@
             this.chkStartInTray.TabIndex = 11;
             this.chkStartInTray.Text = "Start In Tray?";
             this.chkStartInTray.UseVisualStyleBackColor = true;
+            this.chkStartInTray.CheckedChanged += new System.EventHandler(this.chkStartInTray_CheckedChanged);
             // 
             // tabProxy
             // 
@@ -800,7 +810,6 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.button1);
             this.groupBox4.Controls.Add(this.btnDonate);
             this.groupBox4.Controls.Add(this.btnBug);
             this.groupBox4.Controls.Add(this.label10);
@@ -1387,26 +1396,6 @@
             this.unblacklistWallpaper.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.unblacklistWallpaper.Click += new System.EventHandler(this.unblacklistWallpaper_Click);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(9, 79);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // chkWallpaperInfoPopup
-            // 
-            this.chkWallpaperInfoPopup.AutoSize = true;
-            this.chkWallpaperInfoPopup.Location = new System.Drawing.Point(177, 79);
-            this.chkWallpaperInfoPopup.Name = "chkWallpaperInfoPopup";
-            this.chkWallpaperInfoPopup.Size = new System.Drawing.Size(145, 17);
-            this.chkWallpaperInfoPopup.TabIndex = 18;
-            this.chkWallpaperInfoPopup.Text = "Wallpaper Info Popup?";
-            this.chkWallpaperInfoPopup.UseVisualStyleBackColor = true;
-            // 
             // RWC
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1428,7 +1417,6 @@
             this.MaximizeBox = false;
             this.Name = "RWC";
             this.Text = "Reddit Wallpaper Changer";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RWC_FormClosing);
             this.Load += new System.EventHandler(this.RWC_Load);
             this.Shown += new System.EventHandler(this.RWC_Shown);
             this.configurePanel.ResumeLayout(false);
@@ -1581,7 +1569,6 @@
         private System.Windows.Forms.CheckBox chkFitWallpaper;
         private System.Windows.Forms.Button btnUpload;
         private System.Windows.Forms.CheckBox chkSuppressDuplicates;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.CheckBox chkWallpaperInfoPopup;
     }
 }
