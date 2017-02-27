@@ -7,7 +7,7 @@ Reddit Wallpaper Changer is a lightweight C# application for Windows that will s
 # Current Version - 1.0.12.0
 - Hotfix: Issue where RWC closed fully instead of minimising to System Tray
 
-# 1.0.11.0 Update 
+# Version 1.0.11.0 Changes 
 - Added: Option to allow/prevent reuse of wallpapers
 - Added: Mini 'info' popup to display wallaper title, thread & thumbnail
 - Added: Wallpaper size validation (ensures wallpapers match your resolution)
