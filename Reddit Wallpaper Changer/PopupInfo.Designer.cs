@@ -38,16 +38,16 @@
             // 
             this.imgWallpaper.BackgroundImage = global::Reddit_Wallpaper_Changer.Properties.Resources.display_enabled;
             this.imgWallpaper.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.imgWallpaper.Location = new System.Drawing.Point(188, 13);
+            this.imgWallpaper.Location = new System.Drawing.Point(183, 12);
             this.imgWallpaper.Name = "imgWallpaper";
-            this.imgWallpaper.Size = new System.Drawing.Size(100, 65);
+            this.imgWallpaper.Size = new System.Drawing.Size(105, 66);
             this.imgWallpaper.TabIndex = 3;
             this.imgWallpaper.TabStop = false;
             // 
             // lnkWallpaper
             // 
             this.lnkWallpaper.AutoSize = true;
-            this.lnkWallpaper.Location = new System.Drawing.Point(12, 65);
+            this.lnkWallpaper.Location = new System.Drawing.Point(3, 74);
             this.lnkWallpaper.Name = "lnkWallpaper";
             this.lnkWallpaper.Size = new System.Drawing.Size(125, 13);
             this.lnkWallpaper.TabIndex = 4;
@@ -60,10 +60,10 @@
             this.txtWallpaperTitle.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtWallpaperTitle.Enabled = false;
             this.txtWallpaperTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtWallpaperTitle.Location = new System.Drawing.Point(12, 13);
+            this.txtWallpaperTitle.Location = new System.Drawing.Point(7, 6);
             this.txtWallpaperTitle.Multiline = true;
             this.txtWallpaperTitle.Name = "txtWallpaperTitle";
-            this.txtWallpaperTitle.Size = new System.Drawing.Size(170, 49);
+            this.txtWallpaperTitle.Size = new System.Drawing.Size(170, 65);
             this.txtWallpaperTitle.TabIndex = 5;
             // 
             // PopupInfo
