@@ -1,10 +1,2 @@
-Version 1.0.11.0
-- Added: Option to allow/prevent reuse of wallpapers
-- Added: Mini 'info' popup to display wallaper title, link and thumbnail
-- Added: Wallpaper size validation (ensures wallpapers match your resolution)
-- Added: Button to instantly upload log file to Pastebin
-- Fixed: Monitor detection now working (supports up to 3 monitors currently)
-- Fixed: Incorrect tool tip text for 'Auto Save Wallpapers' option
-- Fixed: Bug where choosing 7+ days to change wallpaper caused RWC to crash
-- Changed: Log file cap changed from 1Mb to 500Kb to meet Pastebin requirements
-- Changed: "No results after 50 attempts" now a notification instead of message box
+Current Version - 1.0.12.0
+- Hotfix: Issue where RWC closed fully instead of minimising to System Tray
