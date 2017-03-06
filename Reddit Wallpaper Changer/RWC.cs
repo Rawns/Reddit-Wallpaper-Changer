@@ -1474,22 +1474,35 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            // saveWallpaper.ShowDialog();
             try
             {
-                if (!File.Exists(Properties.Settings.Default.defaultSaveLocation + @"\" + Properties.Settings.Default.currentWallpaperName))
+                String fileName = Properties.Settings.Default.currentWallpaperName;
+
+                // Remove illegal characters from the post title
+                bool changed = false;
+                foreach (char c in Path.GetInvalidFileNameChars())
+                {
+                    if (fileName.Contains(c))
+                        changed = true;
+                    fileName = fileName.Replace(c.ToString(), "_");
+                }
+
+                if (changed)
+                    Logging.LogMessageToFile("Removed illegal characters from post title: " + fileName);
+
+                if (!File.Exists(Properties.Settings.Default.defaultSaveLocation + @"\" + fileName))
                 {
 
-                    System.IO.File.Copy(Properties.Settings.Default.currentWallpaperFile, Properties.Settings.Default.defaultSaveLocation + @"\" + Properties.Settings.Default.currentWallpaperName);
+                    System.IO.File.Copy(Properties.Settings.Default.currentWallpaperFile, Properties.Settings.Default.defaultSaveLocation + @"\" + fileName);
                     if (Properties.Settings.Default.disableNotifications == false)
                     {
                         taskIcon.BalloonTipIcon = ToolTipIcon.Info;
                         taskIcon.BalloonTipTitle = "Wallpaper Saved!";
-                        taskIcon.BalloonTipText = "Wallpaper saved to " + Properties.Settings.Default.defaultSaveLocation + @"\" + Properties.Settings.Default.currentWallpaperName;
+                        taskIcon.BalloonTipText = "Wallpaper saved to " + Properties.Settings.Default.defaultSaveLocation + @"\" + fileName;
                         taskIcon.ShowBalloonTip(750);
                     }
                     updateStatus("Wallpaper saved!");
-                    Logging.LogMessageToFile("Saved " + Properties.Settings.Default.currentWallpaperName + " to " + Properties.Settings.Default.defaultSaveLocation);
+                    Logging.LogMessageToFile("Saved " + fileName + " to " + Properties.Settings.Default.defaultSaveLocation);
                 }
                 else
                 {
@@ -1501,9 +1514,8 @@ namespace Reddit_Wallpaper_Changer
                         taskIcon.ShowBalloonTip(750);
                     }
                     updateStatus("Wallpaper already saved!");
-                    Logging.LogMessageToFile("Wallpaper has already been saved!");
+                    Logging.LogMessageToFile("Not auto saving " + fileName + " because it already exists.");
                 }
- 
             }
             catch (Exception Ex)
             {

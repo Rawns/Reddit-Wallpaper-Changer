@@ -67,3 +67,16 @@ E:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Deb
 E:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.PopupInfo.resources
 C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.PopupInfo.resources
 C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.WallpaperTypes.resources
+C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer-v1.0.12.0\Reddit Wallpaper Changer\bin\Debug\Reddit Wallpaper Changer.exe.config
+C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer-v1.0.12.0\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.exe
+C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer-v1.0.12.0\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.pdb
+C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer-v1.0.12.0\Reddit Wallpaper Changer\bin\Debug\Reddit Wallpaper Changer.exe
+C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer-v1.0.12.0\Reddit Wallpaper Changer\bin\Debug\Reddit Wallpaper Changer.pdb
+C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer-v1.0.12.0\Reddit Wallpaper Changer\bin\Debug\Newtonsoft.Json.dll
+C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer-v1.0.12.0\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.PopupInfo.resources
+C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer-v1.0.12.0\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.RWC.resources
+C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer-v1.0.12.0\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.Properties.Resources.resources
+C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer-v1.0.12.0\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.SearchWizard.resources
+C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer-v1.0.12.0\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.Update.resources
+C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer-v1.0.12.0\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.WallpaperTypes.resources
+C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer-v1.0.12.0\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.csproj.GenerateResource.Cache
