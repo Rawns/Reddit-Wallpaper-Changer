@@ -1354,7 +1354,7 @@ namespace Reddit_Wallpaper_Changer
             realClose = true;
             wallpaperChangeTimer.Enabled = false;
             changeWallpaperTimer.Enabled = false;
-            Logging.LogMessageToFile("Reddit Wallpaper Changer is shitting down.");
+            Logging.LogMessageToFile("Reddit Wallpaper Changer is shutting down.");
             Logging.LogMessageToFile("===================================================================================================================");
             Application.Exit();
         }
