@@ -611,6 +611,7 @@ namespace Reddit_Wallpaper_Changer
             Properties.Settings.Default.fitWallpaper = chkFitWallpaper.Checked;
             Properties.Settings.Default.suppressDuplicates = chkSuppressDuplicates.Checked;
             Properties.Settings.Default.wallpaperInfoPopup = chkWallpaperInfoPopup.Checked;
+            Properties.Settings.Default.wallpaperFade = chkFade.Checked;
             Properties.Settings.Default.Save();
             logSettings();
             if (updateTimerBool)
