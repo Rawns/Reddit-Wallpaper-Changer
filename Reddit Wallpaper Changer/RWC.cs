@@ -17,6 +17,7 @@ using System.Collections;
 using Microsoft.Win32;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Data.SQLite;
 
 namespace Reddit_Wallpaper_Changer
 {
@@ -51,6 +52,7 @@ namespace Reddit_Wallpaper_Changer
         int noResultCount = 0;
         BackgroundWorker bw = new BackgroundWorker();
         Blacklist blacklist;
+        Database database = new Database();
 
         public RWC()
         {
@@ -952,9 +954,18 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void setWallpaper(string url, string title, string threadID)
         {
-            Logging.LogMessageToFile("Setting wallpaper.");      
+            Logging.LogMessageToFile("Setting wallpaper.");
 
-            if (blacklist.containsURL(url))
+            //if (blacklist.containsURL(url))
+            //{
+            //    updateStatus("Wallpaper is blacklisted.");
+            //    Logging.LogMessageToFile("The selected wallpaper has been blacklisted, searching again.");
+            //    changeWallpaperTimer.Enabled = false;
+            //    changeWallpaper();
+            //    return;
+            //}
+
+            if (database.checkForEntry(url))
             {
                 updateStatus("Wallpaper is blacklisted.");
                 Logging.LogMessageToFile("The selected wallpaper has been blacklisted, searching again.");
@@ -1945,6 +1956,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void blacklistWallpapertoolStripMenuItem_Click(object sender, EventArgs e)
         {
+   
             string url = (historyDataGrid.Rows[currentMouseOverRow].Cells[4].Value.ToString());
             string title = (historyDataGrid.Rows[currentMouseOverRow].Cells[1].Value.ToString());
             string threadid = (historyDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
@@ -1952,7 +1964,7 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
-        // Pupulate the blacklisted history panel
+        // Populate the blacklisted history panel
         //======================================================================
         private void populateBlacklistHistory()
         {
@@ -1966,6 +1978,8 @@ namespace Reddit_Wallpaper_Changer
         {
             try
             {
+
+
                 XmlNodeList list = blacklist.getXMLContent("Blacklist");                
 
                 int count = list.Count;
