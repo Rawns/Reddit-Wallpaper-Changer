@@ -58,8 +58,6 @@ namespace Reddit_Wallpaper_Changer
         {
             InitializeComponent();
 
-
-
             // Copy user settings from previous application version if necessary (part of the upgrade proxess)
             if (Properties.Settings.Default.updateSettings)
             {
@@ -180,7 +178,10 @@ namespace Reddit_Wallpaper_Changer
             setupOthers();
             setupForm();
             logSettings();
-            blacklist = new Blacklist(Properties.Settings.Default.AppDataPath + @"\Blacklist.xml");           
+            database.connectToDatabase();
+            database.migrateOldBlacklist();
+
+            // blacklist = new Blacklist(Properties.Settings.Default.AppDataPath + @"\Blacklist.xml");           
             populateBlacklistHistory();
             updateStatus("RWC Setup Initated.");
             checkInternetTimer.Enabled = true;
@@ -955,15 +956,6 @@ namespace Reddit_Wallpaper_Changer
         private void setWallpaper(string url, string title, string threadID)
         {
             Logging.LogMessageToFile("Setting wallpaper.");
-
-            //if (blacklist.containsURL(url))
-            //{
-            //    updateStatus("Wallpaper is blacklisted.");
-            //    Logging.LogMessageToFile("The selected wallpaper has been blacklisted, searching again.");
-            //    changeWallpaperTimer.Enabled = false;
-            //    changeWallpaper();
-            //    return;
-            //}
 
             if (database.checkForEntry(url))
             {
@@ -1887,8 +1879,6 @@ namespace Reddit_Wallpaper_Changer
             wallpaperChangeTimer.Enabled = true;
             changeWallpaperTimer.Enabled = true;
 
-            
-
             populateBlacklistHistory();
 
         }
@@ -1898,7 +1888,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         public void MenuBlacklist(string url, string title, string threadid)
         {
-            blacklist.addEntry(url, title, threadid);
+            database.blacklistWallpaper(url, title, threadid);
 
             if (Properties.Settings.Default.disableNotifications == false)
             {
@@ -1930,9 +1920,9 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         // Click on blacklist menu
         //======================================================================
-        private void blockWallpaperMenuItem_Click(object sender, EventArgs e)
+        public async void blockWallpaperMenuItem_Click(object sender, EventArgs e)
         {
-            Blacklist();
+            // bool blacklisted = await Task.Run(database.blacklistWallpaper(Properties.Settings.Default.url, Properties.Settings.Default.threadTitle, Properties.Settings.Default.threadID));
         }
 
         //======================================================================
@@ -1960,7 +1950,7 @@ namespace Reddit_Wallpaper_Changer
             string url = (historyDataGrid.Rows[currentMouseOverRow].Cells[4].Value.ToString());
             string title = (historyDataGrid.Rows[currentMouseOverRow].Cells[1].Value.ToString());
             string threadid = (historyDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
-            MenuBlacklist(url, title, threadid);
+            database.blacklistWallpaper(url, title, threadid);
         }
 
         //======================================================================
@@ -1977,60 +1967,24 @@ namespace Reddit_Wallpaper_Changer
         delegate (object o, DoWorkEventArgs args)
         {
             try
-            {
-
-
-                XmlNodeList list = blacklist.getXMLContent("Blacklist");                
-
-                int count = list.Count;
-                int i = 0;                
-                foreach (XmlNode xn in list)
+            {          
+            
+                foreach (var item in database.getFromTable())
                 {
-                    try
-                    {
-                        string URL = xn["URL"].InnerText;
-                        string Title = xn["Title"].InnerText;
-                        string ThreadID = xn["ThreadID"].InnerText;
+                    var index = blacklistDataGrid.Rows.Add();
+                    var row = blacklistDataGrid.Rows[index];
 
-                        WebClient wc = Proxy.setProxy();
-                        byte[] bytes = wc.DownloadData(URL);
+                    byte[] bytes = Convert.FromBase64String(item.imgstring);
 
-                        MemoryStream img = new MemoryStream(bytes);
-                        memoryStreamImage = System.Drawing.Image.FromStream(img);
+                    Image image;
+                    MemoryStream ms = new MemoryStream(bytes);
+                    image = Image.FromStream(ms);
 
-                        this.Invoke((MethodInvoker)delegate
-                        {
-                            blacklistDataGrid.Rows.Add(new Bitmap(memoryStreamImage, new Size(100, 100)), Title, dataGridNumber, ThreadID, URL);
-                        });
-
-                        img.Dispose();
-                        img.Close();
-
-                        i++;
-
-                        int percent = i * 100 / (count);
-
-                        this.Invoke((MethodInvoker)delegate
-                        {
-                            blacklistProgress.Value = percent;
-                        });
-                        wc.Dispose();
-                    }
-                    catch (Exception ex)
-                    {
-                        Logging.LogMessageToFile("Unexpected Error: " + ex.Message);
-                    }
+                    row.SetValues(image, item.titlestring, item.threadidstring, item.urlstring);
+                    ms.Dispose();
                 }
 
-                if(blacklistProgress.Value == 100)
-                {
-                    // this.blacklistDataGrid.Sort(this.blacklistDataGrid.Columns[2], ListSortDirection.Descending);
-                    this.Invoke((MethodInvoker)delegate
-                    {
-                        blacklistProgress.Value = 0;
-                        Logging.LogMessageToFile("Blacklisted wallpapers loaded.");
-                    });
-                }
+                Logging.LogMessageToFile("Blacklisted wallpapers loaded.");
             }
             catch (Exception ex)
             {
@@ -2047,7 +2001,7 @@ namespace Reddit_Wallpaper_Changer
         private void unblacklistWallpaper_Click(object sender, EventArgs e)
         {
             String url = (blacklistDataGrid.Rows[currentMouseOverRow].Cells[4].Value.ToString());
-            blacklist.removeEntry(url);
+            database.deleteFromTable(url);
             populateBlacklistHistory();
         }
 
