@@ -51,7 +51,6 @@ namespace Reddit_Wallpaper_Changer
         ArrayList historyRepeated = new ArrayList();
         int noResultCount = 0;
         BackgroundWorker bw = new BackgroundWorker();
-        Blacklist blacklist;
         Database database = new Database();
 
         public RWC()
@@ -84,7 +83,6 @@ namespace Reddit_Wallpaper_Changer
             tt.ToolTipTitle = "RWC";
             tt.ToolTipIcon = ToolTipIcon.Info;            
 
-            // Settings
             tt.SetToolTip(this.chkAutoStart, "Run Reddit Wallpaper Changer when your computer starts.");
             tt.SetToolTip(this.chkStartInTray, "Start Reddit Wallpaper Changer minimised.");
             tt.SetToolTip(this.chkProxy, "Configure a proxy server for Reddit Wallpaper Changer to use.");
@@ -104,6 +102,7 @@ namespace Reddit_Wallpaper_Changer
             tt.SetToolTip(this.chkSuppressDuplicates, "Disable this option if you don't mind the occasional repeating wallpaper in the same session.");
             tt.SetToolTip(this.chkWallpaperInfoPopup, "Displays a mini wallpaper info popup at the bottom right of your primary display for 5 seconds.\r\n" +
                 "Note: The 'Disable Notifications' option suppresses this popup.");
+            tt.SetToolTip(this.chkAutoSaveFaves, "Enable this option to automatically save Favourite wallpapers to the below directory.");
 
             // Monitors
             tt.SetToolTip(this.btnWallpaperHelp, "Show info on the different wallpaper styles.");
@@ -166,7 +165,7 @@ namespace Reddit_Wallpaper_Changer
         private void RWC_Load(object sender, EventArgs e)
         {
             this.FormClosing += new FormClosingEventHandler(RWC_FormClosing);
-            this.Size = new Size(391, 508);
+            this.Size = new Size(466, 508);
             updateStatus("RWC Setup Initating.");
             r = new Random();
             taskIcon.Visible = true;
@@ -180,9 +179,8 @@ namespace Reddit_Wallpaper_Changer
             logSettings();
             database.connectToDatabase();
             database.migrateOldBlacklist();
-
-            // blacklist = new Blacklist(Properties.Settings.Default.AppDataPath + @"\Blacklist.xml");           
-            populateBlacklistHistory();
+            populateFavourites();
+            populateBlacklist();
             updateStatus("RWC Setup Initated.");
             checkInternetTimer.Enabled = true;
         }
@@ -335,6 +333,8 @@ namespace Reddit_Wallpaper_Changer
             chkFitWallpaper.Checked = Properties.Settings.Default.fitWallpaper;
             chkSuppressDuplicates.Checked = Properties.Settings.Default.suppressDuplicates;
             chkWallpaperInfoPopup.Checked = Properties.Settings.Default.wallpaperInfoPopup;
+            chkUpdates.Checked = Properties.Settings.Default.autoUpdateCheck;
+            chkAutoSaveFaves.Enabled = Properties.Settings.Default.autoSaveFaves;
             currentVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
             lblVersion.Text = "Current Version: " + currentVersion;
         }
@@ -344,13 +344,14 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void setupPanels()
         {
-            int w = 375;
+            int w = 450;
             int h = 405;
             aboutPanel.Size = new Size(w, h);
             configurePanel.Size = new Size(w, h);
             monitorPanel.Size = new Size(w, h);
             historyPanel.Size = new Size(w, h);
             blacklistPanel.Size = new Size(w, h);
+            favouritesPanel.Size = new Size(w, h);
 
             int x = 0;
             int y = 65;    
@@ -359,6 +360,7 @@ namespace Reddit_Wallpaper_Changer
             monitorPanel.Location = new Point(x, y);
             historyPanel.Location = new Point(x, y);
             blacklistPanel.Location = new Point(x, y);
+            favouritesPanel.Location = new Point(x, y);
         }
 
         //======================================================================
@@ -385,6 +387,11 @@ namespace Reddit_Wallpaper_Changer
             blacklistButton.FlatAppearance.BorderColor = Color.White;
             blacklistButton.FlatAppearance.MouseDownBackColor = Color.White;
             blacklistButton.FlatAppearance.MouseOverBackColor = Color.White;
+
+            favouritesButton.BackColor = Color.White;
+            favouritesButton.FlatAppearance.BorderColor = Color.White;
+            favouritesButton.FlatAppearance.MouseDownBackColor = Color.White;
+            favouritesButton.FlatAppearance.MouseOverBackColor = Color.White;
 
             selectedPanel = configurePanel;
             selectedButton = configureButton;
@@ -451,6 +458,23 @@ namespace Reddit_Wallpaper_Changer
                 selectButton(blacklistButton);
                 selectedButton = blacklistButton;
                 selectedPanel = blacklistPanel;
+            }
+        }
+
+
+        //======================================================================
+        // Open the Favourites panel
+        //======================================================================
+        private void favouritesButton_Click(object sender, EventArgs e)
+        {
+            if (selectedPanel != favouritesPanel)
+            {
+                selectedPanel.Visible = false;
+                favouritesPanel.Visible = true;
+                cleanButton(selectedButton);
+                selectButton(favouritesButton);
+                selectedButton = favouritesButton;
+                selectedPanel = favouritesPanel;
             }
         }
 
@@ -615,6 +639,8 @@ namespace Reddit_Wallpaper_Changer
             Properties.Settings.Default.suppressDuplicates = chkSuppressDuplicates.Checked;
             Properties.Settings.Default.wallpaperInfoPopup = chkWallpaperInfoPopup.Checked;
             Properties.Settings.Default.wallpaperFade = chkFade.Checked;
+            Properties.Settings.Default.autoUpdateCheck = chkUpdates.Checked;
+            Properties.Settings.Default.autoSaveFaves = chkAutoSaveFaves.Checked;
             Properties.Settings.Default.Save();
             logSettings();
             if (updateTimerBool)
@@ -969,9 +995,9 @@ namespace Reddit_Wallpaper_Changer
             List<string> historyList = new List<string>();
             foreach (DataGridViewRow item in historyDataGrid.Rows)
             {
-                if (item.Cells[4].Value != null)
+                if (item.Cells[3].Value != null)
                 {
-                    historyList.Add(item.Cells[4].Value.ToString());
+                    historyList.Add(item.Cells[3].Value.ToString());
                 }
             }
 
@@ -1376,16 +1402,13 @@ namespace Reddit_Wallpaper_Changer
                 statusMenuItem1.ForeColor = Color.ForestGreen;
                 statusMenuItem1.Text = "Running";
                 Logging.LogMessageToFile("Running.");
-
             }
             else
             {
                 statusMenuItem1.ForeColor = Color.Red;
                 statusMenuItem1.Text = "Not Running";
                 Logging.LogMessageToFile("Not Running.");
-
             }
-
         }
 
         private void currentThreadMenuItem1_Click(object sender, EventArgs e)
@@ -1414,34 +1437,38 @@ namespace Reddit_Wallpaper_Changer
             startupTimer.Enabled = false;
             WebClient wc = Proxy.setProxy();
 
-                try
+            try
+            {
+                if (Properties.Settings.Default.autoUpdateCheck == true)
                 {
                     String latestVersion = wc.DownloadString("https://raw.githubusercontent.com/Rawns/Reddit-Wallpaper-Changer/master/version");
                     if (!latestVersion.Contains(currentVersion.Trim().ToString()))
                     {
-
-                            Form Update = new Update(latestVersion, this);
-                            Update.Show();
-
+                        Form Update = new Update(latestVersion, this);
+                        Update.Show();
                     }
                     else
                     {
                         changeWallpaperTimer.Enabled = true;
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    if (Properties.Settings.Default.disableNotifications == false)
-                    {
-                        taskIcon.BalloonTipIcon = ToolTipIcon.Error;
-                        taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer!";
-                        taskIcon.BalloonTipText = "Error checking for updates.";
-                        taskIcon.ShowBalloonTip(750);
-                    }
-                    Logging.LogMessageToFile("Error checking for updates: " + ex.Message);
+                    changeWallpaperTimer.Enabled = true;
                 }
-
-                wc.Dispose();
+            }
+            catch (Exception ex)
+            {
+                if (Properties.Settings.Default.disableNotifications == false)
+                {
+                    taskIcon.BalloonTipIcon = ToolTipIcon.Error;
+                    taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer!";
+                    taskIcon.BalloonTipText = "Error checking for updates.";
+                    taskIcon.ShowBalloonTip(750);
+                }
+                Logging.LogMessageToFile("Error checking for updates: " + ex.Message);
+            }
+            wc.Dispose();
         }
 
 
@@ -1451,7 +1478,6 @@ namespace Reddit_Wallpaper_Changer
         public void changeWallpaperTimerEnabled()
         {
             changeWallpaperTimer.Enabled = true;
-
         }
 
         //======================================================================
@@ -1465,12 +1491,30 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
+        // Open thread from blacklist selection click
+        //======================================================================
+        private void blacklistDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int rowIndex = e.RowIndex;
+            System.Diagnostics.Process.Start("http://reddit.com/" + blacklistDataGrid.Rows[e.RowIndex].Cells[2].Value.ToString());
+        }
+
+        //======================================================================
         // Open thread from history selection click
         //======================================================================
         private void historyDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             int rowIndex = e.RowIndex;
-            System.Diagnostics.Process.Start("http://reddit.com/" + historyDataGrid.Rows[e.RowIndex].Cells[3].Value.ToString());
+            System.Diagnostics.Process.Start("http://reddit.com/" + historyDataGrid.Rows[e.RowIndex].Cells[2].Value.ToString());
+        }
+
+        //======================================================================
+        // Open thread from favourites selection click
+        //======================================================================
+        private void favouritesDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int rowIndex = e.RowIndex;
+            System.Diagnostics.Process.Start("http://reddit.com/" + favouritesDataGrid.Rows[e.RowIndex].Cells[2].Value.ToString());
         }
 
         //======================================================================
@@ -1545,9 +1589,9 @@ namespace Reddit_Wallpaper_Changer
                 string fileName = saveWallpaper.FileName;
                 currentWallpaper.Save(fileName);
             }
-            catch
+            catch(Exception ex)
             {
-
+                Logging.LogMessageToFile("Unexpected error: " + ex.Message);
             }
         }
 
@@ -1726,7 +1770,7 @@ namespace Reddit_Wallpaper_Changer
                 }
                 else
                 {
-                    contextMenuStrip1.Show(historyDataGrid, new Point(e.X, e.Y));
+                    contextMenuStrip.Show(historyDataGrid, new Point(e.X, e.Y));
                 }
             }
         }
@@ -1742,6 +1786,29 @@ namespace Reddit_Wallpaper_Changer
                 if (currentMouseOverRow >= 0)
                 {
                     blacklistMenuStrip.Show(blacklistDataGrid, new Point(e.X, e.Y));
+                }
+                else
+                {
+                    contextMenuStrip.Show(historyDataGrid, new Point(e.X, e.Y));
+                }
+            }
+        }
+
+        //======================================================================
+        // History grid mouse click
+        //======================================================================
+        private void favouritesDataGrid_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                currentMouseOverRow = favouritesDataGrid.HitTest(e.X, e.Y).RowIndex;
+                if (currentMouseOverRow >= 0)
+                {
+                    favouritesMenuStrip.Show(historyDataGrid, new Point(e.X, e.Y));
+                }
+                else
+                {
+                    contextMenuStrip.Show(historyDataGrid, new Point(e.X, e.Y));
                 }
             }
         }
@@ -1828,41 +1895,64 @@ namespace Reddit_Wallpaper_Changer
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
+            folderBrowser.Description = "Select a location to save wallpapers:";
             if (folderBrowser.ShowDialog() == DialogResult.OK)
             {
                 txtSavePath.Text = folderBrowser.SelectedPath;
             }
         }
 
-        //TODO: Must do something with this sometime.....maybe....
         //======================================================================
-        // Add current wallpaper to favourites
+        // Add wallpaper to Favourites
         //======================================================================
-        //public void Favourite()
-        //{
-        //    XDocument doc = XDocument.Load(AppDomain.CurrentDomain.BaseDirectory + "Favourites.xml");
-        //    XElement favourite = doc.Element("Favourites");
-        //    favourite.Add(new XElement("Wallpaper",
-        //        new XElement("URL", "http://some.wallpaper/link.jpeg"),
-        //        new XElement("Title", "Another Wallpaper!"),
-        //        new XElement("ThreadID", "Thread ID here")));
-        //    doc.Save("Favourites.xml");
-
-        //    faveWallpaperMenuItem.Checked = true;
-
-        //    taskIcon.BalloonTipIcon = ToolTipIcon.Info;
-        //    taskIcon.BalloonTipTitle = "Favourite Wallpaper!";
-        //    taskIcon.BalloonTipText = "The current Wallpaper has been added to your favourites successfully!";
-        //    taskIcon.ShowBalloonTip(750);
-        //}
-
-        //======================================================================
-        //Add current wallpaper to blacklist
-        //======================================================================
-        public void Blacklist()
+        public void addToFavourites(string url, string title, string threadid)
         {
-            blacklist.addEntry(Properties.Settings.Default.url, Properties.Settings.Default.threadTitle, Properties.Settings.Default.threadID);
+            database.faveWallpaper(url, title, threadid);
 
+            if (Properties.Settings.Default.disableNotifications == false)
+            {
+                taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+                taskIcon.BalloonTipTitle = "Wallpaper Favourited!";
+                taskIcon.BalloonTipText = "The Wallpaper has been added to your favourites!";
+                taskIcon.ShowBalloonTip(750);
+            }
+
+            // populateFavourites();
+        }
+
+        //======================================================================
+        // Click on favourite menu
+        //======================================================================
+        private async void faveWallpaperMenuItem_Click(object sender, EventArgs e)
+        {
+            string url = Properties.Settings.Default.url;
+            string title = Properties.Settings.Default.threadTitle;
+            string threadid = Properties.Settings.Default.threadID;
+
+            database.faveWallpaper(url, title, threadid);
+
+            if (Properties.Settings.Default.disableNotifications == false)
+            {
+                taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+                taskIcon.BalloonTipTitle = "Wallpaper Blacklisted!";
+                taskIcon.BalloonTipText = "The current Wallpaper has been favourited! Finding a new wallpaper...";
+                taskIcon.ShowBalloonTip(750);
+            }
+
+            populateFavourites();
+        }
+
+        //======================================================================
+        // Blacklist the current wallpaper
+        //======================================================================
+        public async void blockWallpaperMenuItem_Click(object sender, EventArgs e)
+        {
+            string url = Properties.Settings.Default.url;
+            string title = Properties.Settings.Default.threadTitle;
+            string threadid = Properties.Settings.Default.threadID;
+
+            database.blacklistWallpaper(url, title, threadid);
+            
             if (Properties.Settings.Default.disableNotifications == false)
             {
                 taskIcon.BalloonTipIcon = ToolTipIcon.Info;
@@ -1871,23 +1961,22 @@ namespace Reddit_Wallpaper_Changer
                 taskIcon.ShowBalloonTip(750);
             }
 
-            Logging.LogMessageToFile("Wallpaper Blacklisted! Wallpaper Title: " + Properties.Settings.Default.threadTitle + 
-                ", URL: " + Properties.Settings.Default.url + 
-                ", ThreadID: " + Properties.Settings.Default.threadID);
-
             wallpaperChangeTimer.Enabled = false;
             wallpaperChangeTimer.Enabled = true;
             changeWallpaperTimer.Enabled = true;
 
-            populateBlacklistHistory();
-
+            populateBlacklist();
         }
 
         //======================================================================
-        // Add wallpaper from history view to blacklist
+        // Blacklist wallpaper from History panel
         //======================================================================
-        public void MenuBlacklist(string url, string title, string threadid)
+        private void blacklistWallpapertoolStripMenuItem_Click(object sender, EventArgs e)
         {
+            string title = (historyDataGrid.Rows[currentMouseOverRow].Cells[1].Value.ToString());
+            string threadid = (historyDataGrid.Rows[currentMouseOverRow].Cells[2].Value.ToString());
+            string url = (historyDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
+
             database.blacklistWallpaper(url, title, threadid);
 
             if (Properties.Settings.Default.disableNotifications == false)
@@ -1898,31 +1987,36 @@ namespace Reddit_Wallpaper_Changer
                 taskIcon.ShowBalloonTip(750);
             }
 
-            Logging.LogMessageToFile("Wallpaper Blacklisted! Wallpaper Title: " + title + ", URL: " + url + ", ThreadID: " + threadid);
-
             if (url == Properties.Settings.Default.currentWallpaperUrl)
             {
                 wallpaperChangeTimer.Enabled = false;
                 wallpaperChangeTimer.Enabled = true;
                 changeWallpaperTimer.Enabled = true;
             }
-            populateBlacklistHistory();
+
+            populateBlacklist();
         }
 
         //======================================================================
-        // TODO: Click on favourite menu
+        // Favourite wallpaper from the History Panel
         //======================================================================
-        //private void faveWallpaperMenuItem_Click(object sender, EventArgs e)
-        //{
-        //    Favourite();
-        //}
-
-        //======================================================================
-        // Click on blacklist menu
-        //======================================================================
-        public async void blockWallpaperMenuItem_Click(object sender, EventArgs e)
+        private void favouriteThisWallpaperToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // bool blacklisted = await Task.Run(database.blacklistWallpaper(Properties.Settings.Default.url, Properties.Settings.Default.threadTitle, Properties.Settings.Default.threadID));
+            string title = (historyDataGrid.Rows[currentMouseOverRow].Cells[1].Value.ToString());
+            string threadid = (historyDataGrid.Rows[currentMouseOverRow].Cells[2].Value.ToString());
+            string url = (historyDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
+
+            database.faveWallpaper(url, title, threadid);
+
+            if (Properties.Settings.Default.disableNotifications == false)
+            {
+                taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+                taskIcon.BalloonTipTitle = "Wallpaper Favourited!";
+                taskIcon.BalloonTipText = "The historical Wallpaper has been blacklisted!.";
+                taskIcon.ShowBalloonTip(750);
+            }
+
+            populateFavourites();
         }
 
         //======================================================================
@@ -1935,41 +2029,43 @@ namespace Reddit_Wallpaper_Changer
             Properties.Settings.Default.manualOverride = true;
             Properties.Settings.Default.Save();
 
-            string url = (historyDataGrid.Rows[currentMouseOverRow].Cells[4].Value.ToString());
             string title = (historyDataGrid.Rows[currentMouseOverRow].Cells[1].Value.ToString());
-            string threadid = (historyDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
+            string threadid = (historyDataGrid.Rows[currentMouseOverRow].Cells[2].Value.ToString());
+            string url = (historyDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
             setWallpaper(url, title, threadid);
         }
 
+
+
         //======================================================================
-        // Historical Blacklist menu click
+        // Set wallpaper from selected favourites entry
         //======================================================================
-        private void blacklistWallpapertoolStripMenuItem_Click(object sender, EventArgs e)
+        private void useFaveMenu_Click(object sender, EventArgs e)
         {
-   
-            string url = (historyDataGrid.Rows[currentMouseOverRow].Cells[4].Value.ToString());
-            string title = (historyDataGrid.Rows[currentMouseOverRow].Cells[1].Value.ToString());
-            string threadid = (historyDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
-            database.blacklistWallpaper(url, title, threadid);
+            Logging.LogMessageToFile("Setting a favourite wallpaper (bypassing 'use once' check).");
+            // Set a flag to bypass the 'check if already used' code.
+            Properties.Settings.Default.manualOverride = true;
+            Properties.Settings.Default.Save();
+
+            string title = (favouritesDataGrid.Rows[currentMouseOverRow].Cells[1].Value.ToString());
+            string threadid = (favouritesDataGrid.Rows[currentMouseOverRow].Cells[2].Value.ToString());
+            string url = (favouritesDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
+            setWallpaper(url, title, threadid);
+
         }
+
 
         //======================================================================
         // Populate the blacklisted history panel
         //======================================================================
-        private void populateBlacklistHistory()
+        private async void populateBlacklist()
         {
-            Logging.LogMessageToFile("Refreshing blacklisted wallpaper history.");
+            Logging.LogMessageToFile("Refreshing blacklisted panel.");
             blacklistDataGrid.Rows.Clear();
-            BackgroundWorker blUpdate= new BackgroundWorker();
-            blUpdate.WorkerSupportsCancellation = true;
-            blUpdate.WorkerReportsProgress = true;
-            blUpdate.DoWork += new DoWorkEventHandler(
-        delegate (object o, DoWorkEventArgs args)
-        {
+
             try
-            {          
-            
-                foreach (var item in database.getFromTable())
+            {      
+                foreach (var item in database.getFromBlacklist())
                 {
                     var index = blacklistDataGrid.Rows.Add();
                     var row = blacklistDataGrid.Rows[index];
@@ -1988,11 +2084,41 @@ namespace Reddit_Wallpaper_Changer
             }
             catch (Exception ex)
             {
-                Logging.LogMessageToFile("Error refreshing blacklist: " + ex.Message);
+                Logging.LogMessageToFile("Error populating blacklist panel: " + ex.Message);
             }
+        }
 
-        });           
-            blUpdate.RunWorkerAsync();
+        //======================================================================
+        // Populate the Favourites panel
+        //======================================================================
+        private async void populateFavourites()
+        {
+            Logging.LogMessageToFile("Refreshing Favourites panel.");
+            favouritesDataGrid.Rows.Clear();
+
+            try
+            {
+                foreach (var item in database.getFromFavourites())
+                {
+                    var index = favouritesDataGrid.Rows.Add();
+                    var row = favouritesDataGrid.Rows[index];
+
+                    byte[] bytes = Convert.FromBase64String(item.imgstring);
+
+                    Image image;
+                    MemoryStream ms = new MemoryStream(bytes);
+                    image = Image.FromStream(ms);
+
+                    row.SetValues(image, item.titlestring, item.threadidstring, item.urlstring);
+                    ms.Dispose();
+                }
+
+                Logging.LogMessageToFile("Favourite wallpapers loaded.");
+            }
+            catch (Exception ex)
+            {
+                Logging.LogMessageToFile("Error populating favourites panel: " + ex.Message);
+            }
         }
 
         //======================================================================
@@ -2000,10 +2126,22 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void unblacklistWallpaper_Click(object sender, EventArgs e)
         {
-            String url = (blacklistDataGrid.Rows[currentMouseOverRow].Cells[4].Value.ToString());
-            database.deleteFromTable(url);
-            populateBlacklistHistory();
+            String url = (blacklistDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
+            database.removeFromBlacklist(url);
+            populateBlacklist();
         }
+
+
+        //======================================================================
+        // Remove a previously favourited wallpaper
+        //======================================================================
+        private void removeFaveMenu_Click(object sender, EventArgs e)
+        {
+            String url = (favouritesDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
+            database.removeFromFavourites(url);
+            populateFavourites();
+        }
+
 
         //======================================================================
         // Open the bug form on GitHub
@@ -2221,21 +2359,19 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
-        // Form close
+        // Override auto save faves if auto save al is enabled
         //======================================================================
-        //protected override void OnFormClosing(FormClosingEventArgs e)
-        //{
-
-        //}
-
-        private void button1_Click(object sender, EventArgs e)
+        private void chkAutoSave_CheckedChanged(object sender, EventArgs e)
         {
- 
-        }
-
-        private void chkStartInTray_CheckedChanged(object sender, EventArgs e)
-        {
-
+            if (this.chkAutoSave.Checked == true)
+            {
+                chkAutoSaveFaves.Enabled = false;
+                chkAutoSaveFaves.Checked = false;
+            }
+            else
+            {
+                chkAutoSaveFaves.Enabled = true;
+            }
         }
     }
 }

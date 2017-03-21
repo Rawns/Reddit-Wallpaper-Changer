@@ -73,9 +73,9 @@ namespace Reddit_Wallpaper_Changer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap blacklisted {
+        internal static System.Drawing.Bitmap blacklist {
             get {
-                object obj = ResourceManager.GetObject("blacklisted", resourceCulture);
+                object obj = ResourceManager.GetObject("blacklist", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -186,6 +186,16 @@ namespace Reddit_Wallpaper_Changer.Properties {
         internal static System.Drawing.Bitmap export {
             get {
                 object obj = ResourceManager.GetObject("export", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap favourite {
+            get {
+                object obj = ResourceManager.GetObject("favourite", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

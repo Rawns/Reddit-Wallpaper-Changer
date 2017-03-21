@@ -176,6 +176,8 @@
     <None Include="Resources\help.png" />
     <None Include="Resources\cross.png" />
     <None Include="Resources\pastebin.png" />
+    <None Include="Resources\blacklist.png" />
+    <None Include="Resources\favourite.png" />
     <Content Include="Resources\rwc.ico" />
     <Content Include="Resources\data.png" />
     <Content Include="Resources\information.png" />
