@@ -49,7 +49,7 @@
             this.btnUpdate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnUpdate.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.update_32x32;
             this.btnUpdate.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnUpdate.Location = new System.Drawing.Point(473, 9);
+            this.btnUpdate.Location = new System.Drawing.Point(561, 9);
             this.btnUpdate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(108, 40);
@@ -68,7 +68,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(572, 157);
+            this.textBox1.Size = new System.Drawing.Size(660, 157);
             this.textBox1.TabIndex = 0;
             this.textBox1.TabStop = false;
             // 
@@ -77,7 +77,7 @@
             this.progressBar.Location = new System.Drawing.Point(9, 222);
             this.progressBar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(572, 20);
+            this.progressBar.Size = new System.Drawing.Size(660, 20);
             this.progressBar.TabIndex = 4;
             this.progressBar.Visible = false;
             // 
@@ -85,7 +85,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(592, 255);
+            this.ClientSize = new System.Drawing.Size(679, 255);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.btnUpdate);

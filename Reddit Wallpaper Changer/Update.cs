@@ -53,7 +53,7 @@ namespace Reddit_Wallpaper_Changer
                     try
                     {
                         Logging.LogMessageToFile("Launching installer and exiting.");
-                        System.Diagnostics.Process.Start(temp + "Reddit.Wallpaper.Changer.msi");
+                        System.Diagnostics.Process.Start("msiexec /i \"" + temp + "Reddit.Wallpaper.Changer.msi\" /passive /norestart");
                         System.Environment.Exit(0);
 
                     }

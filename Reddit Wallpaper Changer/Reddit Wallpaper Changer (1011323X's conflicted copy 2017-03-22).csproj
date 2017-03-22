@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blacklist.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="Pastebin.cs" />
@@ -97,7 +98,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ManageSettings.cs" />
-    <Compile Include="SaveWallpaper.cs" />
     <Compile Include="SuperSecret.cs" />
     <Compile Include="Update.cs">
       <SubType>Form</SubType>
@@ -178,7 +178,6 @@
     <None Include="Resources\pastebin.png" />
     <None Include="Resources\blacklist.png" />
     <None Include="Resources\favourite.png" />
-    <None Include="Resources\display_enabled_small.png" />
     <Content Include="Resources\rwc.ico" />
     <Content Include="Resources\data.png" />
     <Content Include="Resources\information.png" />
@@ -192,7 +191,6 @@
     <None Include="Resources\span.png" />
     <None Include="Resources\tile.png" />
     <None Include="Resources\stretch.png" />
-    <None Include="Resources\settings.png" />
     <Content Include="Resources\Wizard.png" />
   </ItemGroup>
   <ItemGroup>
