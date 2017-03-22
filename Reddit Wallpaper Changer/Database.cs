@@ -118,7 +118,7 @@ namespace Reddit_Wallpaper_Changer
                                 string base64ImageRepresentation = Convert.ToBase64String(imageArray);
                                 string dateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.FFF");
 
-                                string sql = "INSERT INTO blacklist (thumbnail, title, threadid, url, date) values ('" + base64ImageRepresentation + "', '" + Title + "', '" + ThreadID + "', '" + URL + "', " + dateTime + "')";
+                                string sql = "INSERT INTO blacklist (thumbnail, title, threadid, url, date) values ('" + base64ImageRepresentation + "', '" + Title + "', '" + ThreadID + "', '" + URL + "', '" + dateTime + "')";
                                 SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
                                 command.ExecuteNonQuery();
                             }
@@ -147,9 +147,13 @@ namespace Reddit_Wallpaper_Changer
             {
                 string thumbnail = getThumbnail(url);
                 string dateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.FFF");
-                string sql = "INSERT INTO blacklist (thumbnail, title, threadid, url, date) values ('" + thumbnail + "', '" + title + "', '" + threadid + "', '" + url + "', '" + dateTime + "')";
-                using (SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection))
+                using (SQLiteCommand command = new SQLiteCommand("INSERT INTO blacklisted (thumbnail, title, threadid, url, date) values (@thumbnail, @title, @threadid, @url, @dateTime)", m_dbConnection))
                 {
+                    command.Parameters.AddWithValue("thumbnail", thumbnail);
+                    command.Parameters.AddWithValue("title", title);
+                    command.Parameters.AddWithValue("threadid", threadid);
+                    command.Parameters.AddWithValue("url", url);
+                    command.Parameters.AddWithValue("dateTime", dateTime);
                     command.ExecuteNonQuery();
                 }
                 Logging.LogMessageToFile("Wallpaper blacklisted! Title: " + title + ", Thread ID: " + threadid + ", URL: " + url);
@@ -169,9 +173,13 @@ namespace Reddit_Wallpaper_Changer
             {
                 string thumbnail = getThumbnail(url);
                 string dateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.FFF");
-                string sql = "INSERT INTO favourites (thumbnail, title, threadid, url, date) values ('" + thumbnail + "', '" + title + "', '" + threadid + "', '" + url + "', '" + dateTime + "')";
-                using (SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection))
+                using (SQLiteCommand command = new SQLiteCommand("INSERT INTO favourites (thumbnail, title, threadid, url, date) values (@thumbnail, @title, @threadid, @url, @dateTime)", m_dbConnection))
                 {
+                    command.Parameters.AddWithValue("thumbnail", thumbnail);
+                    command.Parameters.AddWithValue("title", title);
+                    command.Parameters.AddWithValue("threadid", threadid);
+                    command.Parameters.AddWithValue("url", url);
+                    command.Parameters.AddWithValue("dateTime", dateTime);
                     command.ExecuteNonQuery();
                 }
                 Logging.LogMessageToFile("Wallpaper added to favourites! Title: " + title + ", Thread ID: " + threadid + ", URL: " + url);
@@ -191,10 +199,13 @@ namespace Reddit_Wallpaper_Changer
             {
                 string thumbnail = getThumbnail(url);
                 string dateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.FFF");
-                string sql = "INSERT INTO history (thumbnail, title, threadid, url, date) values ('" + thumbnail + "', '" + title + "', '" + threadid + "', '" + url + "', '" + dateTime + "')";
-
-                using (SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection))
-                {
+                using (SQLiteCommand command = new SQLiteCommand("INSERT INTO history (thumbnail, title, threadid, url, date) values (@thumbnail, @title, @threadid, @url, @dateTime)", m_dbConnection))
+                { 
+                    command.Parameters.AddWithValue("thumbnail", thumbnail);
+                    command.Parameters.AddWithValue("title", title);
+                    command.Parameters.AddWithValue("threadid", threadid);
+                    command.Parameters.AddWithValue("url", url);
+                    command.Parameters.AddWithValue("dateTime", dateTime);
                     command.ExecuteNonQuery();
                 }
 
@@ -202,7 +213,7 @@ namespace Reddit_Wallpaper_Changer
             }
             catch (Exception ex)
             {
-                Logging.LogMessageToFile("Unexpected error favouriting wallpaper: " + ex.Message);
+                Logging.LogMessageToFile("Unexpected error adding wallpaper to history: " + ex.Message);
                 return false;
             }
         }

@@ -51,6 +51,7 @@ namespace Reddit_Wallpaper_Changer
         int noResultCount = 0;
         BackgroundWorker bw = new BackgroundWorker();
         Database database = new Database();
+        SaveWallpaper savewallpaper = new SaveWallpaper();
 
         public RWC()
         {
@@ -216,6 +217,7 @@ namespace Reddit_Wallpaper_Changer
                 Logging.LogMessageToFile("Proxy Authentication: " + Properties.Settings.Default.proxyAuth);
             }
             Logging.LogMessageToFile("AppData Directory: " + Properties.Settings.Default.AppDataPath);
+            Logging.LogMessageToFile("Automatically check for updates: " + Properties.Settings.Default.autoUpdateCheck);
             Logging.LogMessageToFile("Save location for wallpapers: " + Properties.Settings.Default.defaultSaveLocation);
             Logging.LogMessageToFile("Auto Save Favourite Wallpapers: " + Properties.Settings.Default.autoSaveFaves); 
             Logging.LogMessageToFile("Auto Save All Wallpapers: " + Properties.Settings.Default.autoSave);
@@ -1216,7 +1218,7 @@ namespace Reddit_Wallpaper_Changer
 
                             if (Properties.Settings.Default.autoSave == true)
                             {
-                                AutoSave();
+                                savewallpaper.saveCurrentWallpaper(Properties.Settings.Default.currentWallpaperName);
                             }
                         }
                         catch (System.Net.WebException Ex)
@@ -1521,64 +1523,33 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
-        // Save wallpaper locally
+        // Save current wallpaper locally
         //======================================================================
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            try
-            {
-                String fileName = Properties.Settings.Default.currentWallpaperName;
-
-                // Remove illegal characters from the post title
-                bool changed = false;
-                foreach (char c in Path.GetInvalidFileNameChars())
-                {
-                    if (fileName.Contains(c))
-                        changed = true;
-                    fileName = fileName.Replace(c.ToString(), "_");
-                }
-
-                if (changed)
-                    Logging.LogMessageToFile("Removed illegal characters from post title: " + fileName);
-
-                if (!File.Exists(Properties.Settings.Default.defaultSaveLocation + @"\" + fileName))
-                {
-
-                    System.IO.File.Copy(Properties.Settings.Default.currentWallpaperFile, Properties.Settings.Default.defaultSaveLocation + @"\" + fileName);
-                    if (Properties.Settings.Default.disableNotifications == false)
-                    {
-                        taskIcon.BalloonTipIcon = ToolTipIcon.Info;
-                        taskIcon.BalloonTipTitle = "Wallpaper Saved!";
-                        taskIcon.BalloonTipText = "Wallpaper saved to " + Properties.Settings.Default.defaultSaveLocation + @"\" + fileName;
-                        taskIcon.ShowBalloonTip(750);
-                    }
-                    updateStatus("Wallpaper saved!");
-                    Logging.LogMessageToFile("Saved " + fileName + " to " + Properties.Settings.Default.defaultSaveLocation);
-                }
-                else
-                {
-                    if (Properties.Settings.Default.disableNotifications == false)
-                    {
-                        taskIcon.BalloonTipIcon = ToolTipIcon.Info;
-                        taskIcon.BalloonTipTitle = "Already Saved!";
-                        taskIcon.BalloonTipText = "No need to save this wallpaper as it already exists in your wallpapers folder! :)";
-                        taskIcon.ShowBalloonTip(750);
-                    }
-                    updateStatus("Wallpaper already saved!");
-                    Logging.LogMessageToFile("Not auto saving " + fileName + " because it already exists.");
-                }
-            }
-            catch (Exception Ex)
+            String fileName = Properties.Settings.Default.currentWallpaperName;
+            if (savewallpaper.saveCurrentWallpaper(fileName))
             {
                 if (Properties.Settings.Default.disableNotifications == false)
                 {
-                    taskIcon.BalloonTipIcon = ToolTipIcon.Error;
-                    taskIcon.BalloonTipTitle = "Error Saving!";
-                    taskIcon.BalloonTipText = "Unable to save the wallpaper locally. :(";
+                    taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+                    taskIcon.BalloonTipTitle = "Wallpaper Saved!";
+                    taskIcon.BalloonTipText = "Wallpaper saved to " + Properties.Settings.Default.defaultSaveLocation;
                     taskIcon.ShowBalloonTip(750);
                 }
-                updateStatus("Error saving wallpaper!");
-                Logging.LogMessageToFile("Error Saving Wallpaper: " + Ex.Message);
+
+                updateStatus("Wallpaper saved!");
+            }
+            else
+            {
+                if (Properties.Settings.Default.disableNotifications == false)
+                {
+                    taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+                    taskIcon.BalloonTipTitle = "Already Saved!";
+                    taskIcon.BalloonTipText = "No need to save this wallpaper as it already exists in your wallpapers folder! :)";
+                    taskIcon.ShowBalloonTip(750);
+                }
+                updateStatus("Wallpaper already saved!");
             }
         }
 
@@ -1935,7 +1906,30 @@ namespace Reddit_Wallpaper_Changer
 
             if (Properties.Settings.Default.autoSaveFaves == true)
             {
-                // Save
+                if (savewallpaper.saveSelectedWallpaper(url, threadid, title))
+                {
+                    if (Properties.Settings.Default.disableNotifications == false)
+                    {
+                        taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+                        taskIcon.BalloonTipTitle = "Wallpaper Saved!";
+                        taskIcon.BalloonTipText = "Wallpaper saved to " + Properties.Settings.Default.defaultSaveLocation;
+                        taskIcon.ShowBalloonTip(750);
+                    }
+
+                    updateStatus("Wallpaper saved!");
+
+                }
+                else
+                {
+                    if (Properties.Settings.Default.disableNotifications == false)
+                    {
+                        taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+                        taskIcon.BalloonTipTitle = "Already Saved!";
+                        taskIcon.BalloonTipText = "No need to save this wallpaper as it already exists in your wallpapers folder! :)";
+                        taskIcon.ShowBalloonTip(750);
+                    }
+                    updateStatus("Wallpaper already saved!");
+                }
             }
         }
 
@@ -1962,11 +1956,32 @@ namespace Reddit_Wallpaper_Changer
 
             if (Properties.Settings.Default.autoSaveFaves == true)
             {
-                // Save
+                if (savewallpaper.saveSelectedWallpaper(url, threadid, title))
+                {
+                    if (Properties.Settings.Default.disableNotifications == false)
+                    {
+                        taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+                        taskIcon.BalloonTipTitle = "Wallpaper Saved!";
+                        taskIcon.BalloonTipText = "Wallpaper saved to " + Properties.Settings.Default.defaultSaveLocation;
+                        taskIcon.ShowBalloonTip(750);
+                    }
+
+                    updateStatus("Wallpaper saved!");
+
+                }
+                else
+                {
+                    if (Properties.Settings.Default.disableNotifications == false)
+                    {
+                        taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+                        taskIcon.BalloonTipTitle = "Already Saved!";
+                        taskIcon.BalloonTipText = "No need to save this wallpaper as it already exists in your wallpapers folder! :)";
+                        taskIcon.ShowBalloonTip(750);
+                    }
+                    updateStatus("Wallpaper already saved!");
+                }
             }
         }
-
-
 
         //======================================================================
         // Blacklist the current wallpaper
@@ -2043,6 +2058,34 @@ namespace Reddit_Wallpaper_Changer
             }
 
             populateFavourites();
+
+            if (Properties.Settings.Default.autoSaveFaves == true)
+            {
+                if (savewallpaper.saveSelectedWallpaper(url, threadid, title))
+                {
+                    if (Properties.Settings.Default.disableNotifications == false)
+                    {
+                        taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+                        taskIcon.BalloonTipTitle = "Wallpaper Saved!";
+                        taskIcon.BalloonTipText = "Wallpaper saved to " + Properties.Settings.Default.defaultSaveLocation;
+                        taskIcon.ShowBalloonTip(750);
+                    }
+
+                    updateStatus("Wallpaper saved!");
+
+                }
+                else
+                {
+                    if (Properties.Settings.Default.disableNotifications == false)
+                    {
+                        taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+                        taskIcon.BalloonTipTitle = "Already Saved!";
+                        taskIcon.BalloonTipText = "No need to save this wallpaper as it already exists in your wallpapers folder! :)";
+                        taskIcon.ShowBalloonTip(750);
+                    }
+                    updateStatus("Wallpaper already saved!");
+                }
+            }
         }
 
         //======================================================================
@@ -2243,52 +2286,6 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
-        // Auto save all wallpapers
-        //======================================================================
-        private void AutoSave()
-        {
-            try
-            {
-                String fileName = Properties.Settings.Default.currentWallpaperName;
-
-                // Remove illegal characters from the post title
-                bool changed = false;                    
-                foreach (char c in Path.GetInvalidFileNameChars())
-                {
-                    if (fileName.Contains(c))
-                        changed = true;                    
-                    fileName = fileName.Replace(c.ToString(), "_");                                  
-                }
-
-                if (changed)
-                    Logging.LogMessageToFile("Removed illegal characters from post title: " + fileName);
-
-                if (!File.Exists(Properties.Settings.Default.defaultSaveLocation + @"\" + fileName))
-                {
-
-                    System.IO.File.Copy(Properties.Settings.Default.currentWallpaperFile, Properties.Settings.Default.defaultSaveLocation + @"\" + fileName);
-                    Logging.LogMessageToFile("Auto saved " + fileName + " to " + Properties.Settings.Default.defaultSaveLocation);
-                }
-                else
-                {
-                    Logging.LogMessageToFile("Not auto saving " + fileName + " because it already exists.");  
-                }
-            }
-            catch (Exception Ex)
-            {
-                if (Properties.Settings.Default.disableNotifications == false)
-                {
-                    taskIcon.BalloonTipIcon = ToolTipIcon.Error;
-                    taskIcon.BalloonTipTitle = "Error Saving!";
-                    taskIcon.BalloonTipText = "Unable to automatically save the wallpaper. :(";
-                    taskIcon.ShowBalloonTip(750);
-                }
-                Logging.LogMessageToFile("Error automatically saving wallpaper: " + Ex.Message);
-            }
-
-        }
-
-        //======================================================================
         // Enable Active Desktop for wallpaper fade effect
         //======================================================================
         public static void ActiveDesktop()
@@ -2444,6 +2441,76 @@ namespace Reddit_Wallpaper_Changer
             else
             {
                 chkAutoSaveFaves.Enabled = true;
+            }
+        }
+
+        //======================================================================
+        // Manually save selected favourite wallpaper
+        //======================================================================
+        private void saveThisWallpaperToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string title = (favouritesDataGrid.Rows[currentMouseOverRow].Cells[1].Value.ToString());
+            string threadid = (favouritesDataGrid.Rows[currentMouseOverRow].Cells[2].Value.ToString());
+            string url = (favouritesDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
+
+            if (savewallpaper.saveSelectedWallpaper(url, threadid, title))
+            {
+                if (Properties.Settings.Default.disableNotifications == false)
+                {
+                    taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+                    taskIcon.BalloonTipTitle = "Wallpaper Saved!";
+                    taskIcon.BalloonTipText = "Wallpaper saved to " + Properties.Settings.Default.defaultSaveLocation;
+                    taskIcon.ShowBalloonTip(750);
+                }
+
+                updateStatus("Wallpaper saved!");
+
+            }
+            else
+            {
+                if (Properties.Settings.Default.disableNotifications == false)
+                {
+                    taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+                    taskIcon.BalloonTipTitle = "Already Saved!";
+                    taskIcon.BalloonTipText = "No need to save this wallpaper as it already exists in your wallpapers folder! :)";
+                    taskIcon.ShowBalloonTip(750);
+                }
+                updateStatus("Wallpaper already saved!");
+            }
+        }
+
+        //======================================================================
+        // Manually save selected historical wallpaper
+        //======================================================================
+        private void saveThisWallpaperToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            string title = (historyDataGrid.Rows[currentMouseOverRow].Cells[1].Value.ToString());
+            string threadid = (historyDataGrid.Rows[currentMouseOverRow].Cells[2].Value.ToString());
+            string url = (historyDataGrid.Rows[currentMouseOverRow].Cells[3].Value.ToString());
+
+            if (savewallpaper.saveSelectedWallpaper(url, threadid, title))
+            {
+                if (Properties.Settings.Default.disableNotifications == false)
+                {
+                    taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+                    taskIcon.BalloonTipTitle = "Wallpaper Saved!";
+                    taskIcon.BalloonTipText = "Wallpaper saved to " + Properties.Settings.Default.defaultSaveLocation;
+                    taskIcon.ShowBalloonTip(750);
+                }
+
+                updateStatus("Wallpaper saved!");
+
+            }
+            else
+            {
+                if (Properties.Settings.Default.disableNotifications == false)
+                {
+                    taskIcon.BalloonTipIcon = ToolTipIcon.Info;
+                    taskIcon.BalloonTipTitle = "Already Saved!";
+                    taskIcon.BalloonTipText = "No need to save this wallpaper as it already exists in your wallpapers folder! :)";
+                    taskIcon.ShowBalloonTip(750);
+                }
+                updateStatus("Wallpaper already saved!");
             }
         }
     }

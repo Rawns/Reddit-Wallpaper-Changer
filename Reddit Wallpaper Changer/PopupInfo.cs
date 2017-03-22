@@ -90,5 +90,10 @@ namespace Reddit_Wallpaper_Changer
             else
                 Opacity -= 0.05;
         }
+
+        private void txtWallpaperTitle_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

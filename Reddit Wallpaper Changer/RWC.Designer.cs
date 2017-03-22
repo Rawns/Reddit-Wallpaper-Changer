@@ -155,6 +155,8 @@
             this.orderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ThreadLink = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.saveThisWallpaperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveThisWallpaperToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.tabSettingsControl.SuspendLayout();
@@ -218,7 +220,7 @@
             this.settingsToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.contextMenuStrip.Name = "contextMenuStrip1";
-            this.contextMenuStrip.Size = new System.Drawing.Size(187, 192);
+            this.contextMenuStrip.Size = new System.Drawing.Size(233, 192);
             // 
             // statusMenuItem1
             // 
@@ -240,10 +242,10 @@
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripMenuItem1.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.toolStripMenuItem1.ForeColor = System.Drawing.Color.ForestGreen;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(186, 22);
-            this.toolStripMenuItem1.Text = "Save Wallpaper";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(232, 22);
+            this.toolStripMenuItem1.Text = "Save Current Wallpaper";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // blockWallpaperMenuItem
@@ -251,8 +253,8 @@
             this.blockWallpaperMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.blockWallpaperMenuItem.ForeColor = System.Drawing.Color.Crimson;
             this.blockWallpaperMenuItem.Name = "blockWallpaperMenuItem";
-            this.blockWallpaperMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.blockWallpaperMenuItem.Text = "Blacklist Wallpaper";
+            this.blockWallpaperMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.blockWallpaperMenuItem.Text = "Blacklist Current Wallpaper";
             this.blockWallpaperMenuItem.Click += new System.EventHandler(this.blockWallpaperMenuItem_Click);
             // 
             // faveWallpaperMenuItem
@@ -260,8 +262,8 @@
             this.faveWallpaperMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.faveWallpaperMenuItem.ForeColor = System.Drawing.Color.Orange;
             this.faveWallpaperMenuItem.Name = "faveWallpaperMenuItem";
-            this.faveWallpaperMenuItem.Size = new System.Drawing.Size(186, 22);
-            this.faveWallpaperMenuItem.Text = "Favourite Wallpaper";
+            this.faveWallpaperMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.faveWallpaperMenuItem.Text = "Favourite Current Wallpaper";
             this.faveWallpaperMenuItem.Click += new System.EventHandler(this.faveWallpaperMenuItem_Click);
             // 
             // changeWallpaperMenuItem
@@ -1282,9 +1284,10 @@
             this.historyMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.useThisWallpaperToolStripMenuItem,
             this.blacklistWallpapertoolStripMenuItem,
-            this.favouriteThisWallpaperToolStripMenuItem});
+            this.favouriteThisWallpaperToolStripMenuItem,
+            this.saveThisWallpaperToolStripMenuItem1});
             this.historyMenuStrip.Name = "contextMenuStrip2";
-            this.historyMenuStrip.Size = new System.Drawing.Size(212, 70);
+            this.historyMenuStrip.Size = new System.Drawing.Size(212, 114);
             // 
             // useThisWallpaperToolStripMenuItem
             // 
@@ -1307,7 +1310,7 @@
             // favouriteThisWallpaperToolStripMenuItem
             // 
             this.favouriteThisWallpaperToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.favouriteThisWallpaperToolStripMenuItem.ForeColor = System.Drawing.Color.ForestGreen;
+            this.favouriteThisWallpaperToolStripMenuItem.ForeColor = System.Drawing.Color.Orange;
             this.favouriteThisWallpaperToolStripMenuItem.Name = "favouriteThisWallpaperToolStripMenuItem";
             this.favouriteThisWallpaperToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.favouriteThisWallpaperToolStripMenuItem.Text = "Favourite This Wallpaper";
@@ -1548,9 +1551,10 @@
             // 
             this.favouritesMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.useFaveMenu,
-            this.removeFaveMenu});
+            this.removeFaveMenu,
+            this.saveThisWallpaperToolStripMenuItem});
             this.favouritesMenuStrip.Name = "favouritesMenuStrip";
-            this.favouritesMenuStrip.Size = new System.Drawing.Size(274, 48);
+            this.favouritesMenuStrip.Size = new System.Drawing.Size(299, 70);
             // 
             // useFaveMenu
             // 
@@ -1566,8 +1570,8 @@
             this.removeFaveMenu.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.removeFaveMenu.ForeColor = System.Drawing.Color.Crimson;
             this.removeFaveMenu.Name = "removeFaveMenu";
-            this.removeFaveMenu.Size = new System.Drawing.Size(273, 22);
-            this.removeFaveMenu.Text = "Remove Wallpaper From Favourites";
+            this.removeFaveMenu.Size = new System.Drawing.Size(298, 22);
+            this.removeFaveMenu.Text = "Remove This Wallpaper From Favourites";
             this.removeFaveMenu.Click += new System.EventHandler(this.removeFaveMenu_Click);
             // 
             // Preview
@@ -1604,6 +1608,24 @@
             this.DateTime.Name = "DateTime";
             this.DateTime.ReadOnly = true;
             this.DateTime.Visible = false;
+            // 
+            // saveThisWallpaperToolStripMenuItem
+            // 
+            this.saveThisWallpaperToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveThisWallpaperToolStripMenuItem.ForeColor = System.Drawing.Color.ForestGreen;
+            this.saveThisWallpaperToolStripMenuItem.Name = "saveThisWallpaperToolStripMenuItem";
+            this.saveThisWallpaperToolStripMenuItem.Size = new System.Drawing.Size(273, 22);
+            this.saveThisWallpaperToolStripMenuItem.Text = "Save This Wallpaper";
+            this.saveThisWallpaperToolStripMenuItem.Click += new System.EventHandler(this.saveThisWallpaperToolStripMenuItem_Click);
+            // 
+            // saveThisWallpaperToolStripMenuItem1
+            // 
+            this.saveThisWallpaperToolStripMenuItem1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveThisWallpaperToolStripMenuItem1.ForeColor = System.Drawing.Color.ForestGreen;
+            this.saveThisWallpaperToolStripMenuItem1.Name = "saveThisWallpaperToolStripMenuItem1";
+            this.saveThisWallpaperToolStripMenuItem1.Size = new System.Drawing.Size(211, 22);
+            this.saveThisWallpaperToolStripMenuItem1.Text = "Save This Wallpaper";
+            this.saveThisWallpaperToolStripMenuItem1.Click += new System.EventHandler(this.saveThisWallpaperToolStripMenuItem1_Click);
             // 
             // RWC
             // 
@@ -1803,6 +1825,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn orderID;
         private System.Windows.Forms.DataGridViewTextBoxColumn ThreadLink;
         private System.Windows.Forms.DataGridViewTextBoxColumn DateTime;
+        private System.Windows.Forms.ToolStripMenuItem saveThisWallpaperToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveThisWallpaperToolStripMenuItem1;
     }
 }
 

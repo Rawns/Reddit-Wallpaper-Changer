@@ -65,6 +65,7 @@
             this.txtWallpaperTitle.Name = "txtWallpaperTitle";
             this.txtWallpaperTitle.Size = new System.Drawing.Size(170, 65);
             this.txtWallpaperTitle.TabIndex = 5;
+            this.txtWallpaperTitle.TextChanged += new System.EventHandler(this.txtWallpaperTitle_TextChanged);
             // 
             // PopupInfo
             // 
