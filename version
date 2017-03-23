@@ -1,10 +1,21 @@
-Version 1.0.11.0
-- Added: Option to allow/prevent reuse of wallpapers
-- Added: Mini 'info' popup to display wallaper title, link and thumbnail
-- Added: Wallpaper size validation (ensures wallpapers match your resolution)
-- Added: Button to instantly upload log file to Pastebin
-- Fixed: Monitor detection now working (supports up to 3 monitors currently)
-- Fixed: Incorrect tool tip text for 'Auto Save Wallpapers' option
-- Fixed: Bug where choosing 7+ days to change wallpaper caused RWC to crash
-- Changed: Log file cap changed from 1Mb to 500Kb to meet Pastebin requirements
-- Changed: "No results after 50 attempts" now a notification instead of message box
+Version 1.0.13.0
+- Added: Moved from XML file to SQLite for storing wallpaper data
+- Added: Automatic migration of existing Blacklist to new SQLite database
+- Added: You can now 'Favourite' wallpapers!
+- Added: Option to auto-save Favourite wallpapers
+- Added: Endless wallpaper history instead of 'Per Session'
+- Added: Delete database data options
+- Added: Backup/Restore options for database
+- Added: You can now disable automatic update checks
+- Changed: Wallpaper thumbs now saved to SQLite instead of being downloaded each time
+- Changed: 'Suppress Duplicates' will still be limited to 'per session'
+- Changed: Increased wallpaper thumbnail size in History, Favourites and Blacklist menus
+- Changed: New icon set for the Menu buttons 
+- Changed: UI adjustments to encorporate Fvourites and Database options 
+- Changed: Import/Export routine updated to include 1.0.13 features
+- Changed: Monitors screen should now render up to four monitors 
+- Fixed: Unable to save  wallpapers with special characters in their name  
+- Fixed: Thumbnails for History/Favourites/Blacklisted are now stored in SQLite 
+- Fixed: Spelling error in log file when RWC was closed
+- Fixed: Changes to the Fade option were not actually saved
+- Fixed: Various code changes
