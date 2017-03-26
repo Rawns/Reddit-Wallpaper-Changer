@@ -17,5 +17,10 @@ namespace Reddit_Wallpaper_Changer
         {
             this.Close();
         }
+
+        private void WallpaperTypes_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

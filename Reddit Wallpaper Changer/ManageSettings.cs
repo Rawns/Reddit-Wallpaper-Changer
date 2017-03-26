@@ -54,7 +54,7 @@ namespace Reddit_Wallpaper_Changer
                         writer.WriteEndElement();
                         writer.WriteEndDocument();
                     }
-                    Logging.LogMessageToFile("Settings have been successfully exported to: " + savedFile);
+                    Logging.LogMessageToFile("Settings have been successfully exported to: " + savedFile, 0);
                     MessageBox.Show("Your settings have been exported successfully!", "Settings Exported", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -65,7 +65,7 @@ namespace Reddit_Wallpaper_Changer
             }
             catch (Exception ex)
             {
-                Logging.LogMessageToFile("Unexpected error exporting settings: " + ex.Message);
+                Logging.LogMessageToFile("Unexpected error exporting settings: " + ex.Message, 2);
                 MessageBox.Show("Unexpected error exporting settings to XML: " + ex.Message, "Error Exporting!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -120,18 +120,17 @@ namespace Reddit_Wallpaper_Changer
                         Properties.Settings.Default.disableNotifications = Boolean.Parse(xn["DisableNotifications"].InnerText);
                         Properties.Settings.Default.Save();
 
-                        Logging.LogMessageToFile("Settings have been successfully imported. Restarting RWC.");
+                        Logging.LogMessageToFile("Settings have been successfully imported. Restarting RWC.", 0);
                         MessageBox.Show("Settings file imported successfully.\r\n\r\n" +
                             "Note: If a proxy is specified that requires authentication, you must manually enter the credentials.\r\n\r\n" +
                             "RWC will now restart so the new settings take effect.", "Settings Imported", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        // Close and re-launch RWC to apply changes. 
                         System.Diagnostics.Process.Start(System.Reflection.Assembly.GetExecutingAssembly().Location);
                         System.Environment.Exit(0);
                     }
                     catch (Exception ex)
                     {
-                        Logging.LogMessageToFile("Unexpected error importing settings file: " + ex.Message);
+                        Logging.LogMessageToFile("Unexpected error importing settings file: " + ex.Message, 2);
                         MessageBox.Show("Unexpected error importing settings from XML: " + ex.Message, "Error Importing!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                     }

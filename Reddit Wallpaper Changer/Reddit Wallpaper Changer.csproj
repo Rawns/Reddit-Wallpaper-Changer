@@ -179,6 +179,12 @@
     <None Include="Resources\blacklist.png" />
     <None Include="Resources\favourite.png" />
     <None Include="Resources\display_enabled_small.png" />
+    <None Include="Resources\blacklist_16x16.png" />
+    <None Include="Resources\favourite_16x16.png" />
+    <None Include="Resources\history_16x16.png" />
+    <None Include="Resources\db_backup_16x16.png" />
+    <None Include="Resources\db_restore_16x16.png" />
+    <None Include="Resources\null_thumb.png" />
     <Content Include="Resources\rwc.ico" />
     <Content Include="Resources\data.png" />
     <Content Include="Resources\information.png" />
@@ -193,6 +199,7 @@
     <None Include="Resources\tile.png" />
     <None Include="Resources\stretch.png" />
     <None Include="Resources\settings.png" />
+    <None Include="Resources\thumbnails_16x16.png" />
     <Content Include="Resources\Wizard.png" />
   </ItemGroup>
   <ItemGroup>

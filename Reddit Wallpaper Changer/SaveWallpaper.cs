@@ -32,7 +32,7 @@ namespace Reddit_Wallpaper_Changer
                 }
 
                 if (changed)
-                    Logging.LogMessageToFile("Removed illegal characters from post title: " + fileName);
+                    Logging.LogMessageToFile("Removed illegal characters from post title: " + fileName, 0);
 
                 if (!File.Exists(Properties.Settings.Default.defaultSaveLocation + @"\" + fileName))
                 {
@@ -41,13 +41,13 @@ namespace Reddit_Wallpaper_Changer
                 }
                 else
                 {
-                    Logging.LogMessageToFile("Not auto saving " + fileName + " because it already exists.");
+                    Logging.LogMessageToFile("Not auto saving " + fileName + " because it already exists.", 1);
                     return true;
                 }
             }
             catch (Exception Ex)
             {
-                Logging.LogMessageToFile("Error Saving Wallpaper: " + Ex.Message);
+                Logging.LogMessageToFile("Error Saving Wallpaper: " + Ex.Message, 2);
                 return false;
             }
         }
@@ -72,7 +72,7 @@ namespace Reddit_Wallpaper_Changer
                 }
 
                 if (changed)
-                    Logging.LogMessageToFile("Removed illegal characters from post title: " + fileName + ext);
+                    Logging.LogMessageToFile("Removed illegal characters from post title: " + fileName + ext, 0);
 
                 if (!File.Exists(Properties.Settings.Default.defaultSaveLocation + @"\" + fileName + ext))
                 {
@@ -80,18 +80,18 @@ namespace Reddit_Wallpaper_Changer
                     {
                         webClient.DownloadFile(url, Properties.Settings.Default.defaultSaveLocation + @"\" + fileName + ext);
                     }
-                    Logging.LogMessageToFile("Saved " + fileName + ext + " to " + Properties.Settings.Default.defaultSaveLocation);
+                    Logging.LogMessageToFile("Saved " + fileName + ext + " to " + Properties.Settings.Default.defaultSaveLocation, 0);
                     return true;
                 }
                 else
                 {
-                    Logging.LogMessageToFile("Not auto saving " + fileName + ext + " because it already exists.");
+                    Logging.LogMessageToFile("Not auto saving " + fileName + ext + " because it already exists.", 1);
                     return true;
                 }
             }
             catch (Exception Ex)
             {
-                Logging.LogMessageToFile("Error Saving Wallpaper: " + Ex.Message);
+                Logging.LogMessageToFile("Error Saving Wallpaper: " + Ex.Message, 2);
             }
 
             return true;

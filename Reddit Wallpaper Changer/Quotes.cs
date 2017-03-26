@@ -22,7 +22,7 @@ namespace Reddit_Wallpaper_Changer
         //=================================================================================
         private void addQuote(string wallpaper)
         {
-            Logging.LogMessageToFile("Looking for an insightful quote.");
+            Logging.LogMessageToFile("Looking for an insightful quote.", 0);
             getQuote();
             addText(wallpaper);
             return; 
@@ -56,7 +56,7 @@ namespace Reddit_Wallpaper_Changer
             }
             catch(Exception ex)
             {
-                Logging.LogMessageToFile("Error trying to grab a quote: " + ex.Message);                               
+                Logging.LogMessageToFile("Error trying to grab a quote: " + ex.Message, 2);                               
             }
         }
 
@@ -69,7 +69,7 @@ namespace Reddit_Wallpaper_Changer
             XElement quote = doc.Root.Element("quote");
             authQuote = quote.Element("quoteText").Value;
             quoteAuth = "- " + quote.Element("quoteAuthor").Value;
-            Logging.LogMessageToFile("Found a quote: \"" + authQuote + " - " + quoteAuth);
+            Logging.LogMessageToFile("Found a quote: \"" + authQuote + " - " + quoteAuth, 0);
             return;
         }
 

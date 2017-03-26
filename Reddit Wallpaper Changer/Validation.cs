@@ -15,7 +15,7 @@ namespace Reddit_Wallpaper_Changer
         {
             if (!url.Contains("deviantart"))
             {
-                Logging.LogMessageToFile("Checking to ensure the chosen walllpaper URL is for an image.");
+                Logging.LogMessageToFile("Checking to ensure the chosen walllpaper URL is for an image.", 0);
                 HttpWebRequest imageCheck = (HttpWebRequest)WebRequest.Create(url);
                 imageCheck.Timeout = 5000;
                 imageCheck.Method = "HEAD";
@@ -31,7 +31,7 @@ namespace Reddit_Wallpaper_Changer
                 else
                 {
                     imageCheck.Abort();
-                    Logging.LogMessageToFile("The chosen URL is for an image.");
+                    Logging.LogMessageToFile("The chosen URL is for an image.", 0);
                     return true;
                 }
             }
@@ -45,7 +45,7 @@ namespace Reddit_Wallpaper_Changer
         {
             if (url.Contains("imgur"))
             {
-                Logging.LogMessageToFile("Checking to ensure the chosen walllpaper is still available on Imgur.");
+                Logging.LogMessageToFile("Checking to ensure the chosen walllpaper is still available on Imgur.", 0);
                 // A request for a deleted image on Imgur will return status code 302 & redirect to http://i.imgur.com/removed.png returning status code 200
                 HttpWebRequest imgurRequest = (HttpWebRequest)WebRequest.Create(url);
                 imgurRequest.Timeout = 5000;
@@ -61,7 +61,7 @@ namespace Reddit_Wallpaper_Changer
                 else
                 {
                     imgurRequest.Abort();
-                    Logging.LogMessageToFile("The chosen wallpaper is still available on Imgur.");
+                    Logging.LogMessageToFile("The chosen wallpaper is still available on Imgur.", 0);
                     return true;
                 }
             }

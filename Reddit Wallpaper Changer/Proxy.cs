@@ -13,31 +13,33 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         public static WebClient setProxy()
         {
-            WebClient wc = new WebClient();
-            wc.Proxy = null;
-
-            if (Properties.Settings.Default.useProxy == true)
+            using (WebClient wc = new WebClient())
             {
-                try
-                {
-                    WebProxy proxy = new WebProxy(Properties.Settings.Default.proxyAddress);
+                wc.Proxy = null;
 
-                    if (Properties.Settings.Default.proxyAuth == true)
+                if (Properties.Settings.Default.useProxy == true)
+                {
+                    try
                     {
-                        proxy.Credentials = new NetworkCredential(Properties.Settings.Default.proxyUser, Properties.Settings.Default.proxyPass);
-                        proxy.UseDefaultCredentials = false;
-                        proxy.BypassProxyOnLocal = false;
+                        WebProxy proxy = new WebProxy(Properties.Settings.Default.proxyAddress);
+
+                        if (Properties.Settings.Default.proxyAuth == true)
+                        {
+                            proxy.Credentials = new NetworkCredential(Properties.Settings.Default.proxyUser, Properties.Settings.Default.proxyPass);
+                            proxy.UseDefaultCredentials = false;
+                            proxy.BypassProxyOnLocal = false;
+                        }
+
+                        wc.Proxy = proxy;
                     }
+                    catch (Exception ex)
+                    {
+                        Logging.LogMessageToFile("Unexpeced error setting proxy: " + ex.Message, 2);
+                    }
+                }
 
-                    wc.Proxy = proxy;
-                }
-                catch(Exception ex)
-                {
-                    Logging.LogMessageToFile("Unexpeced error setting proxy: " + ex.Message);
-                }
+                return wc;
             }
-
-            return wc;
         }
     }
 }

@@ -21,36 +21,37 @@ namespace Reddit_Wallpaper_Changer
             Data["api_dev_key"] = "017c00e3a11ee8c70499c1f4b6b933f0";
             Data["api_option"] = "paste";
 
-            WebClient wb = Proxy.setProxy();
-
-            try
+            using (WebClient wc = Proxy.setProxy())
             {
-                byte[] bytes = wb.UploadValues("http://pastebin.com/api/api_post.php", Data);
-                string response;
-                using (MemoryStream ms = new MemoryStream(bytes))
-                using (StreamReader reader = new StreamReader(ms))
-                    response = reader.ReadToEnd();
-
-                if (response.StartsWith("Bad API request"))
+                try
                 {
-                    Logging.LogMessageToFile("Failed to upload log to Pastebin: " + response);
-                    return false;
+                    byte[] bytes = wc.UploadValues("http://pastebin.com/api/api_post.php", Data);
+                    string response;
+                    using (MemoryStream ms = new MemoryStream(bytes))
+                    using (StreamReader reader = new StreamReader(ms))
+                        response = reader.ReadToEnd();
 
+                    if (response.StartsWith("Bad API request"))
+                    {
+                        Logging.LogMessageToFile("Failed to upload log to Pastebin: " + response, 0);
+                        return false;
+
+                    }
+                    else
+                    {
+                        Logging.LogMessageToFile("Logfile successfully uploaded to Pastebin: " + response, 0);
+                        Properties.Settings.Default.logUrl = response;
+                        Properties.Settings.Default.Save();
+                        return true;
+
+                    }
                 }
-                else 
+                catch (Exception ex)
                 {
-                    Logging.LogMessageToFile("Logfile successfully uploaded to Pastebin: " + response);
-                    Properties.Settings.Default.logUrl = response;
-                    Properties.Settings.Default.Save();
+                    Logging.LogMessageToFile("Error uploading logfile to Pastebin: " + ex.Message, 2);
                     return true;
 
                 }
-            }
-            catch (Exception ex)
-            {
-                Logging.LogMessageToFile("Error uploading logfile to Pastebin: " + ex.Message);
-                return true;
-
             }
         }
     }

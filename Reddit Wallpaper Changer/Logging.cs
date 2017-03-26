@@ -8,9 +8,14 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         // Write to the logfile
         //======================================================================
-        public static void LogMessageToFile(string msg)
+        public static void LogMessageToFile(string msg, int code)
         {
             StreamWriter sw = null;
+            string level = "";
+            if (code == 0) { level = "INFORMATION:"; }
+            if (code == 1) { level = "WARNING:"; }
+            if (code == 2) { level = "ERROR:"; }
+
             string hostName = System.Environment.MachineName;
             string logfiledir = Properties.Settings.Default.AppDataPath + @"\Logs";
             System.IO.Directory.CreateDirectory(logfiledir);
@@ -72,7 +77,7 @@ namespace Reddit_Wallpaper_Changer
             try
             {
                 sw = new StreamWriter(logfiledir + @"\RWC.log", true);
-                sw.WriteLine(DateTime.Now.ToString() + " - " + hostName + ": " + msg);
+                sw.WriteLine(DateTime.Now.ToString() + " - " + hostName + " - " + level + " " + msg);
                 sw.Flush();
                 sw.Close();
             }

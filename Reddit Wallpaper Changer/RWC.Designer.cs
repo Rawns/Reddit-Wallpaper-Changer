@@ -35,7 +35,7 @@
             this.statusMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.blockWallpaperMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.blacklistWallpaperMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.faveWallpaperMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeWallpaperMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.currentThreadMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,8 +64,14 @@
             this.chkAuth = new System.Windows.Forms.CheckBox();
             this.txtProxyServer = new System.Windows.Forms.TextBox();
             this.chkProxy = new System.Windows.Forms.CheckBox();
+            this.tabDatabase = new System.Windows.Forms.TabPage();
+            this.btnRebuildThumbnails = new System.Windows.Forms.Button();
+            this.btnRestore = new System.Windows.Forms.Button();
+            this.btnBackup = new System.Windows.Forms.Button();
+            this.btnClearBlacklisted = new System.Windows.Forms.Button();
+            this.btnClearFavourites = new System.Windows.Forms.Button();
+            this.btnClearHistory = new System.Windows.Forms.Button();
             this.iconList = new System.Windows.Forms.ImageList(this.components);
-            this.statuslabel = new System.Windows.Forms.Label();
             this.noticeLabel = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -112,6 +118,11 @@
             this.historyPanel = new System.Windows.Forms.Panel();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.historyDataGrid = new System.Windows.Forms.DataGridView();
+            this.Preview = new System.Windows.Forms.DataGridViewImageColumn();
+            this.Thread = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.orderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ThreadLink = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.wallpaperChangeTimer = new System.Windows.Forms.Timer(this.components);
             this.taskIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.startupTimer = new System.Windows.Forms.Timer(this.components);
@@ -126,7 +137,9 @@
             this.historyMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.useThisWallpaperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.blacklistWallpapertoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeThisWallpaperFromHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.favouriteThisWallpaperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveThisWallpaperToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.blacklistPanel = new System.Windows.Forms.Panel();
             this.blacklistGroupBox = new System.Windows.Forms.GroupBox();
             this.blacklistDataGrid = new System.Windows.Forms.DataGridView();
@@ -150,13 +163,10 @@
             this.favouritesMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.useFaveMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.removeFaveMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.Preview = new System.Windows.Forms.DataGridViewImageColumn();
-            this.Thread = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.orderID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ThreadLink = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DateTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.saveThisWallpaperToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveThisWallpaperToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.rwcStatusStrip = new System.Windows.Forms.StatusStrip();
+            this.statuslabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statuslabel = new System.Windows.Forms.Label();
             this.configurePanel.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.tabSettingsControl.SuspendLayout();
@@ -164,6 +174,7 @@
             this.tabWallpaperSave.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.tabProxy.SuspendLayout();
+            this.tabDatabase.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.changeTimeValue)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -188,6 +199,7 @@
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.favouritesDataGrid)).BeginInit();
             this.favouritesMenuStrip.SuspendLayout();
+            this.rwcStatusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // configurePanel
@@ -212,7 +224,7 @@
             this.statusMenuItem1,
             this.toolStripSeparator1,
             this.toolStripMenuItem1,
-            this.blockWallpaperMenuItem,
+            this.blacklistWallpaperMenuItem,
             this.faveWallpaperMenuItem,
             this.changeWallpaperMenuItem,
             this.currentThreadMenuItem1,
@@ -230,14 +242,14 @@
             this.statusMenuItem1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.statusMenuItem1.ForeColor = System.Drawing.Color.ForestGreen;
             this.statusMenuItem1.Name = "statusMenuItem1";
-            this.statusMenuItem1.Size = new System.Drawing.Size(186, 22);
+            this.statusMenuItem1.Size = new System.Drawing.Size(232, 22);
             this.statusMenuItem1.Text = "Running";
             this.statusMenuItem1.Click += new System.EventHandler(this.statusMenuItem1_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(183, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(229, 6);
             // 
             // toolStripMenuItem1
             // 
@@ -248,14 +260,14 @@
             this.toolStripMenuItem1.Text = "Save Current Wallpaper";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
-            // blockWallpaperMenuItem
+            // blacklistWallpaperMenuItem
             // 
-            this.blockWallpaperMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.blockWallpaperMenuItem.ForeColor = System.Drawing.Color.Crimson;
-            this.blockWallpaperMenuItem.Name = "blockWallpaperMenuItem";
-            this.blockWallpaperMenuItem.Size = new System.Drawing.Size(232, 22);
-            this.blockWallpaperMenuItem.Text = "Blacklist Current Wallpaper";
-            this.blockWallpaperMenuItem.Click += new System.EventHandler(this.blockWallpaperMenuItem_Click);
+            this.blacklistWallpaperMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.blacklistWallpaperMenuItem.ForeColor = System.Drawing.Color.Crimson;
+            this.blacklistWallpaperMenuItem.Name = "blacklistWallpaperMenuItem";
+            this.blacklistWallpaperMenuItem.Size = new System.Drawing.Size(232, 22);
+            this.blacklistWallpaperMenuItem.Text = "Blacklist Current Wallpaper";
+            this.blacklistWallpaperMenuItem.Click += new System.EventHandler(this.blacklistWallpaperMenuItem_Click);
             // 
             // faveWallpaperMenuItem
             // 
@@ -271,7 +283,7 @@
             this.changeWallpaperMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.changeWallpaperMenuItem.ForeColor = System.Drawing.Color.Black;
             this.changeWallpaperMenuItem.Name = "changeWallpaperMenuItem";
-            this.changeWallpaperMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.changeWallpaperMenuItem.Size = new System.Drawing.Size(232, 22);
             this.changeWallpaperMenuItem.Text = "Change Wallpaper";
             this.changeWallpaperMenuItem.Click += new System.EventHandler(this.changeWallpaperMenuItem_Click);
             // 
@@ -280,26 +292,26 @@
             this.currentThreadMenuItem1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.currentThreadMenuItem1.ForeColor = System.Drawing.SystemColors.InfoText;
             this.currentThreadMenuItem1.Name = "currentThreadMenuItem1";
-            this.currentThreadMenuItem1.Size = new System.Drawing.Size(186, 22);
+            this.currentThreadMenuItem1.Size = new System.Drawing.Size(232, 22);
             this.currentThreadMenuItem1.Text = "Current Thread";
             this.currentThreadMenuItem1.Click += new System.EventHandler(this.currentThreadMenuItem1_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(183, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(229, 6);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -308,6 +320,7 @@
             this.tabSettingsControl.Controls.Add(this.tabSettings);
             this.tabSettingsControl.Controls.Add(this.tabWallpaperSave);
             this.tabSettingsControl.Controls.Add(this.tabProxy);
+            this.tabSettingsControl.Controls.Add(this.tabDatabase);
             this.tabSettingsControl.ImageList = this.iconList;
             this.tabSettingsControl.Location = new System.Drawing.Point(10, 203);
             this.tabSettingsControl.Name = "tabSettingsControl";
@@ -425,7 +438,7 @@
             this.tabWallpaperSave.Name = "tabWallpaperSave";
             this.tabWallpaperSave.Size = new System.Drawing.Size(420, 131);
             this.tabWallpaperSave.TabIndex = 2;
-            this.tabWallpaperSave.Text = "Wallpaper Saving";
+            this.tabWallpaperSave.Text = "Wallpaper Saving:";
             // 
             // chkAutoSaveFaves
             // 
@@ -544,6 +557,107 @@
             this.chkProxy.UseVisualStyleBackColor = true;
             this.chkProxy.CheckedChanged += new System.EventHandler(this.chkProxy_CheckedChanged);
             // 
+            // tabDatabase
+            // 
+            this.tabDatabase.BackColor = System.Drawing.SystemColors.Control;
+            this.tabDatabase.Controls.Add(this.btnRebuildThumbnails);
+            this.tabDatabase.Controls.Add(this.btnRestore);
+            this.tabDatabase.Controls.Add(this.btnBackup);
+            this.tabDatabase.Controls.Add(this.btnClearBlacklisted);
+            this.tabDatabase.Controls.Add(this.btnClearFavourites);
+            this.tabDatabase.Controls.Add(this.btnClearHistory);
+            this.tabDatabase.ImageKey = "database.png";
+            this.tabDatabase.Location = new System.Drawing.Point(4, 23);
+            this.tabDatabase.Name = "tabDatabase";
+            this.tabDatabase.Size = new System.Drawing.Size(420, 131);
+            this.tabDatabase.TabIndex = 3;
+            this.tabDatabase.Text = "Database:";
+            // 
+            // btnRebuildThumbnails
+            // 
+            this.btnRebuildThumbnails.Enabled = false;
+            this.btnRebuildThumbnails.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.thumbnails_16x16;
+            this.btnRebuildThumbnails.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnRebuildThumbnails.Location = new System.Drawing.Point(231, 84);
+            this.btnRebuildThumbnails.Name = "btnRebuildThumbnails";
+            this.btnRebuildThumbnails.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.btnRebuildThumbnails.Size = new System.Drawing.Size(144, 28);
+            this.btnRebuildThumbnails.TabIndex = 5;
+            this.btnRebuildThumbnails.Text = "Rebuild Thumbnails";
+            this.btnRebuildThumbnails.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.btnRebuildThumbnails.UseVisualStyleBackColor = true;
+            this.btnRebuildThumbnails.Click += new System.EventHandler(this.btnRebuildThumbnails_Click);
+            // 
+            // btnRestore
+            // 
+            this.btnRestore.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.db_restore_16x16;
+            this.btnRestore.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnRestore.Location = new System.Drawing.Point(231, 50);
+            this.btnRestore.Name = "btnRestore";
+            this.btnRestore.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.btnRestore.Size = new System.Drawing.Size(144, 28);
+            this.btnRestore.TabIndex = 4;
+            this.btnRestore.Text = "Restore Database";
+            this.btnRestore.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.btnRestore.UseVisualStyleBackColor = true;
+            this.btnRestore.Click += new System.EventHandler(this.btnRestore_Click);
+            // 
+            // btnBackup
+            // 
+            this.btnBackup.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.db_backup_16x16;
+            this.btnBackup.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnBackup.Location = new System.Drawing.Point(231, 15);
+            this.btnBackup.Name = "btnBackup";
+            this.btnBackup.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.btnBackup.Size = new System.Drawing.Size(144, 28);
+            this.btnBackup.TabIndex = 3;
+            this.btnBackup.Text = "Backup Database";
+            this.btnBackup.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.btnBackup.UseVisualStyleBackColor = true;
+            this.btnBackup.Click += new System.EventHandler(this.btnBackup_Click);
+            // 
+            // btnClearBlacklisted
+            // 
+            this.btnClearBlacklisted.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.blacklist_16x16;
+            this.btnClearBlacklisted.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnClearBlacklisted.Location = new System.Drawing.Point(45, 84);
+            this.btnClearBlacklisted.Name = "btnClearBlacklisted";
+            this.btnClearBlacklisted.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.btnClearBlacklisted.Size = new System.Drawing.Size(144, 28);
+            this.btnClearBlacklisted.TabIndex = 2;
+            this.btnClearBlacklisted.Text = "Clear Blacklist";
+            this.btnClearBlacklisted.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.btnClearBlacklisted.UseVisualStyleBackColor = true;
+            this.btnClearBlacklisted.Click += new System.EventHandler(this.btnClearBlacklisted_Click);
+            // 
+            // btnClearFavourites
+            // 
+            this.btnClearFavourites.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.favourite_16x16;
+            this.btnClearFavourites.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnClearFavourites.Location = new System.Drawing.Point(45, 49);
+            this.btnClearFavourites.Name = "btnClearFavourites";
+            this.btnClearFavourites.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.btnClearFavourites.Size = new System.Drawing.Size(144, 29);
+            this.btnClearFavourites.TabIndex = 1;
+            this.btnClearFavourites.Text = "Clear Favourites";
+            this.btnClearFavourites.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.btnClearFavourites.UseVisualStyleBackColor = true;
+            this.btnClearFavourites.Click += new System.EventHandler(this.btnClearFavourites_Click);
+            // 
+            // btnClearHistory
+            // 
+            this.btnClearHistory.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.history_16x16;
+            this.btnClearHistory.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnClearHistory.Location = new System.Drawing.Point(45, 15);
+            this.btnClearHistory.Name = "btnClearHistory";
+            this.btnClearHistory.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.btnClearHistory.Size = new System.Drawing.Size(144, 28);
+            this.btnClearHistory.TabIndex = 0;
+            this.btnClearHistory.Text = "Clear History";
+            this.btnClearHistory.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.btnClearHistory.UseVisualStyleBackColor = true;
+            this.btnClearHistory.Click += new System.EventHandler(this.btnClearHistory_Click);
+            // 
             // iconList
             // 
             this.iconList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("iconList.ImageStream")));
@@ -551,14 +665,7 @@
             this.iconList.Images.SetKeyName(0, "save.png");
             this.iconList.Images.SetKeyName(1, "proxy.png");
             this.iconList.Images.SetKeyName(2, "config_16x16.png");
-            // 
-            // statuslabel
-            // 
-            this.statuslabel.AutoSize = true;
-            this.statuslabel.Location = new System.Drawing.Point(15, 375);
-            this.statuslabel.Name = "statuslabel";
-            this.statuslabel.Size = new System.Drawing.Size(0, 13);
-            this.statuslabel.TabIndex = 12;
+            this.iconList.Images.SetKeyName(3, "database.png");
             // 
             // noticeLabel
             // 
@@ -1166,6 +1273,41 @@
             this.historyDataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.historyDataGrid_CellContentClick);
             this.historyDataGrid.MouseClick += new System.Windows.Forms.MouseEventHandler(this.historyDataGrid_MouseClick);
             // 
+            // Preview
+            // 
+            this.Preview.HeaderText = "Preview";
+            this.Preview.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
+            this.Preview.Name = "Preview";
+            this.Preview.ReadOnly = true;
+            // 
+            // Thread
+            // 
+            this.Thread.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Thread.HeaderText = "Thread";
+            this.Thread.Name = "Thread";
+            this.Thread.ReadOnly = true;
+            // 
+            // orderID
+            // 
+            this.orderID.HeaderText = "OrderID";
+            this.orderID.Name = "orderID";
+            this.orderID.ReadOnly = true;
+            this.orderID.Visible = false;
+            // 
+            // ThreadLink
+            // 
+            this.ThreadLink.HeaderText = "ThreadLink";
+            this.ThreadLink.Name = "ThreadLink";
+            this.ThreadLink.ReadOnly = true;
+            this.ThreadLink.Visible = false;
+            // 
+            // DateTime
+            // 
+            this.DateTime.HeaderText = "DateTime";
+            this.DateTime.Name = "DateTime";
+            this.DateTime.ReadOnly = true;
+            this.DateTime.Visible = false;
+            // 
             // wallpaperChangeTimer
             // 
             this.wallpaperChangeTimer.Tick += new System.EventHandler(this.wallpaperChangeTimer_Tick);
@@ -1258,7 +1400,7 @@
             // 
             // breakBetweenChange
             // 
-            this.breakBetweenChange.Interval = 1000;
+            this.breakBetweenChange.Interval = 1500;
             this.breakBetweenChange.Tick += new System.EventHandler(this.breakBetweenChange_Tick);
             // 
             // monitorButton
@@ -1284,17 +1426,18 @@
             this.historyMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.useThisWallpaperToolStripMenuItem,
             this.blacklistWallpapertoolStripMenuItem,
+            this.removeThisWallpaperFromHistoryToolStripMenuItem,
             this.favouriteThisWallpaperToolStripMenuItem,
             this.saveThisWallpaperToolStripMenuItem1});
             this.historyMenuStrip.Name = "contextMenuStrip2";
-            this.historyMenuStrip.Size = new System.Drawing.Size(212, 114);
+            this.historyMenuStrip.Size = new System.Drawing.Size(281, 114);
             // 
             // useThisWallpaperToolStripMenuItem
             // 
             this.useThisWallpaperToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.useThisWallpaperToolStripMenuItem.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.useThisWallpaperToolStripMenuItem.Name = "useThisWallpaperToolStripMenuItem";
-            this.useThisWallpaperToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.useThisWallpaperToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
             this.useThisWallpaperToolStripMenuItem.Text = "Use This Wallpaper";
             this.useThisWallpaperToolStripMenuItem.Click += new System.EventHandler(this.useThisWallpapertoolStripMenuItem_Click);
             // 
@@ -1303,18 +1446,36 @@
             this.blacklistWallpapertoolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.blacklistWallpapertoolStripMenuItem.ForeColor = System.Drawing.Color.Crimson;
             this.blacklistWallpapertoolStripMenuItem.Name = "blacklistWallpapertoolStripMenuItem";
-            this.blacklistWallpapertoolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.blacklistWallpapertoolStripMenuItem.Size = new System.Drawing.Size(280, 22);
             this.blacklistWallpapertoolStripMenuItem.Text = "Blacklist This Wallpaper";
             this.blacklistWallpapertoolStripMenuItem.Click += new System.EventHandler(this.blacklistWallpapertoolStripMenuItem_Click);
+            // 
+            // removeThisWallpaperFromHistoryToolStripMenuItem
+            // 
+            this.removeThisWallpaperFromHistoryToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.removeThisWallpaperFromHistoryToolStripMenuItem.ForeColor = System.Drawing.Color.Crimson;
+            this.removeThisWallpaperFromHistoryToolStripMenuItem.Name = "removeThisWallpaperFromHistoryToolStripMenuItem";
+            this.removeThisWallpaperFromHistoryToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
+            this.removeThisWallpaperFromHistoryToolStripMenuItem.Text = "Remove This Wallpaper From History";
+            this.removeThisWallpaperFromHistoryToolStripMenuItem.Click += new System.EventHandler(this.removeThisWallpaperFromHistoryToolStripMenuItem_Click);
             // 
             // favouriteThisWallpaperToolStripMenuItem
             // 
             this.favouriteThisWallpaperToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.favouriteThisWallpaperToolStripMenuItem.ForeColor = System.Drawing.Color.Orange;
             this.favouriteThisWallpaperToolStripMenuItem.Name = "favouriteThisWallpaperToolStripMenuItem";
-            this.favouriteThisWallpaperToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.favouriteThisWallpaperToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
             this.favouriteThisWallpaperToolStripMenuItem.Text = "Favourite This Wallpaper";
             this.favouriteThisWallpaperToolStripMenuItem.Click += new System.EventHandler(this.favouriteThisWallpaperToolStripMenuItem_Click);
+            // 
+            // saveThisWallpaperToolStripMenuItem1
+            // 
+            this.saveThisWallpaperToolStripMenuItem1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveThisWallpaperToolStripMenuItem1.ForeColor = System.Drawing.Color.ForestGreen;
+            this.saveThisWallpaperToolStripMenuItem1.Name = "saveThisWallpaperToolStripMenuItem1";
+            this.saveThisWallpaperToolStripMenuItem1.Size = new System.Drawing.Size(280, 22);
+            this.saveThisWallpaperToolStripMenuItem1.Text = "Save This Wallpaper";
+            this.saveThisWallpaperToolStripMenuItem1.Click += new System.EventHandler(this.saveThisWallpaperToolStripMenuItem1_Click);
             // 
             // blacklistPanel
             // 
@@ -1417,7 +1578,7 @@
             this.blacklistButton.Name = "blacklistButton";
             this.blacklistButton.Size = new System.Drawing.Size(75, 66);
             this.blacklistButton.TabIndex = 3;
-            this.blacklistButton.Text = "Blacklisted";
+            this.blacklistButton.Text = "Blacklist";
             this.blacklistButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.blacklistButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.blacklistButton.UseVisualStyleBackColor = false;
@@ -1428,15 +1589,15 @@
             this.blacklistMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.unblacklistWallpaper});
             this.blacklistMenuStrip.Name = "contextMenuStrip3";
-            this.blacklistMenuStrip.Size = new System.Drawing.Size(261, 26);
+            this.blacklistMenuStrip.Size = new System.Drawing.Size(287, 26);
             // 
             // unblacklistWallpaper
             // 
             this.unblacklistWallpaper.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.unblacklistWallpaper.ForeColor = System.Drawing.Color.ForestGreen;
             this.unblacklistWallpaper.Name = "unblacklistWallpaper";
-            this.unblacklistWallpaper.Size = new System.Drawing.Size(260, 22);
-            this.unblacklistWallpaper.Text = "Remove Wallpaper from Blacklist";
+            this.unblacklistWallpaper.Size = new System.Drawing.Size(286, 22);
+            this.unblacklistWallpaper.Text = "Remove This Wallpaper From Blacklist";
             this.unblacklistWallpaper.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.unblacklistWallpaper.Click += new System.EventHandler(this.unblacklistWallpaper_Click);
             // 
@@ -1462,7 +1623,7 @@
             // 
             this.favouritesPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.favouritesPanel.Controls.Add(this.groupBox5);
-            this.favouritesPanel.Location = new System.Drawing.Point(458, 154);
+            this.favouritesPanel.Location = new System.Drawing.Point(458, 38);
             this.favouritesPanel.Name = "favouritesPanel";
             this.favouritesPanel.Size = new System.Drawing.Size(450, 404);
             this.favouritesPanel.TabIndex = 10;
@@ -1561,7 +1722,7 @@
             this.useFaveMenu.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.useFaveMenu.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.useFaveMenu.Name = "useFaveMenu";
-            this.useFaveMenu.Size = new System.Drawing.Size(273, 22);
+            this.useFaveMenu.Size = new System.Drawing.Size(298, 22);
             this.useFaveMenu.Text = "Use This Wallpaper";
             this.useFaveMenu.Click += new System.EventHandler(this.useFaveMenu_Click);
             // 
@@ -1574,64 +1735,46 @@
             this.removeFaveMenu.Text = "Remove This Wallpaper From Favourites";
             this.removeFaveMenu.Click += new System.EventHandler(this.removeFaveMenu_Click);
             // 
-            // Preview
-            // 
-            this.Preview.HeaderText = "Preview";
-            this.Preview.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Stretch;
-            this.Preview.Name = "Preview";
-            this.Preview.ReadOnly = true;
-            // 
-            // Thread
-            // 
-            this.Thread.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Thread.HeaderText = "Thread";
-            this.Thread.Name = "Thread";
-            this.Thread.ReadOnly = true;
-            // 
-            // orderID
-            // 
-            this.orderID.HeaderText = "OrderID";
-            this.orderID.Name = "orderID";
-            this.orderID.ReadOnly = true;
-            this.orderID.Visible = false;
-            // 
-            // ThreadLink
-            // 
-            this.ThreadLink.HeaderText = "ThreadLink";
-            this.ThreadLink.Name = "ThreadLink";
-            this.ThreadLink.ReadOnly = true;
-            this.ThreadLink.Visible = false;
-            // 
-            // DateTime
-            // 
-            this.DateTime.HeaderText = "DateTime";
-            this.DateTime.Name = "DateTime";
-            this.DateTime.ReadOnly = true;
-            this.DateTime.Visible = false;
-            // 
             // saveThisWallpaperToolStripMenuItem
             // 
             this.saveThisWallpaperToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.saveThisWallpaperToolStripMenuItem.ForeColor = System.Drawing.Color.ForestGreen;
             this.saveThisWallpaperToolStripMenuItem.Name = "saveThisWallpaperToolStripMenuItem";
-            this.saveThisWallpaperToolStripMenuItem.Size = new System.Drawing.Size(273, 22);
+            this.saveThisWallpaperToolStripMenuItem.Size = new System.Drawing.Size(298, 22);
             this.saveThisWallpaperToolStripMenuItem.Text = "Save This Wallpaper";
             this.saveThisWallpaperToolStripMenuItem.Click += new System.EventHandler(this.saveThisWallpaperToolStripMenuItem_Click);
             // 
-            // saveThisWallpaperToolStripMenuItem1
+            // rwcStatusStrip
             // 
-            this.saveThisWallpaperToolStripMenuItem1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveThisWallpaperToolStripMenuItem1.ForeColor = System.Drawing.Color.ForestGreen;
-            this.saveThisWallpaperToolStripMenuItem1.Name = "saveThisWallpaperToolStripMenuItem1";
-            this.saveThisWallpaperToolStripMenuItem1.Size = new System.Drawing.Size(211, 22);
-            this.saveThisWallpaperToolStripMenuItem1.Text = "Save This Wallpaper";
-            this.saveThisWallpaperToolStripMenuItem1.Click += new System.EventHandler(this.saveThisWallpaperToolStripMenuItem1_Click);
+            this.rwcStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statuslabel1});
+            this.rwcStatusStrip.Location = new System.Drawing.Point(0, 787);
+            this.rwcStatusStrip.Name = "rwcStatusStrip";
+            this.rwcStatusStrip.Size = new System.Drawing.Size(1192, 22);
+            this.rwcStatusStrip.SizingGrip = false;
+            this.rwcStatusStrip.TabIndex = 11;
+            // 
+            // statuslabel1
+            // 
+            this.statuslabel1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statuslabel1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.statuslabel1.Name = "statuslabel1";
+            this.statuslabel1.Size = new System.Drawing.Size(127, 17);
+            this.statuslabel1.Text = "toolStripStatusLabel1";
+            // 
+            // statuslabel
+            // 
+            this.statuslabel.Location = new System.Drawing.Point(0, 0);
+            this.statuslabel.Name = "statuslabel";
+            this.statuslabel.Size = new System.Drawing.Size(100, 23);
+            this.statuslabel.TabIndex = 15;
             // 
             // RWC
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1192, 809);
+            this.Controls.Add(this.rwcStatusStrip);
             this.Controls.Add(this.favouritesPanel);
             this.Controls.Add(this.blacklistPanel);
             this.Controls.Add(this.historyPanel);
@@ -1664,6 +1807,7 @@
             this.groupBox9.PerformLayout();
             this.tabProxy.ResumeLayout(false);
             this.tabProxy.PerformLayout();
+            this.tabDatabase.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.changeTimeValue)).EndInit();
@@ -1694,7 +1838,10 @@
             this.groupBox5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.favouritesDataGrid)).EndInit();
             this.favouritesMenuStrip.ResumeLayout(false);
+            this.rwcStatusStrip.ResumeLayout(false);
+            this.rwcStatusStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -1753,10 +1900,9 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ContextMenuStrip historyMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem useThisWallpaperToolStripMenuItem;
-        private System.Windows.Forms.Label statuslabel;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.LinkLabel rawnsLink;
-        private System.Windows.Forms.ToolStripMenuItem blockWallpaperMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem blacklistWallpaperMenuItem;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ToolStripMenuItem blacklistWallpapertoolStripMenuItem;
         private System.Windows.Forms.Panel blacklistPanel;
@@ -1827,6 +1973,17 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn DateTime;
         private System.Windows.Forms.ToolStripMenuItem saveThisWallpaperToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveThisWallpaperToolStripMenuItem1;
+        private System.Windows.Forms.TabPage tabDatabase;
+        private System.Windows.Forms.Button btnClearBlacklisted;
+        private System.Windows.Forms.Button btnClearFavourites;
+        private System.Windows.Forms.Button btnClearHistory;
+        private System.Windows.Forms.Button btnRestore;
+        private System.Windows.Forms.Button btnBackup;
+        private System.Windows.Forms.Button btnRebuildThumbnails;
+        private System.Windows.Forms.ToolStripMenuItem removeThisWallpaperFromHistoryToolStripMenuItem;
+        private System.Windows.Forms.StatusStrip rwcStatusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel statuslabel1;
+        private System.Windows.Forms.Label statuslabel;
     }
 }
 

@@ -430,5 +430,29 @@ namespace Reddit_Wallpaper_Changer.Properties {
                 this["autoSaveFaves"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string thumbnailCache {
+            get {
+                return ((string)(this["thumbnailCache"]));
+            }
+            set {
+                this["thumbnailCache"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool dbMigrated {
+            get {
+                return ((bool)(this["dbMigrated"]));
+            }
+            set {
+                this["dbMigrated"] = value;
+            }
+        }
     }
 }
