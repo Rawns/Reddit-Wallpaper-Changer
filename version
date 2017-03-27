@@ -1,21 +1,25 @@
 Version 1.0.13.0
-- Added: Moved from XML file to SQLite for storing wallpaper data
+- Added: Migrated from XML files to SQLite for storing wallpaper data
 - Added: Automatic migration of existing Blacklist to new SQLite database
-- Added: You can now 'Favourite' wallpapers!
+- Added: You can now 'Favourite' wallpapers for reuse!
 - Added: Option to auto-save Favourite wallpapers
 - Added: Endless wallpaper history instead of 'Per Session'
-- Added: Delete database data options
+- Added: Added some database housekeeping options
 - Added: Backup/Restore options for database
 - Added: You can now disable automatic update checks
-- Changed: Wallpaper thumbs now saved to SQLite instead of being downloaded each time
-- Changed: 'Suppress Duplicates' will still be limited to 'per session'
 - Changed: Increased wallpaper thumbnail size in History, Favourites and Blacklist menus
+- Changed: Wallpaper titles now multi-lined in History, Favourites and Blacklist menus 
+- Changed: Wallpaper thumbs now saved to SQLite instead of being downloaded every time
+- Changed: 'Suppress Duplicates' will still be limited to 'per session'
 - Changed: New icon set for the Menu buttons 
-- Changed: UI adjustments to encorporate Fvourites and Database options 
+- Changed: UI adjustments to encorporate Favourites and Database options 
 - Changed: Import/Export routine updated to include 1.0.13 features
-- Changed: Monitors screen should now render up to four monitors 
-- Fixed: Unable to save  wallpapers with special characters in their name  
-- Fixed: Thumbnails for History/Favourites/Blacklisted are now stored in SQLite 
-- Fixed: Spelling error in log file when RWC was closed
-- Fixed: Changes to the Fade option were not actually saved
+- Changed: 'Monitors' menu should now support up to four detected monitors 
+- Changed: Settings 'Save' button now saves changes but won't trigger a wallpaper change 
+- Changed: Changes to the backend code for searching for/applying wallpapers 
+- Fixed: Unable to save wallpapers with special characters in their name  
+- Fixed: Some spelling errors in log file
+- Fixed: Changes to the 'Fade' setting were not actually being saved
 - Fixed: Various code changes
+- Fixed: Some minor logging errors
+- Fixed: Other small bugs
