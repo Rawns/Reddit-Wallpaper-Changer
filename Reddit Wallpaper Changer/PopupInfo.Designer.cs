@@ -38,6 +38,7 @@
             // 
             this.imgWallpaper.BackgroundImage = global::Reddit_Wallpaper_Changer.Properties.Resources.display_enabled;
             this.imgWallpaper.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.imgWallpaper.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.imgWallpaper.Location = new System.Drawing.Point(183, 12);
             this.imgWallpaper.Name = "imgWallpaper";
             this.imgWallpaper.Size = new System.Drawing.Size(105, 66);
@@ -65,6 +66,8 @@
             this.txtWallpaperTitle.Name = "txtWallpaperTitle";
             this.txtWallpaperTitle.Size = new System.Drawing.Size(170, 65);
             this.txtWallpaperTitle.TabIndex = 5;
+            this.txtWallpaperTitle.Text = "Wallpaper Title Here";
+            this.txtWallpaperTitle.TextChanged += new System.EventHandler(this.txtWallpaperTitle_TextChanged);
             // 
             // PopupInfo
             // 

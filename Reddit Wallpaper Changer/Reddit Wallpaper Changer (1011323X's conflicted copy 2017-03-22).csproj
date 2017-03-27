@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E7DD94D8-2127-46C3-B8F1-167B7815CA12}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Reddit_Wallpaper_Changer</RootNamespace>
+    <AssemblyName>Reddit Wallpaper Changer</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\rwc.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Remote|AnyCPU'">
+    <OutputPath>bin\Remote\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Resources\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>Refrences\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Blacklist.cs" />
+    <Compile Include="Database.cs" />
+    <Compile Include="Logging.cs" />
+    <Compile Include="Pastebin.cs" />
+    <Compile Include="PopupInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PopupInfo.Designer.cs">
+      <DependentUpon>PopupInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Proxy.cs" />
+    <Compile Include="Quotes.cs" />
+    <Compile Include="RWC.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RWC.Designer.cs">
+      <DependentUpon>RWC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ManageSettings.cs" />
+    <Compile Include="SuperSecret.cs" />
+    <Compile Include="Update.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Update.Designer.cs">
+      <DependentUpon>Update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchWizard.Designer.cs">
+      <DependentUpon>SearchWizard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ActiveDesktop.cs" />
+    <Compile Include="Validation.cs" />
+    <Compile Include="WallpaperTypes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WallpaperTypes.Designer.cs">
+      <DependentUpon>WallpaperTypes.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="PopupInfo.resx">
+      <DependentUpon>PopupInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RWC.resx">
+      <DependentUpon>RWC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SearchWizard.resx">
+      <DependentUpon>SearchWizard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Update.resx">
+      <DependentUpon>Update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WallpaperTypes.resx">
+      <DependentUpon>WallpaperTypes.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\display.png" />
+    <None Include="Resources\display_enabled.png" />
+    <None Include="Resources\display_disabled.png" />
+    <None Include="Resources\blacklisted.png" />
+    <None Include="Resources\history.png" />
+    <None Include="Resources\about.png" />
+    <None Include="Resources\display_green.png" />
+    <None Include="Resources\display_grey.png" />
+    <None Include="Resources\donate.png" />
+    <None Include="Resources\reddit.png" />
+    <None Include="Resources\bug.png" />
+    <None Include="Resources\information16x16.png" />
+    <None Include="Resources\Browse.png" />
+    <None Include="Resources\import.png" />
+    <None Include="Resources\export.png" />
+    <None Include="Resources\centre.png" />
+    <None Include="Resources\fill.png" />
+    <None Include="Resources\fit.png" />
+    <None Include="Resources\help.png" />
+    <None Include="Resources\cross.png" />
+    <None Include="Resources\pastebin.png" />
+    <None Include="Resources\blacklist.png" />
+    <None Include="Resources\favourite.png" />
+    <Content Include="Resources\rwc.ico" />
+    <Content Include="Resources\data.png" />
+    <Content Include="Resources\information.png" />
+    <Content Include="Resources\monitor.png" />
+    <Content Include="Resources\panel.png" />
+    <None Include="Resources\update.png" />
+    <None Include="Resources\update_disabled.png" />
+    <None Include="Resources\update16x16.png" />
+    <None Include="Resources\save.png" />
+    <None Include="Resources\update_32x32.png" />
+    <None Include="Resources\span.png" />
+    <None Include="Resources\tile.png" />
+    <None Include="Resources\stretch.png" />
+    <Content Include="Resources\Wizard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -73,9 +73,19 @@ namespace Reddit_Wallpaper_Changer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap blacklisted {
+        internal static System.Drawing.Bitmap blacklist {
             get {
-                object obj = ResourceManager.GetObject("blacklisted", resourceCulture);
+                object obj = ResourceManager.GetObject("blacklist", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap blacklist_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("blacklist_16x16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,6 +133,26 @@ namespace Reddit_Wallpaper_Changer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap db_backup_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("db_backup_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap db_restore_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("db_restore_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap display {
             get {
                 object obj = ResourceManager.GetObject("display", resourceCulture);
@@ -146,6 +176,16 @@ namespace Reddit_Wallpaper_Changer.Properties {
         internal static System.Drawing.Bitmap display_enabled {
             get {
                 object obj = ResourceManager.GetObject("display_enabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap display_enabled_small {
+            get {
+                object obj = ResourceManager.GetObject("display_enabled_small", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -193,6 +233,26 @@ namespace Reddit_Wallpaper_Changer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap favourite {
+            get {
+                object obj = ResourceManager.GetObject("favourite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap favourite_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("favourite_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap fill {
             get {
                 object obj = ResourceManager.GetObject("fill", resourceCulture);
@@ -233,6 +293,16 @@ namespace Reddit_Wallpaper_Changer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap history_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("history_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap import {
             get {
                 object obj = ResourceManager.GetObject("import", resourceCulture);
@@ -256,6 +326,16 @@ namespace Reddit_Wallpaper_Changer.Properties {
         internal static System.Drawing.Bitmap monitor {
             get {
                 object obj = ResourceManager.GetObject("monitor", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap null_thumb {
+            get {
+                object obj = ResourceManager.GetObject("null_thumb", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -313,6 +393,16 @@ namespace Reddit_Wallpaper_Changer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap settings {
+            get {
+                object obj = ResourceManager.GetObject("settings", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap span {
             get {
                 object obj = ResourceManager.GetObject("span", resourceCulture);
@@ -326,6 +416,16 @@ namespace Reddit_Wallpaper_Changer.Properties {
         internal static System.Drawing.Bitmap stretch {
             get {
                 object obj = ResourceManager.GetObject("stretch", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap thumbnails_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("thumbnails_16x16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

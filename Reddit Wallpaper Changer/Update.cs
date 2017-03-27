@@ -31,7 +31,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            Logging.LogMessageToFile("Updating Reddit Wallpaper Changer.");
+            Logging.LogMessageToFile("Updating Reddit Wallpaper Changer.", 0);
             btnUpdate.Enabled = false;
             progressBar.Visible = true;
             string temp = Path.GetTempPath();
@@ -47,12 +47,12 @@ namespace Reddit_Wallpaper_Changer
                 // Run this code once the download is completed
                 wc.DownloadFileCompleted += (s, a) =>
                 {
-                    Logging.LogMessageToFile("Update successfully downloaded.");
+                    Logging.LogMessageToFile("Update successfully downloaded.", 0);
                     progressBar.Visible = false;
                
                     try
                     {
-                        Logging.LogMessageToFile("Launching installer and exiting.");
+                        Logging.LogMessageToFile("Launching installer and exiting.", 0);
                         System.Diagnostics.Process.Start(temp + "Reddit.Wallpaper.Changer.msi");
                         System.Environment.Exit(0);
 
@@ -60,7 +60,7 @@ namespace Reddit_Wallpaper_Changer
                     catch (Exception ex)
                     {
                         MessageBox.Show("Error Updating: " + ex.Message, "RWC", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        Logging.LogMessageToFile("Error Updating: " + ex.Message);
+                        Logging.LogMessageToFile("Error Updating: " + ex.Message, 2);
                     }
                 };
 
@@ -71,7 +71,7 @@ namespace Reddit_Wallpaper_Changer
             catch (Exception ex)
             {
                 MessageBox.Show("Error Updating: " + ex.Message, "RWC", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Logging.LogMessageToFile("Error Updating: " + ex.Message);
+                Logging.LogMessageToFile("Error Updating: " + ex.Message, 2);
             }
         }
 

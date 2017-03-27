@@ -1,2 +1,25 @@
-Current Version - 1.0.12.0
-- Hotfix: Issue where RWC closed fully instead of minimising to System Tray
+Version 1.0.13.0
+- Added: Migrated from XML files to SQLite for storing wallpaper data
+- Added: Automatic migration of existing Blacklist to new SQLite database
+- Added: You can now 'Favourite' wallpapers for reuse!
+- Added: Option to auto-save Favourite wallpapers
+- Added: Endless wallpaper history instead of 'Per Session'
+- Added: Added some database housekeeping options
+- Added: Backup/Restore options for database
+- Added: You can now disable automatic update checks
+- Changed: Increased wallpaper thumbnail size in History, Favourites and Blacklist menus
+- Changed: Wallpaper titles now multi-lined in History, Favourites and Blacklist menus 
+- Changed: Wallpaper thumbs now saved to SQLite instead of being downloaded every time
+- Changed: 'Suppress Duplicates' will still be limited to 'per session'
+- Changed: New icon set for the Menu buttons 
+- Changed: UI adjustments to encorporate Favourites and Database options 
+- Changed: Import/Export routine updated to include 1.0.13 features
+- Changed: 'Monitors' menu should now support up to four detected monitors 
+- Changed: Settings 'Save' button now saves changes but won't trigger a wallpaper change 
+- Changed: Changes to the backend code for searching for/applying wallpapers 
+- Fixed: Unable to save wallpapers with special characters in their name  
+- Fixed: Some spelling errors in log file
+- Fixed: Changes to the 'Fade' setting were not actually being saved
+- Fixed: Various code changes
+- Fixed: Some minor logging errors
+- Fixed: Other small bugs

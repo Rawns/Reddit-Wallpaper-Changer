@@ -49,12 +49,18 @@ namespace Reddit_Wallpaper_Changer
                         writer.WriteElementString("ProxyAuthentication", Properties.Settings.Default.proxyAuth.ToString());
                         writer.WriteElementString("DefaultSaveLocation", Properties.Settings.Default.defaultSaveLocation);
                         writer.WriteElementString("AutoSave", Properties.Settings.Default.autoSave.ToString());
+                        writer.WriteElementString("AutoSaveFaves", Properties.Settings.Default.autoSaveFaves.ToString());
                         writer.WriteElementString("WallpaperFade", Properties.Settings.Default.wallpaperFade.ToString());
                         writer.WriteElementString("DisableNotifications", Properties.Settings.Default.disableNotifications.ToString());
+                        writer.WriteElementString("SuppressDuplicates", Properties.Settings.Default.suppressDuplicates.ToString());
+                        writer.WriteElementString("ValidateWallpaperSize", Properties.Settings.Default.sizeValidation.ToString());
+                        writer.WriteElementString("WallpaperInfoPopup", Properties.Settings.Default.wallpaperInfoPopup.ToString());
+                        writer.WriteElementString("AutoUpdateCheck", Properties.Settings.Default.autoUpdateCheck.ToString());
+                        writer.WriteElementString("WallpaperFit", Properties.Settings.Default.wallpaperStyle);
                         writer.WriteEndElement();
                         writer.WriteEndDocument();
                     }
-                    Logging.LogMessageToFile("Settings have been successfully exported to: " + savedFile);
+                    Logging.LogMessageToFile("Settings have been successfully exported to: " + savedFile, 0);
                     MessageBox.Show("Your settings have been exported successfully!", "Settings Exported", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -65,7 +71,7 @@ namespace Reddit_Wallpaper_Changer
             }
             catch (Exception ex)
             {
-                Logging.LogMessageToFile("Unexpected error exporting settings: " + ex.Message);
+                Logging.LogMessageToFile("Unexpected error exporting settings: " + ex.Message, 2);
                 MessageBox.Show("Unexpected error exporting settings to XML: " + ex.Message, "Error Exporting!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -116,22 +122,27 @@ namespace Reddit_Wallpaper_Changer
                         Properties.Settings.Default.proxyAuth = Boolean.Parse(xn["ProxyAuthentication"].InnerText);
                         Properties.Settings.Default.defaultSaveLocation = xn["DefaultSaveLocation"].InnerText;
                         Properties.Settings.Default.autoSave = Boolean.Parse(xn["AutoSave"].InnerText);
+                        Properties.Settings.Default.autoSaveFaves = Boolean.Parse(xn["AutoSaveFaves"].InnerText);
                         Properties.Settings.Default.wallpaperFade = Boolean.Parse(xn["WallpaperFade"].InnerText);
                         Properties.Settings.Default.disableNotifications = Boolean.Parse(xn["DisableNotifications"].InnerText);
+                        Properties.Settings.Default.suppressDuplicates = Boolean.Parse(xn["SuppressDuplicates"].InnerText);
+                        Properties.Settings.Default.sizeValidation = Boolean.Parse(xn["ValidateWallpaperSize"].InnerText);
+                        Properties.Settings.Default.wallpaperInfoPopup = Boolean.Parse(xn["WallpaperInfoPopup"].InnerText);
+                        Properties.Settings.Default.autoUpdateCheck = Boolean.Parse(xn["AutoUpdateCheck"].InnerText);
+                        Properties.Settings.Default.wallpaperStyle = xn["WallpaperFit"].InnerText;
                         Properties.Settings.Default.Save();
 
-                        Logging.LogMessageToFile("Settings have been successfully imported. Restarting RWC.");
+                        Logging.LogMessageToFile("Settings have been successfully imported. Restarting RWC.", 0);
                         MessageBox.Show("Settings file imported successfully.\r\n\r\n" +
                             "Note: If a proxy is specified that requires authentication, you must manually enter the credentials.\r\n\r\n" +
                             "RWC will now restart so the new settings take effect.", "Settings Imported", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        // Close and re-launch RWC to apply changes. 
                         System.Diagnostics.Process.Start(System.Reflection.Assembly.GetExecutingAssembly().Location);
                         System.Environment.Exit(0);
                     }
                     catch (Exception ex)
                     {
-                        Logging.LogMessageToFile("Unexpected error importing settings file: " + ex.Message);
+                        Logging.LogMessageToFile("Unexpected error importing settings file: " + ex.Message, 2);
                         MessageBox.Show("Unexpected error importing settings from XML: " + ex.Message, "Error Importing!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                     }

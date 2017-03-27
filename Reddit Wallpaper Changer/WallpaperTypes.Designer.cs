@@ -158,9 +158,9 @@
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(6, 113);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(36, 13);
+            this.label5.Size = new System.Drawing.Size(266, 13);
             this.label5.TabIndex = 3;
-            this.label5.Text = "Span";
+            this.label5.Text = "Span (Recommended for multi moniotr setups)";
             // 
             // label3
             // 
@@ -211,6 +211,7 @@
             this.Name = "WallpaperTypes";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WallpaperTypes";
+            this.Load += new System.EventHandler(this.WallpaperTypes_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

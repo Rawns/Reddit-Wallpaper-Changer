@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Drawing;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace Reddit_Wallpaper_Changer
 {
     public partial class PopupInfo : Form
     {
-
-        public string url { get; set; }
         public string title { get; set; }
+        public string threadid { get; set; }
 
-        public PopupInfo(string url, string title)
+        protected override bool ShowWithoutActivation
+        {
+            get { return true; }
+        }
+
+        public PopupInfo(string threadid, string title)
         {
             InitializeComponent();
-            this.url = url;
+            this.threadid = threadid;
             this.title = title;
-                
         }
         
         Timer fade = new Timer();
@@ -28,14 +30,13 @@ namespace Reddit_Wallpaper_Changer
         private void PopupInfo_Load(object sender, EventArgs e)
         {
             this.BringToFront();
-            // this.BackColor = 
             this.txtWallpaperTitle.Text = title;
-            this.lnkWallpaper.Text = url;
-            Bitmap img = new Bitmap(Properties.Settings.Default.currentWallpaperFile);
-            this.imgWallpaper.BackgroundImage = img;
-            this.imgWallpaper.BackgroundImageLayout = ImageLayout.Zoom;
-            // this.imgWallpaper.BorderStyle = BorderStyle.FixedSingle;
+            this.lnkWallpaper.Text = "http://www.reddit.com/" + threadid;
 
+            Bitmap img = new Bitmap(Properties.Settings.Default.currentWallpaperFile);            
+            this.imgWallpaper.BackgroundImage = img;
+            this.imgWallpaper.BackgroundImageLayout = ImageLayout.Stretch;
+            
             Opacity = 0;     
             fade.Interval = 10;  
             fade.Tick += new EventHandler(fadeIn);
@@ -43,7 +44,8 @@ namespace Reddit_Wallpaper_Changer
             
             timer.Interval = 3000;
             timer.Tick += new EventHandler(timer_Tick);
-            timer.Start();            
+            timer.Start();
+            
         }
 
         //======================================================================
@@ -89,6 +91,11 @@ namespace Reddit_Wallpaper_Changer
             }
             else
                 Opacity -= 0.05;
+        }
+
+        private void txtWallpaperTitle_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

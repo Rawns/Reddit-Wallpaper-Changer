@@ -28,7 +28,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -59,6 +59,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>Refrences\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -71,7 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Blacklist.cs" />
+    <Compile Include="Database.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="Pastebin.cs" />
     <Compile Include="PopupInfo.cs">
@@ -94,6 +97,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ManageSettings.cs" />
+    <Compile Include="SaveWallpaper.cs" />
     <Compile Include="SuperSecret.cs" />
     <Compile Include="Update.cs">
       <SubType>Form</SubType>
@@ -172,6 +176,15 @@
     <None Include="Resources\help.png" />
     <None Include="Resources\cross.png" />
     <None Include="Resources\pastebin.png" />
+    <None Include="Resources\blacklist.png" />
+    <None Include="Resources\favourite.png" />
+    <None Include="Resources\display_enabled_small.png" />
+    <None Include="Resources\blacklist_16x16.png" />
+    <None Include="Resources\favourite_16x16.png" />
+    <None Include="Resources\history_16x16.png" />
+    <None Include="Resources\db_backup_16x16.png" />
+    <None Include="Resources\db_restore_16x16.png" />
+    <None Include="Resources\null_thumb.png" />
     <Content Include="Resources\rwc.ico" />
     <Content Include="Resources\data.png" />
     <Content Include="Resources\information.png" />
@@ -185,6 +198,8 @@
     <None Include="Resources\span.png" />
     <None Include="Resources\tile.png" />
     <None Include="Resources\stretch.png" />
+    <None Include="Resources\settings.png" />
+    <None Include="Resources\thumbnails_16x16.png" />
     <Content Include="Resources\Wizard.png" />
   </ItemGroup>
   <ItemGroup>
