@@ -7,6 +7,7 @@ using System.Net;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace Reddit_Wallpaper_Changer
 {
@@ -38,8 +39,13 @@ namespace Reddit_Wallpaper_Changer
                     m_dbConnection.Open();
                     Logging.LogMessageToFile("Successfully connected to database 'Reddit-Wallpaper-Changer.sqlite'", 0);
 
-                    string sql = "CREATE TABLE blacklist (thumbnail STRING, title STRING, threadid STRING, url STRING, date STRING)";
+                    string sql = "CREATE TABLE version (version STRING, date STRING)";
                     SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+                    command.ExecuteNonQuery();
+                    Logging.LogMessageToFile("Table 'version' successfully created.", 0);
+
+                    sql = "CREATE TABLE blacklist (thumbnail STRING, title STRING, threadid STRING, url STRING, date STRING)";
+                    command = new SQLiteCommand(sql, m_dbConnection);
                     command.ExecuteNonQuery();
                     Logging.LogMessageToFile("Table 'blacklist' successfully created.", 0);
 
@@ -68,6 +74,8 @@ namespace Reddit_Wallpaper_Changer
                     command.ExecuteNonQuery();
                     Logging.LogMessageToFile("Index 'idx_history' successfully created.", 0);
 
+                    addVersion();
+
                 }
                 catch(Exception ex)
                 {
@@ -94,70 +102,87 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         public void migrateOldBlacklist()
         {
-            Logging.LogMessageToFile("Migrating Blacklist.xml to 'Reddit-Wallpaper-Changer.sqlite'. This is a one off task...", 0);
-            XmlDocument doc = new XmlDocument();
-            XmlNodeList list;
-
-            doc.Load(Properties.Settings.Default.AppDataPath + @"\Blacklist.xml");
-            list = doc.SelectNodes("Blacklisted/Wallpaper");
-
-            using (WebClient wc = Proxy.setProxy())
+            try
             {
-                foreach (XmlNode xn in list)
+                Logging.LogMessageToFile("Migrating Blacklist.xml to 'Reddit-Wallpaper-Changer.sqlite'. This is a one off task...", 0);
+
+                if (File.Exists(Properties.Settings.Default.AppDataPath + @"\Blacklist.xml"))
                 {
-                    try
+                    XmlDocument doc = new XmlDocument();
+                    XmlNodeList list;
+
+                    doc.Load(Properties.Settings.Default.AppDataPath + @"\Blacklist.xml");
+                    list = doc.SelectNodes("Blacklisted/Wallpaper");
+
+                    using (WebClient wc = Proxy.setProxy())
                     {
-                        string URL = xn["URL"].InnerText;
-                        string Title = xn["Title"].InnerText;
-                        Title = Title.Replace("'", "''");
-                        string ThreadID = xn["ThreadID"].InnerText;
-                        Logging.LogMessageToFile("Migrating: " + Title + ", " + ThreadID + ", " + URL, 0);
-
-                        Uri uri = new Uri(URL);
-
-                        byte[] bytes = wc.DownloadData(URL);
-                        using (MemoryStream ms = new MemoryStream(bytes))
+                        foreach (XmlNode xn in list)
                         {
-                            using (var bmp = new Bitmap(ms))
+                            try
                             {
-                                using (Bitmap newImage = new Bitmap(150, 70))
+                                string URL = xn["URL"].InnerText;
+                                string Title = xn["Title"].InnerText;
+                                Title = Title.Replace("'", "''");
+                                string ThreadID = xn["ThreadID"].InnerText;
+                                Logging.LogMessageToFile("Migrating: " + Title + ", " + ThreadID + ", " + URL, 0);
+
+                                Uri uri = new Uri(URL);
+
+                                byte[] bytes = wc.DownloadData(URL);
+                                using (MemoryStream ms = new MemoryStream(bytes))
                                 {
-                                    using (Graphics gr = Graphics.FromImage(newImage))
+                                    using (var bmp = new Bitmap(ms))
                                     {
-                                        gr.SmoothingMode = SmoothingMode.HighQuality;
-                                        gr.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                                        gr.PixelOffsetMode = PixelOffsetMode.HighQuality;
-                                        gr.DrawImage(bmp, new Rectangle(0, 0, 150, 70));
-                                        using (MemoryStream newms = new MemoryStream())
+                                        using (Bitmap newImage = new Bitmap(150, 70))
                                         {
-                                            newImage.Save(newms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                                            using (Graphics gr = Graphics.FromImage(newImage))
+                                            {
+                                                gr.SmoothingMode = SmoothingMode.HighQuality;
+                                                gr.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                                                gr.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                                                gr.DrawImage(bmp, new Rectangle(0, 0, 150, 70));
+                                                using (MemoryStream newms = new MemoryStream())
+                                                {
+                                                    newImage.Save(newms, System.Drawing.Imaging.ImageFormat.Jpeg);
 
-                                            byte[] imageArray = newms.ToArray();
-                                            string base64ImageRepresentation = Convert.ToBase64String(imageArray);
-                                            string dateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.FFF");
+                                                    byte[] imageArray = newms.ToArray();
+                                                    string base64ImageRepresentation = Convert.ToBase64String(imageArray);
+                                                    string dateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.FFF");
 
-                                            string sql = "INSERT INTO blacklist (thumbnail, title, threadid, url, date) values ('" + base64ImageRepresentation + "', '" + Title + "', '" + ThreadID + "', '" + URL + "', '" + dateTime + "')";
-                                            SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
-                                            command.ExecuteNonQuery();
+                                                    string sql = "INSERT INTO blacklist (thumbnail, title, threadid, url, date) values ('" + base64ImageRepresentation + "', '" + Title + "', '" + ThreadID + "', '" + URL + "', '" + dateTime + "')";
+                                                    SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+                                                    command.ExecuteNonQuery();
+                                                }
+                                            }
                                         }
                                     }
                                 }
-                            }                               
+                                Logging.LogMessageToFile("Successfully migrated: " + Title + ", " + ThreadID + ", " + URL, 0);
+                            }
+                            catch (WebException ex)
+                            {
+                                Logging.LogMessageToFile("Unexpected error migrating: " + ex.Message, 2);
+                            }
                         }
-                        Logging.LogMessageToFile("Successfully migrated: " + Title + ", " + ThreadID + ", " + URL, 0);
                     }
-                    catch (WebException ex)
-                    {
-                        Logging.LogMessageToFile("Unexpected error migrating: " + ex.Message, 2);
-                    }
+
+                    Logging.LogMessageToFile("Migration to database completed successfully!", 0);
+                    File.Delete(Properties.Settings.Default.AppDataPath + @"\Blacklist.xml");
+                    Logging.LogMessageToFile("Blacklist.xml deleted.", 0);
+                    Properties.Settings.Default.dbMigrated = true;
+                    Properties.Settings.Default.Save();
+                }
+                else
+                {
+                    Logging.LogMessageToFile("No blacklist.xml file to migrate", 0);
+                    Properties.Settings.Default.dbMigrated = true;
+                    Properties.Settings.Default.Save();
                 }
             }
-
-            Logging.LogMessageToFile("Migration to database completed successfully!", 0);
-            File.Delete(Properties.Settings.Default.AppDataPath + @"\Blacklist.xml");
-            Logging.LogMessageToFile("Blacklist.xml deleted.", 0);
-            Properties.Settings.Default.dbMigrated = true;
-            Properties.Settings.Default.Save();
+            catch (Exception ex)
+            {
+                Logging.LogMessageToFile("Error migrating: " + ex.Message, 2);
+            }
         }
 
         //======================================================================
@@ -215,6 +240,28 @@ namespace Reddit_Wallpaper_Changer
             {
                 Logging.LogMessageToFile("Unexpected error favouriting wallpaper: " + ex.Message, 1);
                 return false;
+            }
+        }
+
+        //======================================================================
+        // Add version
+        //======================================================================
+        public void addVersion()
+        {
+            try
+            {
+                string currentVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
+                string dateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.FFF");
+                using (SQLiteCommand command = new SQLiteCommand("INSERT INTO version (version, date) values (@version, @dateTime)", m_dbConnection))
+                {
+                    command.Parameters.AddWithValue("dateTime", dateTime);
+                    command.Parameters.AddWithValue("version", currentVersion);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logging.LogMessageToFile("Unexpected error adding version to database: " + ex.Message, 1);
             }
         }
 
@@ -593,3 +640,5 @@ namespace Reddit_Wallpaper_Changer
 
     }
 }
+
+

@@ -85,4 +85,3 @@ E:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\bin\Deb
 C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\bin\Debug\System.Data.SQLite.dll
 C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\bin\Debug\System.Data.SQLite.xml
 C:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.csprojResolveAssemblyReference.cache
-E:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.csprojResolveAssemblyReference.cache

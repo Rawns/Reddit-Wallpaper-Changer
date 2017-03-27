@@ -454,5 +454,17 @@ namespace Reddit_Wallpaper_Changer.Properties {
                 this["dbMigrated"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool rebuildThumbCache {
+            get {
+                return ((bool)(this["rebuildThumbCache"]));
+            }
+            set {
+                this["rebuildThumbCache"] = value;
+            }
+        }
     }
 }

@@ -61,12 +61,13 @@ namespace Reddit_Wallpaper_Changer
                 Properties.Settings.Default.Upgrade();
                 Properties.Settings.Default.updateSettings = false;
                 Properties.Settings.Default.Save();
+                database.addVersion();
             }
 
             Logging.LogMessageToFile("===================================================================================================================", 0);
             Random random = new Random();
             int db = random.Next(0, 1000);
-            if (db == 500) { SuperSecret.DickButt(); };
+            if (db == 500) { SuperSecret.DickButt(); }
             Logging.LogMessageToFile("Reddit Wallpaper Changer Version " + Assembly.GetEntryAssembly().GetName().Version.ToString(), 0);
             Logging.LogMessageToFile("RWC is starting.", 0);
             Logging.LogMessageToFile("RWC Interface Loaded.", 0);
@@ -109,6 +110,7 @@ namespace Reddit_Wallpaper_Changer
             tt.SetToolTip(this.btnBackup, "Backup Reddit Wallpaper Changer's database.");
             tt.SetToolTip(this.btnRestore, "Restore a previous backup.");
             tt.SetToolTip(this.btnRebuildThumbnails, "This will wipe the current thumbnail cache and recreate it.");
+            tt.SetToolTip(this.chkUpdates, "Enable or disable automatic update checks.\r\nA manual check for updates can be done in the 'About' panel.");
 
             // Monitors
             tt.SetToolTip(this.btnWallpaperHelp, "Show info on the different wallpaper styles.");
@@ -175,6 +177,7 @@ namespace Reddit_Wallpaper_Changer
             updateStatus("RWC Setup Initating.");
             r = new Random();
             taskIcon.Visible = true;
+            if (Properties.Settings.Default.rebuildThumbCache == true) { removeThumbnailCache(); }
             setupSavedWallpaperLocation();
             setupAppDataLocation();
             setupThumbnailCache();
@@ -619,10 +622,12 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void saveButton_Click(object sender, EventArgs e)
         {
+            Logging.LogMessageToFile("Settings successfully saved.", 0);
+            Logging.LogMessageToFile("New settings...", 0);
             saveData();
             // changeWallpaperTimer.Enabled = true;
             updateStatus("Settings Saved!");
-            Logging.LogMessageToFile("Settings saved.", 0);
+            
         }
 
         //======================================================================
@@ -709,28 +714,28 @@ namespace Reddit_Wallpaper_Changer
         #region Change Wallpaper
         private void changeWallpaper()
         {
-             Logging.LogMessageToFile("Changing wallpaper.", 0);
-             var bw = new BackgroundWorker();
+            Logging.LogMessageToFile("Changing wallpaper.", 0);
+            var bw = new BackgroundWorker();
 
-             bw.DoWork += delegate
-             {
+            bw.DoWork += delegate
+            {
                 Logging.LogMessageToFile("The background worker started successfully and is looking for a wallpaper.", 0);
                 if (noResultCount >= 50)
                 {
                     noResultCount = 0;
 
-                     if (Properties.Settings.Default.disableNotifications == false)
-                     {
+                    if (Properties.Settings.Default.disableNotifications == false)
+                    {
                          taskIcon.BalloonTipIcon = ToolTipIcon.Info;
                          taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer";
                          taskIcon.BalloonTipText = "No results after 50 attempts. Disabling Reddit Wallpaper Changer.";
                          taskIcon.ShowBalloonTip(700);
-                     }
+                    }
 
-                     Logging.LogMessageToFile("No results after 50 attempts. Disabeling Reddit Wallpaper Changer.", 1);
-                     updateStatus("RWC Disabled.");
-                     changeWallpaperTimer.Enabled = false;
-                     return;
+                    Logging.LogMessageToFile("No results after 50 attempts. Disabeling Reddit Wallpaper Changer.", 1);
+                    updateStatus("RWC Disabled.");
+                    changeWallpaperTimer.Enabled = false;
+                    return;
                 }
                 updateStatus("Finding New Wallpaper");
                 Random random = new Random();
@@ -743,7 +748,7 @@ namespace Reddit_Wallpaper_Changer
                 var rand = new Random();
                 string[] subs = subreddits.Split('+');
                 string sub = subs[rand.Next(0, subs.Length)];
-                updateStatus("Sub: " + sub);
+                updateStatus("Searching /r/" + sub + " for a wallpaper...");
                 Logging.LogMessageToFile("Sellected sub to search: " + sub, 0);
 
                 if (sub.Equals(""))
@@ -765,7 +770,7 @@ namespace Reddit_Wallpaper_Changer
                 switch (wallpaperGrabType)
                 {
                     case 0:
-                         // Random
+                        // Random
                         formURL += "/search.json?q=" + query + randomSort[random.Next(0, 4)] + randomT[random.Next(0, 5)] + "&restrict_sr=on";
                         Logging.LogMessageToFile("Full URL Search String: " + formURL, 0);
                         break;  
@@ -775,12 +780,12 @@ namespace Reddit_Wallpaper_Changer
                         Logging.LogMessageToFile("Full URL Search String: " + formURL, 0);
                         break;
                     case 2:
-                         // Hot Today
+                        // Hot Today
                         formURL += "/search.json?q=" + query + "&sort=hot&restrict_sr=on&t=day";
                         Logging.LogMessageToFile("Full URL Search String: " + formURL, 0);
                         break;
                     case 3:
-                         // Top Last Hour
+                        // Top Last Hour
                         formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=hour";
                         Logging.LogMessageToFile("Full URL Search String: " + formURL, 0);
                         break;
@@ -790,12 +795,12 @@ namespace Reddit_Wallpaper_Changer
                         Logging.LogMessageToFile("Full URL Search String: " + formURL, 0);
                         break;
                     case 5:
-                         // Top Week
+                        // Top Week
                         formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=week";
                         Logging.LogMessageToFile("Full URL Search String: " + formURL, 0);
                         break;
                     case 6:
-                         // Top Month
+                        // Top Month
                         formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=month";
                         Logging.LogMessageToFile("Full URL Search String: " + formURL, 0);
                         break;
@@ -806,14 +811,14 @@ namespace Reddit_Wallpaper_Changer
                         break;
                     case 8:
                          // Top All Time
-                        formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=all";
-                        Logging.LogMessageToFile("Full URL Search String: " + formURL, 0);
-                        break;
-                    case 9:
+                         formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=all";
+                         Logging.LogMessageToFile("Full URL Search String: " + formURL, 0);
+                         break;
+                     case 9:
                          // Truly Random
-                        formURL += "/random.json?p=" + (System.Guid.NewGuid().ToString());
-                        Logging.LogMessageToFile("Full URL Search String: " + formURL, 0);
-                        break;
+                         formURL += "/random.json?p=" + (System.Guid.NewGuid().ToString());
+                         Logging.LogMessageToFile("Full URL Search String: " + formURL, 0);
+                         break;
                 }
 
                 String jsonData = "";
@@ -824,22 +829,23 @@ namespace Reddit_Wallpaper_Changer
                     {
                         Logging.LogMessageToFile("Searching Reddit for a wallpaper.", 0);
                         jsonData = wc.DownloadString(formURL);
-
                     }
-                    catch (System.Net.WebException Ex)
-                    {
-                        if (Ex.Message == "The remote server returned an error: (503) Server Unavailable.")
-                        {
-                            updateStatus("Reddit Server Unavailable, try again later.");
-                            Logging.LogMessageToFile("Reddit Server Unavailable: " + Ex.Message, 1);
-                        }
+                    catch (System.Net.WebException ex)
+                    {                      
+                        updateStatus(ex.Message);
+                        Logging.LogMessageToFile("Reddit server error: " + ex.Message, 2);
                         failedDownload = true;
+                        restartTimer(breakBetweenChange);
+                        return;
                     }
-                     catch (Exception ex)
-                     {
-                         Logging.LogMessageToFile("Error searching for a wallpaper: " + ex.Message, 2);
-                         failedDownload = true;
-                     }
+                    catch (Exception ex)
+                    {
+                        updateStatus("Error downloading search results.");
+                        Logging.LogMessageToFile("Error downloading search results: " + ex.Message, 2);
+                        failedDownload = true;
+                        restartTimer(breakBetweenChange);
+                        return;
+                    }
                 }
                 try
                 {
@@ -875,7 +881,7 @@ namespace Reddit_Wallpaper_Changer
                                 // {
                                     token = toke;
                                 // }
-                                
+                             
                             }
                             bool needsChange = false;
                             if (token == null)
@@ -883,6 +889,7 @@ namespace Reddit_Wallpaper_Changer
                                 if (redditResult.Count() == 0)
                                 {
                                     ++noResultCount;
+                                    updateStatus("No results found, searching again.");
                                     Logging.LogMessageToFile("No search results, trying to change wallpaper again.", 0);
                                     needsChange = true;
                                     changeWallpaper();
@@ -896,74 +903,72 @@ namespace Reddit_Wallpaper_Changer
                             }
                             if (!needsChange)
                             {
-
                                 if (wallpaperGrabType != 0)
                                 {
-                                     currentThread = "http://reddit.com" + token["data"]["permalink"].ToString();
-                                     Logging.LogMessageToFile("Found a wallpaper! Title: " + token["data"]["title"].ToString() + ", URL: " + token["data"]["url"].ToString() + ", ThreadID: " + token["data"]["id"].ToString(), 0);
+                                    currentThread = "http://reddit.com" + token["data"]["permalink"].ToString();
+                                    Logging.LogMessageToFile("Found a wallpaper! Title: " + token["data"]["title"].ToString() + ", URL: " + token["data"]["url"].ToString() + ", ThreadID: " + token["data"]["id"].ToString(), 0);
 
-                                     // check URL 
-                                     if (Validation.checkImg(token["data"]["url"].ToString()))
-                                     {
-                                         if (Validation.checkImgur(token["data"]["url"].ToString()))
-                                         {
-                                             setWallpaper(token["data"]["url"].ToString(), token["data"]["title"].ToString(), token["data"]["id"].ToString());
-                                         }
-                                         else
-                                         {
-                                             updateStatus("Wallpaper removed from Imgur.");
-                                             Logging.LogMessageToFile("The selected wallpaper was deleted from Imgur, searching again.", 1);
-                                             ++noResultCount;
-                                             restartTimer(breakBetweenChange);
-                                             changeWallpaper();
-                                         }
-                                     }
-                                     else
-                                     {
-                                         updateStatus("Non-image URL.");
-                                         Logging.LogMessageToFile("Not a direct wallpaper URL, searching again.", 1);
-                                         ++noResultCount;
-                                         restartTimer(breakBetweenChange);
-                                         return;
-                                     }
+                                    // check URL 
+                                    if (Validation.checkImg(token["data"]["url"].ToString()))
+                                    {
+                                        if (Validation.checkImgur(token["data"]["url"].ToString()))
+                                        {
+                                            setWallpaper(token["data"]["url"].ToString(), token["data"]["title"].ToString(), token["data"]["id"].ToString());
+                                        }
+                                        else
+                                        {
+                                            updateStatus("Wallpaper has been removed from Imgur.");
+                                            Logging.LogMessageToFile("The selected wallpaper was deleted from Imgur, searching again.", 1);
+                                            ++noResultCount;
+                                            restartTimer(breakBetweenChange);
+                                            changeWallpaper();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        updateStatus("The selected URL is not for an image.");
+                                        Logging.LogMessageToFile("Not a direct wallpaper URL, searching again.", 1);
+                                        ++noResultCount;
+                                        restartTimer(breakBetweenChange);
+                                        return;
+                                    }
                                 }
                                 else
                                 {
-                                     token = redditResult.ElementAt(random.Next(0, redditResult.Count() - 1));
-                                     currentThread = "http://reddit.com" + token["data"]["permalink"].ToString();
-                                     Logging.LogMessageToFile("Found a wallpaper! Title: " + token["data"]["title"].ToString() + ", URL: " + token["data"]["url"].ToString() + ", ThreadID: " + token["data"]["id"].ToString(), 1);
+                                    token = redditResult.ElementAt(random.Next(0, redditResult.Count() - 1));
+                                    currentThread = "http://reddit.com" + token["data"]["permalink"].ToString();
+                                    Logging.LogMessageToFile("Found a wallpaper! Title: " + token["data"]["title"].ToString() + ", URL: " + token["data"]["url"].ToString() + ", ThreadID: " + token["data"]["id"].ToString(), 0);
 
-                                     // check URL 
-                                     if (Validation.checkImg(token["data"]["url"].ToString()))
-                                     {
-                                         if (Validation.checkImgur(token["data"]["url"].ToString()))
-                                         {
-                                             setWallpaper(token["data"]["url"].ToString(), token["data"]["title"].ToString(), token["data"]["id"].ToString());
-                                         }
-                                         else
-                                         {
-                                             updateStatus("Wallpaper removed from Imgur.");
-                                             Logging.LogMessageToFile("The selected wallpaper was deleted from Imgur, searching again.", 1);
-                                             ++noResultCount;
-                                             restartTimer(breakBetweenChange);
-                                             changeWallpaper();
-                                         }
-                                     }
-                                     else
-                                     {
-                                         updateStatus("Non-image URL.");
-                                         Logging.LogMessageToFile("Not a direct wallpaper URL, searching again.", 1);
-                                         ++noResultCount;
-                                         restartTimer(breakBetweenChange);
-                                         return;
-                                     }
-                                }
+                                    // check URL 
+                                    if (Validation.checkImg(token["data"]["url"].ToString()))
+                                    {
+                                        if (Validation.checkImgur(token["data"]["url"].ToString()))
+                                        {
+                                            setWallpaper(token["data"]["url"].ToString(), token["data"]["title"].ToString(), token["data"]["id"].ToString());
+                                        }
+                                        else
+                                        {
+                                            updateStatus("Wallpaper has been removed from Imgur.");
+                                            Logging.LogMessageToFile("The selected wallpaper was deleted from Imgur, searching again.", 1);
+                                            ++noResultCount;
+                                            restartTimer(breakBetweenChange);
+                                            changeWallpaper();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        updateStatus("The selected URL is not for an image.");
+                                        Logging.LogMessageToFile("Not a direct wallpaper URL, searching again.", 1);
+                                        ++noResultCount;
+                                        restartTimer(breakBetweenChange);
+                                        return;
+                                    }
+                                } 
                             }
-
                         }
                         catch (System.InvalidOperationException)
                         {
-                            updateStatus("Your query is bringing up no results.");
+                            updateStatus("Your search query is bringing up no results.");
                             Logging.LogMessageToFile("No results from the search query.", 1);
                             failedDownload = true;
                             restartTimer(breakBetweenChange);
@@ -976,6 +981,7 @@ namespace Reddit_Wallpaper_Changer
                 }
                 catch (JsonReaderException ex)
                 {
+                    updateStatus("Unexpected error: " + ex.Message);
                     Logging.LogMessageToFile("Unexpected error: " + ex.Message, 2);
                     restartTimer(breakBetweenChange);
                 }
@@ -1220,8 +1226,13 @@ namespace Reddit_Wallpaper_Changer
                             {
                                 updateStatus("Wallpaper Changed!");
                             });
+
                             Logging.LogMessageToFile("Wallpaper changed!", 0);
                             historyList.Add(threadID);
+
+                            database.historyWallpaper(url, title, threadID);
+                            this.Invoke((MethodInvoker)(() => { buildThumbnailCache(); }));
+                            this.Invoke((MethodInvoker)(() => { var done = populateHistory(); }));
 
 
                             if (Properties.Settings.Default.disableNotifications == false && Properties.Settings.Default.wallpaperInfoPopup == true)
@@ -1279,29 +1290,29 @@ namespace Reddit_Wallpaper_Changer
                                 currentWallpaper.Dispose();    
                             }
 
-                            database.historyWallpaper(url, title, threadID);
-                            buildThumbnailCache();
+                            // database.historyWallpaper(url, title, threadID);
+                            // buildThumbnailCache();
                             // populateHistory();
 
                             // this.Invoke((MethodInvoker)(() => { database.historyWallpaper(url, title, threadID); }));
                             // this.Invoke((MethodInvoker)(() => { buildThumbnailCache(); }));
                             // this.Invoke((MethodInvoker)(() => { var done = populateHistory(); }));
 
-                            this.Invoke((MethodInvoker)(() => { var done = populateHistory(); }));
+                            // this.Invoke((MethodInvoker)(() => { var done = populateHistory(); }));
 
                         }
                         catch (ArgumentException Ex)
                         {
                             Logging.LogMessageToFile("Unexpected Error: " + Ex.Message, 2);
 
-                            database.historyWallpaper(url, title, threadID);
-                            buildThumbnailCache();
+                            // database.historyWallpaper(url, title, threadID);
+                            // buildThumbnailCache();
                             // populateHistory();
 
                             //this.Invoke((MethodInvoker)(() => { database.historyWallpaper(url, title, threadID); }));
                             //this.Invoke((MethodInvoker)(() => { buildThumbnailCache(); }));
                             //this.Invoke((MethodInvoker)(() => { populateHistory(); }));
-                            this.Invoke((MethodInvoker)(() => { var done = populateHistory(); }));
+                            // this.Invoke((MethodInvoker)(() => { var done = populateHistory(); }));
 
                             restartTimer(breakBetweenChange);
                         }
@@ -2788,39 +2799,57 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
-        // Remove all thumbnails
+        // Rebuild cache
         //======================================================================
         private void btnRebuildThumbnails_Click(object sender, EventArgs e)
         {
-            DialogResult choice = MessageBox.Show("This will remove all wallpaper thumbnails and recreate them.\r\n" +
-                "Continue?", "Rebuild Thumbnails?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult choice = MessageBox.Show("This will remove all wallpaper thumbnails and recreate them.\r\n\r\r" +
+                "Reddit Wallpaper Will be restarted to complete this process. Continue?", "Rebuild Thumbnails?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (choice == DialogResult.Yes)
             {
                 try
                 {
-                    Logging.LogMessageToFile("Rebuilding thumbnail cache.", 0);
+                    Logging.LogMessageToFile("Restarting Reddit Wallpaper Changer to clear thumbnail cache.", 0);
+                    Properties.Settings.Default.rebuildThumbCache = true;
+                    Properties.Settings.Default.Save();
 
-                    historyDataGrid.Rows.Clear();
-                    favouritesDataGrid.Rows.Clear();
-                    blacklistDataGrid.Rows.Clear();
+                    System.Diagnostics.Process.Start(System.Reflection.Assembly.GetEntryAssembly().Location);
+                    System.Environment.Exit(0);
 
-                    var dir = new DirectoryInfo(Properties.Settings.Default.thumbnailCache);
-                    foreach (var file in dir.EnumerateFiles("*.jpg"))
-                    {
-                        file.Delete();
-                    }
-                    Logging.LogMessageToFile("Thumbnail cache erased.", 0);
-                    buildThumbnailCache();
                 }
                 catch(Exception ex)
                 {
-                    Logging.LogMessageToFile("Error rebuilding thumbnail cache: " + ex.Message, 1);
+                    Logging.LogMessageToFile("Error restarting RWC: " + ex.Message, 1);
                 }
 
             }
             else if (choice == DialogResult.No)
             {
 
+            }
+        }
+
+        //======================================================================
+        // Remove all thumbnails
+        //======================================================================
+        public void removeThumbnailCache()
+        {
+            try
+            {
+                Logging.LogMessageToFile("Removing thumbnail cache", 0);
+                var dir = new DirectoryInfo(Properties.Settings.Default.thumbnailCache);
+                foreach (var file in dir.EnumerateFiles("*.jpg"))
+                {
+                    file.Delete();
+                }
+                Logging.LogMessageToFile("Thumbnail cache erased.", 0);
+                Properties.Settings.Default.rebuildThumbCache = false;
+                Properties.Settings.Default.Save();
+
+            }
+            catch(Exception ex)
+            {
+                Logging.LogMessageToFile("Error rebuilding thumbnail cache: " + ex.Message, 1);
             }
         }
     }

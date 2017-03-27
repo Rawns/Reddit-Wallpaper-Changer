@@ -49,8 +49,14 @@ namespace Reddit_Wallpaper_Changer
                         writer.WriteElementString("ProxyAuthentication", Properties.Settings.Default.proxyAuth.ToString());
                         writer.WriteElementString("DefaultSaveLocation", Properties.Settings.Default.defaultSaveLocation);
                         writer.WriteElementString("AutoSave", Properties.Settings.Default.autoSave.ToString());
+                        writer.WriteElementString("AutoSaveFaves", Properties.Settings.Default.autoSaveFaves.ToString());
                         writer.WriteElementString("WallpaperFade", Properties.Settings.Default.wallpaperFade.ToString());
                         writer.WriteElementString("DisableNotifications", Properties.Settings.Default.disableNotifications.ToString());
+                        writer.WriteElementString("SuppressDuplicates", Properties.Settings.Default.suppressDuplicates.ToString());
+                        writer.WriteElementString("ValidateWallpaperSize", Properties.Settings.Default.sizeValidation.ToString());
+                        writer.WriteElementString("WallpaperInfoPopup", Properties.Settings.Default.wallpaperInfoPopup.ToString());
+                        writer.WriteElementString("AutoUpdateCheck", Properties.Settings.Default.autoUpdateCheck.ToString());
+                        writer.WriteElementString("WallpaperFit", Properties.Settings.Default.wallpaperStyle);
                         writer.WriteEndElement();
                         writer.WriteEndDocument();
                     }
@@ -116,8 +122,14 @@ namespace Reddit_Wallpaper_Changer
                         Properties.Settings.Default.proxyAuth = Boolean.Parse(xn["ProxyAuthentication"].InnerText);
                         Properties.Settings.Default.defaultSaveLocation = xn["DefaultSaveLocation"].InnerText;
                         Properties.Settings.Default.autoSave = Boolean.Parse(xn["AutoSave"].InnerText);
+                        Properties.Settings.Default.autoSaveFaves = Boolean.Parse(xn["AutoSaveFaves"].InnerText);
                         Properties.Settings.Default.wallpaperFade = Boolean.Parse(xn["WallpaperFade"].InnerText);
                         Properties.Settings.Default.disableNotifications = Boolean.Parse(xn["DisableNotifications"].InnerText);
+                        Properties.Settings.Default.suppressDuplicates = Boolean.Parse(xn["SuppressDuplicates"].InnerText);
+                        Properties.Settings.Default.sizeValidation = Boolean.Parse(xn["ValidateWallpaperSize"].InnerText);
+                        Properties.Settings.Default.wallpaperInfoPopup = Boolean.Parse(xn["WallpaperInfoPopup"].InnerText);
+                        Properties.Settings.Default.autoUpdateCheck = Boolean.Parse(xn["AutoUpdateCheck"].InnerText);
+                        Properties.Settings.Default.wallpaperStyle = xn["WallpaperFit"].InnerText;
                         Properties.Settings.Default.Save();
 
                         Logging.LogMessageToFile("Settings have been successfully imported. Restarting RWC.", 0);
