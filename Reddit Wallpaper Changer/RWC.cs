@@ -18,6 +18,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 
+// RWC
 namespace Reddit_Wallpaper_Changer
 {
     public partial class RWC : Form
