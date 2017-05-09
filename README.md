@@ -35,4 +35,4 @@ Reddit Wallpaper Changer is a lightweight C# application for Windows that will s
 # Installation
 Download the latest MSI installer from the [releases page](https://github.com/Rawns/Reddit-Wallpaper-Changer/releases) or install using [Chocolatey](https://chocolatey.org/packages/reddit-wallpaper-changer/)
 
-You will need to have the **Microsoft Visual C++ 2010 Redistributable Package (x86)** package installed, which is a prerequisit for SQLite. You can [download the installer from Microsoft](https://www.microsoft.com/en-gb/download/details.aspx?id=5555). 
+You will need to have the **Microsoft Visual C++ 2010 Redistributable Package (x86)** package installed, which is a prerequisite for SQLite. You can [download the installer from Microsoft](https://www.microsoft.com/en-gb/download/details.aspx?id=5555). 
