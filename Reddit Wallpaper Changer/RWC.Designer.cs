@@ -1097,7 +1097,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(136, 13);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Origionally Created By:";
+            this.label3.Text = "Originally Created By:";
             // 
             // redditLink
             // 
