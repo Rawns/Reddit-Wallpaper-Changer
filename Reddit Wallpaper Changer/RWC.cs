@@ -16,6 +16,8 @@ using System.Collections;
 using Microsoft.Win32;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System.Globalization;
 
 
 // RWC
@@ -426,6 +428,62 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
+        // Parse subreddits string into array of current usable subreddits
+        // Expects a URL-safe list of subreddit names accompanied by an
+        //  optional 24-hour time range in the format [H:mm-H:mm]
+        // Skips malformed entries
+        //======================================================================
+        private string[] parseSubredditsList(string subs)
+        {
+            var subsList = new List<string>();
+
+            subs = subs.Trim('+');
+            var splitList = subs.Split('+').ToList();
+
+            Regex nameTimeRegex = new Regex(@"^(?<name>[a-zA-Z0-9-_%]+)(?:\[(?<t1>[0-9]{1,2}:[0-9]{2})-(?<t2>[0-9]{1,2}:[0-9]{2})+\])?");
+            foreach (var entry in splitList)
+            {
+                var r = nameTimeRegex.Match(entry);
+                if (!r.Groups["name"].Success)
+                    continue;
+
+                if (!r.Groups["t1"].Success)
+                {
+                    subsList.Add(r.Groups["name"].Value);
+                    continue;
+                }
+
+                var t1 = r.Groups["t1"].Value;
+                var t2 = r.Groups["t2"].Value;
+
+                DateTime dt1;
+                DateTime dt2;
+
+                try
+                {
+                    dt1 = System.DateTime.ParseExact(t1, "H:mm", CultureInfo.InvariantCulture);
+                    dt2 = System.DateTime.ParseExact(t2, "H:mm", CultureInfo.InvariantCulture);
+                }
+                catch (FormatException e)
+                {
+                    Logging.LogMessageToFile("Malformed timecode in entry: \"" + entry + "\". Skipping.", 1);
+                    continue;
+                }
+
+                if (dt2 < dt1)
+                    dt2 += new TimeSpan(1, 0, 0, 0);
+
+                var now = System.DateTime.Now;
+                if (now >= dt1 && now <= dt2)
+                {
+                    subsList.Add(r.Groups["name"].Value);
+                }
+            }
+
+            return subsList.ToArray();
+        }
+
+        //======================================================================
         // Config button clicked
         //======================================================================
         private void configureButton_Click(object sender, EventArgs e)
@@ -747,7 +805,13 @@ namespace Reddit_Wallpaper_Changer
                 String subreddits = Properties.Settings.Default.subredditsUsed.Replace(" ", "").Replace("www.reddit.com/", "").Replace("reddit.com/", "").Replace("http://", "").Replace("/r/", "");
 
                 var rand = new Random();
-                string[] subs = subreddits.Split('+');
+                string[] subs = parseSubredditsList(subreddits);
+                if (subs.Length == 0)
+                {
+                    updateStatus("No subreddits available for wallpaper change.");
+                    return;
+                }
+
                 string sub = subs[rand.Next(0, subs.Length)];
                 updateStatus("Searching /r/" + sub + " for a wallpaper...");
                 Logging.LogMessageToFile("Sellected sub to search: " + sub, 0);
