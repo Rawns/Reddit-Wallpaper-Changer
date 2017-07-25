@@ -440,6 +440,7 @@ namespace Reddit_Wallpaper_Changer
             subs = subs.Trim('+');
             var splitList = subs.Split('+').ToList();
 
+            Regex nameTimeRegex = new Regex(@"^(?<name>[^[\]+]+)(?:\[(?<t1>[0-9]{1,2}:[0-9]{2})-(?<t2>[0-9]{1,2}:[0-9]{2})+\])?");
             foreach (var entry in splitList)
             {
                 var r = nameTimeRegex.Match(entry);
