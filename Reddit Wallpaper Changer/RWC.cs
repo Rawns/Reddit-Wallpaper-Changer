@@ -809,6 +809,7 @@ namespace Reddit_Wallpaper_Changer
                 if (subs.Length == 0)
                 {
                     updateStatus("No subreddits available for wallpaper change.");
+                    Logging.LogMessageToFile("No subs to pull wallpapers from. Aborting.", 0);
                     return;
                 }
 
