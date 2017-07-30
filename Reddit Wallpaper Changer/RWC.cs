@@ -751,7 +751,7 @@ namespace Reddit_Wallpaper_Changer
                 string[] subs = subreddits.Split('+');
                 string sub = subs[rand.Next(0, subs.Length)];
                 updateStatus("Searching /r/" + sub + " for a wallpaper...");
-                Logging.LogMessageToFile("Sellected sub to search: " + sub, 0);
+                Logging.LogMessageToFile("Selected sub to search: " + sub, 0);
 
                 if (sub.Equals(""))
                 {
@@ -875,16 +875,16 @@ namespace Reddit_Wallpaper_Changer
                         JToken token = null;
                         try
                         {
-                            
-                            IEnumerable<JToken> redditResultReversed = redditResult.Reverse();
-                            foreach (JToken toke in redditResultReversed)
-                            {
-                                // if (!historyRepeated.Contains(toke["data"]["id"].ToString()))
-                                // {
-                                    token = toke;
-                                // }
-                             
-                            }
+
+                            //IEnumerable<JToken> redditResultReversed = redditResult.Reverse();
+                            //foreach (JToken toke in redditResultReversed)
+                            //{
+                            //    // if (!historyRepeated.Contains(toke["data"]["id"].ToString()))
+                            //    // {
+                            //    token = toke;
+                            //    // }asd
+                            //}
+
                             bool needsChange = false;
                             if (token == null)
                             {
