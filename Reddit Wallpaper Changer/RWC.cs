@@ -51,6 +51,7 @@ namespace Reddit_Wallpaper_Changer
         Database database = new Database();
         SaveWallpaper savewallpaper = new SaveWallpaper();
         List<string> historyList = new List<string>();
+        bool dissmissedOnce = false;
 
         public RWC()
         {
@@ -1032,6 +1033,7 @@ namespace Reddit_Wallpaper_Changer
             {
                 updateStatus("Wallpaper is blacklisted.");
                 Logging.LogMessageToFile("The selected wallpaper has been blacklisted, searching again.", 1);
+                ++noResultCount;
                 changeWallpaperTimer.Enabled = false;
                 changeWallpaper();
                 return;
@@ -1045,6 +1047,7 @@ namespace Reddit_Wallpaper_Changer
                     {
                         updateStatus("Wallpaper already used this session.");
                         Logging.LogMessageToFile("The selected wallpaper has already been used this session, searching again.", 1);
+                        ++noResultCount;
                         changeWallpaperTimer.Enabled = false;
                         changeWallpaper();
                         return;
@@ -1364,7 +1367,7 @@ namespace Reddit_Wallpaper_Changer
             this.Visible = false;
             if(p)
             {
-                if (Properties.Settings.Default.disableNotifications == false)
+                if (Properties.Settings.Default.disableNotifications == false && !dissmissedOnce)
                 {
                     taskIcon.BalloonTipIcon = ToolTipIcon.Info;
                     taskIcon.BalloonTipTitle = "Reddit Wallpaper Changer";
@@ -1372,6 +1375,8 @@ namespace Reddit_Wallpaper_Changer
                     taskIcon.ShowBalloonTip(700);
                 }
             }
+
+            dissmissedOnce = true;
         }
 
         //======================================================================
