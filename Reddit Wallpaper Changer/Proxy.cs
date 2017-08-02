@@ -37,7 +37,7 @@ namespace Reddit_Wallpaper_Changer
                         Logging.LogMessageToFile("Unexpeced error setting proxy: " + ex.Message, 2);
                     }
                 }
-
+                //test
                 return wc;
             }
         }
