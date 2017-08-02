@@ -2897,7 +2897,7 @@ namespace Reddit_Wallpaper_Changer
         private void btnRebuildThumbnails_Click(object sender, EventArgs e)
         {
             DialogResult choice = MessageBox.Show("This will remove all wallpaper thumbnails and recreate them.\r\n\r\r" +
-                "Reddit Wallpaper Will be restarted to complete this process. Continue?", "Rebuild Thumbnails?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                "Reddit Wallpaper will be restarted to complete this process. Continue?", "Rebuild Thumbnails?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (choice == DialogResult.Yes)
             {
                 try
