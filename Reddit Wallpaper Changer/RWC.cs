@@ -1622,7 +1622,15 @@ namespace Reddit_Wallpaper_Changer
         private void blacklistDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             int rowIndex = e.RowIndex;
-            System.Diagnostics.Process.Start("http://reddit.com/" + blacklistDataGrid.Rows[e.RowIndex].Cells[2].Value.ToString());
+            try
+            {
+
+                System.Diagnostics.Process.Start("http://reddit.com/" + blacklistDataGrid.Rows[e.RowIndex].Cells[2].Value.ToString());
+            }
+            catch
+            {
+
+            }
         }
 
         //======================================================================
@@ -1631,7 +1639,14 @@ namespace Reddit_Wallpaper_Changer
         private void historyDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             int rowIndex = e.RowIndex;
-            System.Diagnostics.Process.Start("http://reddit.com/" + historyDataGrid.Rows[e.RowIndex].Cells[2].Value.ToString());
+            try
+            {
+                System.Diagnostics.Process.Start("http://reddit.com/" + historyDataGrid.Rows[e.RowIndex].Cells[2].Value.ToString());
+            }
+            catch
+            {
+
+            }
         }
 
         //======================================================================
@@ -1640,7 +1655,14 @@ namespace Reddit_Wallpaper_Changer
         private void favouritesDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             int rowIndex = e.RowIndex;
-            System.Diagnostics.Process.Start("http://reddit.com/" + favouritesDataGrid.Rows[e.RowIndex].Cells[2].Value.ToString());
+            try
+            {
+                System.Diagnostics.Process.Start("http://reddit.com/" + favouritesDataGrid.Rows[e.RowIndex].Cells[2].Value.ToString());
+            }
+            catch
+            {
+
+            }
         }
 
         //======================================================================
