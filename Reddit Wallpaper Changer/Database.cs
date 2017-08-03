@@ -458,6 +458,36 @@ namespace Reddit_Wallpaper_Changer
         }
 
         //======================================================================
+        // Get wallpaper history for deletion on exit
+        //======================================================================
+        public List<Database> deleteOnExit()
+        {
+            try
+            {
+                List<Database> items = new List<Database>();
+                string sql = "SELECT threadid FROM history";
+                SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var item = new Database();
+                        item.threadidstring = (string)reader["threadid"];
+
+                        items.Add(item);
+                    }
+                }
+
+                return items;
+            }
+            catch (Exception ex)
+            {
+                Logging.LogMessageToFile("Unexpected error retrieving threadid's from database: " + ex.Message, 1);
+                return null;
+            }
+        }
+
+        //======================================================================
         // Check for blacklisted wallpaper
         //======================================================================
         public bool checkForEntry(string url)

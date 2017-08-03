@@ -15,6 +15,7 @@ namespace Reddit_Wallpaper_Changer
             if (code == 0) { level = "INFORMATION:"; }
             if (code == 1) { level = "WARNING:"; }
             if (code == 2) { level = "ERROR:"; }
+            if (code == 3) { level = "DICKBUTT:"; }
 
             string hostName = System.Environment.MachineName;
             string logfiledir = Properties.Settings.Default.AppDataPath + @"\Logs";

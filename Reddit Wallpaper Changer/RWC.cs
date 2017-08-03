@@ -1505,6 +1505,7 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            wallpaperCleanup();
             Logging.LogMessageToFile("Exiting Reddit Wallpaper Changer.", 0);
             realClose = true;
             wallpaperChangeTimer.Enabled = false;
@@ -2896,23 +2897,22 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void btnRebuildThumbnails_Click(object sender, EventArgs e)
         {
-            DialogResult choice = MessageBox.Show("This will remove all wallpaper thumbnails and recreate them.\r\n\r\r" +
-                "Reddit Wallpaper will be restarted to complete this process. Continue?", "Rebuild Thumbnails?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            DialogResult choice = MessageBox.Show("This will remove all wallpaper thumbnails and recreate them\r\n" +
+                "when Reddit Wallpaper Changer next starts. Continue?", "Rebuild Thumbnails?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (choice == DialogResult.Yes)
             {
                 try
                 {
-                    Logging.LogMessageToFile("Restarting Reddit Wallpaper Changer to clear thumbnail cache.", 0);
+                    MessageBox.Show("The wallpaper thumbnail cache will be recreated when\r\n" +
+                        "Reddit Wallpaper Changer next opens.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Logging.LogMessageToFile("User has chosen to to clear the thumbnail cache.", 0);
                     Properties.Settings.Default.rebuildThumbCache = true;
                     Properties.Settings.Default.Save();
-
-                    System.Diagnostics.Process.Start(System.Reflection.Assembly.GetEntryAssembly().Location);
-                    System.Environment.Exit(0);
 
                 }
                 catch(Exception ex)
                 {
-                    Logging.LogMessageToFile("Error restarting RWC: " + ex.Message, 1);
+                    Logging.LogMessageToFile("Error: " + ex.Message, 1);
                 }
 
             }
@@ -2945,6 +2945,30 @@ namespace Reddit_Wallpaper_Changer
                 Logging.LogMessageToFile("Error rebuilding thumbnail cache: " + ex.Message, 1);
             }
         }
+
+        //======================================================================
+        // Delete all downloaded wallpapers on close 
+        //======================================================================
+        public void wallpaperCleanup()
+        {
+            try
+            {
+                foreach (var item in database.deleteOnExit())
+                {
+                    var dir = new DirectoryInfo(System.IO.Path.GetTempPath());
+
+                    foreach (var file in dir.EnumerateFiles(item.threadidstring + ".*"))
+                    {
+                        file.Delete();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logging.LogMessageToFile("Error deleting wallpaper: " + ex.Message, 1);
+            }
+        }
+
     }
 }
 
