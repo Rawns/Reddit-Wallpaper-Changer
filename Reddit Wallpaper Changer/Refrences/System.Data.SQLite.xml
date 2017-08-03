@@ -606,6 +606,19 @@
             <param name="source">A string or number representing true or false</param>
             <returns></returns>
         </member>
+        <member name="M:System.Data.SQLite.SQLiteConvert.ToString(System.Int32)">
+            <summary>
+            Converts an integer to a string that can be round-tripped using the
+            invariant culture.
+            </summary>
+            <param name="value">
+            The integer value to return the string representation for.
+            </param>
+            <returns>
+            The string representation of the specified integer value, using the
+            invariant culture.
+            </returns>
+        </member>
         <member name="M:System.Data.SQLite.SQLiteConvert.ToBoolean(System.String)">
             <summary>
             Attempts to convert a <see cref="T:System.String"/> into a <see cref="T:System.Boolean"/>.
@@ -4951,7 +4964,7 @@
             <summary>
             Queries and returns the value of the specified setting, using the
             cached setting names and values for the last connection that used
-            by the <see cref="M:System.Data.SQLite.SQLiteConnection.Open"/> method, when available.
+            the <see cref="M:System.Data.SQLite.SQLiteConnection.Open"/> method, when available.
             </summary>
             <param name="name">
             The name of the setting.
@@ -4967,6 +4980,20 @@
             <returns>
             Non-zero if the cached setting was found; otherwise, zero.
             </returns>
+        </member>
+        <member name="M:System.Data.SQLite.SQLiteConnection.SetLastCachedSetting(System.String,System.Object)">
+            <summary>
+            Adds or sets the cached setting specified by <paramref name="name"/>
+            to the value specified by <paramref name="value"/> using the cached
+            setting names and values for the last connection that used the
+            <see cref="M:System.Data.SQLite.SQLiteConnection.Open"/> method, when available.
+            </summary>
+            <param name="name">
+            The name of the cached setting to add or replace.
+            </param>
+            <param name="value">
+            The new value of the cached setting.
+            </param>
         </member>
         <member name="M:System.Data.SQLite.SQLiteConnection.Shutdown">
             <summary>
@@ -10468,6 +10495,40 @@
             SQLite interop assembly into the current process.
             </summary>
         </member>
+        <member name="F:System.Data.SQLite.UnsafeNativeMethods.cachedAssemblyDirectory">
+            <summary>
+            This is the cached return value from the
+            <see cref="M:System.Data.SQLite.UnsafeNativeMethods.GetAssemblyDirectory"/> method -OR- null if that method
+            has never returned a valid value.
+            </summary>
+        </member>
+        <member name="F:System.Data.SQLite.UnsafeNativeMethods.noAssemblyDirectory">
+            <summary>
+            When this field is non-zero, it indicates the
+            <see cref="M:System.Data.SQLite.UnsafeNativeMethods.GetAssemblyDirectory"/> method was not able to locate a
+            suitable assembly directory.  The
+            <see cref="M:System.Data.SQLite.UnsafeNativeMethods.GetCachedAssemblyDirectory"/> method will check this
+            field and skips calls into the <see cref="M:System.Data.SQLite.UnsafeNativeMethods.GetAssemblyDirectory"/>
+            method whenever it is non-zero.
+            </summary>
+        </member>
+        <member name="F:System.Data.SQLite.UnsafeNativeMethods.cachedXmlConfigFileName">
+            <summary>
+            This is the cached return value from the
+            <see cref="M:System.Data.SQLite.UnsafeNativeMethods.GetXmlConfigFileName"/> method -OR- null if that method
+            has never returned a valid value.
+            </summary>
+        </member>
+        <member name="F:System.Data.SQLite.UnsafeNativeMethods.noXmlConfigFileName">
+            <summary>
+            When this field is non-zero, it indicates the
+            <see cref="M:System.Data.SQLite.UnsafeNativeMethods.GetXmlConfigFileName"/> method was not able to locate a
+            suitable XML configuration file name.  The
+            <see cref="M:System.Data.SQLite.UnsafeNativeMethods.GetCachedXmlConfigFileName"/> method will check this
+            field and skips calls into the <see cref="M:System.Data.SQLite.UnsafeNativeMethods.GetXmlConfigFileName"/>
+            method whenever it is non-zero.
+            </summary>
+        </member>
         <member name="M:System.Data.SQLite.UnsafeNativeMethods.#cctor">
             <summary>
             For now, this method simply calls the Initialize method.
@@ -10492,6 +10553,27 @@
             <returns>
             The combined path string -OR- null if both of the original path
             strings are null.
+            </returns>
+        </member>
+        <member name="M:System.Data.SQLite.UnsafeNativeMethods.ResetCachedXmlConfigFileName">
+            <summary>
+            Resets the cached XML configuration file name value, thus forcing the
+            next call to <see cref="M:System.Data.SQLite.UnsafeNativeMethods.GetCachedXmlConfigFileName"/> method to rely
+            upon the <see cref="M:System.Data.SQLite.UnsafeNativeMethods.GetXmlConfigFileName"/> method to fetch the
+            XML configuration file name.
+            </summary>
+        </member>
+        <member name="M:System.Data.SQLite.UnsafeNativeMethods.GetCachedXmlConfigFileName">
+            <summary>
+            Queries and returns the cached XML configuration file name for the
+            assembly containing the managed System.Data.SQLite components, if
+            available.  If the cached XML configuration file name value is not
+            available, the <see cref="M:System.Data.SQLite.UnsafeNativeMethods.GetXmlConfigFileName"/> method will
+            be used to obtain the XML configuration file name.
+            </summary>
+            <returns>
+            The XML configuration file name -OR- null if it cannot be determined
+            or does not exist.
             </returns>
         </member>
         <member name="M:System.Data.SQLite.UnsafeNativeMethods.GetXmlConfigFileName">
@@ -10613,6 +10695,26 @@
             within the value to be returned unless either the "No_Expand" or
             "No_Expand_<paramref name="name" />" environment variable is set [to
             anything].
+            </returns>
+        </member>
+        <member name="M:System.Data.SQLite.UnsafeNativeMethods.ResetCachedAssemblyDirectory">
+            <summary>
+            Resets the cached assembly directory value, thus forcing the next
+            call to <see cref="M:System.Data.SQLite.UnsafeNativeMethods.GetCachedAssemblyDirectory"/> method to rely
+            upon the <see cref="M:System.Data.SQLite.UnsafeNativeMethods.GetAssemblyDirectory"/> method to fetch the
+            assembly directory.
+            </summary>
+        </member>
+        <member name="M:System.Data.SQLite.UnsafeNativeMethods.GetCachedAssemblyDirectory">
+            <summary>
+            Queries and returns the cached directory for the assembly currently
+            being executed, if available.  If the cached assembly directory value
+            is not available, the <see cref="M:System.Data.SQLite.UnsafeNativeMethods.GetAssemblyDirectory"/> method will
+            be used to obtain the assembly directory.
+            </summary>
+            <returns>
+            The directory for the assembly currently being executed -OR- null if
+            it cannot be determined.
             </returns>
         </member>
         <member name="M:System.Data.SQLite.UnsafeNativeMethods.GetAssemblyDirectory">
