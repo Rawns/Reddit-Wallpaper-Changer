@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RWC));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.configurePanel = new System.Windows.Forms.Panel();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.statusMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -571,7 +571,7 @@
             this.tabDatabase.ImageKey = "database.png";
             this.tabDatabase.Location = new System.Drawing.Point(4, 23);
             this.tabDatabase.Name = "tabDatabase";
-            this.tabDatabase.Size = new System.Drawing.Size(420, 153);
+            this.tabDatabase.Size = new System.Drawing.Size(420, 131);
             this.tabDatabase.TabIndex = 3;
             this.tabDatabase.Text = "Database:";
             // 
@@ -1295,8 +1295,8 @@
             // Thread
             // 
             this.Thread.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Thread.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Thread.DefaultCellStyle = dataGridViewCellStyle4;
             this.Thread.HeaderText = "Thread";
             this.Thread.Name = "Thread";
             this.Thread.ReadOnly = true;
@@ -1555,8 +1555,8 @@
             // blacklistThread
             // 
             this.blacklistThread.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.blacklistThread.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.blacklistThread.DefaultCellStyle = dataGridViewCellStyle5;
             this.blacklistThread.HeaderText = "Thread";
             this.blacklistThread.Name = "blacklistThread";
             this.blacklistThread.ReadOnly = true;
@@ -1699,8 +1699,8 @@
             // favouriteThread
             // 
             this.favouriteThread.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.favouriteThread.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.favouriteThread.DefaultCellStyle = dataGridViewCellStyle6;
             this.favouriteThread.HeaderText = "Thread";
             this.favouriteThread.Name = "favouriteThread";
             this.favouriteThread.ReadOnly = true;

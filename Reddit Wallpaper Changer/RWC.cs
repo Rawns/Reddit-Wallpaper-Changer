@@ -185,6 +185,7 @@ namespace Reddit_Wallpaper_Changer
             setupSavedWallpaperLocation();
             setupAppDataLocation();
             setupThumbnailCache();
+            buildThumbnailCache();
             setupProxySettings();
             setupButtons();
             setupPanels();          
@@ -193,7 +194,6 @@ namespace Reddit_Wallpaper_Changer
             logSettings();
             database.connectToDatabase();
             if (Properties.Settings.Default.dbMigrated == false) { database.migrateOldBlacklist(); }
-            buildThumbnailCache();
             populateHistory();
             populateFavourites();
             populateBlacklist();
@@ -2325,7 +2325,6 @@ namespace Reddit_Wallpaper_Changer
                         row.SetValues(image, item.titlestring, item.threadidstring, item.urlstring, item.datestring);
                     }
                 }
-
                 Logging.LogMessageToFile("History panel reloaded.", 0);
                 return true;
             }
@@ -2358,6 +2357,7 @@ namespace Reddit_Wallpaper_Changer
                 }
 
                 Logging.LogMessageToFile("Blacklisted wallpapers loaded.", 0);
+
             }
             catch (Exception ex)
             {
@@ -2935,9 +2935,12 @@ namespace Reddit_Wallpaper_Changer
                 {
                     file.Delete();
                 }
-                Logging.LogMessageToFile("Thumbnail cache erased.", 0);
                 Properties.Settings.Default.rebuildThumbCache = false;
                 Properties.Settings.Default.Save();
+
+                buildThumbnailCache();
+
+                Logging.LogMessageToFile("Thumbnail cache erased.", 0);
 
             }
             catch(Exception ex)
