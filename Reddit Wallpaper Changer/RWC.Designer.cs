@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RWC));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.configurePanel = new System.Windows.Forms.Panel();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.statusMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -507,7 +507,7 @@
             this.tabProxy.Location = new System.Drawing.Point(4, 23);
             this.tabProxy.Name = "tabProxy";
             this.tabProxy.Padding = new System.Windows.Forms.Padding(3);
-            this.tabProxy.Size = new System.Drawing.Size(420, 153);
+            this.tabProxy.Size = new System.Drawing.Size(420, 131);
             this.tabProxy.TabIndex = 1;
             this.tabProxy.Text = "Proxy Server:";
             // 
@@ -621,7 +621,7 @@
             // 
             this.btnClearBlacklisted.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.blacklist_16x16;
             this.btnClearBlacklisted.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnClearBlacklisted.Location = new System.Drawing.Point(45, 84);
+            this.btnClearBlacklisted.Location = new System.Drawing.Point(43, 84);
             this.btnClearBlacklisted.Name = "btnClearBlacklisted";
             this.btnClearBlacklisted.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.btnClearBlacklisted.Size = new System.Drawing.Size(144, 28);
@@ -635,7 +635,7 @@
             // 
             this.btnClearFavourites.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.favourite_16x16;
             this.btnClearFavourites.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnClearFavourites.Location = new System.Drawing.Point(45, 49);
+            this.btnClearFavourites.Location = new System.Drawing.Point(43, 49);
             this.btnClearFavourites.Name = "btnClearFavourites";
             this.btnClearFavourites.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.btnClearFavourites.Size = new System.Drawing.Size(144, 29);
@@ -649,7 +649,7 @@
             // 
             this.btnClearHistory.Image = global::Reddit_Wallpaper_Changer.Properties.Resources.history_16x16;
             this.btnClearHistory.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnClearHistory.Location = new System.Drawing.Point(45, 15);
+            this.btnClearHistory.Location = new System.Drawing.Point(43, 15);
             this.btnClearHistory.Name = "btnClearHistory";
             this.btnClearHistory.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.btnClearHistory.Size = new System.Drawing.Size(144, 28);
@@ -1295,8 +1295,8 @@
             // Thread
             // 
             this.Thread.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Thread.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Thread.DefaultCellStyle = dataGridViewCellStyle7;
             this.Thread.HeaderText = "Thread";
             this.Thread.Name = "Thread";
             this.Thread.ReadOnly = true;
@@ -1555,8 +1555,8 @@
             // blacklistThread
             // 
             this.blacklistThread.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.blacklistThread.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.blacklistThread.DefaultCellStyle = dataGridViewCellStyle8;
             this.blacklistThread.HeaderText = "Thread";
             this.blacklistThread.Name = "blacklistThread";
             this.blacklistThread.ReadOnly = true;
@@ -1699,8 +1699,8 @@
             // favouriteThread
             // 
             this.favouriteThread.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.favouriteThread.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.favouriteThread.DefaultCellStyle = dataGridViewCellStyle9;
             this.favouriteThread.HeaderText = "Thread";
             this.favouriteThread.Name = "favouriteThread";
             this.favouriteThread.ReadOnly = true;

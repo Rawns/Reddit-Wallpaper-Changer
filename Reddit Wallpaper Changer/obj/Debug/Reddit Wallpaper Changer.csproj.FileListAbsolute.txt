@@ -101,3 +101,12 @@ E:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit-Wallpaper-Changer\Reddit 
 E:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.exe
 E:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.pdb
 E:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.csprojResolveAssemblyReference.cache
+S:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.csprojResolveAssemblyReference.cache
+S:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.PopupInfo.resources
+S:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.RWC.resources
+S:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.Properties.Resources.resources
+S:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.SearchWizard.resources
+S:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.Update.resources
+S:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit_Wallpaper_Changer.WallpaperTypes.resources
+S:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.csproj.GenerateResource.Cache
+S:\Dropbox\C# Projects\Reddit-Wallpaper-Changer\Reddit-Wallpaper-Changer\Reddit Wallpaper Changer\obj\Debug\Reddit Wallpaper Changer.pdb

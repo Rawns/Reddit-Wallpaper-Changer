@@ -35,7 +35,7 @@ namespace Reddit_Wallpaper_Changer
             form1.changeSearchQuery(searchQuery.Text);
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void btnNSFWFilter_Click(object sender, EventArgs e)
         {
             if (searchQuery.Text.Contains("nsfw:yes"))
             {
@@ -52,7 +52,7 @@ namespace Reddit_Wallpaper_Changer
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnSave_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.searchQuery = searchQuery.Text;
             Properties.Settings.Default.Save();
