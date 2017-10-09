@@ -838,47 +838,47 @@ namespace Reddit_Wallpaper_Changer
                 {
                     case 0:
                         // Random
-                        formURL += "/search.json?q=" + query + randomSort[random.Next(0, 4)] + randomT[random.Next(0, 5)] + "&restrict_sr=on";
+                        formURL += "/search.json?q=" + query + randomSort[random.Next(0, 4)] + randomT[random.Next(0, 5)];
                         Logging.LogMessageToFile("Full URL Search String: " + formURL, 0);
                         break;  
                     case 1:
                         // Newest 
-                        formURL += "/search.json?q=" + query + "&sort=new&restrict_sr=on";
+                        formURL += "/search.json?q=" + query + "&sort=new";
                         Logging.LogMessageToFile("Full URL Search String: " + formURL, 0);
                         break;
                     case 2:
                         // Hot Today
-                        formURL += "/search.json?q=" + query + "&sort=hot&restrict_sr=on&t=day";
+                        formURL += "/search.json?q=" + query + "&sort=hot&t=day";
                         Logging.LogMessageToFile("Full URL Search String: " + formURL, 0);
                         break;
                     case 3:
                         // Top Last Hour
-                        formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=hour";
+                        formURL += "/search.json?q=" + query + "&sort=top&t=hour";
                         Logging.LogMessageToFile("Full URL Search String: " + formURL, 0);
                         break;
                     case 4:
                          // Top Today
-                        formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=day";
+                        formURL += "/search.json?q=" + query + "&sort=top&t=day";
                         Logging.LogMessageToFile("Full URL Search String: " + formURL, 0);
                         break;
                     case 5:
                         // Top Week
-                        formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=week";
+                        formURL += "/search.json?q=" + query + "&sort=top&t=week";
                         Logging.LogMessageToFile("Full URL Search String: " + formURL, 0);
                         break;
                     case 6:
                         // Top Month
-                        formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=month";
+                        formURL += "/search.json?q=" + query + "&sort=top&t=month";
                         Logging.LogMessageToFile("Full URL Search String: " + formURL, 0);
                         break;
                     case 7:
                          // Top Year
-                        formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=year";
+                        formURL += "/search.json?q=" + query + "&sort=top&t=year";
                         Logging.LogMessageToFile("Full URL Search String: " + formURL, 0);
                         break;
                     case 8:
                          // Top All Time
-                         formURL += "/search.json?q=" + query + "&sort=top&restrict_sr=on&t=all";
+                         formURL += "/search.json?q=" + query + "&sort=top&t=all";
                          Logging.LogMessageToFile("Full URL Search String: " + formURL, 0);
                          break;
                      case 9:
