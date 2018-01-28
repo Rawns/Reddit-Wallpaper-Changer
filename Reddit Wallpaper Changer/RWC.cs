@@ -203,13 +203,15 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void setupAppDataLocation()
         {
-            if (Properties.Settings.Default.AppDataPath == "")
-            {
-                String appDataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Reddit Wallpaper Changer";
-                System.IO.Directory.CreateDirectory(appDataFolderPath);
-                Properties.Settings.Default.AppDataPath = appDataFolderPath;
-                Properties.Settings.Default.Save();
-            }     
+            string appDataFolderPath;
+            if (Properties.Settings.Default.AppDataPath.Any())
+                appDataFolderPath = Properties.Settings.Default.AppDataPath;
+            else
+                appDataFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Reddit Wallpaper Changer";
+
+            Directory.CreateDirectory(appDataFolderPath);
+            Properties.Settings.Default.AppDataPath = appDataFolderPath;
+            Properties.Settings.Default.Save();  
         }
 
         //======================================================================
@@ -217,13 +219,15 @@ namespace Reddit_Wallpaper_Changer
         //======================================================================
         private void setupThumbnailCache()
         {
-            if (Properties.Settings.Default.thumbnailCache == "")
-            {                
-                String thumbnailCache = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Reddit Wallpaper Changer\ThumbnailCache";
-                System.IO.Directory.CreateDirectory(thumbnailCache);
-                Properties.Settings.Default.thumbnailCache = thumbnailCache;
-                Properties.Settings.Default.Save();
-            }
+            string thumbnailCachePath;
+            if (Properties.Settings.Default.thumbnailCache.Any())
+                thumbnailCachePath = Properties.Settings.Default.thumbnailCache;
+            else
+                thumbnailCachePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Reddit Wallpaper Changer\ThumbnailCache";
+
+            Directory.CreateDirectory(thumbnailCachePath);
+            Properties.Settings.Default.thumbnailCache = thumbnailCachePath;
+            Properties.Settings.Default.Save();
         }
 
 
