@@ -74,9 +74,6 @@
     <Setting Name="updateSettings" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="manualOverride" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="wallpaperStyle" Type="System.String" Scope="User">
       <Value Profile="(Default)">Stretch</Value>
     </Setting>
@@ -112,6 +109,9 @@
     </Setting>
     <Setting Name="rebuildThumbCache" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="lastWallpaperUpdateTime" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

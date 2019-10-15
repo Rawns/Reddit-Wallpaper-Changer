@@ -57,6 +57,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>Resources\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="SimpleInjector, Version=4.7.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.4.7.1\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite">
@@ -75,20 +78,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database.cs" />
-    <Compile Include="Logging.cs" />
+    <Compile Include="Log\Logging.cs" />
+    <Compile Include="Model\ChangeWallpaperResult.cs" />
+    <Compile Include="Model\HistoryItem.cs" />
+    <Compile Include="Model\ImageInfo.cs" />
     <Compile Include="Pastebin.cs" />
-    <Compile Include="PopupInfo.cs">
+    <Compile Include="Settings\ILoadSettings.cs" />
+    <Compile Include="Settings\ISearchSettings.cs" />
+    <Compile Include="Settings\SettingsProvider.cs" />
+    <Compile Include="View\PopupInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PopupInfo.Designer.cs">
+    <Compile Include="View\PopupInfo.Designer.cs">
       <DependentUpon>PopupInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Proxy.cs" />
     <Compile Include="Quotes.cs" />
-    <Compile Include="RWC.cs">
+    <Compile Include="View\RWC.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RWC.Designer.cs">
+    <Compile Include="View\RWC.Designer.cs">
       <DependentUpon>RWC.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -96,51 +105,70 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ManageSettings.cs" />
-    <Compile Include="SaveWallpaper.cs" />
-    <Compile Include="SuperSecret.cs" />
-    <Compile Include="Update.cs">
+    <Compile Include="Settings\ManageSettings.cs" />
+    <Compile Include="Wallpaper\ICurrentWallpaperHolder.cs" />
+    <Compile Include="Wallpaper\IImageUrlValidator.cs" />
+    <Compile Include="Wallpaper\Impl\CurrentWallpaperHolder.cs" />
+    <Compile Include="Wallpaper\Impl\WallpaperSaver.cs" />
+    <Compile Include="Log\SuperSecret.cs" />
+    <Compile Include="View\Update.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Update.Designer.cs">
+    <Compile Include="View\Update.Designer.cs">
       <DependentUpon>Update.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SearchWizard.cs">
+    <Compile Include="View\SearchWizard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SearchWizard.Designer.cs">
+    <Compile Include="View\SearchWizard.Designer.cs">
       <DependentUpon>SearchWizard.cs</DependentUpon>
     </Compile>
-    <Compile Include="ActiveDesktop.cs" />
-    <Compile Include="Validation.cs" />
-    <Compile Include="WallpaperTypes.cs">
+    <Compile Include="Wallpaper\Impl\ActiveDesktop.cs" />
+    <Compile Include="Wallpaper\Impl\ImageUrlValidator.cs" />
+    <Compile Include="View\WallpaperTypes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WallpaperTypes.Designer.cs">
+    <Compile Include="View\WallpaperTypes.Designer.cs">
       <DependentUpon>WallpaperTypes.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="PopupInfo.resx">
+    <Compile Include="Wallpaper\IImageInfoProvider.cs" />
+    <Compile Include="Wallpaper\IImageLoader.cs" />
+    <Compile Include="Wallpaper\Impl\ImageInfoProvider.cs" />
+    <Compile Include="Wallpaper\Impl\ImageLoader.cs" />
+    <Compile Include="Wallpaper\Impl\SearchUrlProvider.cs" />
+    <Compile Include="Wallpaper\Impl\WallpaperSetter.cs" />
+    <Compile Include="Wallpaper\IWallpaperSaver.cs" />
+    <Compile Include="Wallpaper\ISearchUrlProvider.cs" />
+    <Compile Include="Wallpaper\Impl\ThumbnailCacheBuilder.cs" />
+    <Compile Include="Wallpaper\Impl\WallpaperChanger.cs" />
+    <Compile Include="Wallpaper\Impl\WinApiProvider.cs" />
+    <Compile Include="Wallpaper\IThumbnailCacheBuilder.cs" />
+    <Compile Include="Wallpaper\IWallpaperChanger.cs" />
+    <Compile Include="Wallpaper\IWallpaperSetter.cs" />
+    <EmbeddedResource Include="View\PopupInfo.resx">
       <DependentUpon>PopupInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RWC.resx">
+    <EmbeddedResource Include="View\RWC.resx">
       <DependentUpon>RWC.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="SearchWizard.resx">
+    <EmbeddedResource Include="View\SearchWizard.resx">
       <DependentUpon>SearchWizard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Update.resx">
+    <EmbeddedResource Include="View\Update.resx">
       <DependentUpon>Update.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WallpaperTypes.resx">
+    <EmbeddedResource Include="View\WallpaperTypes.resx">
       <DependentUpon>WallpaperTypes.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
