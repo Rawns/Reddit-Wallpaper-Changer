@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Reddit_Wallpaper_Changer.Log;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Net;

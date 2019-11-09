@@ -1,6 +1,0 @@
-C:\Dropbox\C# Projects\RWC-Source\Reddit Wallpaper Changer\bin\Remote\Reddit Wallpaper Changer.exe.config
-C:\Dropbox\C# Projects\RWC-Source\Reddit Wallpaper Changer\obj\Remote\Reddit_Wallpaper_Changer.RWC.resources
-C:\Dropbox\C# Projects\RWC-Source\Reddit Wallpaper Changer\obj\Remote\Reddit_Wallpaper_Changer.Properties.Resources.resources
-C:\Dropbox\C# Projects\RWC-Source\Reddit Wallpaper Changer\obj\Remote\Reddit_Wallpaper_Changer.SearchWizard.resources
-C:\Dropbox\C# Projects\RWC-Source\Reddit Wallpaper Changer\obj\Remote\Reddit_Wallpaper_Changer.Update.resources
-C:\Dropbox\C# Projects\RWC-Source\Reddit Wallpaper Changer\obj\Remote\Reddit Wallpaper Changer.csproj.GenerateResource.Cache
