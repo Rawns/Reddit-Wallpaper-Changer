@@ -110,7 +110,11 @@
     <Setting Name="rebuildThumbCache" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+<<<<<<< HEAD
     <Setting Name="lastWallpaperUpdateTime" Type="System.DateTime" Scope="User">
+=======
+    <Setting Name="wallpaperCache" Type="System.String" Scope="User">
+>>>>>>> Development
       <Value Profile="(Default)" />
     </Setting>
   </Settings>
