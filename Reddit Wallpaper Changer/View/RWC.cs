@@ -906,7 +906,7 @@ namespace Reddit_Wallpaper_Changer
             {
                 try
                 {
-                    if (Properties.Settings.Default.autoUpdateCheck == true)
+                    if (Properties.Settings.Default.autoUpdateCheck == true && false)
                     {
                         string latestVersion = wc.DownloadString("https://raw.githubusercontent.com/Rawns/Reddit-Wallpaper-Changer/master/version");
                         if (!latestVersion.Contains(currentVersion.Trim().ToString()))
