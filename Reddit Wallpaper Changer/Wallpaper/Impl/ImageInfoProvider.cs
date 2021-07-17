@@ -38,6 +38,10 @@ namespace Reddit_Wallpaper_Changer.Wallpaper.Impl
                 }
 
                 JToken token = redditResult.Last;
+
+                // Replacing old imgur urls
+                token["data"]["url"] = token["data"]["url"].ToString().Replace("/imgur", "/i.imgur");
+
                 if (wallpaperGrabType != 0)
                 {
                     Logging.LogMessageToFile("Found a wallpaper! Title: " + token["data"]["title"].ToString() + ", URL: " + token["data"]["url"].ToString() + ", ThreadID: " + token["data"]["id"].ToString(), 0);
@@ -98,6 +102,7 @@ namespace Reddit_Wallpaper_Changer.Wallpaper.Impl
         {
             using (var wc = Proxy.setProxy())
             {
+                wc.Headers.Add(HttpRequestHeader.Cookie, "over18=1");
                 try
                 {
                     Logging.LogMessageToFile("Searching Reddit for a wallpaper.", 0);

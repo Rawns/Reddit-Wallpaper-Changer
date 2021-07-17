@@ -56,7 +56,7 @@ namespace Reddit_Wallpaper_Changer.Wallpaper.Impl
             catch (Exception ex)
             {
                 Logging.LogMessageToFile(ex.ToString(), 1);
-                return true;
+                return false;
             }
         }
 
@@ -89,7 +89,7 @@ namespace Reddit_Wallpaper_Changer.Wallpaper.Impl
             }
             catch
             {
-                return true;
+                return false;
             }
         }
     }
