@@ -714,6 +714,7 @@ namespace Reddit_Wallpaper_Changer
                     };
                     popup.Show();
                 }
+                populateHistory();
             }
             else
             {
@@ -1435,14 +1436,16 @@ namespace Reddit_Wallpaper_Changer
             if (DB.blacklistWallpaper(imageInfo.Url, imageInfo.Title, imageInfo.ThreadId))
             {
                 ShowNotification("Wallpaper Blacklisted!", "The wallpaper has been blacklisted! Finding a new wallpaper...");
+                wallpaperChangeTimer.Enabled = false;
+                _ = ChangeWallpaper();
             }
             else
             {
                 ShowNotification("Error Blacklisting!", "There was an error blacklisting the wallpaper!");
             }
 
-            wallpaperChangeTimer.Enabled = false;
-            wallpaperChangeTimer.Enabled = true;
+            //wallpaperChangeTimer.Enabled = false;
+            //wallpaperChangeTimer.Enabled = true;
             populateBlacklist();
         }
 
@@ -1467,7 +1470,8 @@ namespace Reddit_Wallpaper_Changer
             if (url == Properties.Settings.Default.currentWallpaperUrl)
             {
                 wallpaperChangeTimer.Enabled = false;
-                wallpaperChangeTimer.Enabled = true;
+                //wallpaperChangeTimer.Enabled = true;
+                _ = ChangeWallpaper();
             }
 
             populateBlacklist();

@@ -61,6 +61,7 @@ namespace Reddit_Wallpaper_Changer.Wallpaper.Impl
                     var result = await ChangeWallpaperImpl(progress);
                     if (result.Success)
                     {
+                        isRunning = 0;
                         return result;
                     }
                 }

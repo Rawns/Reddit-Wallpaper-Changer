@@ -9,6 +9,8 @@ namespace Reddit_Wallpaper_Changer.Wallpaper.Impl
 
         public ImageInfo GetCurrentWallpaper()
         {
+            //return CurrentImageInfo;
+            CurrentImageInfo = new ImageInfo(Properties.Settings.Default.url, Properties.Settings.Default.threadTitle, Properties.Settings.Default.threadID, Properties.Settings.Default.url);
             return CurrentImageInfo;
         }
 
