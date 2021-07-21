@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Reddit_Wallpaper_Changer
+namespace Reddit_Wallpaper_Changer.Log
 {
     class Logging
     {
