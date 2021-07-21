@@ -15,13 +15,15 @@ namespace Reddit_Wallpaper_Changer
     public class Database
     {
         SQLiteConnection m_dbConnection;
-        string dbPath = Properties.Settings.Default.AppDataPath + @"\Reddit-Wallpaper-Changer.sqlite";
+        string dbPath;
 
         //======================================================================
         // Create the SQLite Blacklist database
         //======================================================================
         public void connectToDatabase()
         {
+            dbPath = Properties.Settings.Default.AppDataPath + @"\Reddit-Wallpaper-Changer.sqlite";
+
             if (!File.Exists(dbPath))
             {
                 try
