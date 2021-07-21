@@ -465,5 +465,29 @@ namespace Reddit_Wallpaper_Changer.Properties {
                 this["lastWallpaperUpdateTime"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public string manualOverride {
+            get {
+                return ((string)(this["manualOverride"]));
+            }
+            set {
+                this["manualOverride"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string wallpaperCache {
+            get {
+                return ((string)(this["wallpaperCache"]));
+            }
+            set {
+                this["wallpaperCache"] = value;
+            }
+        }
     }
 }
